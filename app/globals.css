@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Evitamos que los glow/blur absolutos generen scroll lateral en mobile */
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-ink-950 text-ink-100 antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv02', 'cv03', 'cv04';
+    overflow-x: hidden;
+    width: 100%;
+    /* Padding inferior solo en mobile para que el sticky ATC y el float
+       de WhatsApp no tapen el último bloque (Footer / CTA back-to-pricing). */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  /* Tap targets más cómodos: nada por debajo de 44px en mobile */
+  @media (max-width: 640px) {
+    button,
+    a[role='button'],
+    .min-tap {
+      min-height: 44px;
+    }
+  }
+  /* Selección con color de marca */
+  ::selection {
+    @apply bg-accent text-white;
+  }
+  /* Imágenes nunca se desbordan del contenedor */
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* Estilo de heading principal: italic + black + uppercase + tracking justito.
+     Lo usamos en todas las secciones para mantener identidad visual fuerte. */
+  .heading-display {
+    @apply font-display font-black uppercase italic tracking-tight text-white;
+  }
+  /* Variante de heading con leve "skew" en el accent — se usa para resaltar
+     palabras clave dentro de un heading. */
+  .accent-italic {
+    @apply italic text-accent;
+  }
+  /* Frase "section eyebrow" arriba de cada heading */
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-accent italic;
+  }
+}
+
+/* Track del strip de marcas/categorías horizontal (marquee).
+   Definimos el @keyframes acá directamente (en vez de depender del de
+   tailwind.config) porque solo lo usamos vía esta clase custom — y Tailwind
+   tree-shakea los keyframes que no están referenciados por una `animate-*`.
+   El contenido se mueve a la DERECHA: parte en -50% y vuelve a 0. */
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.marquee-track {
+  width: max-content;
+  animation: marquee-right 30s linear infinite;
+  will-change: transform;
+}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -X POST \"https://carmania-9625.myshopify.com/api/2025-01/graphql.json\" -H \"Content-Type: application/json\" -H \"X-Shopify-Storefront-Access-Token: 40713e31c177219dad9d6d23ee103513\" -d \"{\\\\\"query\\\\\":\\\\\"{ product\\(handle: \\\\\\\\\\\\\"soporte-magnetico-pro\\\\\\\\\\\\\"\\) { id title handle availableForSale priceRange { minVariantPrice { amount currencyCode } } images\\(first:5\\) { edges { node { url altText } } } variants\\(first:5\\) { edges { node { id title price { amount currencyCode } compareAtPrice { amount currencyCode } } } } } }\\\\\"}\")",
+      "Bash(git -C \"C:/Users/ignaf/Desktop/Ecommerce/CarMania/Carmania-Landing\" rev-parse --show-toplevel)",
+      "Bash(npm install *)",
+      "Bash(npx next *)",
+      "WebFetch(domain:web.archive.org)",
+      "Bash(npx tsc *)",
+      "Bash(find \"C:/Users/ignaf/Desktop/IronVision Repo/ironvision-nano-fresa/web-frontend/apps/app-mining/src\" -name \"AlertsPanel*\" -o -name \"alertsPanel*\" 2>/dev/null)"
+    ]
+  }
+}
