@@ -12,6 +12,7 @@
  * reemplazá REVIEWS por el fetch de su API manteniendo el mismo shape
  * y agregá `image: '/reviews/<n>.jpg'` por review.
  */
+import Image from 'next/image';
 import { BRAND, REVIEWS, RATING_BREAKDOWN } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
@@ -74,7 +75,7 @@ export function Reviews() {
               key={r.name + r.date}
               className="flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950"
             >
-              <ReviewImage initial={r.name[0]} index={i} />
+              <ReviewImage initial={r.name[0]} index={i} image={'image' in r ? (r as { image: string }).image : undefined} />
 
               <div className="flex flex-1 flex-col p-4 sm:p-5">
                 <div className="flex items-center gap-2">
@@ -123,8 +124,7 @@ export function Reviews() {
  * fotos reales que mandan los clientes (o de Loox / Judge.me), reemplazá
  * el div por <Image src={r.image} ... fill className="object-cover" />.
  */
-function ReviewImage({ initial, index }: { initial: string; index: number }) {
-  // Variamos sutilmente el gradiente para que las cards no se vean idénticas.
+function ReviewImage({ initial, index, image }: { initial: string; index: number; image?: string }) {
   const variants = [
     'from-ink-700 via-ink-800 to-ink-950',
     'from-ink-800 via-ink-900 to-black',
@@ -135,24 +135,30 @@ function ReviewImage({ initial, index }: { initial: string; index: number }) {
 
   return (
     <div className={`relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br ${bg}`}>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(215,7,7,0.15),transparent_60%)]"
-      />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="font-display text-7xl font-black italic text-white/10">
-          {initial}
-        </span>
-      </div>
-      <div className="absolute left-3 top-3 rounded-md border border-white/15 bg-black/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur">
-        Foto cliente
-      </div>
-
-      {/*
-        Cuando tengas las fotos de los clientes:
-        import Image from 'next/image';
-        <Image src={review.image} alt={`Foto de ${review.name}`} fill className="object-cover" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" />
-      */}
+      {image ? (
+        <Image
+          src={image}
+          alt={`Foto de reseña`}
+          fill
+          className="object-cover"
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+        />
+      ) : (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(215,7,7,0.15),transparent_60%)]"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-display text-7xl font-black italic text-white/10">
+              {initial}
+            </span>
+          </div>
+          <div className="absolute left-3 top-3 rounded-md border border-white/15 bg-black/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur">
+            Foto cliente
+          </div>
+        </>
+      )}
     </div>
   );
 }

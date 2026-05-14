@@ -272,6 +272,7 @@ export const REVIEWS = [
     text: 'Lo uso hace 3 meses en mi Corolla y no se movió ni un milímetro. Probé tres soportes antes y todos terminaron en la guantera. Este es otra historia.',
     date: '12 Mar 2026',
     verified: true,
+    image: '/Reviews/revw5.webp',
   },
   {
     name: 'Sofía R.',
@@ -280,6 +281,7 @@ export const REVIEWS = [
     text: 'Llegó en 2 días con seguimiento. Lo instalé sin tocar nada del auto y aguanta mi iPhone 14 Pro como si nada. Súper recomendado.',
     date: '28 Feb 2026',
     verified: true,
+    image: '/Reviews/revw6.webp',
   },
   {
     name: 'Diego P.',
@@ -288,6 +290,7 @@ export const REVIEWS = [
     text: 'Ni en los pozos de la 7 se mueve. Encima viene con 3 chapitas distintas, así que lo uso entre el auto mío y el de mi vieja. Buenísimo.',
     date: '21 Feb 2026',
     verified: true,
+    image: '/Reviews/revw7.webp',
   },
   {
     name: 'Lucía M.',
@@ -296,6 +299,7 @@ export const REVIEWS = [
     text: 'Excelente producto. Una estrella menos solo porque la chapita más chica no me quedó bien centrada al primer intento, pero las otras dos andan perfecto.',
     date: '10 Feb 2026',
     verified: true,
+    image: '/Reviews/revv1-500x500.jpg',
   },
   {
     name: 'Federico A.',
@@ -304,6 +308,7 @@ export const REVIEWS = [
     text: 'Compra protegida con MP, llegó en 48hs y la calidad es muy superior a lo que esperaba. Vale cada peso. Ya le compré uno a mi hermano.',
     date: '02 Feb 2026',
     verified: true,
+    image: '/Reviews/revv2-500x500.jpg',
   },
 ] as const;
 
@@ -346,45 +351,37 @@ export const TRUST_PILLARS = [
 
 /**
  * ─────────────────────────────────────────────────────────────────────────
- * BUNDLES — Tres niveles de oferta sobre la MISMA variante de Shopify.
+ * BUNDLES — Cada bundle es un PRODUCTO independiente en Shopify (con su
+ * propio precio, compareAtPrice y discount config).
  *
- *   Bundle 1 (single): 1 unidad         → multiplier 1     (precio normal)
- *   Bundle 2 (double): 2 unidades, 2ª al 50% → multiplier 1.5
- *   Bundle 3 (triple): 3 unidades, 3ª gratis → multiplier 2
+ *   Bundle x1 → productId 8264328118387
+ *   Bundle x2 → productId 8270224392307
+ *   Bundle x3 → productId 8270224425075
  *
- * El multiplier se aplica al PRECIO ACTUAL (rebajado) que viene de Shopify,
- * no al compareAtPrice.
- *
- * IMPORTANTE — para que el checkout cobre el monto correcto:
- *
- *   En Shopify → Discounts → Create discount → Buy X get Y, y asociá un CÓDIGO:
- *     • Código "BUNDLE2" → "Buy 1 get 1 at 50% off"  (sólo de este producto)
- *     • Código "BUNDLE3" → "Buy 2 get 1 free"        (sólo de este producto)
- *
- * El BuyButton manda ese código junto con el cartCreate, así Shopify aplica
- * el descuento automáticamente en el checkout. El single no necesita código.
- *
- * Si preferís usar "Automatic Discounts" (sin código), igual deberían dispararse
- * por cantidad — pero pasar el code es el camino más confiable.
+ * En tiempo de render fetcheamos la primera variante de cada producto y
+ * obtenemos su variantId + precios. Los `fallback*` solo se usan si la
+ * Storefront API falla.
  * ─────────────────────────────────────────────────────────────────────────
  */
 type Bundle = {
   id: 'single' | 'double' | 'triple';
+  productId: string;      // GID del producto Shopify
   label: string;
   subtitle: string;
-  quantity: number;       // cantidad que se manda al checkout
-  unitsLabel: string;     // texto visible: "1 unidad", "2 unidades · 2ª al 50%", etc
-  badge: string | null;   // "MÁS ELEGIDO" | "MEJOR PRECIO"
-  bonus: string;          // "+ N chapitas MagSafe"
+  quantity: number;       // solo display ("1 unidad", "2 unidades", etc.)
+  unitsLabel: string;
+  badge: string | null;
+  bonus: string;
   freeShipping: boolean;
   recommended: boolean;
-  priceMultiplier: number; // multiplica al PRECIO REBAJADO de Shopify
-  discountCode?: string;   // se aplica en cartCreate (Shopify lo cobra correctamente)
+  fallbackPrice: number;   // ARS — usado si Shopify API no responde
+  fallbackCompare: number; // ARS
 };
 
 export const BUNDLES: readonly Bundle[] = [
   {
     id: 'single',
+    productId: 'gid://shopify/Product/8264328118387',
     label: 'LLEVÁ 1',
     subtitle: 'Un soporte. Mil usos.',
     quantity: 1,
@@ -393,10 +390,12 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 1 chapita MagSafe',
     freeShipping: false,
     recommended: false,
-    priceMultiplier: 1,
+    fallbackPrice: 44990,
+    fallbackCompare: 89990,
   },
   {
     id: 'double',
+    productId: 'gid://shopify/Product/8270224392307',
     label: 'LLEVÁ 2',
     subtitle: '50% OFF en la 2ª unidad.',
     quantity: 2,
@@ -405,11 +404,12 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 2 chapitas MagSafe',
     freeShipping: true,
     recommended: true,
-    priceMultiplier: 1.5,
-    discountCode: 'BUNDLE2',
+    fallbackPrice: 67485,
+    fallbackCompare: 179980,
   },
   {
     id: 'triple',
+    productId: 'gid://shopify/Product/8270224425075',
     label: 'LLEVÁ 3',
     subtitle: 'La 3ª unidad es GRATIS.',
     quantity: 3,
@@ -418,8 +418,8 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 3 chapitas MagSafe',
     freeShipping: true,
     recommended: false,
-    priceMultiplier: 2,
-    discountCode: 'BUNDLE3',
+    fallbackPrice: 89980,
+    fallbackCompare: 269970,
   },
 ];
 

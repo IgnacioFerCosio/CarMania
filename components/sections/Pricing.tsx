@@ -1,40 +1,21 @@
-/**
- * PRICING — bloque de conversión principal (rediseño con 3 bundles).
- *
- * 3 cards de oferta tipo "Buy 1 / Buy 2+1 / Buy 4+2". Como tu producto en
- * Shopify tiene 1 variante, los bundles funcionan por CANTIDAD — el botón
- * carga el carrito con quantity=1, 3 o 6 según corresponda. Para que el
- * "2+1 gratis" sea real, configurá en Shopify:
- *   Discounts → Buy X get Y → cuando cantidad ≥ 3, 1 gratis (y ≥ 6, 2 gratis)
- *
- * Mientras tanto, en pantalla mostramos el precio TOTAL del bundle
- * usando `priceMultiplier` (pagás 2, recibís 3 → priceMultiplier = 2).
- */
 import Image from 'next/image';
-import { formatARS } from '@/lib/shopify';
+import { formatARS, type BundleData } from '@/lib/shopify';
 import {
   BRAND,
   BUNDLES,
-  FALLBACK_PRICING,
   PAYMENTS,
   RETURNS,
-  URGENCY,
 } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
-import { Countdown } from '@/components/commerce/Countdown';
 import { BuyButton } from '@/components/commerce/BuyButton';
 
 type Props = {
-  variantId: string;
   productId: string;
-  price: number; // ARS — precio unitario actual del producto en Shopify
-  compareAtPrice: number | null;
+  bundlesData: Record<string, BundleData>; // keyed by productId
 };
 
-export function Pricing({ variantId, productId, price, compareAtPrice }: Props) {
-  const unitPrice = price || FALLBACK_PRICING.price;
-  const compare = compareAtPrice ?? FALLBACK_PRICING.compareAtPrice;
+export function Pricing({ productId, bundlesData }: Props) {
 
   return (
     <section
@@ -100,8 +81,10 @@ export function Pricing({ variantId, productId, price, compareAtPrice }: Props) 
         {/* ── Grid de bundles ────────────────────────────────────────── */}
         <ul className="mt-8 grid gap-5 sm:mt-10 sm:gap-6 md:mt-12 md:grid-cols-3">
           {BUNDLES.map((b, idx) => {
-            const bundleTotal = unitPrice * b.priceMultiplier;
-            const bundleCompare = compare * b.quantity;
+            const shopifyData = bundlesData[b.productId];
+            const bundleTotal = shopifyData?.price ?? b.fallbackPrice;
+            const bundleCompare = shopifyData?.compareAtPrice ?? b.fallbackCompare;
+            const variantIdForCart = shopifyData?.variantId ?? '';
             const savings = bundleCompare - bundleTotal;
             const installment = Math.round(bundleTotal / PAYMENTS.installments);
 
@@ -203,11 +186,10 @@ export function Pricing({ variantId, productId, price, compareAtPrice }: Props) 
                 {/* CTA */}
                 <div className="mt-5 sm:mt-6">
                   <BuyButton
-                    variantId={variantId}
+                    variantId={variantIdForCart}
                     productId={productId}
-                    price={unitPrice}
-                    quantity={b.quantity}
-                    discountCode={b.discountCode}
+                    price={bundleTotal}
+                    quantity={1}
                     totalOverride={bundleTotal}
                     label={b.recommended ? 'Lo quiero — oferta' : 'Comprar'}
                     size="lg"

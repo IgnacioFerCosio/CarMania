@@ -29,32 +29,42 @@ import { StickyATC } from '@/components/commerce/StickyATC';
 import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { GuaranteeBadge } from '@/components/overlays/GuaranteeBadge';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
-import { getProduct } from '@/lib/shopify';
-import { BRAND, FALLBACK_PRICING } from '@/lib/config';
+import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
+import { BRAND, BUNDLES, FALLBACK_PRICING } from '@/lib/config';
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual.
 export const revalidate = 300;
 
 export default async function HomePage() {
-  let variantId = '';
   let productId = '';
+  // Mapa { [productId]: { variantId, price, compareAtPrice } }
+  let bundlesData: Record<string, BundleData> = {};
+
+  // Precio base para PixelViewContent (single bundle)
   let price: number = FALLBACK_PRICING.price;
-  let compareAt: number | null = FALLBACK_PRICING.compareAtPrice;
 
   try {
-    const product = await getProduct(BRAND.productHandle);
-    if (product && product.variants[0]) {
-      productId = product.id;
-      variantId = product.variants[0].id;
-      price = parseFloat(product.variants[0].price.amount);
-      compareAt = product.variants[0].compareAtPrice
-        ? parseFloat(product.variants[0].compareAtPrice.amount)
-        : FALLBACK_PRICING.compareAtPrice;
-    }
+    const [product, data] = await Promise.all([
+      getProduct(BRAND.productHandle),
+      getBundlesData(BUNDLES.map((b) => b.productId)),
+    ]);
+    if (product) productId = product.id;
+    bundlesData = data;
+
+    const singleBundle = BUNDLES.find((b) => b.id === 'single')!;
+    const singleData = data[singleBundle.productId];
+    if (singleData) price = singleData.price;
   } catch (err) {
-    console.error('[Shopify] No pude traer el producto:', err);
+    console.error('[Shopify] No pude traer datos de bundles:', err);
   }
+
+  // StickyATC usa el bundle recomendado (x2)
+  const recommendedBundle = BUNDLES.find((b) => b.recommended)!;
+  const stickyData = bundlesData[recommendedBundle.productId];
+  const stickyVariantId = stickyData?.variantId ?? '';
+  const stickyPrice = stickyData?.price ?? recommendedBundle.fallbackPrice;
+  const stickyCompare = stickyData?.compareAtPrice ?? recommendedBundle.fallbackCompare;
 
   return (
     <>
@@ -81,10 +91,8 @@ export default async function HomePage() {
 
         {/* 7. Pricing (bloque de conversión principal) */}
         <Pricing
-          variantId={variantId}
           productId={productId}
-          price={price}
-          compareAtPrice={compareAt}
+          bundlesData={bundlesData}
         />
 
         {/* 7.5 Superficies compatibles (strip lifestyle) */}
@@ -114,13 +122,13 @@ export default async function HomePage() {
 
       <Footer />
 
-      {/* Overlays: sticky ATC + WhatsApp + insignia de garantía */}
-      {variantId && (
+      {/* Overlays: sticky ATC — usa el bundle recomendado (x2) */}
+      {stickyVariantId && (
         <StickyATC
-          variantId={variantId}
+          variantId={stickyVariantId}
           productId={productId}
-          price={price}
-          compareAtPrice={compareAt}
+          price={stickyPrice}
+          compareAtPrice={stickyCompare}
         />
       )}
       <WhatsAppFloat />

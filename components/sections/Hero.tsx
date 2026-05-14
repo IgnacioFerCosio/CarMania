@@ -12,11 +12,9 @@
  * video/imagen. Por ahora muestra un placeholder con gradiente — reemplazalo
  * por <video autoplay muted loop /> o <Image /> cuando tengas el asset.
  */
-import { BRAND, HEADLINES, REVIEWS } from '@/lib/config';
+import { BRAND, HEADLINES } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
-import { Stars } from '@/components/ui/Stars';
-
-const HERO_TESTIMONIAL = REVIEWS[0]; // usamos la primera review de config como social proof inline
+import { HeroTestimonialCarousel } from '@/components/ui/HeroTestimonialCarousel';
 
 export function Hero() {
   return (
@@ -81,29 +79,8 @@ export function Hero() {
             {/* Métodos de pago */}
             <PaymentBadges />
 
-            {/* Testimonio inline */}
-            <div className="mt-8 flex max-w-md items-start gap-3 border-t border-ink-800 pt-6">
-              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
-                {/*
-                  SLOT: foto del cliente. Cargá una imagen en
-                  /public/avatars/<nombre>.jpg y reemplazá este div
-                  por <Image src="/avatars/martin.jpg" ... />
-                */}
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-700 to-ink-900 text-base font-black italic text-white">
-                  {HERO_TESTIMONIAL.name[0]}
-                </div>
-              </div>
-              <div className="flex-1 text-sm">
-                <Stars rating={HERO_TESTIMONIAL.stars} size={14} />
-                <p className="mt-1.5 italic leading-relaxed text-ink-200">
-                  &ldquo;{HERO_TESTIMONIAL.text}&rdquo;
-                </p>
-                <p className="mt-2 text-xs font-bold text-white">
-                  {HERO_TESTIMONIAL.name}{' '}
-                  <span className="font-normal text-ink-400">/ {HERO_TESTIMONIAL.location}</span>
-                </p>
-              </div>
-            </div>
+            {/* Testimonios rotativos */}
+            <HeroTestimonialCarousel />
           </div>
 
           {/* Columna derecha — media slot grande */}

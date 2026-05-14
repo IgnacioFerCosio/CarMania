@@ -145,6 +145,80 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
   };
 }
 
+const BUNDLES_QUERY = /* GraphQL */ `
+  query GetBundles($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Product {
+        id
+        variants(first: 1) {
+          edges {
+            node {
+              id
+              availableForSale
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+type BundlesQueryResponse = {
+  nodes: Array<{
+    id: string;
+    variants: {
+      edges: Array<{
+        node: {
+          id: string;
+          availableForSale: boolean;
+          price: { amount: string; currencyCode: string };
+          compareAtPrice: { amount: string; currencyCode: string } | null;
+        };
+      }>;
+    };
+  } | null>;
+};
+
+export type BundleData = {
+  variantId: string;
+  price: number;
+  compareAtPrice: number | null;
+};
+
+/**
+ * Recibe un array de GIDs de PRODUCTO y devuelve un mapa
+ * `{ [productId]: { variantId, price, compareAtPrice } }`.
+ *
+ * Toma la primera variante de cada producto (los bundles tienen 1 variante).
+ */
+export async function getBundlesData(
+  productIds: string[],
+): Promise<Record<string, BundleData>> {
+  const data = await shopifyFetch<BundlesQueryResponse>(BUNDLES_QUERY, {
+    ids: productIds,
+  });
+  const result: Record<string, BundleData> = {};
+  for (const node of data.nodes) {
+    if (node && node.variants.edges[0]) {
+      const v = node.variants.edges[0].node;
+      result[node.id] = {
+        variantId: v.id,
+        price: parseFloat(v.price.amount),
+        compareAtPrice: v.compareAtPrice ? parseFloat(v.compareAtPrice.amount) : null,
+      };
+    }
+  }
+  return result;
+}
+
 const CART_CREATE = /* GraphQL */ `
   mutation CartCreate($lines: [CartLineInput!]!, $discountCodes: [String!]) {
     cartCreate(input: { lines: $lines, discountCodes: $discountCodes }) {

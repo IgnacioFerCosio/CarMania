@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     siteName: 'CARMANIA',
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 export const viewport: Viewport = {
