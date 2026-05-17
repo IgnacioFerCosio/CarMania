@@ -107,12 +107,12 @@ function PaymentBadges() {
       {PAYMENT_LOGOS.map((p) => (
         <li
           key={p.name}
-          className="inline-flex h-9 items-center justify-center rounded-lg border border-ink-800 bg-ink-900/50 px-3 transition-colors hover:border-ink-700"
+          className="inline-flex h-12 items-center justify-center rounded-lg border border-ink-800 bg-ink-900/50 px-3.5 transition-colors hover:border-ink-700"
         >
           <img
             src={p.src}
             alt={p.name}
-            className={`${p.lg ? 'h-6' : 'h-4'} w-auto 
+            className={`${p.lg ? 'h-8' : 'h-6'} w-auto
     /* brightness(0) lo hace negro, invert(1) lo pasa a blanco puro */
     [filter:brightness(0)_invert(1)] 
     opacity-80 

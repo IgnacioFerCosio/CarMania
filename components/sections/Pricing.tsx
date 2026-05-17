@@ -224,12 +224,12 @@ export function Pricing({ productId, bundlesData }: Props) {
             ].map((m) => (
               <span
                 key={m.name}
-                className="flex h-9 items-center justify-center rounded-lg border border-ink-800 bg-ink-900"
+                className="flex h-11 items-center justify-center rounded-lg border border-ink-800 bg-ink-900"
               >
                 <img
                   src={m.src}
                   alt={m.name}
-                  className={`${m.lg ? 'h-7' : 'h-5'} w-auto [filter:brightness(0)_invert(54%)]`}
+                  className={`${m.lg ? 'h-8' : 'h-6'} w-auto [filter:brightness(0)_invert(54%)]`}
                 />
               </span>
             ))}
