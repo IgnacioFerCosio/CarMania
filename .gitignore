@@ -8,3 +8,7 @@ out
 *.log
 .vercel
 .turbo
+
+# Build artifacts / local settings (no van al repo)
+tsconfig.tsbuildinfo
+.claude/settings.local.json

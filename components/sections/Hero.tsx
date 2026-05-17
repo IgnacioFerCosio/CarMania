@@ -129,7 +129,7 @@ function HeroMedia() {
   return (
     <div
       id="hero-media"
-      className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-white/5 md:aspect-auto md:h-full"
+      className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-white/5 md:aspect-auto md:h-full"
     >
       {/* Video del producto */}
       <video
@@ -150,9 +150,9 @@ function HeroMedia() {
       {/* Badge en la esquina inferior derecha */}
       <div className="absolute bottom-4 right-4 max-w-[60%] text-right sm:bottom-5 sm:right-5">
         <span className="font-display text-2xl font-black italic uppercase leading-none text-white drop-shadow-lg sm:text-3xl md:text-5xl">
-          PROBADO
+          NO SE
           <br />
-          EN RUTA
+          CAE MÁS
         </span>
       </div>
     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { REVIEWS } from '@/lib/config';
 import { Stars } from '@/components/ui/Stars';
 
@@ -28,10 +29,14 @@ export function HeroTestimonialCarousel() {
               i === active ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
           >
-            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-700 to-ink-900 text-base font-black italic text-white">
-                {r.name[0]}
-              </div>
+            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
+              <Image
+                src={r.image}
+                alt={r.name}
+                fill
+                className="object-cover"
+                sizes="48px"
+              />
             </div>
             <div className="flex-1 text-sm">
               <Stars rating={r.stars} size={14} />
@@ -47,17 +52,21 @@ export function HeroTestimonialCarousel() {
         ))}
       </div>
 
-      {/* Dot navigation */}
-      <div className="mt-4 flex gap-1.5">
+      {/* Dot navigation — el <button> es el área táctil; el <span> es el dot visible */}
+      <div className="mt-2 flex items-center">
         {heroReviews.map((_, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            aria-label={`Reseña ${i + 1}`}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? 'w-4 bg-accent' : 'w-1.5 bg-ink-600 hover:bg-ink-400'
-            }`}
-          />
+            aria-label={`Ver reseña ${i + 1}`}
+            className="group flex items-center px-1.5 py-2"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all duration-300 ${
+                i === active ? 'w-4 bg-accent' : 'w-1.5 bg-ink-600 group-hover:bg-ink-400'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

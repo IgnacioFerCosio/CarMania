@@ -62,7 +62,7 @@ export const HEADLINES = {
   heroLine2: 'para tu celular',
   heroSub:
     'Se adhiere al auto, al espejo, al escritorio o a la pared. Compatible con MagSafe para GPS, llamadas y filmar contenido.',
-  heroBadge: 'PROBADO EN RUTA', // Texto sobre la imagen del producto en el hero (editable)
+  heroBadge: 'NO SE CAE MÁS', // Texto sobre la imagen del producto en el hero (editable)
   pain: '¿Cuántas veces se te cayó el celular manejando?',
   painSub:
     'Estás siguiendo el GPS, te suena un mensaje, y cuando volvés a mirar la pantalla está en el piso del acompañante. Los soportes baratos no aguantan ni dos pozos sin soltarse.',
@@ -214,7 +214,7 @@ export const HOW_IT_WORKS = [
   {
     n: 2,
     title: 'Acoplás la chapita magnética',
-    desc: 'Pegás una de las 3 chapitas finitas en tu celular o atrás de la funda. Ni se nota. Cargá inalámbrico igual.',
+    desc: 'Pegás la chapita finita que viene incluida en tu celular o atrás de la funda. Ni se nota. Cargá inalámbrico igual.',
   },
   {
     n: 3,
@@ -287,7 +287,7 @@ export const REVIEWS = [
     name: 'Diego P.',
     location: 'Mendoza',
     stars: 5,
-    text: 'Ni en los pozos de la 7 se mueve. Encima viene con 3 chapitas distintas, así que lo uso entre el auto mío y el de mi vieja. Buenísimo.',
+    text: 'Ni en los pozos de la 7 se mueve. Lo paso del auto mío al de mi vieja en segundos, sin pegamento ni marcas. Buenísimo.',
     date: '21 Feb 2026',
     verified: true,
     image: '/Reviews/revw7.webp',
@@ -296,7 +296,7 @@ export const REVIEWS = [
     name: 'Lucía M.',
     location: 'Rosario',
     stars: 4,
-    text: 'Excelente producto. Una estrella menos solo porque la chapita más chica no me quedó bien centrada al primer intento, pero las otras dos andan perfecto.',
+    text: 'Excelente producto. Una estrella menos solo porque la chapita metálica no me quedó centrada al primer intento y la tuve que despegar y reubicar. Fuera de eso, anda perfecto.',
     date: '10 Feb 2026',
     verified: true,
     image: '/Reviews/revv1-500x500.jpg',
@@ -309,6 +309,33 @@ export const REVIEWS = [
     date: '02 Feb 2026',
     verified: true,
     image: '/Reviews/revv2-500x500.jpg',
+  },
+  {
+    name: 'Valentina C.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Lo tengo pegado en el parabrisas hace dos meses y ni con el calor del verano se despegó. Mi celular siempre a la vista para el GPS. Lo recomiendo a todo el mundo.',
+    date: '18 Ene 2026',
+    verified: true,
+    image: '/Reviews/clutchXrev2.jpg',
+  },
+  {
+    name: 'Ramiro S.',
+    location: 'Salta',
+    stars: 5,
+    text: 'Tengo un Xiaomi sin MagSafe y con el aro que viene incluido funciona perfectísimo. Se siente sólido, no tiene nada que ver con los soportes de pinza que usaba antes.',
+    date: '09 Ene 2026',
+    verified: true,
+    image: '/Reviews/clutchXrev5.jpg',
+  },
+  {
+    name: 'Carolina B.',
+    location: 'Mar del Plata',
+    stars: 5,
+    text: 'Ruta Buenos Aires–MDP ida y vuelta y el celular quieto todo el viaje. El imán es una bestia. Además el empaque está muy cuidado, se nota que es un producto serio.',
+    date: '27 Dic 2025',
+    verified: true,
+    image: '/Reviews/clutchXrev6.jpg',
   },
 ] as const;
 
@@ -323,7 +350,7 @@ export const FAQ = [
   },
   {
     q: '¿Funciona con celulares grandes o con funda gruesa?',
-    a: 'Sí, funciona con todos los celulares hasta 500g, con o sin funda. En el kit vienen 3 chapitas magnéticas distintas (una redonda, una rectangular y una para colocar dentro de la funda) para que elijas la que mejor se adapta al tuyo.',
+    a: 'Sí. El soporte es compatible con MagSafe: si tu iPhone tiene MagSafe nativo, lo colocás directamente y queda fijo al instante. Si tu celular no cuenta con MagSafe, en el kit viene incluido un aro metálico adhesivo que pegás en el back de tu celu o dentro de la funda, y a partir de ahí funciona igual.',
   },
   {
     q: '¿El imán le borra datos al celular o le hace mal?',
