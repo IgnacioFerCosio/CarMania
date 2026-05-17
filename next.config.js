@@ -16,21 +16,6 @@ const nextConfig = {
     // soporte cae a WebP automáticamente.
     formats: ['image/avif', 'image/webp'],
   },
-
-  // En el deploy de PRODUCCIÓN, cualquier visita por la URL *.vercel.app
-  // se redirige (308) al dominio oficial. Los preview deploys NO se tocan:
-  // la regla solo se compila cuando VERCEL_ENV === 'production'.
-  async redirects() {
-    if (process.env.VERCEL_ENV !== 'production') return [];
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: '^.+\\.vercel\\.app$' }],
-        destination: 'https://oferta.carmaniaoficial.com/:path*',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
