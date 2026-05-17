@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     siteName: 'CARMANIA',
   },
   robots: { index: true, follow: true },
+  alternates: {
+    canonical: '/',
+  },
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
