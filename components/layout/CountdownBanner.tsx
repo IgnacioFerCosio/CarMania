@@ -15,11 +15,13 @@ function getOrCreateDeadline(): number {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const deadline = parseInt(stored, 10);
-      if (!isNaN(deadline) && deadline > Date.now()) {
+      const remaining = deadline - Date.now();
+      // Válido solo si no venció Y no supera la duración máxima actual
+      if (!isNaN(deadline) && remaining > 0 && remaining <= DURATION_MS) {
         return deadline;
       }
     }
-    // Primera visita o deadline vencido — crear uno nuevo
+    // Primera visita, deadline vencido o de un ciclo anterior más largo — crear uno nuevo
     const newDeadline = Date.now() + DURATION_MS;
     localStorage.setItem(STORAGE_KEY, String(newDeadline));
     return newDeadline;
