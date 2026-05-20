@@ -125,14 +125,14 @@ export default async function HomePage() {
       <Footer />
 
       {/* Overlays: sticky ATC — usa el bundle recomendado (x2) */}
-      {stickyVariantId && (
+      {/* {stickyVariantId && (
         <StickyATC
           variantId={stickyVariantId}
           productId={productId}
           price={stickyPrice}
           compareAtPrice={stickyCompare}
         />
-      )}
+      )} */}
       <WhatsAppFloat />
       {/* <GuaranteeBadge /> */}
 
