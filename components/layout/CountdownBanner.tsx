@@ -1,14 +1,14 @@
 'use client';
 /**
  * COUNTDOWN BANNER — franja roja fija en el tope de la página.
- * Cuenta regresiva de 3 días desde la primera visita.
- * Al vencer, resetea automáticamente por otros 3 días.
+ * Cuenta regresiva de 8 horas desde la primera visita.
+ * Al vencer, resetea automáticamente por otras 8 horas.
  * El deadline persiste en localStorage (clave: carmania_offer_deadline).
  */
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'carmania_offer_deadline';
-const DURATION_MS = 3 * 24 * 60 * 60 * 1000; // 3 días en ms
+const DURATION_MS = 8 * 60 * 60 * 1000; // 8 horas en ms
 
 function getOrCreateDeadline(): number {
   try {
@@ -29,14 +29,13 @@ function getOrCreateDeadline(): number {
   }
 }
 
-type TimeLeft = { dd: string; hh: string; mm: string; ss: string };
+type TimeLeft = { hh: string; mm: string; ss: string };
 
 function calcTimeLeft(ms: number): TimeLeft {
-  if (ms <= 0) return { dd: '00', hh: '00', mm: '00', ss: '00' };
+  if (ms <= 0) return { hh: '00', mm: '00', ss: '00' };
   const total = Math.floor(ms / 1000);
   return {
-    dd: String(Math.floor(total / 86400)).padStart(2, '0'),
-    hh: String(Math.floor((total % 86400) / 3600)).padStart(2, '0'),
+    hh: String(Math.floor(total / 3600)).padStart(2, '0'),
     mm: String(Math.floor((total % 3600) / 60)).padStart(2, '0'),
     ss: String(total % 60).padStart(2, '0'),
   };
@@ -51,7 +50,7 @@ export function CountdownBanner() {
     const tick = () => {
       const left = deadline - Date.now();
       if (left <= 0) {
-        // Resetear a otro ciclo de 3 días
+        // Resetear a otro ciclo de 8 horas
         deadline = Date.now() + DURATION_MS;
         try {
           localStorage.setItem(STORAGE_KEY, String(deadline));
@@ -87,8 +86,6 @@ export function CountdownBanner() {
         <span className="flex items-center gap-1 font-display text-xs font-extrabold tabular-nums text-white sm:text-sm">
           {time ? (
             <>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.dd}</span>
-              <span className="opacity-60">:</span>
               <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.hh}</span>
               <span className="opacity-60">:</span>
               <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.mm}</span>
@@ -97,7 +94,7 @@ export function CountdownBanner() {
             </>
           ) : (
             /* Placeholder durante hidratación para evitar layout shift */
-            <span className="opacity-0">00:00:00:00</span>
+            <span className="opacity-0">00:00:00</span>
           )}
         </span>
 
