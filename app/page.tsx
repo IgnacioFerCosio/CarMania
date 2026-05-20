@@ -9,6 +9,7 @@
  * lib/config.ts para que el landing nunca quede roto.
  */
 import { Navbar } from '@/components/layout/Navbar';
+import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { SubPromoBar } from '@/components/layout/SubPromoBar';
 import { Hero } from '@/components/sections/Hero';
@@ -69,6 +70,7 @@ export default async function HomePage() {
   return (
     <>
       {/* Header stack */}
+      <CountdownBanner />
       <PromoBar />
       <Navbar />
       {/* <SubPromoBar /> */}

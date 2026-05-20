@@ -68,7 +68,6 @@ export function Hero() {
             <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-ink-200 sm:text-sm">
               <span aria-hidden="true">🏆</span>
               <span>
-                Más de{' '}
                 <strong className="font-black italic text-accent">
                   {BRAND.socialProofCount}
                 </strong>{' '}
@@ -138,6 +137,7 @@ function HeroMedia() {
         muted
         loop
         playsInline
+        preload="metadata"
         className="absolute inset-0 h-full w-full object-cover"
       />
 

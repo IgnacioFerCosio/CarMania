@@ -19,7 +19,7 @@ const LINKS = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 border-b border-ink-800/80 bg-[#24262A] backdrop-blur supports-[backdrop-filter]:bg-[#24262A]">
+    <header className="sticky top-10 z-40 border-b border-ink-800/80 bg-[#24262A] backdrop-blur supports-[backdrop-filter]:bg-[#24262A]">
       <div className="mx-auto grid h-12 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 sm:gap-4 sm:px-4 md:h-16 md:px-6">
         {/* Links a la izquierda (desktop) */}
         <nav className="hidden items-center gap-5 text-xs font-bold uppercase tracking-wider text-ink-200 md:flex">

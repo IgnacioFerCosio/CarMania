@@ -14,7 +14,7 @@ export function BackToPricingCTA() {
           ¿Listo para tener tu <span className="text-accent">CARMANIA</span>?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
-          Más de {BRAND.socialProofCount} {BRAND.socialProofLabel} ya lo eligieron.
+          {BRAND.socialProofCount} {BRAND.socialProofLabel} ya lo eligieron.
           Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
           para devolverlo si no te convence.
         </p>

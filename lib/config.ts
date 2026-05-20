@@ -295,8 +295,8 @@ export const REVIEWS = [
   {
     name: 'Lucía M.',
     location: 'Rosario',
-    stars: 4,
-    text: 'Excelente producto. Una estrella menos solo porque la chapita metálica no me quedó centrada al primer intento y la tuve que despegar y reubicar. Fuera de eso, anda perfecto.',
+    stars: 5,
+    text: 'La chapita magnética quedó perfecta y el soporte no se movió ni un centímetro desde que lo instalé. Lo tengo en el parabrisas hace más de un mes y aguanta todo: pozos, frenadas, calor. Diez puntos.',
     date: '10 Feb 2026',
     verified: true,
     image: '/Reviews/revv1-500x500.jpg',

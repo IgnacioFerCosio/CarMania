@@ -111,8 +111,8 @@ export function Reviews() {
 
         {/* Counter de total */}
         <p className="mt-8 text-center text-[13px] leading-relaxed text-ink-400 sm:mt-10 sm:text-sm">
-          Sumate a las <span className="font-semibold text-white">{BRAND.socialProofCount}</span>{' '}
-          {BRAND.socialProofLabel} que ya manejan tranquilos con CARMANIA.
+          Sumate a los <span className="font-semibold text-white">{BRAND.socialProofCount}</span>{' '}
+          clientes que ya manejan tranquilos con CARMANIA.
         </p>
       </div>
     </section>

@@ -37,6 +37,7 @@ export function HowItWorks() {
                   muted
                   loop
                   playsInline
+                  preload="none"
                   className="h-full w-full object-cover"
                 />
               </div>
