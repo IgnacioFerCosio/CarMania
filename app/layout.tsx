@@ -6,7 +6,7 @@ import { TRACKING } from '@/lib/config';
 import { MetaPixel } from '@/components/analytics/MetaPixel';
 import './globals.css';
 
-const GTM_ID = 'GTM-WRNZKN6S';
+const GTM_ID = 'GTM-TMK9STLD';
 
 // Cargamos Inter en su versión variable para tener todos los pesos (incluido 900)
 // y ambos estilos (normal + italic). Eso nos habilita los headlines en
