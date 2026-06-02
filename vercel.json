@@ -20,7 +20,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.shopify.com https://www.facebook.com; font-src 'self'; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com; frame-src https://www.facebook.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net https://www.googletagmanager.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://cdn.shopify.com https://www.facebook.com https://www.googletagmanager.com; font-src 'self'; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com https://www.googletagmanager.com https://www.google-analytics.com https://vitals.vercel-insights.com; frame-src https://www.facebook.com https://www.googletagmanager.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
         }
       ]
     }
