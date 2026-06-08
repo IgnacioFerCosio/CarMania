@@ -81,6 +81,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* Klaviyo */}
+        <Script
+          src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RLXPcd"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
