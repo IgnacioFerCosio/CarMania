@@ -82,7 +82,7 @@ export const track = {
   },
 
   klaviyoStartedCheckout(p: ProductEventParams) {
-    klaviyoPush('Started Checkout', {
+    klaviyoPush('Checkout Started', {
       ProductName: p.content_name,
       ProductID: p.content_ids?.[0],
       Quantity: p.num_items,
