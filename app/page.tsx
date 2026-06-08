@@ -30,6 +30,7 @@ import { StickyATC } from '@/components/commerce/StickyATC';
 import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { GuaranteeBadge } from '@/components/overlays/GuaranteeBadge';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
+import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { BRAND, BUNDLES, FALLBACK_PRICING } from '@/lib/config';
 
@@ -139,6 +140,9 @@ export default async function HomePage() {
       {/* Tracking — fire-and-forget */}
       {productId && (
         <PixelViewContent productId={productId} name={BRAND.tagline} price={price} />
+      )}
+      {productId && (
+        <KlaviyoViewedProduct productId={productId} name={BRAND.tagline} price={price} />
       )}
     </>
   );

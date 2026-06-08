@@ -62,21 +62,20 @@ export function BuyButton({
 
     const trackedValue = totalOverride ?? price * quantity;
 
-    track.addToCart({
+    const eventParams = {
       content_ids: [productId],
       content_name: BRAND.tagline,
       value: trackedValue,
       num_items: quantity,
-    });
+    };
+
+    track.addToCart(eventParams);
+    track.klaviyoAddedToCart(eventParams);
 
     try {
       const url = await createCheckout(variantId, quantity, discountCode);
-      track.initiateCheckout({
-        content_ids: [productId],
-        content_name: BRAND.tagline,
-        value: trackedValue,
-        num_items: quantity,
-      });
+      track.initiateCheckout(eventParams);
+      track.klaviyoStartedCheckout(eventParams);
       window.location.href = url;
     } catch (err) {
       console.error(err);
