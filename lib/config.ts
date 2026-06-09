@@ -47,7 +47,7 @@ export const RETURNS = {
 } as const;
 
 export const WHATSAPP = {
-  number: '5492612453172', // formato internacional sin + ni espacios
+  number: '5492612460642', // formato internacional sin + ni espacios
   display: '+54 9 261 245-3172',
   prefilled: 'Hola CARMANIA! Estuve navegando por su tienda y quería consultar sobre...',
 } as const;
