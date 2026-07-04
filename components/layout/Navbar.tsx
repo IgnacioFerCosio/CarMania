@@ -4,7 +4,7 @@
  *
  * En mobile: solo logo + CTA. Los links se ocultan.
  */
-// import Image from 'next/image'; // ← descomentar cuando uses el logo
+import Image from 'next/image';
 import Link from 'next/link';
 import { BRAND } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
@@ -45,11 +45,6 @@ export function Navbar() {
           className="flex items-center justify-center"
           aria-label={`${BRAND.name} inicio`}
         >
-          {/*
-            ── LOGO ──────────────────────────────────────────────────────────
-            Cuando quieras activar la imagen, descomentar el bloque de abajo
-            y comentar el wordmark de texto.
-
             <Image
               src="/logo.png"
               alt={BRAND.name}
@@ -58,10 +53,10 @@ export function Navbar() {
               priority
               className="h-8 w-auto md:h-10"
             />
-            ──────────────────────────────────────────────────────────────── */}
-          <span className="font-display text-lg font-black italic tracking-tight text-white sm:text-xl md:text-2xl">
+            
+          {/* <span className="font-display text-lg font-black italic tracking-tight text-white sm:text-xl md:text-2xl">
             CAR<span className="text-accent">MANIA</span>
-          </span>
+          </span> */}
         </Link>
 
         {/* CTA + icon a la derecha */}
