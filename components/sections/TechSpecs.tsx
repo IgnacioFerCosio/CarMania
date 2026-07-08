@@ -69,7 +69,7 @@ function TechImage() {
   return (
     <div className="relative mx-auto w-full max-w-2xl">
       <Image
-        src="/medidas/medidas.png"
+        src="/medidas/medidas.webp"
         alt="Dimensiones del Soporte Magnético PRO™"
         width={800}
         height={600}

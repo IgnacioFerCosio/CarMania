@@ -102,8 +102,8 @@ function ProductPhoto() {
   return (
     <div className="relative mx-auto w-full max-w-lg">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/what-includes/QueIncluye.png"
+        <img
+          src="/what-includes/QueIncluye.webp"
         alt="Soporte Magnético PRO™ — contenido de la caja"
         className="h-auto w-full rounded-3xl"
       />

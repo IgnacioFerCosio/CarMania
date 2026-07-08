@@ -248,7 +248,7 @@ function BundleImage({ index, accent }: { index: number; accent: boolean }) {
       }`}
     >
       <Image
-        src={`/bundles/BundleX${index}.png`}
+        src={`/bundles/BundleX${index}.webp`}
         alt={`Bundle opción ${index}`}
         fill
         className="object-cover"
