@@ -81,6 +81,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* Cloudflare Web Analytics */}
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          strategy="afterInteractive"
+          data-cf-beacon='{"token": "7324ac88c1c24a8ab7fe57cca550f06c"}'
+        />
+
         {/* Klaviyo */}
         <Script
           src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RLXPcd"
