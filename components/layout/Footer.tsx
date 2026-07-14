@@ -67,6 +67,16 @@ export function Footer() {
             </li>
             <li>
               <a
+                href="https://carmaniaoficial.com/policies/shipping-policy"
+                className="hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Política de envíos
+              </a>
+            </li>
+            <li>
+              <a
                 href={`https://wa.me/${WHATSAPP.number}`}
                 className="hover:text-white"
                 target="_blank"
