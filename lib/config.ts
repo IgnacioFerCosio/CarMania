@@ -142,19 +142,22 @@ export const SURFACES = [
  * Si querés mostrar logos reales, ponelos en /public/brands/<slug>.svg
  * y cambiá el `logo` con la ruta.
  */
+// `w`/`h` son la relación de aspecto real del SVG (su viewBox). El alto
+// pintado lo fija el CSS (h-7/h-9/h-10); los atributos sólo sirven para que
+// el navegador reserve el ancho correcto y el marquee no salte al cargar.
 export const CAR_BRANDS = [
-  { name: 'Toyota',        logo: '/brands/toyota.svg',     softWhite: false },
-  { name: 'Ford',          logo: '/brands/ford.svg',       softWhite: true  },
-  { name: 'Chevrolet',     logo: '/brands/chevrolet.svg',  softWhite: false },
-  { name: 'Volkswagen',    logo: '/brands/volkswagen.svg', softWhite: false },
-  { name: 'Renault',       logo: '/brands/renault.svg',    softWhite: false },
-  { name: 'Peugeot',       logo: '/brands/peugeot.svg',    softWhite: true  },
-  { name: 'Fiat',          logo: '/brands/fiat.svg',       softWhite: false },
-  { name: 'Honda',         logo: '/brands/honda.svg',      softWhite: false },
-  { name: 'Nissan',        logo: '/brands/nissan.svg',     softWhite: false },
-  { name: 'Mercedes-Benz', logo: '/brands/mercedes.svg',   softWhite: false },
-  { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true  },
-  { name: 'Audi',          logo: '/brands/audi.svg',       softWhite: false },
+  { name: 'Toyota',        logo: '/brands/toyota.svg',     softWhite: false, w: 251,  h: 42   },
+  { name: 'Ford',          logo: '/brands/ford.svg',       softWhite: true,  w: 1000, h: 345  },
+  { name: 'Chevrolet',     logo: '/brands/chevrolet.svg',  softWhite: false, w: 700,  h: 327  },
+  { name: 'Volkswagen',    logo: '/brands/volkswagen.svg', softWhite: false, w: 1024, h: 1024 },
+  { name: 'Renault',       logo: '/brands/renault.svg',    softWhite: false, w: 500,  h: 438  },
+  { name: 'Peugeot',       logo: '/brands/peugeot.svg',    softWhite: true,  w: 1587, h: 1123 },
+  { name: 'Fiat',          logo: '/brands/fiat.svg',       softWhite: false, w: 110,  h: 68   },
+  { name: 'Honda',         logo: '/brands/honda.svg',      softWhite: false, w: 2000, h: 1605 },
+  { name: 'Nissan',        logo: '/brands/nissan.svg',     softWhite: false, w: 265,  h: 221  },
+  { name: 'Mercedes-Benz', logo: '/brands/mercedes.svg',   softWhite: false, w: 1000, h: 1001 },
+  { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true,  w: 200,  h: 200  },
+  { name: 'Audi',          logo: '/brands/audi.svg',       softWhite: false, w: 403,  h: 210  },
 ];
 
 /**

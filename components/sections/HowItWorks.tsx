@@ -5,7 +5,9 @@
  */
 import { HEADLINES, STEPS_V2 } from '@/lib/config';
 
-// Rutas de los videos de /public/how-to-use/
+// Rutas de los videos de /public/how-to-use/ — se sirven desde el mismo
+// origen. Ojo: la CSP de `_headers` tiene `media-src 'self'`, así que apuntar
+// esto a un CDN externo hace que los videos no carguen en producción.
 const STEP_VIDEOS = [
   '/how-to-use/InstalaLaBase.mp4',
   '/how-to-use/ajustaAngulo.mp4',

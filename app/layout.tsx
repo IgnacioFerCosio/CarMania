@@ -53,6 +53,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-AR" className={inter.variable}>
       <head>
+        {/* El poster del video del hero es el elemento LCP. Lo precargamos con
+            prioridad alta para que pinte apenas llega el HTML, sin esperar a
+            que el parser descubra el <video>. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/hero/VideoPrincipal-poster.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+
         {/* Google Tag Manager — script principal */}
         <Script
           id="gtm"

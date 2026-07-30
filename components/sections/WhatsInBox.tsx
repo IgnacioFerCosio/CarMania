@@ -101,10 +101,17 @@ export function WhatsInBox() {
 function ProductPhoto() {
   return (
     <div className="relative mx-auto w-full max-w-lg">
+      {/* width/height = tamaño real del webp (1073x1080). Sin esto la imagen
+          ocupa 0 px de alto hasta que carga y empuja hacia abajo todo lo que
+          viene después (HowItWorks, #pricing) — era la fuente principal de CLS. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/what-includes/QueIncluye.webp"
+      <img
+        src="/what-includes/QueIncluye.webp"
         alt="Soporte Magnético PRO™ — contenido de la caja"
+        width={1073}
+        height={1080}
+        loading="lazy"
+        decoding="async"
         className="h-auto w-full rounded-3xl"
       />
     </div>

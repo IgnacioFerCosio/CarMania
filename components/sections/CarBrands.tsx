@@ -32,7 +32,13 @@ export function CarBrands() {
       <div className="mt-7 overflow-hidden sm:mt-10 md:mt-12">
         <div className="marquee-track flex items-center gap-7 sm:gap-12 md:gap-16">
           {items.map((b, i) => (
-            <BrandItem key={`${b.name}-${i}`} name={b.name} logo={b.logo} />
+            <BrandItem
+              key={`${b.name}-${i}`}
+              name={b.name}
+              logo={b.logo}
+              w={b.w}
+              h={b.h}
+            />
           ))}
         </div>
       </div>
@@ -45,12 +51,26 @@ export function CarBrands() {
  * lo renderiza con el mismo filtro monocromático que los métodos de pago.
  * Si no, fallback al nombre en texto — útil mientras se cargan los assets.
  */
-function BrandItem({ name, logo }: { name: string; logo: string | null }) {
+function BrandItem({
+  name,
+  logo,
+  w,
+  h,
+}: {
+  name: string;
+  logo: string | null;
+  w: number;
+  h: number;
+}) {
   if (logo) {
     return (
       <img
         src={logo}
         alt={name}
+        width={w}
+        height={h}
+        loading="lazy"
+        decoding="async"
         className="h-7 w-auto shrink-0 opacity-60 [filter:brightness(0)_invert(1)] transition hover:opacity-100 sm:h-9 md:h-10"
       />
     );

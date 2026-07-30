@@ -8,9 +8,9 @@
  *
  * En mobile: stack vertical, imagen primero, después texto.
  *
- * SLOT DE IMAGEN: hay un div con id="hero-media" que es el lugar para tu
- * video/imagen. Por ahora muestra un placeholder con gradiente — reemplazalo
- * por <video autoplay muted loop /> o <Image /> cuando tengas el asset.
+ * SLOT DE IMAGEN: el div con id="hero-media" contiene el video del producto
+ * (/public/hero/VideoPrincipal.mp4) con su poster webp. Es el elemento LCP
+ * de la página — cualquier cambio acá se nota en Core Web Vitals.
  */
 import { BRAND, HEADLINES } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
@@ -92,12 +92,15 @@ export function Hero() {
   );
 }
 
+// width/height = relación de aspecto real de cada SVG (viewBox). El tamaño
+// pintado lo define el CSS (h-6/h-8 + w-auto), pero los atributos le dan al
+// navegador el aspect-ratio para reservar el ancho antes de que cargue.
 const PAYMENT_LOGOS = [
-  { name: 'Visa', src: '/payments/visa.svg', lg: false },
-  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false },
-  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true },
-  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false },
-  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false },
+  { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
+  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
+  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
+  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
+  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
 ];
 
 function PaymentBadges() {
@@ -111,6 +114,9 @@ function PaymentBadges() {
           <img
             src={p.src}
             alt={p.name}
+            width={p.w}
+            height={p.h}
+            decoding="async"
             className={`${p.lg ? 'h-8' : 'h-6'} w-auto
     /* brightness(0) lo hace negro, invert(1) lo pasa a blanco puro */
     [filter:brightness(0)_invert(1)] 
@@ -130,14 +136,20 @@ function HeroMedia() {
       id="hero-media"
       className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-white/5 md:aspect-auto md:h-full"
     >
-      {/* Video del producto */}
+      {/* Video del producto — servido desde /public (mismo origen) para no
+          pagar DNS + TLS de un CDN externo en el camino crítico del LCP.
+          El `poster` (webp de 17 KB, primer frame) es lo que realmente pinta
+          el LCP: aparece al instante mientras el mp4 todavía baja. */}
       <video
         src="/hero/VideoPrincipal.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
+        poster="/hero/VideoPrincipal-poster.webp"
+        autoPlay={true}
+        muted={true}
+        loop={true}
+        playsInline={true}
         preload="metadata"
+        width={720}
+        height={1280}
         className="absolute inset-0 h-full w-full object-cover"
       />
 

@@ -92,27 +92,25 @@ export function Pricing({ productId, bundlesData }: Props) {
             // En desktop volvemos al orden source (single → double → triple).
             const mobileOrder =
               b.id === 'double' ? 'order-1' :
-              b.id === 'triple' ? 'order-2' :
-                                  'order-3';
+                b.id === 'triple' ? 'order-2' :
+                  'order-3';
 
             return (
               <li
                 key={b.id}
-                className={`${mobileOrder} relative flex flex-col rounded-2xl border bg-ink-900 p-5 sm:rounded-3xl sm:p-6 md:order-none md:p-7 ${
-                  b.recommended
+                className={`${mobileOrder} relative flex flex-col rounded-2xl border bg-ink-900 p-5 sm:rounded-3xl sm:p-6 md:order-none md:p-7 ${b.recommended
                     ? 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
                     : 'border-ink-800'
-                }`}
+                  }`}
               >
                 {/* Badge superior */}
                 {b.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${
-                        b.recommended
+                      className={`inline-flex items-center gap-1 rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
                           ? 'bg-accent text-white'
                           : 'bg-white text-ink-950'
-                      }`}
+                        }`}
                     >
                       <Icon
                         name={b.recommended ? 'fire' : 'star'}
@@ -175,12 +173,12 @@ export function Pricing({ productId, bundlesData }: Props) {
                     <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                     <span>{b.bonus}</span>
                   </li>
-                  
-                    <li className="flex items-start gap-2 text-ink-200">
-                      <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                      <span>Envío gratis incluido</span>
-                    </li>
-                  
+
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>Envío gratis incluido</span>
+                  </li>
+
                 </ul>
 
                 {/* CTA */}
@@ -216,11 +214,11 @@ export function Pricing({ productId, bundlesData }: Props) {
           </span>
           <div className="grid w-full grid-cols-5 gap-2">
             {[
-              { name: 'Visa',             src: '/payments/visa.svg',                     lg: false },
-              { name: 'Mastercard',       src: '/payments/Mastercard-logo.svg',          lg: false },
-              { name: 'Mercado Pago',     src: '/payments/Mercado_Pago.svg',             lg: true  },
-              { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false },
-              { name: 'Naranja X',        src: '/payments/NaranjaX-logo.svg',            lg: false },
+              { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
+              { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
+              { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
+              { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
+              { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
             ].map((m) => (
               <span
                 key={m.name}
@@ -229,6 +227,10 @@ export function Pricing({ productId, bundlesData }: Props) {
                 <img
                   src={m.src}
                   alt={m.name}
+                  width={m.w}
+                  height={m.h}
+                  loading="lazy"
+                  decoding="async"
                   className={`${m.lg ? 'h-8' : 'h-6'} w-auto [filter:brightness(0)_invert(54%)]`}
                 />
               </span>
@@ -243,9 +245,8 @@ export function Pricing({ productId, bundlesData }: Props) {
 function BundleImage({ index, accent }: { index: number; accent: boolean }) {
   return (
     <div
-      className={`relative my-5 aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ${
-        accent ? 'ring-1 ring-inset ring-accent/30' : 'ring-1 ring-inset ring-ink-800'
-      }`}
+      className={`relative my-5 aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ${accent ? 'ring-1 ring-inset ring-accent/30' : 'ring-1 ring-inset ring-ink-800'
+        }`}
     >
       <Image
         src={`/bundles/BundleX${index}.webp`}
