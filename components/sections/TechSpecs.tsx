@@ -63,7 +63,7 @@ export function TechSpecs() {
 
 /**
  * Imagen técnica real del producto con las medidas.
- * Archivo: /public/medidas/medidas.png
+ * Archivo: /public/medidas/medidas.webp
  */
 function TechImage() {
   return (
