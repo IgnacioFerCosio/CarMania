@@ -44,7 +44,14 @@ export type ShopifyProduct = {
   };
 };
 
-async function shopifyFetch<T>(
+/**
+ * Fetch genérico contra la Storefront API. Exportado porque `lib/cart.ts`
+ * lo reusa para las mutaciones de carrito (que corren client-side).
+ *
+ * `revalidate: 0` ⇒ sin caché. Next no permite combinar `cache: 'no-store'`
+ * con `next.revalidate`, así que se elige uno u otro, no los dos.
+ */
+export async function shopifyFetch<T>(
   query: string,
   variables: Record<string, unknown> = {},
   opts: { revalidate?: number } = {},
@@ -55,6 +62,12 @@ async function shopifyFetch<T>(
     );
   }
 
+  const revalidate = opts.revalidate ?? 300;
+  const cacheOpts =
+    revalidate === 0
+      ? { cache: 'no-store' as const }
+      : { next: { revalidate } };
+
   const res = await fetch(ENDPOINT, {
     method: 'POST',
     headers: {
@@ -62,7 +75,7 @@ async function shopifyFetch<T>(
       'X-Shopify-Storefront-Access-Token': TOKEN,
     },
     body: JSON.stringify({ query, variables }),
-    next: { revalidate: opts.revalidate ?? 300 }, // ISR cada 5 min por defecto
+    ...cacheOpts,
   });
 
   if (!res.ok) {
@@ -215,6 +228,65 @@ export async function getBundlesData(
         compareAtPrice: v.compareAtPrice ? parseFloat(v.compareAtPrice.amount) : null,
       };
     }
+  }
+  return result;
+}
+
+const VARIANTS_QUERY = /* GraphQL */ `
+  query GetVariants($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on ProductVariant {
+        id
+        availableForSale
+        price {
+          amount
+        }
+        compareAtPrice {
+          amount
+        }
+      }
+    }
+  }
+`;
+
+export type VariantPrice = {
+  variantId: string;
+  price: number;
+  compareAtPrice: number | null;
+  availableForSale: boolean;
+};
+
+/**
+ * Precios VIVOS de una lista de variantes, por GID.
+ *
+ * Existe porque la página se prerenderiza en el build y en Cloudflare no
+ * corre ISR (ver CLAUDE.md → Gotchas): los precios que llegan por props
+ * pueden estar viejos. El carrito los vuelve a pedir en el cliente para que
+ * el copy del upsell nunca anuncie un número distinto al que cobra Shopify.
+ */
+export async function getVariantsByIds(
+  variantIds: string[],
+): Promise<Record<string, VariantPrice>> {
+  const data = await shopifyFetch<{
+    nodes: Array<{
+      id: string;
+      availableForSale: boolean;
+      price: { amount: string };
+      compareAtPrice: { amount: string } | null;
+    } | null>;
+  }>(VARIANTS_QUERY, { ids: variantIds }, { revalidate: 0 });
+
+  const result: Record<string, VariantPrice> = {};
+  for (const node of data.nodes) {
+    if (!node) continue;
+    result[node.id] = {
+      variantId: node.id,
+      price: parseFloat(node.price.amount),
+      compareAtPrice: node.compareAtPrice
+        ? parseFloat(node.compareAtPrice.amount)
+        : null,
+      availableForSale: node.availableForSale,
+    };
   }
   return result;
 }

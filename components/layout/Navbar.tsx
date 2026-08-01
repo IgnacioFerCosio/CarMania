@@ -1,13 +1,16 @@
 /**
- * Navbar — versión rediseñada con logo centrado, nav links a la izquierda
- * y CTA + ícono a la derecha. Sticky.
+ * Navbar — logo centrado, nav links a la izquierda, CTA + carrito a la derecha.
  *
- * En mobile: solo logo + CTA. Los links se ocultan.
+ * En mobile: solo logo centrado + carrito. Los links y el CTA se ocultan.
+ *
+ * Scrollea con la página (no queda fijo). Cuando se va de pantalla, el acceso
+ * al carrito lo toma `FloatingCartButton`, que se guía por el id de acá.
  */
 import Image from 'next/image';
 import Link from 'next/link';
 import { BRAND } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
+import { CartButton } from '@/components/commerce/CartButton';
 
 const LINKS = [
   { href: '#how', label: 'Cómo funciona' },
@@ -19,10 +22,16 @@ const LINKS = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-10 z-40 border-b border-ink-800/80 bg-[#24262A] backdrop-blur supports-[backdrop-filter]:bg-[#24262A]">
+    <header
+      id="site-navbar"
+      className="border-b border-ink-800/80 bg-[#24262A] backdrop-blur supports-[backdrop-filter]:bg-[#24262A]"
+    >
       <div className="mx-auto grid h-12 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 sm:gap-4 sm:px-4 md:h-16 md:px-6">
-        {/* Links a la izquierda (desktop) */}
-        <nav className="hidden items-center gap-5 text-xs font-bold uppercase tracking-wider text-ink-200 md:flex">
+        {/* Links a la izquierda (desktop).
+            Las 3 columnas van con col-start explícito: en mobile este <nav>
+            es display:none y sale de la grilla, así que sin esto el logo se
+            correría a la columna 1 y quedaría descentrado. */}
+        <nav className="col-start-1 hidden items-center gap-5 text-xs font-bold uppercase tracking-wider text-ink-200 md:flex">
           {LINKS.map((l) => (
             <Link
               key={l.href}
@@ -42,25 +51,24 @@ export function Navbar() {
         {/* Logo centrado */}
         <Link
           href="#top"
-          className="flex items-center justify-center"
+          className="col-start-2 flex items-center justify-center"
           aria-label={`${BRAND.name} inicio`}
         >
-            <Image
-              src="/logo.png"
-              alt={BRAND.name}
-              width={170}
-              height={42}
-              priority
-              className="h-8 w-auto md:h-10"
-            />
-            
-          {/* <span className="font-display text-lg font-black italic tracking-tight text-white sm:text-xl md:text-2xl">
-            CAR<span className="text-accent">MANIA</span>
-          </span> */}
+          {/* logo.webp = 459x120, 25 KB. El .png original pesa 201 KB y, como
+              en Cloudflare `/_next/image` no optimiza, se servía entero —
+              precargado por `priority`, compitiendo con el LCP. */}
+          <Image
+            src="/logo.webp"
+            alt={BRAND.name}
+            width={459}
+            height={120}
+            priority
+            className="h-8 w-auto md:h-10"
+          />
         </Link>
 
-        {/* CTA + icon a la derecha */}
-        <div className="flex items-center justify-end gap-3">
+        {/* CTA (solo desktop) + carrito */}
+        <div className="col-start-3 flex items-center justify-end gap-2 sm:gap-3">
           <a
             href="#pricing"
             className="hidden h-10 items-center justify-center gap-1.5 rounded-full bg-accent px-5 text-xs font-black uppercase italic tracking-wider text-white shadow-[0_4px_14px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 md:inline-flex"
@@ -68,12 +76,7 @@ export function Navbar() {
             Aprovechá
             <Icon name="arrow-right" className="h-3.5 w-3.5" />
           </a>
-          <a
-            href="#pricing"
-            className="inline-flex h-9 shrink-0 items-center rounded-full bg-accent px-3.5 text-[11px] font-black uppercase italic tracking-wider text-white shadow-[0_4px_12px_rgba(215,7,7,0.35)] sm:px-4 md:hidden"
-          >
-            Comprar
-          </a>
+          <CartButton />
         </div>
       </div>
     </header>

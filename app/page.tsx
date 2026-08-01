@@ -27,6 +27,9 @@ import { TrustBlock } from '@/components/sections/TrustBlock';
 // import { FinalCTA } from '@/components/sections/FinalCTA'; // ← deshabilitado
 import { Footer } from '@/components/layout/Footer';
 import { StickyATC } from '@/components/commerce/StickyATC';
+import { CartProvider } from '@/components/commerce/CartProvider';
+import { CartDrawer } from '@/components/commerce/CartDrawer';
+import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { GuaranteeBadge } from '@/components/overlays/GuaranteeBadge';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
@@ -69,8 +72,9 @@ export default async function HomePage() {
   const stickyCompare = stickyData?.compareAtPrice ?? recommendedBundle.fallbackCompare;
 
   return (
-    <>
-      {/* Header stack */}
+    <CartProvider bundlesData={bundlesData}>
+      {/* Header stack. Sólo el banner de oferta queda fijo arriba; la promo
+          bar y el navbar scrollean con la página. */}
       <CountdownBanner />
       <PromoBar />
       <Navbar />
@@ -137,6 +141,12 @@ export default async function HomePage() {
       <WhatsAppFloat />
       {/* <GuaranteeBadge /> */}
 
+      {/* Carrito flotante — aparece cuando el navbar se esconde */}
+      <FloatingCartButton />
+
+      {/* Drawer del carrito — se abre solo al agregar un producto */}
+      <CartDrawer />
+
       {/* Tracking — fire-and-forget */}
       {productId && (
         <PixelViewContent productId={productId} name={BRAND.tagline} price={price} />
@@ -144,6 +154,6 @@ export default async function HomePage() {
       {productId && (
         <KlaviyoViewedProduct productId={productId} name={BRAND.tagline} price={price} />
       )}
-    </>
+    </CartProvider>
   );
 }

@@ -70,7 +70,9 @@ export function CountdownBanner() {
 
   return (
     <>
-      {/* Banner fijo — 40 px de alto (h-10) */}
+      {/* Banner fijo — 40 px de alto (h-10). Es el único elemento del header
+          que queda pegado arriba; el navbar scrollea con la página y, cuando
+          se va, el acceso al carrito lo cubre `FloatingCartButton`. */}
       <div
         aria-label="Oferta por tiempo limitado"
         className="fixed inset-x-0 top-0 z-50 flex h-10 items-center justify-center gap-2 bg-accent px-4 sm:gap-3"

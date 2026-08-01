@@ -27,6 +27,8 @@ type IconName =
   | 'lock'
   | 'fire'
   | 'arrow-right'
+  | 'plus'
+  | 'trash'
   | 'alert';
 
 type Props = { name: IconName } & SVGProps<SVGSVGElement>;
@@ -194,6 +196,21 @@ const PATHS: Record<IconName, JSX.Element> = {
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+  ),
+  plus: (
+    <path
+      d="M12 5v14M5 12h14"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      fill="none"
+      strokeLinecap="round"
+    />
+  ),
+  trash: (
+    <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 7h16M10 11v6M14 11v6" />
+      <path d="M6 7l1 13h10l1-13M9 7V4h6v3" />
+    </g>
   ),
   alert: (
     <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round">

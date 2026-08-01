@@ -87,9 +87,7 @@ export function StickyATC({ variantId, productId, price, compareAtPrice }: Props
         <div className="flex-1 md:flex-none md:min-w-[260px]">
           <BuyButton
             variantId={variantId}
-            productId={productId}
             price={price}
-            quantity={1}
             label="Comprar"
             size="md"
             className="w-full"
