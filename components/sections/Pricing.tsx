@@ -84,7 +84,9 @@ export function Pricing({ productId, bundlesData }: Props) {
             const shopifyData = bundlesData[b.productId];
             const bundleTotal = shopifyData?.price ?? b.fallbackPrice;
             const bundleCompare = shopifyData?.compareAtPrice ?? b.fallbackCompare;
-            const variantIdForCart = shopifyData?.variantId ?? '';
+            // Si el fetch del build falló, el GID hardcodeado mantiene el
+            // carrito usable en vez de dejar el botón muerto.
+            const variantIdForCart = shopifyData?.variantId ?? b.fallbackVariantId;
             const savings = bundleCompare - bundleTotal;
             const installment = Math.round(bundleTotal / PAYMENTS.installments);
 
@@ -185,9 +187,7 @@ export function Pricing({ productId, bundlesData }: Props) {
                 <div className="mt-5 sm:mt-6">
                   <BuyButton
                     variantId={variantIdForCart}
-                    productId={productId}
                     price={bundleTotal}
-                    quantity={1}
                     totalOverride={bundleTotal}
                     label={b.recommended ? 'Lo quiero — oferta' : 'Comprar'}
                     size="lg"

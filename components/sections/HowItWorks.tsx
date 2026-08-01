@@ -4,6 +4,7 @@
  * Sin texto flotando encima del video.
  */
 import { HEADLINES, STEPS_V2 } from '@/lib/config';
+import { LazyVideo } from '@/components/ui/LazyVideo';
 
 // Rutas de los videos de /public/how-to-use/ — se sirven desde el mismo
 // origen. Ojo: la CSP de `_headers` tiene `media-src 'self'`, así que apuntar
@@ -31,15 +32,11 @@ export function HowItWorks() {
               key={s.n}
               className="overflow-hidden rounded-2xl border border-ink-800 bg-ink-950"
             >
-              {/* Video sin ningún texto encima */}
+              {/* Video sin ningún texto encima. El aspect-ratio del contenedor
+                  reserva el espacio aunque el video todavía no se haya montado. */}
               <div className="relative aspect-video w-full overflow-hidden bg-ink-900 sm:aspect-[6/5]">
-                <video
+                <LazyVideo
                   src={STEP_VIDEOS[i]}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
                   className="h-full w-full object-cover"
                 />
               </div>

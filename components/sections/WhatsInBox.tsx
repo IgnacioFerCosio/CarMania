@@ -7,10 +7,10 @@
  * por <Image src="/box/producto.jpg" alt="..." fill className="object-contain" />
  * cuando tengas la foto del producto sobre fondo negro.
  */
-import Image from 'next/image';
-import { HEADLINES, WHATS_IN_BOX, REVIEWS } from '@/lib/config';
+import { HEADLINES, WHATS_IN_BOX, WHATS_IN_BOX_GALLERY, REVIEWS } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
+import { ProductCarousel } from '@/components/ui/ProductCarousel';
 
 const TESTIMONIAL = REVIEWS[2]; // segunda muestra de social proof, distinto de la del hero
 
@@ -19,9 +19,9 @@ export function WhatsInBox() {
     <section className="relative bg-ink-950 py-14 sm:py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="grid items-center gap-8 sm:gap-10 md:grid-cols-2 md:gap-16">
-          {/* Imagen — primero en mobile, izquierda en desktop */}
+          {/* Carrusel — primero en mobile, izquierda en desktop */}
           <div className="order-1 md:order-1">
-            <ProductPhoto />
+            <ProductCarousel slides={WHATS_IN_BOX_GALLERY} />
           </div>
 
           {/* Texto */}
@@ -98,22 +98,3 @@ export function WhatsInBox() {
   );
 }
 
-function ProductPhoto() {
-  return (
-    <div className="relative mx-auto w-full max-w-lg">
-      {/* width/height = tamaño real del webp (1073x1080). Sin esto la imagen
-          ocupa 0 px de alto hasta que carga y empuja hacia abajo todo lo que
-          viene después (HowItWorks, #pricing) — era la fuente principal de CLS. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/what-includes/QueIncluye.webp"
-        alt="Soporte Magnético PRO™ — contenido de la caja"
-        width={1073}
-        height={1080}
-        loading="lazy"
-        decoding="async"
-        className="h-auto w-full rounded-3xl"
-      />
-    </div>
-  );
-}

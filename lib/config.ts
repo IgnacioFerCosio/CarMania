@@ -20,7 +20,7 @@ export const BRAND = {
  * Los precios "vivos" se traen del producto en Shopify en build time.
  */
 export const FALLBACK_PRICING = {
-  price: 44990,
+  price: 39990,
   compareAtPrice: 60000,
   currency: 'ARS',
 } as const;
@@ -159,6 +159,33 @@ export const CAR_BRANDS = [
   { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true,  w: 200,  h: 200  },
   { name: 'Audi',          logo: '/brands/audi.svg',       softWhite: false, w: 403,  h: 210  },
 ];
+
+/**
+ * Carrusel de la sección WhatsInBox. Todas las imágenes viven en
+ * /public/what-includes/ y conviene que sean cuadradas (o casi): el carrusel
+ * usa un contenedor 1:1 con `object-contain`, así ninguna infografía queda
+ * con el texto cortado.
+ *
+ * Para sumar o sacar slides, editá este array — el componente se adapta solo.
+ */
+export const WHATS_IN_BOX_GALLERY = [
+  {
+    src: '/what-includes/QueIncluye.webp',
+    alt: 'Contenido de la caja del Soporte Magnético PRO™',
+  },
+  {
+    src: '/what-includes/CompatibilidadUniversal.webp',
+    alt: 'Cómo instalar el anillo magnético si tu teléfono no tiene MagSafe, en 3 pasos',
+  },
+  {
+    src: '/what-includes/FuncionaConTodos.webp',
+    alt: 'Compatible con iPhone 12 y posteriores, y con Android usando el anillo metálico incluido',
+  },
+  {
+    src: '/what-includes/guiaInstalacion.webp',
+    alt: 'Guía de instalación del soporte con succión en el tablero o el parabrisas, en 4 pasos',
+  },
+] as const;
 
 /**
  * "Qué incluye la caja" — para el bloque WhatsInBox.
@@ -353,7 +380,7 @@ export const FAQ = [
   },
   {
     q: '¿Funciona con celulares grandes o con funda gruesa?',
-    a: 'Sí. El soporte es compatible con MagSafe: si tu iPhone tiene MagSafe nativo, lo colocás directamente y queda fijo al instante. Si tu celular no cuenta con MagSafe, en el kit viene incluido un aro metálico adhesivo que pegás en el back de tu celu o dentro de la funda, y a partir de ahí funciona igual.',
+    a: 'Sí. El soporte es compatible con MagSafe: si tu iPhone tiene MagSafe nativo (como el iPhone 12 y posteriores), lo colocás directamente y queda fijo al instante. Si tu celular no cuenta con MagSafe, en el kit viene incluido un aro metálico adhesivo que pegás en el back de tu celu o de la funda, y a partir de ahí funciona igual. Recomendamos que la funda sea compatible con MagSafe para la mejor adherencia.',
   },
   {
     q: '¿El imán le borra datos al celular o le hace mal?',
@@ -396,6 +423,13 @@ export const TRUST_PILLARS = [
 type Bundle = {
   id: 'single' | 'double' | 'triple';
   productId: string;      // GID del producto Shopify
+  /**
+   * GID de la variante. Los bundles tienen una sola variante cada uno.
+   * Normalmente lo resuelve `getBundlesData()` en el build; esto es el
+   * fallback para que el carrito siga funcionando si esa llamada falla.
+   * Verificados contra la tienda real (4xf11b-u0.myshopify.com).
+   */
+  fallbackVariantId: string;
   label: string;
   subtitle: string;
   quantity: number;       // solo display ("1 unidad", "2 unidades", etc.)
@@ -412,6 +446,7 @@ export const BUNDLES: readonly Bundle[] = [
   {
     id: 'single',
     productId: 'gid://shopify/Product/8264328118387',
+    fallbackVariantId: 'gid://shopify/ProductVariant/44945337450611',
     label: 'LLEVÁ 1',
     subtitle: 'Un soporte. Mil usos.',
     quantity: 1,
@@ -420,12 +455,13 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 1 chapita MagSafe',
     freeShipping: false,
     recommended: false,
-    fallbackPrice: 44990,
-    fallbackCompare: 89990,
+    fallbackPrice: 39990,
+    fallbackCompare: 60000,
   },
   {
     id: 'double',
     productId: 'gid://shopify/Product/8270224392307',
+    fallbackVariantId: 'gid://shopify/ProductVariant/44965343035507',
     label: 'LLEVÁ 2',
     subtitle: '50% OFF en la 2ª unidad.',
     quantity: 2,
@@ -434,12 +470,13 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 2 chapitas MagSafe',
     freeShipping: true,
     recommended: true,
-    fallbackPrice: 67485,
-    fallbackCompare: 179980,
+    fallbackPrice: 59985,
+    fallbackCompare: 120000,
   },
   {
     id: 'triple',
     productId: 'gid://shopify/Product/8270224425075',
+    fallbackVariantId: 'gid://shopify/ProductVariant/44965343199347',
     label: 'LLEVÁ 3',
     subtitle: 'La 3ª unidad es GRATIS.',
     quantity: 3,
@@ -448,8 +485,8 @@ export const BUNDLES: readonly Bundle[] = [
     bonus: '+ 3 chapitas MagSafe',
     freeShipping: true,
     recommended: false,
-    fallbackPrice: 89980,
-    fallbackCompare: 269970,
+    fallbackPrice: 74990,
+    fallbackCompare: 180000,
   },
 ];
 
