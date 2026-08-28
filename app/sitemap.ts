@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 /**
  * Genera /sitemap.xml en build.
- * La landing es una sola página (one-page), así que el sitemap solo
- * lista la home.
+ * El sitio tiene dos rutas indexables: la landing del soporte (one-page) y
+ * la home de tienda en /tienda.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -12,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
+    },
+    {
+      url: 'https://oferta.carmaniaoficial.com/tienda',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
   ];
 }

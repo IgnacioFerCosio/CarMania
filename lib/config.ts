@@ -596,3 +596,11 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fallbackPrice: 39990,
   },
 ] as const;
+
+/** Copy del encabezado de /tienda. */
+export const STORE_HEADLINES = {
+  eyebrow: 'Tienda oficial',
+  title: 'Accesorios que resuelven',
+  titleAccent: 'problemas reales',
+  sub: 'Productos elegidos de a uno, probados en la calle argentina. Envío gratis a todo el país y 30 días para devolverlo si no te convence.',
+} as const;
