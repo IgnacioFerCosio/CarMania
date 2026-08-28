@@ -60,6 +60,14 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
   Permissions-Policy. **No hay `vercel.json`.** `next.config.js` tiene su
   propio `headers()` casi idéntico, pero el que se sirve en producción es
   el de `_headers` — editá ese.
+- **El dev server necesita `'unsafe-eval'`; producción NO.** Fast Refresh de
+  Next compila con `eval`, así que sin ese flag el `npm run dev` tira un
+  `EvalError` que mata el bundle del cliente entero: se cae la hidratación y
+  los componentes `'use client'` dejan de montarse (los `<video>` de
+  `LazyVideo` desaparecen sin dejar rastro en el DOM). Por eso el
+  `headers()` de `next.config.js` lo agrega **solo** cuando
+  `NODE_ENV === 'development'`. No lo copies a `_headers`: fuera de esa
+  condición, la CSP de ambos archivos tiene que quedar espejada byte a byte.
 - La CSP tiene `media-src 'self'`: **los videos tienen que estar en
   `/public`.** Apuntar un `<video>` a un CDN externo los rompe en
   producción.
