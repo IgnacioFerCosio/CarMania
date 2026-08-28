@@ -8,6 +8,7 @@
  * Si la Storefront API falla o el handle no existe, usa los fallbacks de
  * lib/config.ts para que el landing nunca quede roto.
  */
+import type { Metadata } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
@@ -40,6 +41,18 @@ import { BRAND, BUNDLES, FALLBACK_PRICING } from '@/lib/config';
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual.
 export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: 'Soporte Magnético PRO™ — CARMANIA',
+  description:
+    'El soporte para celular que no se cae. Imán N52 grado militar + base al vacío. Envío gratis y 30 días de devolución.',
+  openGraph: {
+    title: 'Soporte Magnético PRO™ — CARMANIA',
+    description:
+      'El soporte para celular que no se cae. Imán N52 + base al vacío. Envío gratis y devolución 30 días.',
+  },
+  alternates: { canonical: '/' },
+};
 
 export default async function HomePage() {
   let productId = '';

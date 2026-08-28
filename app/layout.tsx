@@ -21,21 +21,19 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://oferta.carmaniaoficial.com'),
-  title: 'Soporte Magnético PRO™ — CARMANIA',
-  description:
-    'El soporte para celular que no se cae. Imán N52 grado militar + base al vacío. Envío gratis y 30 días de devolución.',
+  // El title/description/canonical los define cada página: este layout lo
+  // comparten la landing del soporte y la home de tienda. Lo que queda acá
+  // es solo lo que vale para todo el sitio.
+  title: {
+    default: 'CARMANIA',
+    template: '%s',
+  },
   openGraph: {
-    title: 'Soporte Magnético PRO™ — CARMANIA',
-    description:
-      'El soporte para celular que no se cae. Imán N52 + base al vacío. Envío gratis y devolución 30 días.',
     type: 'website',
     locale: 'es_AR',
     siteName: 'CARMANIA',
   },
   robots: { index: true, follow: true },
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
@@ -53,17 +51,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-AR" className={inter.variable}>
       <head>
-        {/* El poster del video del hero es el elemento LCP. Lo precargamos con
-            prioridad alta para que pinte apenas llega el HTML, sin esperar a
-            que el parser descubra el <video>. */}
-        <link
-          rel="preload"
-          as="image"
-          href="/hero/VideoPrincipal-poster.webp"
-          type="image/webp"
-          fetchPriority="high"
-        />
-
         {/* Google Tag Manager — script principal */}
         <Script
           id="gtm"

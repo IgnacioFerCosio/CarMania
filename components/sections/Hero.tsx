@@ -19,6 +19,17 @@ import { HeroTestimonialCarousel } from '@/components/ui/HeroTestimonialCarousel
 export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden bg-ink-950">
+      {/* El poster del video del hero es el elemento LCP de ESTA página. Vivía
+          en el layout raíz, pero desde ahí se precargaba también en /tienda,
+          donde la imagen no existe y competía contra el LCP real. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/hero/VideoPrincipal-poster.webp"
+        type="image/webp"
+        fetchPriority="high"
+      />
+
       {/* Glow sutil de fondo */}
       <div
         aria-hidden="true"
