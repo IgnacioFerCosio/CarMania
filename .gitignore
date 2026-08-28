@@ -12,3 +12,5 @@ out
 # Build artifacts / local settings (no van al repo)
 tsconfig.tsbuildinfo
 .claude/settings.local.json
+
+.vercel
