@@ -12,7 +12,11 @@ import { BRAND } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { CartButton } from '@/components/commerce/CartButton';
 
-const LINKS = [
+export type NavLink = { href: string; label: string; highlight?: boolean };
+
+// Links de la landing del soporte. Son el default para no tener que
+// pasarlos desde `app/page.tsx`, que ya los usaba implícitamente.
+const LANDING_LINKS: NavLink[] = [
   { href: '#how', label: 'Cómo funciona' },
   { href: '#pricing', label: 'Oferta', highlight: true },
   { href: '#reviews', label: 'Reseñas' },
@@ -20,7 +24,13 @@ const LINKS = [
   { href: '#faq', label: 'FAQ' },
 ];
 
-export function Navbar() {
+export function Navbar({
+  links = LANDING_LINKS,
+  homeHref = '#top',
+}: {
+  links?: NavLink[];
+  homeHref?: string;
+} = {}) {
   return (
     <header
       id="site-navbar"
@@ -32,7 +42,7 @@ export function Navbar() {
             es display:none y sale de la grilla, así que sin esto el logo se
             correría a la columna 1 y quedaría descentrado. */}
         <nav className="col-start-1 hidden items-center gap-5 text-xs font-bold uppercase tracking-wider text-ink-200 md:flex">
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -50,7 +60,7 @@ export function Navbar() {
 
         {/* Logo centrado */}
         <Link
-          href="#top"
+          href={homeHref}
           className="col-start-2 flex items-center justify-center"
           aria-label={`${BRAND.name} inicio`}
         >
