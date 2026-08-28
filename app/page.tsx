@@ -47,6 +47,9 @@ export const metadata: Metadata = {
   title: 'Soporte Magnético PRO™ — CARMANIA',
   description:
     'El soporte para celular que no se cae. Imán N52 grado militar + base al vacío. Envío gratis y 30 días de devolución.',
+  // Next NO hace deep-merge de `openGraph` entre layout y page: el objeto
+  // de la página REEMPLAZA al del layout. Por eso type/locale/siteName se
+  // repiten acá aunque también estén en app/layout.tsx. No los borres.
   openGraph: {
     title: 'Soporte Magnético PRO™ — CARMANIA',
     description:

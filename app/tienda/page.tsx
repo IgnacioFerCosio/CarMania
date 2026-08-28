@@ -27,10 +27,16 @@ export const metadata: Metadata = {
   title: 'Tienda — CARMANIA',
   description:
     'Accesorios premium para tu auto. Envío gratis a todo el país, 3 cuotas sin interés y 30 días de devolución.',
+  // Next NO hace deep-merge de `openGraph` entre layout y page: el objeto
+  // de la página REEMPLAZA al del layout. Por eso type/locale/siteName se
+  // repiten acá aunque también estén en app/layout.tsx. No los borres.
   openGraph: {
     title: 'Tienda — CARMANIA',
     description:
       'Accesorios premium para tu auto. Envío gratis a todo el país y 30 días de devolución.',
+    type: 'website',
+    locale: 'es_AR',
+    siteName: 'CARMANIA',
   },
   alternates: { canonical: '/tienda' },
 };
@@ -71,7 +77,7 @@ export default async function TiendaPage() {
   return (
     <CartProvider bundlesData={bundlesData}>
       <PromoBar />
-      <Navbar links={STORE_LINKS} homeHref="/tienda" />
+      <Navbar links={STORE_LINKS} homeHref="/tienda" ctaHref="#productos" />
 
       <main>
         <StoreHero />

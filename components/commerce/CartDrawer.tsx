@@ -78,7 +78,10 @@ export function CartDrawer() {
     setTimeout(() => {
       // Sin `behavior`: hereda el `scroll-behavior: smooth` que globals.css ya
       // define en <html>, en vez de forzarlo desde acá.
-      document.getElementById('pricing')?.scrollIntoView({ block: 'start' });
+      // Si la página no tiene #pricing (ej. /tienda), cae a #productos.
+      const target =
+        document.getElementById('pricing') ?? document.getElementById('productos');
+      target?.scrollIntoView({ block: 'start' });
     }, 60);
   }
 
