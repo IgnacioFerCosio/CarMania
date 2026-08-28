@@ -17,6 +17,13 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
   },
   async headers() {
+    // Fast Refresh de Next compila con `eval` en desarrollo, asi que el dev
+    // server necesita 'unsafe-eval' o el bundle del cliente muere entero (se
+    // cae la hidratacion y, entre otras cosas, los <video> de LazyVideo nunca
+    // se montan). En produccion NO va: ahi los headers los sirve `_headers`
+    // y esta CSP tiene que quedar espejada con ese archivo.
+    const devEval = process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : '';
+
     return [
       {
         source: '/(.*)',
@@ -29,7 +36,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://connect.facebook.net https://www.googletagmanager.com https://static.klaviyo.com https://static.cloudflareinsights.com https://*.klaviyo.com; style-src 'self' 'unsafe-inline' https://*.klaviyo.com; img-src 'self' data: blob: https:; font-src 'self' https://*.klaviyo.com; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com https://www.googletagmanager.com https://www.google-analytics.com https://cloudflareinsights.com https://*.klaviyo.com; frame-src https://www.facebook.com https://www.googletagmanager.com https://*.klaviyo.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline'" + devEval + " https://connect.facebook.net https://www.googletagmanager.com https://static.klaviyo.com https://static.cloudflareinsights.com https://*.klaviyo.com; style-src 'self' 'unsafe-inline' https://*.klaviyo.com; img-src 'self' data: blob: https:; font-src 'self' https://*.klaviyo.com; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com https://www.googletagmanager.com https://www.google-analytics.com https://cloudflareinsights.com https://*.klaviyo.com; frame-src https://www.facebook.com https://www.googletagmanager.com https://*.klaviyo.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'",
           },
         ],
       },
