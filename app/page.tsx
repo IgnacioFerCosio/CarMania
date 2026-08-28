@@ -9,6 +9,7 @@
  * lib/config.ts para que el landing nunca quede roto.
  */
 import type { Metadata } from 'next';
+import ReactDOM from 'react-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
@@ -50,11 +51,26 @@ export const metadata: Metadata = {
     title: 'Soporte Magnético PRO™ — CARMANIA',
     description:
       'El soporte para celular que no se cae. Imán N52 + base al vacío. Envío gratis y devolución 30 días.',
+    type: 'website',
+    locale: 'es_AR',
+    siteName: 'CARMANIA',
   },
   alternates: { canonical: '/' },
 };
 
 export default async function HomePage() {
+  // El poster del video del hero es el elemento LCP de ESTA página. Vivía en
+  // el layout raíz, pero desde ahí se precargaba también en /tienda, donde la
+  // imagen no existe y competía contra el LCP real. `ReactDOM.preload()`
+  // (vs. un <link> JSX manual) es lo que lo hoistea cerca del principio de
+  // <head> — verificado: queda en la posición 2, justo después de
+  // charset/viewport.
+  ReactDOM.preload('/hero/VideoPrincipal-poster.webp', {
+    as: 'image',
+    fetchPriority: 'high',
+    type: 'image/webp',
+  });
+
   let productId = '';
   // Mapa { [productId]: { variantId, price, compareAtPrice } }
   let bundlesData: Record<string, BundleData> = {};
