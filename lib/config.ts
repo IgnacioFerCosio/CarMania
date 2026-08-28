@@ -563,3 +563,36 @@ export const CERTIFICATIONS = {
   desc: 'Nuestra fábrica fue revisada y aprobada por las agencias relevantes — incluyendo la FDA y los estándares europeos RoHS y CE.',
   items: ['FDA', 'RoHS', 'CE'],
 } as const;
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ * STORE_PRODUCTS — la grilla de /tienda.
+ *
+ * Lista CURADA a propósito: pedirle "todos los productos" a Shopify traería
+ * el soporte tres veces, porque los packs x2 y x3 son productos separados y
+ * no variantes (ver CLAUDE.md). Acá va un item por producto DISTINTO.
+ *
+ * `href` es a dónde linkea la card: el soporte manda a `/`, que es su
+ * landing y la URL de las campañas. Cada producto nuevo manda a la suya.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export type StoreProduct = {
+  handle: string;        // handle en Shopify — sirve para leer el precio vivo
+  title: string;
+  blurb: string;
+  image: string;         // ruta en /public
+  href: string;
+  fallbackPrice: number; // ARS, si la Storefront API no responde
+};
+
+export const STORE_PRODUCTS: readonly StoreProduct[] = [
+  {
+    handle: 'soporte-magnetico-pro',
+    title: 'Soporte Magnético PRO™',
+    blurb:
+      'Imán N52 grado militar y base al vacío. Se adhiere al auto, al espejo o al escritorio, y no se cae.',
+    image: '/bundles/BundleX1.webp',
+    href: '/',
+    fallbackPrice: 39990,
+  },
+] as const;
