@@ -43,10 +43,16 @@ export const metadata: Metadata = {
 
 const STORE_LINKS: NavLink[] = [{ href: '#productos', label: 'Productos' }];
 
-export default async function TiendaPage() {
+// Re-renderizamos cada 5 minutos para reflejar cambios de precio en
+// Shopify sin tener que hacer build manual. Mismo valor que app/page.tsx,
+// por la misma razón (ver comentario ahí); de adorno mientras el ISR no
+// corra en Cloudflare Pages.
+export const revalidate = 300;
+
+async function getProducts(): Promise<{ product: StoreProduct; price: number }[]> {
   // Un fetch por producto. Con 1-3 productos no justifica una query batch;
   // si la lista crece, conviene una sola query con `nodes`.
-  const products: { product: StoreProduct; price: number }[] = await Promise.all(
+  return Promise.all(
     STORE_PRODUCTS.map(async (product) => {
       try {
         const live = await getProduct(product.handle);
@@ -61,18 +67,27 @@ export default async function TiendaPage() {
       }
     }),
   );
+}
 
+async function getBundles(): Promise<Record<string, BundleData>> {
   // El carrito se comparte con la landing (persiste entre páginas), así que
   // necesita los mismos precios de bundles. Sin esto `buildTiers` igual
   // funciona — cae a los `fallbackVariantId` de config — pero el drawer
   // mostraría precios de fallback y el visitante vería números distintos a
   // los de la landing.
-  let bundlesData: Record<string, BundleData> = {};
   try {
-    bundlesData = await getBundlesData(BUNDLES.map((b) => b.productId));
+    return await getBundlesData(BUNDLES.map((b) => b.productId));
   } catch (err) {
     console.error('[Shopify] No pude traer datos de bundles:', err);
+    return {};
   }
+}
+
+export default async function TiendaPage() {
+  // Los precios de STORE_PRODUCTS y los de BUNDLES no dependen entre sí —
+  // los pedimos en paralelo en vez de esperar uno para arrancar el otro
+  // (mismo criterio que app/page.tsx).
+  const [products, bundlesData] = await Promise.all([getProducts(), getBundles()]);
 
   return (
     <CartProvider bundlesData={bundlesData}>

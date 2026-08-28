@@ -593,7 +593,11 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
       'Imán N52 grado militar y base al vacío. Se adhiere al auto, al espejo o al escritorio, y no se cae.',
     image: '/bundles/BundleX1.webp',
     href: '/',
-    fallbackPrice: 39990,
+    // Referencia a FALLBACK_PRICING en vez de repetir el número: ya había dos
+    // copias de este precio (acá y en BUNDLES); una tercera copia suelta es
+    // justo el tipo de desfase que el commit "sincronizar fallbacks con
+    // Shopify" vino a limpiar.
+    fallbackPrice: FALLBACK_PRICING.price,
   },
 ] as const;
 
@@ -603,4 +607,7 @@ export const STORE_HEADLINES = {
   title: 'Accesorios que resuelven',
   titleAccent: 'problemas reales',
   sub: 'Productos elegidos de a uno, probados en la calle argentina. Envío gratis a todo el país y 30 días para devolverlo si no te convence.',
+  // Heading de la grilla — existe para que la página no salte de h1 (StoreHero)
+  // a h3 (título de cada ProductCard) sin un h2 en el medio.
+  gridTitle: 'Nuestros productos',
 } as const;
