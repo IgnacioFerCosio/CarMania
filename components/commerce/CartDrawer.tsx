@@ -16,7 +16,17 @@ import { useCart } from './CartProvider';
 import { CartLineItem } from './CartLineItem';
 import { UpsellBanner } from './UpsellBanner';
 
-export function CartDrawer() {
+export function CartDrawer({
+  ctaHref = '#pricing',
+}: {
+  /**
+   * A dónde manda "Ver las ofertas" del estado de carrito vacío — mismo
+   * patrón que el `ctaHref` de `Navbar`, para que el drawer no tenga que
+   * adivinar en qué página está mirando el DOM (antes: `getElementById`
+   * probando `#pricing` y después `#productos` a ciegas).
+   */
+  ctaHref?: string;
+} = {}) {
   const {
     cart,
     tiers,
@@ -68,9 +78,9 @@ export function CartDrawer() {
   const isEmpty = !cart || cart.lines.length === 0;
 
   /**
-   * Cierra el drawer y baja a #pricing. Va por JS en vez de dejar el salto de
-   * ancla al navegador porque mientras el drawer está abierto el body tiene el
-   * scroll bloqueado: hay que esperar a que React lo libere.
+   * Cierra el drawer y baja hasta `ctaHref`. Va por JS en vez de dejar el
+   * salto de ancla al navegador porque mientras el drawer está abierto el
+   * body tiene el scroll bloqueado: hay que esperar a que React lo libere.
    */
   function goToPricing(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
@@ -78,10 +88,8 @@ export function CartDrawer() {
     setTimeout(() => {
       // Sin `behavior`: hereda el `scroll-behavior: smooth` que globals.css ya
       // define en <html>, en vez de forzarlo desde acá.
-      // Si la página no tiene #pricing (ej. /tienda), cae a #productos.
-      const target =
-        document.getElementById('pricing') ?? document.getElementById('productos');
-      target?.scrollIntoView({ block: 'start' });
+      const targetId = ctaHref.replace(/^#/, '');
+      document.getElementById(targetId)?.scrollIntoView({ block: 'start' });
     }, 60);
   }
 
@@ -159,7 +167,7 @@ export function CartDrawer() {
               <Icon name="cart" className="h-10 w-10 text-ink-700" />
               <p className="text-sm text-ink-400">Todavía no agregaste nada.</p>
               <a
-                href="#pricing"
+                href={ctaHref}
                 onClick={goToPricing}
                 className="mt-1 text-sm font-bold uppercase tracking-wider text-accent transition hover:text-accent-400"
               >

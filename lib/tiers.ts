@@ -11,15 +11,14 @@
  * Los precios entran por parámetro (nunca hardcodeados acá) para que el copy
  * del upsell se actualice solo cuando cambien en Shopify.
  */
-import { UPSELL_CHAIN } from './config';
+import { UPSELL_CHAIN, type TierId } from './config';
 import type { BundleData } from './shopify';
 import type { VariantPrice } from './shopify';
 
-export type TierId = 'single' | 'double' | 'triple' | 'x4' | 'x5' | 'x6';
+export type { TierId };
 
 export type ResolvedTier = {
   id: TierId;
-  label: string;
   unitsLabel: string;
   /** Unidades físicas que entrega este nivel. */
   units: number;
@@ -49,8 +48,7 @@ export function buildTiers(
 
     const live = livePrices?.[variantId];
     tiers.push({
-      id: t.id as TierId,
-      label: t.unitsLabel,
+      id: t.id,
       unitsLabel: t.unitsLabel,
       units: t.quantity,
       variantId,

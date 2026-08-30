@@ -420,6 +420,13 @@ export const TRUST_PILLARS = [
  * Storefront API falla.
  * ─────────────────────────────────────────────────────────────────────────
  */
+/**
+ * Todos los ids válidos de la escalera de tiers, de single a x6. Vive acá
+ * (no en lib/tiers.ts) porque es la data — BUNDLES/UPSELL_CHAIN — la que
+ * define qué ids existen; lib/tiers.ts solo la consume.
+ */
+export type TierId = 'single' | 'double' | 'triple' | 'x4' | 'x5' | 'x6';
+
 type Bundle = {
   id: 'single' | 'double' | 'triple';
   productId: string;      // GID del producto Shopify
@@ -508,7 +515,7 @@ export const BUNDLES: readonly Bundle[] = [
  * ─────────────────────────────────────────────────────────────────────────
  */
 type UpsellTier = {
-  id: string;
+  id: TierId;
   productId: string;      // GID del producto Shopify
   fallbackVariantId: string;
   quantity: number;       // unidades físicas que entrega este nivel

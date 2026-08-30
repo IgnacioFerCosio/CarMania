@@ -37,7 +37,7 @@ import { GuaranteeBadge } from '@/components/overlays/GuaranteeBadge';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
 import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { BRAND, BUNDLES, FALLBACK_PRICING } from '@/lib/config';
+import { BRAND, BUNDLES, FALLBACK_PRICING, UPSELL_CHAIN } from '@/lib/config';
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual.
@@ -84,7 +84,11 @@ export default async function HomePage() {
   try {
     const [product, data] = await Promise.all([
       getProduct(BRAND.productHandle),
-      getBundlesData(BUNDLES.map((b) => b.productId)),
+      // UPSELL_CHAIN, no BUNDLES: incluye tambien Pack x4/x5/x6, que solo
+      // existen para el upsell del carrito. Sin esto, esos 3 niveles nunca
+      // reciben precio real en el build y dependen enteramente del refetch
+      // client-side (que puede fallar en silencio) — ver lib/tiers.ts.
+      getBundlesData(UPSELL_CHAIN.map((t) => t.productId)),
     ]);
     if (product) productId = product.id;
     bundlesData = data;

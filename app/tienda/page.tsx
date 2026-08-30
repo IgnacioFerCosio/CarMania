@@ -21,7 +21,7 @@ import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { BUNDLES, STORE_PRODUCTS, type StoreProduct } from '@/lib/config';
+import { STORE_PRODUCTS, UPSELL_CHAIN, type StoreProduct } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Tienda — CARMANIA',
@@ -71,12 +71,14 @@ async function getProducts(): Promise<{ product: StoreProduct; price: number }[]
 
 async function getBundles(): Promise<Record<string, BundleData>> {
   // El carrito se comparte con la landing (persiste entre páginas), así que
-  // necesita los mismos precios de bundles. Sin esto `buildTiers` igual
-  // funciona — cae a los `fallbackVariantId` de config — pero el drawer
-  // mostraría precios de fallback y el visitante vería números distintos a
-  // los de la landing.
+  // necesita los mismos precios. UPSELL_CHAIN, no BUNDLES: incluye también
+  // Pack x4/x5/x6 (solo alcanzables vía el upsell del carrito). Sin esto,
+  // `buildTiers` igual funciona para esos 3 niveles — cae a los
+  // `fallbackVariantId`/`fallbackPrice` de config — pero mostraría un precio
+  // desactualizado hasta que el refetch client-side lo corrija (y ese
+  // refetch puede fallar en silencio, ver lib/tiers.ts).
   try {
-    return await getBundlesData(BUNDLES.map((b) => b.productId));
+    return await getBundlesData(UPSELL_CHAIN.map((t) => t.productId));
   } catch (err) {
     console.error('[Shopify] No pude traer datos de bundles:', err);
     return {};
@@ -107,7 +109,7 @@ export default async function TiendaPage() {
 
       <WhatsAppFloat />
       <FloatingCartButton />
-      <CartDrawer />
+      <CartDrawer ctaHref="#productos" />
     </CartProvider>
   );
 }
