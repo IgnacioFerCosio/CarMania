@@ -86,7 +86,13 @@ export function CountdownBanner() {
         {/* Separador */}
         <span aria-hidden="true" className="h-3.5 w-px bg-white/30" />
 
-        {/* Countdown — tabular-nums para que los dígitos no se muevan */}
+        {/* Countdown — tabular-nums para que los dígitos no se muevan.
+            El placeholder de abajo usa la MISMA estructura (3 cajitas +
+            separadores, con el mismo flex/gap) que el estado real, solo
+            invisible — así el ancho es idéntico desde el primer paint y
+            montar no corre 52px el resto de la fila (el contenedor con
+            justify-center la recentraba entera). Medido: antes de este
+            fix, el placeholder medía ~53px contra ~105px del real. */}
         <span className="flex items-center gap-1 font-display text-xs font-extrabold tabular-nums text-white sm:text-sm">
           {time ? (
             <>
@@ -97,8 +103,13 @@ export function CountdownBanner() {
               <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.ss}</span>
             </>
           ) : (
-            /* Placeholder durante hidratación para evitar layout shift */
-            <span className="opacity-0">00:00:00</span>
+            <span aria-hidden="true" className="flex items-center gap-1 opacity-0">
+              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
+              <span className="opacity-60">:</span>
+              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
+              <span className="opacity-60">:</span>
+              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
+            </span>
           )}
         </span>
 
