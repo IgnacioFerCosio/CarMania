@@ -7,7 +7,9 @@
  * reales que devuelve Shopify. Si mañana cambia un precio en el admin, este
  * copy se actualiza solo.
  *
- * No se renderiza cuando la línea ya está en el tier más alto (Pack x3).
+ * No se renderiza cuando la línea ya está en el tier más alto de
+ * UPSELL_CHAIN (hoy Pack x6) — lo decide `nextTierOf` por posición, así que
+ * si la cadena crece o se acorta esto no necesita tocarse.
  */
 import { formatARS } from '@/lib/shopify';
 import { upsellDelta, upsellExtraUnits, type ResolvedTier } from '@/lib/tiers';

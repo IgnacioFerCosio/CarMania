@@ -491,6 +491,67 @@ export const BUNDLES: readonly Bundle[] = [
 ];
 
 /**
+ * ─────────────────────────────────────────────────────────────────────────
+ * UPSELL_CHAIN — la escalera completa del banner "Sumá una unidad más" del
+ * carrito (lib/tiers.ts la recorre por posición, sin casos por id).
+ *
+ * A propósito NO es lo mismo que BUNDLES: BUNDLES son los 3 packs que se ven
+ * como card en /#pricing (Llevá 1 / Llevá 2 / Llevá 3). Pack x4/x5/x6 existen
+ * en Shopify pero NO están en ninguna colección ni en la landing — solo se
+ * llega a ellos vía el upsell del carrito. Si agregáramos esos 3 directo a
+ * BUNDLES, `Pricing.tsx` (que hace `BUNDLES.map(...)`) los mostraría como
+ * card sin querer.
+ *
+ * Los primeros 3 niveles se derivan de BUNDLES (misma fuente, sin duplicar
+ * datos); los 3 nuevos van fallbackVariantId/fallbackPrice, igual que los
+ * anteriores. Verificados contra la tienda real, 2026-08-30.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+type UpsellTier = {
+  id: string;
+  productId: string;      // GID del producto Shopify
+  fallbackVariantId: string;
+  quantity: number;       // unidades físicas que entrega este nivel
+  unitsLabel: string;     // copy del banner: "Pasás a 4 unidades..."
+  fallbackPrice: number;  // ARS — usado si Shopify API no responde
+};
+
+export const UPSELL_CHAIN: readonly UpsellTier[] = [
+  ...BUNDLES.map((b): UpsellTier => ({
+    id: b.id,
+    productId: b.productId,
+    fallbackVariantId: b.fallbackVariantId,
+    quantity: b.quantity,
+    unitsLabel: b.unitsLabel,
+    fallbackPrice: b.fallbackPrice,
+  })),
+  {
+    id: 'x4',
+    productId: 'gid://shopify/Product/8379013693555',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45421351731315',
+    quantity: 4,
+    unitsLabel: '4 unidades',
+    fallbackPrice: 89989,
+  },
+  {
+    id: 'x5',
+    productId: 'gid://shopify/Product/8379013595251',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45421351501939',
+    quantity: 5,
+    unitsLabel: '5 unidades',
+    fallbackPrice: 99988,
+  },
+  {
+    id: 'x6',
+    productId: 'gid://shopify/Product/8379012939891',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45421349765235',
+    quantity: 6,
+    unitsLabel: '6 unidades',
+    fallbackPrice: 109987,
+  },
+];
+
+/**
  * Specs técnicas del producto — sección "Nano-tech".
  * Las medidas las usamos visualmente alrededor del producto.
  */

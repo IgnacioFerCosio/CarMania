@@ -1,32 +1,36 @@
 /**
- * La escalera de bundles: single → double → triple.
+ * La escalera de tiers: single → double → triple → x4 → x5 → x6.
  *
- * Los 3 son productos separados en Shopify, así que "subir de tier" es
+ * Cada nivel es un producto separado en Shopify, así que "subir de tier" es
  * cambiar de producto, no cambiar una cantidad. Este módulo resuelve, dado
  * el variantId que hay en una línea del carrito, cuál es el tier siguiente
- * y cuánto cuesta el salto.
+ * y cuánto cuesta el salto — recorriendo UPSELL_CHAIN por posición, sin
+ * casos hardcodeados por id: agregar o sacar un nivel es editar esa lista,
+ * nada de esto necesita tocarse.
  *
  * Los precios entran por parámetro (nunca hardcodeados acá) para que el copy
  * del upsell se actualice solo cuando cambien en Shopify.
  */
-import { BUNDLES } from './config';
+import { UPSELL_CHAIN } from './config';
 import type { BundleData } from './shopify';
 import type { VariantPrice } from './shopify';
 
-export type TierId = 'single' | 'double' | 'triple';
+export type TierId = 'single' | 'double' | 'triple' | 'x4' | 'x5' | 'x6';
 
 export type ResolvedTier = {
   id: TierId;
   label: string;
   unitsLabel: string;
-  /** Unidades físicas que entrega este bundle. */
+  /** Unidades físicas que entrega este nivel. */
   units: number;
   variantId: string;
   price: number;
 };
 
 /**
- * Arma la escalera ordenada (single → double → triple).
+ * Arma la escalera ordenada (single → double → triple → x4 → x5 → x6),
+ * recorriendo UPSELL_CHAIN en el orden en que está declarada — no hay
+ * ningún salto ni caso especial por id acá.
  *
  * `bundlesData` viene del servidor (resuelto en el build). `livePrices` es el
  * refetch client-side; cuando está, pisa a los precios del build, que en
@@ -38,19 +42,19 @@ export function buildTiers(
 ): ResolvedTier[] {
   const tiers: ResolvedTier[] = [];
 
-  for (const b of BUNDLES) {
-    const data = bundlesData[b.productId];
-    const variantId = data?.variantId || b.fallbackVariantId;
+  for (const t of UPSELL_CHAIN) {
+    const data = bundlesData[t.productId];
+    const variantId = data?.variantId || t.fallbackVariantId;
     if (!variantId) continue;
 
     const live = livePrices?.[variantId];
     tiers.push({
-      id: b.id,
-      label: b.label,
-      unitsLabel: b.unitsLabel,
-      units: b.quantity,
+      id: t.id as TierId,
+      label: t.unitsLabel,
+      unitsLabel: t.unitsLabel,
+      units: t.quantity,
       variantId,
-      price: live?.price ?? data?.price ?? b.fallbackPrice,
+      price: live?.price ?? data?.price ?? t.fallbackPrice,
     });
   }
 
@@ -66,8 +70,11 @@ export function tierOf(
 }
 
 /**
- * El tier siguiente en la escalera, o null si ya está en el tope (triple)
- * o si el variantId no corresponde a ningún bundle conocido.
+ * El tier siguiente en la escalera, o null si ya está en el último nivel de
+ * UPSELL_CHAIN o si el variantId no corresponde a ningún tier conocido.
+ * Como es puramente posicional (índice + 1), el tope se ajusta solo con lo
+ * que tenga la lista — hoy es x6, pero si se agrega o saca un nivel esto no
+ * necesita tocarse.
  */
 export function nextTierOf(
   tiers: ResolvedTier[],
