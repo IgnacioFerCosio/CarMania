@@ -122,14 +122,14 @@ sale de un export actual de `config.ts` salvo los marcados NUEVO.
 | `fallbackPricing` | `FALLBACK_PRICING` | placeholder, `// TODO PRECIO REAL` |
 | `headlines` | `HEADLINES` | copy del doc §3–§5 |
 | `heroMedia` | hardcode en `Hero` | NUEVO campo: `{ videoSrc, poster, badgeLine1: 'SE ABRE EN', badgeLine2: '3 SEGUNDOS' }` |
-| `heroSubHighlights` | hardcode en `Hero` | NUEVO: `Hero` hoy hace `heroSub.split(/(MagSafe\|GPS)/)` con las keywords fijas en el JSX. Pasa a ser `string[]` por landing (parasol: `['UV']` o `[]`) |
+| `heroSubHighlights` | hardcode en `Hero` | NUEVO: `Hero` hoy hace `heroSub.split(/(MagSafe\|GPS)/)` con las keywords fijas en el JSX. Pasa a ser `string[]` por landing. Soporte: `['MagSafe', 'GPS']` (idéntico a hoy). Parasol: `['paraguas', 'UV']` |
 | `sectionCopy` | strings hardcodeados en JSX | NUEVO: títulos de `Reviews`, `FAQ`, `Surfaces`, H2 de `Pricing`, cierre de `Reviews`, heading de `CarBrands` |
 | `carBrands` | `CAR_BRANDS` | mismos logos; heading "Se adapta a cualquier parabrisas" |
 | `steps` + `stepVideos` | `STEPS_V2` + hardcode en `HowItWorks` | 3 pasos del doc §5; `stepVideos` movido a config |
 | `benefits` | `BENEFITS` | 6 cards del doc §6 (primeras 2 con `highlight: true`) |
 | `pitchBlocks` | — | NUEVO: `Array<{ eyebrow?, headline, accentWord, body }>` — §4 y §8 |
-| `reviews` | `REVIEWS` | genéricas hasta tener propias del parasol |
-| `ratingBreakdown` | `RATING_BREAKDOWN` | genérico coherente |
+| `reviews` | `REVIEWS` | **placeholders genéricos inventados** — ver §4.1 |
+| `ratingBreakdown` | `RATING_BREAKDOWN` | coherente con el total de `reviews` |
 | `faq` | `FAQ` | 5 preguntas del doc §11 (la de envíos y la legal reusan texto del soporte) |
 | `qualityBadges` | `QUALITY_BADGES` | §10 — devolución 30 días (10 legales), garantía |
 | `certifications` | `CERTIFICATIONS` | igual que soporte o `enabled: false` |
@@ -138,6 +138,22 @@ sale de un export actual de `config.ts` salvo los marcados NUEVO.
 | `upsellChain` | `UPSELL_CHAIN` | deriva de `bundles` (parasol no tiene x4–x6 por ahora) |
 | `whatsapp` (override texto CTA) | `WHATSAPP` | `WhatsAppFloat` acepta texto vía prop; "Consultanos por tu Parasol PRO" |
 | `metadata` | cada `page.tsx` | `{ title, description, ogTitle, ogDescription, canonical: '/parasol' }` |
+
+### 4.1 Reseñas placeholder — no publicar sin reemplazar
+
+`parasol.ts` lleva reseñas **genéricas inventadas** (nombre, ciudad, fecha,
+texto), del mismo shape que las del soporte, para que la sección `Reviews`
+renderice completa durante el desarrollo.
+
+Son placeholders, igual que los precios. Se marcan en el archivo con un bloque
+de comentario visible y entran en el **checklist de pre-publicación** (§10),
+porque a diferencia de un precio placeholder — que se nota — una reseña falsa
+pasa desapercibida y quedaría publicada como si fuera un cliente real.
+
+Lo mismo aplica a `brand.socialProofCount` / `socialProofLabel` y a
+`ratingBreakdown`: el doc de contenido pide arrancar con algo genérico
+("Miles de autos ya protegidos") y cambiarlo por el número real apenas haya
+data propia del parasol.
 
 Campos que el soporte usa y el parasol **no** (`useCases`, `surfaces`,
 `techSpecs`, `whatsInBox`, `whatsInBoxGallery`, `painPoints`): van en el tipo
@@ -155,7 +171,7 @@ secciones, la vía limpia es tiparlos opcionales. **Elegido: opcionales.**
 |---|---|---|
 | §1 barra oferta | `CountdownBanner` + `PromoBar` | reuso tal cual (ya product-agnostic) |
 | §2 header | `Navbar` | `links` nuevos: `#como`, `#precios`, `#opiniones`, `#faq` |
-| §3 hero | `Hero` | **fix**: usar `config.heroMedia` en vez del hardcode "NO SE / CAE MÁS"; copy nuevo; video placeholder |
+| §3 hero | `Hero` | **fix**: usar `config.heroMedia` en vez del hardcode "NO SE / CAE MÁS"; copy nuevo; video placeholder. **Corrección de copy**: el subtítulo del doc mezcla tercera persona con imperativo ("Bloquea los rayos UV, *mantiné* el auto fresco y *protegé* el tablero"). Se normaliza a tercera persona — "Bloquea… mantiene… protege" — que es el patrón del soporte |
 | §4 "UN HORNO" | `PitchBlock` (NUEVO) | `pitchBlocks[0]` |
 | §5 cómo funciona | `HowItWorks` | 3 pasos nuevos; 3 videos placeholder; `stepVideos` desde config |
 | §6 beneficios | `Benefits` | `benefits` = 6 cards del doc |
@@ -300,6 +316,24 @@ en `_headers`). Apuntar a un CDN externo los rompe en producción.
 
 Mientras los assets no existan, los componentes ya degradan a placeholder
 (gradiente + inicial, poster faltante) sin romper la página.
+
+### 10.1 Checklist de pre-publicación
+
+Nada de esto bloquea el scaffold, pero **todo tiene que estar tildado antes de
+que `/parasol` reciba tráfico**. Va en `parasol-assets.md` junto a la lista de
+media.
+
+- [ ] Precios reales en `bundles` (los 3) — reemplazan los placeholders
+- [ ] `productId` + `fallbackVariantId` reales de Shopify (los 3) — hoy en `''`
+- [ ] Video del hero + poster
+- [ ] 3 videos de `HowItWorks`
+- [ ] 3 fotos de bundle
+- [ ] **Reseñas reales** — reemplazar las inventadas de §4.1
+- [ ] **`socialProofCount` / `socialProofLabel` reales** — hoy "Miles de autos protegidos"
+- [ ] **`ratingBreakdown` real** — coherente con las reseñas reales
+- [ ] Redeploy después de tocar precios (ver CLAUDE.md → Gotchas: el ISR no
+      corre en Cloudflare, los precios se congelan en el build)
+- [ ] Verificar el Pixel con Meta Pixel Helper por si la CSP bloqueó algo
 
 ## 11. Verificación (antes de cerrar la implementación)
 
