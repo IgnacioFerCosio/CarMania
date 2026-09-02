@@ -93,6 +93,22 @@ símbolos product-específicos desde `./landings/soporte` (`HEADLINES`, `BUNDLES
 re-export es la red de seguridad durante la migración y para cualquier consumidor
 no migrado.
 
+### 3.2 Regla anti-ciclo (obligatoria)
+
+La dependencia es **unidireccional**: `config.ts` → `landings/*.ts`. Nunca al
+revés.
+
+- `landings/soporte.ts` y `landings/parasol.ts` **no pueden importar nada de
+  `lib/config.ts`**. Si necesitan un valor compartido, va en `landings/types.ts`
+  o se duplica como literal.
+- Motivo concreto: `STORE_PRODUCTS` (que queda en `config.ts`) usa hoy
+  `FALLBACK_PRICING.price`, y `FALLBACK_PRICING` se muda a `soporte.ts`. Eso
+  fuerza `config.ts → soporte.ts`; cualquier import en sentido contrario cierra
+  el ciclo.
+- El tipo **`TierId`** (hoy exportado por `config.ts`, consumido por
+  `lib/tiers.ts`) se muda a `landings/types.ts`. `config.ts` lo re-exporta para
+  compatibilidad.
+
 ---
 
 ## 4. El tipo `LandingConfig`
@@ -106,6 +122,7 @@ sale de un export actual de `config.ts` salvo los marcados NUEVO.
 | `fallbackPricing` | `FALLBACK_PRICING` | placeholder, `// TODO PRECIO REAL` |
 | `headlines` | `HEADLINES` | copy del doc §3–§5 |
 | `heroMedia` | hardcode en `Hero` | NUEVO campo: `{ videoSrc, poster, badgeLine1: 'SE ABRE EN', badgeLine2: '3 SEGUNDOS' }` |
+| `heroSubHighlights` | hardcode en `Hero` | NUEVO: `Hero` hoy hace `heroSub.split(/(MagSafe\|GPS)/)` con las keywords fijas en el JSX. Pasa a ser `string[]` por landing (parasol: `['UV']` o `[]`) |
 | `sectionCopy` | strings hardcodeados en JSX | NUEVO: títulos de `Reviews`, `FAQ`, `Surfaces`, H2 de `Pricing`, cierre de `Reviews`, heading de `CarBrands` |
 | `carBrands` | `CAR_BRANDS` | mismos logos; heading "Se adapta a cualquier parabrisas" |
 | `steps` + `stepVideos` | `STEPS_V2` + hardcode en `HowItWorks` | 3 pasos del doc §5; `stepVideos` movido a config |
@@ -117,7 +134,7 @@ sale de un export actual de `config.ts` salvo los marcados NUEVO.
 | `qualityBadges` | `QUALITY_BADGES` | §10 — devolución 30 días (10 legales), garantía |
 | `certifications` | `CERTIFICATIONS` | igual que soporte o `enabled: false` |
 | `trustPillars` | `TRUST_PILLARS` | igual |
-| `bundles` | `BUNDLES` | 3 bundles, `productId`/`fallbackVariantId` = `'…/PARASOL_X1_TODO'`, precios placeholder |
+| `bundles` | `BUNDLES` | 3 bundles, `productId`/`fallbackVariantId` = **`''`** (ver §7), precios placeholder, + campo `image` por bundle (ver abajo) |
 | `upsellChain` | `UPSELL_CHAIN` | deriva de `bundles` (parasol no tiene x4–x6 por ahora) |
 | `whatsapp` (override texto CTA) | `WHATSAPP` | `WhatsAppFloat` acepta texto vía prop; "Consultanos por tu Parasol PRO" |
 | `metadata` | cada `page.tsx` | `{ title, description, ogTitle, ogDescription, canonical: '/parasol' }` |
@@ -182,24 +199,81 @@ los `id` se mantienen en soporte. Para `/parasol` hay dos opciones:
 
 ## 7. Carrito
 
-- `CartProvider` gana props `bundles?` / `upsellChain?` (default: soporte).
-- `buildTiers(bundlesData, livePrices, chain = UPSELL_CHAIN)` — firma nueva,
-  parámetro opcional al final.
-- `lib/tiers.ts` deja de depender solo del import de `UPSELL_CHAIN`.
+### 7.1 Parametrización
+
+- `buildTiers(bundlesData, livePrices, chain = UPSELL_CHAIN)` — parámetro
+  opcional al final.
+- `CartProvider` gana prop `upsellChain?` (default: soporte).
 - `nextTierOf`, `tierOf`, `upsellDelta`, `upsellExtraUnits` — sin cambios
   (operan sobre el array ya resuelto).
-- `BuyButton` — sin cambios (ya 100% props). Con `variantId` placeholder
-  (`''` tras el resolve fallido, o el GID `_TODO`), muestra "Producto no
-  disponible. Recargá la página o escribinos por WhatsApp." — comportamiento
-  correcto y deseado para el scaffold.
-- `app/parasol/page.tsx` llama `getBundlesData` con los IDs placeholder: la
-  query devuelve `nodes: [null, null, null]`, se cae a fallbacks, no tira error.
+- `CartProvider` usa hoy `BRAND.tagline` como `content_name` del tracking
+  (`addTier`, `upgradeLine`, `checkout`). Gana prop `productName?` para no
+  reportar "Soporte Magnético PRO™" desde `/parasol`.
+- `BuyButton` — sin cambios (ya 100% props).
 
-## 8. SEO / metadata
+### 7.2 Placeholders: string vacío, NO un GID falso
+
+**Decisión crítica.** `BuyButton` resuelve la disponibilidad con
+`const unavailable = !variantId`. Un GID placeholder tipo
+`'gid://shopify/Product/PARASOL_X1_TODO'` es un string **truthy**:
+
+- el botón queda **habilitado**,
+- al click dispara `cartCreate` contra un merchandise inexistente,
+- el drawer muestra *"No pudimos agregar el producto. Reintentá en un
+  momento"* — un error transitorio engañoso.
+
+Por eso `productId` y `fallbackVariantId` de los 3 bundles del parasol van en
+**`''`**. En `Pricing`, `shopifyData?.variantId ?? b.fallbackVariantId` resuelve
+a `''` → `unavailable = true` → botón deshabilitado con el mensaje correcto
+("Producto no disponible. Recargá la página o escribinos por WhatsApp").
+
+Además, `app/parasol/page.tsx` **filtra los productIds vacíos antes de llamar a
+`getBundlesData`** y omite la llamada si no queda ninguno. Motivo: con un GID
+malformado la Storefront API devuelve un **error top-level** (no un nodo
+`null`), que haría tirar a `shopifyFetch`, ensuciar cada build con un error y
+gastar una request al pedo. Con IDs vacíos filtrados, el caso ni se presenta.
+
+Cuando existan los productos reales, se reemplazan los `''` por los GIDs y todo
+el flujo (fetch, precios vivos, upsell, checkout) funciona sin más cambios.
+
+### 7.3 Carrito compartido entre landings
+
+El `cart_id` vive en un único `localStorage` (`carmania_cart_id`), así que el
+carrito **persiste entre `/` y `/parasol`**. Si `buildTiers` recibiera solo la
+chain de la página actual, una línea del otro producto caería en
+`tierOf() → null` y **perdería su banner de upsell** (verificado en
+`CartDrawer.tsx:180-183` — degrada sin romper, pero el upsell desaparece).
+
+**Solución:** las dos páginas (y `/tienda`) pasan la **unión** de las chains
+(soporte + parasol) a `getBundlesData` y a `buildTiers`. Costo: los productIds
+de ambos productos en una sola query de build. Beneficio: el drawer resuelve
+tiers correctamente sin importar en qué página se abra.
+
+Mientras el parasol tenga IDs vacíos, la unión es efectivamente la del soporte
+(los vacíos se filtran), así que esto no cambia nada hasta que existan los
+productos.
+
+### 7.4 Imágenes de bundle
+
+`Pricing` arma hoy la foto por índice: `` `/bundles/BundleX${index}.webp` ``.
+Cada bundle gana un campo **`image`** en config, y `BundleImage` pasa a recibir
+la ruta en vez de calcularla. Soporte conserva sus rutas actuales (output
+idéntico); parasol apunta a `/parasol/bundles/ParasolX{1,2,3}.webp`.
+
+## 8. SEO / metadata / performance
 
 - `app/parasol/page.tsx` → `metadata` con title/description/OG del doc y
   `alternates.canonical: '/parasol'`. Hereda `robots: { index: true }` del
   layout (el doc quiere que se indexe).
+- **`export const revalidate = 300`** — mismo valor que `/` y `/tienda`. De
+  adorno mientras Cloudflare no corra ISR (ver CLAUDE.md → Gotchas), pero
+  consistente.
+- **LCP:** `app/page.tsx` hace `ReactDOM.preload()` del poster del hero, con un
+  comentario explícito de que se sacó del layout raíz justo para no precargarlo
+  en `/tienda`, donde competía contra el LCP real. `/parasol` debe hacer **su
+  propio** `ReactDOM.preload()` apuntando a `config.heroMedia.poster`
+  (`as: 'image'`, `fetchPriority: 'high'`, `type: 'image/webp'`). Sin esto la
+  landing nueva arranca con peor LCP que la del soporte.
 - `app/sitemap.ts` → nueva entrada
   `https://oferta.carmaniaoficial.com/parasol`, `priority: 0.9`.
 - `robots.ts` — sin cambios (`allow: '/'` ya cubre `/parasol`).
@@ -233,10 +307,15 @@ Mientras los assets no existan, los componentes ya degradan a placeholder
 2. `npm run build` — OK.
 3. `npm run dev` → `/` y `/tienda`: diff visual, **sin cambios** (defaults
    intactos). Comparar screenshots contra `main`.
-4. `/parasol`: 11 secciones renderizan, sin errores de consola. Carrito muestra
-   estado "no disponible" en los 3 botones. Meta Pixel dispara `PageView` +
+4. `/parasol`: 11 secciones renderizan, sin errores de consola. Los 3 botones de
+   compra están **deshabilitados** mostrando "Producto no disponible" (no
+   habilitados tirando error de carrito). Meta Pixel dispara `PageView` +
    `ViewContent`.
-5. Screenshots de `/parasol` (desktop + mobile) y de `/` para el commit.
+5. **Carrito cruzado:** agregar un soporte desde `/`, navegar a `/parasol`,
+   abrir el drawer → la línea del soporte conserva su banner de upsell.
+6. **Build limpio:** `npm run build` sin errores de Shopify en el log
+   (confirma que el filtro de IDs vacíos funciona).
+7. Screenshots de `/parasol` (desktop + mobile) y de `/` para el commit.
 
 ## 12. Fuera de alcance
 
@@ -254,6 +333,9 @@ Mientras los assets no existan, los componentes ya degradan a placeholder
 | Riesgo | Mitigación |
 |---|---|
 | Regresión visual en `/` al parametrizar 32 archivos | Prop `config` con default = soporte → output idéntico. `tsc` + diff visual de screenshots obligatorio. |
+| Import circular `config.ts` ↔ `landings/*.ts` | Regla unidireccional de §3.2, verificada por `tsc`. `TierId` se muda a `types.ts`. |
 | `config.ts` re-export mal armado rompe imports | Migración incremental; el re-export mantiene compat mientras tanto. |
-| `getBundlesData` con IDs placeholder tira error y rompe el build de `/parasol` | La query `nodes(ids:)` devuelve `null` para IDs inexistentes, no error. `try/catch` ya presente cae a fallbacks. Verificar en build. |
+| GIDs placeholder truthy habilitan el botón de compra y tiran error de carrito | Placeholders en `''`, no GIDs falsos (§7.2). Filtrar IDs vacíos antes de `getBundlesData`. |
+| Línea del otro producto pierde el upsell en el carrito compartido | Pasar la unión de ambas chains a `buildTiers` en las tres páginas (§7.3). |
+| `/parasol` con peor LCP que `/` | `ReactDOM.preload()` propio del poster (§8). Medir con Lighthouse antes de publicar. |
 | Anclas duplicadas entre `/` y `/parasol` | Son páginas distintas, mismo `id` en cada una no colisiona. El `Navbar` de parasol apunta a los anclas locales. |
