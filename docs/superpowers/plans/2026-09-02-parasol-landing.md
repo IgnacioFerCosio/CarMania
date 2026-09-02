@@ -22,15 +22,27 @@
 - **No pushear.** Ignacio ordena el push (cada push = redeploy de producción). Commitear es libre.
 - **Branch:** `feat/parasol-landing` (ya creada, con el spec commiteado).
 - **Idioma del copy:** español rioplatense (voseo), igual que la landing del soporte.
-- **Mensajes de commit:** terminan con `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`.
+- **Mensajes de commit:** terminan con la línea `Co-Authored-By:` que te indique el controller en el dispatch (cambia por modelo). Si no te la pasa: `Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>`.
 
-### Gate de regresión (se usa en todas las tareas 1-6)
+### Gate de regresión (se usa en todas las tareas 1-8)
 
-Antes de empezar la Tarea 1, se captura un baseline del HTML prerenderizado de `/` y `/tienda`. Después de cada tarea se rebuildea y se compara. **Diff vacío = `/` no cambió.**
+El controller ya capturó el baseline del HTML prerenderizado de `/` y `/tienda` (Task 0), en `.superpowers/sdd/baseline/{index,tienda}.html`, y dejó el script del gate en `.superpowers/sdd/gate.sh`.
 
-Normalización necesaria: los nombres de chunk de `/_next/static/...` llevan hash de contenido y cambian en cada build aunque el render sea idéntico, así que se colapsan antes de comparar.
+**Comando único del gate** (corré esto donde el plan diga "gate de regresión"):
 
-**Caveat:** `.env.local` existe, así que el build pega a Shopify en vivo. Si el diff muestra **solo** diferencias de precio, es Shopify, no el refactor — re-capturá el baseline y seguí.
+```bash
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
+```
+
+Imprime `OK index` / `OK tienda` si esas dos páginas no cambiaron, o `DIFF <página>` con la línea de `diff` para inspeccionar. El script ya normaliza lo no determinista (hashes de `/_next/static/`, `buildId`, hash de la clase de fuente).
+
+Para **re-capturar** el baseline (solo cuando el plan lo diga explícitamente, p. ej. Task 4):
+
+```bash
+bash .superpowers/sdd/gate.sh capture
+```
+
+**Caveat:** `.env.local` existe, así que el build pega a Shopify en vivo. Si el `DIFF` muestra **solo** diferencias de precio en las cards de pricing, es Shopify moviéndose, no tu cambio — re-capturá el baseline y seguí. Cualquier otra diferencia es una regresión real.
 
 ---
 
@@ -60,70 +72,16 @@ Normalización necesaria: los nombres de chunk de `/_next/static/...` llevan has
 
 ---
 
-## Task 0: Capturar el baseline de regresión
+## Task 0: Capturar el baseline de regresión — HECHA POR EL CONTROLLER
 
-**Files:**
-- Create: `.gitignore` entry no hace falta (el baseline va al scratchpad, fuera del repo)
+Ya está. El controller:
 
-**Interfaces:**
-- Produces: dos archivos de baseline normalizados en el scratchpad, que las tareas 1-6 consumen para el diff.
+1. Verificó árbol limpio en `feat/parasol-landing`.
+2. Buildeó (`✓ Compiled successfully`; `/` = 5.14 kB / 119 kB First Load, `/tienda` = 209 B / 112 kB).
+3. Escribió `.superpowers/sdd/gate.sh` (normaliza `/_next/static/` hashes, `buildId`, y el hash de la clase de fuente) y capturó el baseline en `.superpowers/sdd/baseline/{index,tienda}.html` (2207 líneas normalizadas).
+4. Verificó que el gate es determinista: dos rebuilds consecutivos del código sin cambios dan `OK index` / `OK tienda`.
 
-- [ ] **Step 1: Confirmar que el árbol está limpio y en la branch correcta**
-
-```bash
-git status --short && git branch --show-current
-```
-
-Expected: sin salida de `status` (limpio), y `feat/parasol-landing`.
-
-- [ ] **Step 2: Build de baseline**
-
-```bash
-npm run build
-```
-
-Expected: `✓ Compiled successfully`. Anotá los tamaños de ruta que imprime — sirven de referencia después.
-
-- [ ] **Step 3: Localizar los HTML prerenderizados**
-
-```bash
-ls -la .next/server/app/*.html
-```
-
-Expected: al menos `index.html` y `tienda.html`. Si los nombres difieren, usá los que aparezcan y ajustá los pasos siguientes.
-
-- [ ] **Step 4: Guardar el baseline normalizado**
-
-El `sed` colapsa las URLs de `/_next/static/...` (llevan hash de build y cambian siempre).
-
-```bash
-BASE="$CLAUDE_SCRATCHPAD"; mkdir -p "$BASE/baseline"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "$BASE/baseline/$f.html"
-done
-wc -l "$BASE/baseline/"*.html
-```
-
-Expected: dos archivos con miles de líneas cada uno.
-
-> Si `$CLAUDE_SCRATCHPAD` no está seteada, usá la ruta del scratchpad de la sesión que figura en el system prompt y reemplazala en todos los pasos que la mencionen.
-
-- [ ] **Step 5: Verificar que el gate funciona (build sin cambios ⇒ diff vacío)**
-
-```bash
-npm run build >/dev/null 2>&1
-BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
-```
-
-Expected: `OK index` y `OK tienda`.
-
-Si alguno difiere sin haber cambiado código, el gate no es confiable: inspeccioná el diff (`diff $BASE/baseline/index.html /tmp/index.now.html | head -40`), extendé la normalización del `sed` a lo que sea no determinista, y repetí hasta que dé `OK`. **No sigas a la Tarea 1 sin un gate que dé `OK`.**
+Los implementers de las tareas 1-8 corren el gate con `npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh`.
 
 ---
 
@@ -408,12 +366,7 @@ Expected: sin salida (0 errores). Si aparece `Type 'readonly [...]' is not assig
 - [ ] **Step 5: Gate de regresión**
 
 ```bash
-npm run build && BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
 ```
 
 Expected: `OK index`, `OK tienda`.
@@ -432,7 +385,7 @@ global de marca y re-exporta los simbolos product-especificos desde
 tocarse. Los valores no cambian: el HTML prerenderizado de / y /tienda es
 identico al del commit anterior.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -539,12 +492,7 @@ Expected: sin salida.
 - [ ] **Step 4: Gate de regresión**
 
 ```bash
-npm run build && BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
 ```
 
 Expected: `OK index`, `OK tienda`.
@@ -573,7 +521,7 @@ tracking) por parametro, con default en la del soporte. Habilita que una
 segunda landing use su propia escalera de bundles sin tocar la logica de
 tiers, que sigue siendo puramente posicional.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -693,12 +641,7 @@ Y en el llamador: `<HeroMedia media={heroMedia} />`.
 - [ ] **Step 4: Type check + gate de regresión**
 
 ```bash
-npx tsc --noEmit && npm run build && BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
 ```
 
 Expected: `OK index`, `OK tienda`. Un diff acá casi seguro es el `highlight()` produciendo nodos distintos — comparalo con `diff ... | head -20`.
@@ -714,7 +657,7 @@ HEADLINES.heroBadge; ahora sale de config.heroMedia. Las keywords del
 resaltado del subtitulo, que estaban fijas en el JSX como /(MagSafe|GPS)/,
 pasan a config.heroSubHighlights.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -801,7 +744,7 @@ function BundleImage({
 }
 ```
 
-> **Ojo:** el `alt` de hoy es `` `Bundle opción ${index}` ``. Cambiarlo a `b.label` mejora la accesibilidad pero **hace fallar el gate de HTML**. Es un cambio deliberado y deseable. Cuando el diff aparezca, confirmá que las **únicas** líneas distintas son los tres `alt`, y re-capturá el baseline (Step 5).
+> **Ojo:** el `alt` de hoy es `` `Bundle opción ${index}` ``. Cambiarlo a `b.label` mejora la accesibilidad pero **hace fallar el gate de HTML**. Es un cambio deliberado y deseable. Cuando el `DIFF` aparezca, confirmá que las **únicas** líneas distintas son los tres `alt`, y re-capturá el baseline.
 
 El parámetro `idx` del `.map` queda sin uso — sacalo de la firma para que no falle el lint.
 
@@ -816,23 +759,19 @@ Expected: compila sin errores.
 - [ ] **Step 5: Verificar el diff acotado y re-capturar el baseline**
 
 ```bash
-BASE="$CLAUDE_SCRATCHPAD"
-sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-  .next/server/app/index.html > /tmp/index.now.html
-diff "$BASE/baseline/index.html" /tmp/index.now.html
+bash .superpowers/sdd/gate.sh
+diff .superpowers/sdd/baseline/index.html /tmp/gate-index.html
 ```
 
-Expected: solo diferencias en los `alt` de las 3 imágenes de bundle (`Bundle opción 1|2|3` → `LLEVÁ 1|2|3`). **Si aparece cualquier otra cosa, es una regresión — arreglala antes de seguir.**
+Expected: el gate marca `DIFF index`, y el `diff` muestra **solo** diferencias en los `alt` de las 3 imágenes de bundle (`Bundle opción 1|2|3` → `LLEVÁ 1|2|3`). `tienda` debe seguir en `OK`. **Si aparece cualquier otra cosa, es una regresión — arreglala antes de seguir.**
 
-Con el diff confirmado como intencional, re-capturá:
+Con el diff confirmado como intencional, re-capturá el baseline (queda alineado para las tareas 5-8):
 
 ```bash
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "$BASE/baseline/$f.html"
-done
-echo "baseline actualizado"
+bash .superpowers/sdd/gate.sh capture && bash .superpowers/sdd/gate.sh
 ```
+
+Expected: `OK index` / `OK tienda` tras re-capturar.
 
 - [ ] **Step 6: Commit**
 
@@ -845,7 +784,7 @@ La imagen dejaba de calcularse por indice (/bundles/BundleX{i}.webp) y pasa
 a ser un campo del bundle, para que otra landing apunte a las suyas. De paso
 el alt deja de ser 'Bundle opcion N' y usa el label de la card.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -906,12 +845,7 @@ Expected: compila sin errores.
 - [ ] **Step 4: Gate de regresión**
 
 ```bash
-BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
 ```
 
 Expected: `OK index`, `OK tienda`.
@@ -933,7 +867,7 @@ de Reviews, FAQ, CarBrands y el bloque de Benefits) pasa a sectionCopy, y los
 videos de HowItWorks dejan de vivir en una constante del componente para ser
 un campo de cada paso.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -1029,7 +963,7 @@ Headline grande con palabra en accent + parrafo, centrado y sin listas. Cubre
 los dos bloques de argumentacion de la landing del parasol que no matcheaban
 ningun componente existente.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -1350,7 +1284,7 @@ existen en Shopify: asi el BuyButton queda deshabilitado mostrando 'Producto
 no disponible' en vez de habilitarse contra un merchandise inexistente.
 Precios, media y resenas son placeholders marcados con TODO.
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -1600,12 +1534,7 @@ Expected: compila, y en la tabla de rutas aparece `/parasol`. **El log no debe t
 - [ ] **Step 7: Gate de regresión**
 
 ```bash
-BASE="$CLAUDE_SCRATCHPAD"
-for f in index tienda; do
-  sed -E 's#/_next/static/[^"'"'"']*#/_next/static/NORM#g' \
-    ".next/server/app/$f.html" > "/tmp/$f.now.html"
-  diff -q "$BASE/baseline/$f.html" "/tmp/$f.now.html" && echo "OK $f"
-done
+npx tsc --noEmit && npm run build && bash .superpowers/sdd/gate.sh
 ```
 
 Expected: `OK index`, `OK tienda`.
@@ -1627,7 +1556,7 @@ con la config del parasol. Detalles que no son obvios:
   carrito persiste entre paginas y con una sola chain la linea del otro
   producto perdia su banner de upsell
 
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>"
 ```
 
 ---
