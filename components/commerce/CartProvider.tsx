@@ -30,7 +30,8 @@ import {
 import { getVariantsByIds, type BundleData, type VariantPrice } from '@/lib/shopify';
 import { buildTiers, nextTierOf, type ResolvedTier } from '@/lib/tiers';
 import { track } from '@/lib/tracking';
-import { BRAND } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { UpsellTier } from '@/lib/landings/types';
 
 const STORAGE_KEY = 'carmania_cart_id';
 /** Dónde guardamos los parámetros de campaña de la visita. */
@@ -64,9 +65,13 @@ export function useCart() {
 
 export function CartProvider({
   bundlesData,
+  upsellChain = SOPORTE.upsellChain,
+  productName = SOPORTE.brand.tagline,
   children,
 }: {
   bundlesData: Record<string, BundleData>;
+  upsellChain?: readonly UpsellTier[];
+  productName?: string;
   children: React.ReactNode;
 }) {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -80,8 +85,8 @@ export function CartProvider({
 
   // Precios del build como base; el refetch client-side los pisa cuando llega.
   const tiers = useMemo(
-    () => buildTiers(bundlesData, livePrices),
-    [bundlesData, livePrices],
+    () => buildTiers(bundlesData, livePrices, upsellChain),
+    [bundlesData, livePrices, upsellChain],
   );
 
   // ── Guardar los parámetros de campaña de la visita ────────────────────────
@@ -251,7 +256,7 @@ export function CartProvider({
 
         const params = {
           content_ids: [variantId],
-          content_name: added?.productTitle ?? BRAND.tagline,
+          content_name: added?.productTitle ?? productName,
           value: added?.lineTotal ?? 0,
           num_items: 1,
         };
@@ -309,7 +314,7 @@ export function CartProvider({
 
         const params = {
           content_ids: [nextVariantId],
-          content_name: swapped?.productTitle ?? BRAND.tagline,
+          content_name: swapped?.productTitle ?? productName,
           value: swapped?.lineTotal ?? 0,
           num_items: 1,
         };
@@ -347,7 +352,7 @@ export function CartProvider({
     if (!cart) return;
     const params = {
       content_ids: cart.lines.map((l) => l.merchandiseId),
-      content_name: BRAND.tagline,
+      content_name: productName,
       value: cart.total,
       num_items: cart.totalQuantity,
     };
