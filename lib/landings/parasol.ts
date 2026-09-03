@@ -199,12 +199,12 @@ export const PARASOL = {
    * placeholder de gradiente (ver docs/superpowers/specs/parasol-assets.md).
    */
   useCases: [
-    { label: 'MENOS CALOR', image: '/parasol/use-cases/calor.jpg', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
-    { label: 'MENOS RAJADURAS', image: '/parasol/use-cases/tablero.jpg', alt: 'Tablero protegido del sol, sin plásticos rajados' },
-    { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.jpg', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
-    { label: 'VOLANTE FRESCO', image: '/parasol/use-cases/volante.jpg', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
-    { label: 'MÁS FRESCO AL SUBIR', image: '/parasol/use-cases/aire.jpg', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },
-    { label: 'MENOS DECOLORACIÓN', image: '/parasol/use-cases/tapizados.jpg', alt: 'Asientos y tapizados sin decolorar por el sol' },
+    { label: 'MENOS CALOR', image: '/parasol/use-cases/calor.webp', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
+    { label: 'MENOS RAJADURAS', image: '/parasol/use-cases/tablero.webp', alt: 'Tablero protegido del sol, sin plásticos rajados' },
+    { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.webp', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
+    { label: 'VOLANTE FRESCO', image: '/parasol/use-cases/volante.webp', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
+    { label: 'MÁS FRESCO AL SUBIR', image: '/parasol/use-cases/aire.webp', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },
+    { label: 'MENOS DECOLORACIÓN', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
   ],
   steps: [
     {

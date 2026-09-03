@@ -13,13 +13,10 @@ Todo bajo `/public/parasol/`.
 
 - ✅ `hero/parasol-hero.webp` — imagen del producto, LCP (PNG 5.5MB → webp 43KB, 1600×1600)
 - ✅ `how-to-use/01-sacalo-de-la-funda.mp4` · `02-abrilo-como-paraguas.mp4` · `03-encajalo-parabrisas.mp4` — re-encodeados H.264 sin audio, 720×720, ~0.6–1MB c/u (fuente ~7MB c/u)
+- ✅ `use-cases/{calor,tablero,privacidad,volante,aire,tapizados}.webp` — 6 fotos del grid (generadas con Gemini, optimizadas 800px webp, 33–83KB c/u)
 
 **Pendientes:**
 
-- `use-cases/{calor,tablero,privacidad,volante,aire,tapizados}.jpg` — 6 fotos del
-  grid "menos calor / menos desgaste". Hoy caen al placeholder (gradiente +
-  inicial). `next/image` tira un `400` en consola por cada una hasta que existan
-  — cosmético, no rompe nada.
 - `bundles/ParasolX1.webp`, `ParasolX2.webp`, `ParasolX3.webp` — fotos de las cards de pricing.
 - reviews (opcional)
 
@@ -40,7 +37,7 @@ que `/parasol` reciba tráfico**.
 - [ ] `productId` + `fallbackVariantId` reales de Shopify (los 3) — hoy en `''`
 - [x] Imagen del hero — `hero/parasol-hero.webp`
 - [x] 3 videos de `HowItWorks`
-- [ ] 6 fotos del grid de casos de uso — `use-cases/{calor,tablero,privacidad,volante,aire,tapizados}.jpg`
+- [x] 6 fotos del grid de casos de uso — `use-cases/*.webp`
 - [ ] 3 fotos de bundle
 - [ ] **Reseñas reales** — reemplazar las inventadas de §4.1
 - [ ] **`socialProofCount` / `socialProofLabel` reales** — hoy "Miles de autos protegidos"
