@@ -68,7 +68,8 @@ export const HEADLINES = {
  * Media del hero — antes hardcodeado en Hero.tsx (video, poster, badge).
  */
 export const HERO_MEDIA = {
-  videoSrc: '/hero/VideoPrincipal.mp4',
+  kind: 'video',
+  src: '/hero/VideoPrincipal.mp4',
   poster: '/hero/VideoPrincipal-poster.webp',
   width: 720,
   height: 1280,
@@ -93,7 +94,22 @@ export const SECTION_COPY = {
   faqTitle: 'Respondemos lo que más nos preguntan',
   carBrandsTitle: 'Compatible con',
   carBrandsTitleAccent: 'cualquier auto',
+  useCasesTitle: 'Un soporte. Todos los lugares.',
+  useCasesPrefix: 'Para',
 } as const;
+
+/**
+ * Grid de casos de uso — antes `USE_CASES` en lib/config.ts. Las fotos viven
+ * en /public/use-cases/.
+ */
+export const USE_CASES = [
+  { label: 'AUTO', image: '/use-cases/auto.jpg', alt: 'Soporte usado para AUTO' },
+  { label: 'VIAJES', image: '/use-cases/viajes.jpg', alt: 'Soporte usado para VIAJES' },
+  { label: 'TRABAJO', image: '/use-cases/trabajo.jpg', alt: 'Soporte usado para TRABAJO' },
+  { label: 'GYM', image: '/use-cases/gym.jpg', alt: 'Soporte usado para GYM' },
+  { label: 'ESPEJO', image: '/use-cases/espejo.jpg', alt: 'Soporte usado para ESPEJO' },
+  { label: 'COCINA', image: '/use-cases/cocina.jpg', alt: 'Soporte usado para COCINA' },
+] as const;
 
 /**
  * Marcas de autos compatibles. Por ahora son nombres en texto.
@@ -504,6 +520,7 @@ export const SOPORTE = {
   heroMedia: HERO_MEDIA,
   heroSubHighlights: HERO_SUB_HIGHLIGHTS,
   sectionCopy: SECTION_COPY,
+  useCases: USE_CASES,
   carBrands: CAR_BRANDS,
   steps: STEPS_V2,
   benefits: BENEFITS,

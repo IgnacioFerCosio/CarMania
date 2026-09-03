@@ -15,6 +15,7 @@ import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { PitchBlock } from '@/components/sections/PitchBlock';
+import { UseCases } from '@/components/sections/UseCases';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { Benefits } from '@/components/sections/Benefits';
@@ -60,9 +61,10 @@ const PARASOL_LINKS: NavLink[] = [
 ];
 
 export default async function ParasolPage() {
-  // El poster del video del hero es el LCP de ESTA página. `ReactDOM.preload()`
-  // (vs. un <link> JSX) es lo que lo hoistea cerca del principio de <head>.
-  ReactDOM.preload(PARASOL.heroMedia.poster, {
+  // La imagen del hero (`heroMedia.src`, un webp) es el LCP de ESTA página.
+  // `ReactDOM.preload()` (vs. un <link> JSX) la hoistea cerca del principio de
+  // <head>. Apunta al archivo real — el <img> del hero también, sin doble fetch.
+  ReactDOM.preload(PARASOL.heroMedia.src, {
     as: 'image',
     fetchPriority: 'high',
     type: 'image/webp',
@@ -107,18 +109,42 @@ export default async function ParasolPage() {
       <Navbar links={PARASOL_LINKS} homeHref="#top" ctaHref="#pricing" />
 
       <main>
+        {/* 1. Hero */}
         <Hero config={PARASOL} />
-        <PitchBlock data={PARASOL.pitchBlocks[0]} />
-        <CarBrands config={PARASOL} />
+
+        {/* "TU AUTO YA NO ES UN HORNO" — desactivado por ahora, no borrar.
+        <PitchBlock data={PARASOL.pitchBlocks[0]} /> */}
+
+        {/* 2. Grid de problemas que resuelve el parasol */}
+        <UseCases config={PARASOL} />
+
+        {/* 3. Cómo funciona (3 videos) */}
         <HowItWorks config={PARASOL} />
-        <Benefits config={PARASOL} />
+
+        {/* 4. Compatibilidad — "Se adapta a cualquier parabrisas" */}
+        <CarBrands config={PARASOL} />
+
+        {/* 5. vs. la alternativa mala — "el parasol de cartón" */}
         <PitchBlock data={PARASOL.pitchBlocks[1]} />
+
+        {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={PARASOL} />
+
+        {/* 7. Specs / "Pensado para el sol argentino" — debajo del pricing */}
+        <Benefits config={PARASOL} />
+
+        {/* 8. Reseñas */}
         <Reviews config={PARASOL} />
+
+        {/* 9. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={PARASOL} />
         </div>
+
+        {/* 10. FAQ */}
         <FAQ config={PARASOL} />
+
+        {/* 11. CTA final */}
         <BackToPricingCTA config={PARASOL} />
       </main>
 

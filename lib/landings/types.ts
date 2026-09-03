@@ -77,13 +77,24 @@ export type PitchBlockData = {
 };
 
 export type HeroMedia = {
-  videoSrc: string;
-  poster: string;
-  /** Dimensiones intrínsecas del video, para reservar el espacio. */
+  /** 'video' → <video src poster>; 'image' → <Image src> (sin poster). */
+  kind: 'video' | 'image';
+  /** URL del video o de la imagen, según `kind`. */
+  src: string;
+  /** Poster del video (primer frame). Sólo aplica a `kind: 'video'`. */
+  poster?: string;
+  /** Dimensiones intrínsecas del media, para reservar el espacio. */
   width: number;
   height: number;
   badgeLine1: string;
   badgeLine2: string;
+};
+
+export type UseCase = {
+  label: string;
+  image: string;
+  /** alt de la foto — cada landing lo redacta a su producto. */
+  alt: string;
 };
 
 export type SectionCopy = {
@@ -96,6 +107,10 @@ export type SectionCopy = {
   faqTitle: string;
   carBrandsTitle: string;
   carBrandsTitleAccent: string;
+  /** Título del grid de casos de uso; la última palabra va en accent. */
+  useCasesTitle: string;
+  /** Prefijo de cada label del grid ('Para' en el soporte, '' en el parasol). */
+  useCasesPrefix: string;
 };
 
 export type CarBrand = {
@@ -134,6 +149,8 @@ export type LandingConfig = {
   /** Términos de `heroSub` que se pintan en accent. */
   heroSubHighlights: string[];
   sectionCopy: SectionCopy;
+  /** Grid "dónde/para qué" (componente UseCases). */
+  useCases: readonly UseCase[];
   carBrands: CarBrand[];
   steps: readonly Step[];
   benefits: readonly Benefit[];

@@ -120,20 +120,6 @@ export const MEDIA_FEATURED = {
 } as const;
 
 /**
- * Grid de "Un soporte, todos los lugares" — 6 cards con imagen de fondo
- * + label de categoría. Las imágenes las cargás en /public/use-cases/.
- * Si la imagen no existe, se muestra un placeholder con gradiente.
- */
-export const USE_CASES = [
-  { label: 'AUTO', image: '/use-cases/auto.jpg' },
-  { label: 'VIAJES', image: '/use-cases/viajes.jpg' },
-  { label: 'TRABAJO', image: '/use-cases/trabajo.jpg' },
-  { label: 'GYM', image: '/use-cases/gym.jpg' },
-  { label: 'ESPEJO', image: '/use-cases/espejo.jpg' },
-  { label: 'COCINA', image: '/use-cases/cocina.jpg' },
-] as const;
-
-/**
  * Superficies compatibles — strip horizontal de 6 fotos lifestyle
  * mostrando dónde se adhiere el soporte. Sección "Un soporte, cualquier
  * superficie" que va debajo de Pricing.

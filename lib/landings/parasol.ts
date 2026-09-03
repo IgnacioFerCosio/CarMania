@@ -168,10 +168,11 @@ export const PARASOL = {
       'Verano tras verano de dejar el auto al rayo del sol. Cada detalle está pensado para que no se convierta en un horno.',
   },
   heroMedia: {
-    videoSrc: '/parasol/hero/parasol-video.mp4',
-    poster: '/parasol/hero/parasol-video-poster.webp',
-    width: 720,
-    height: 1280,
+    // Imagen (no video): render del producto. Es el LCP de /parasol.
+    kind: 'image',
+    src: '/parasol/hero/parasol-hero.webp',
+    width: 1600,
+    height: 1600,
     badgeLine1: 'SE ABRE EN',
     badgeLine2: '3 SEGUNDOS',
   },
@@ -186,28 +187,43 @@ export const PARASOL = {
     faqTitle: 'Respondemos lo que más nos preguntan',
     carBrandsTitle: 'Se adapta a',
     carBrandsTitleAccent: 'cualquier parabrisas',
+    useCasesTitle: 'Menos calor. Menos desgaste.',
+    // Sin prefijo "Para": los labels ya son frases ("MENOS CALOR", etc.).
+    useCasesPrefix: '',
   },
   // Misma lista de logos de marcas que el soporte (reuso deliberado; la
   // extracción a un módulo compartido es una limpieza posterior).
   carBrands: SOPORTE.carBrands,
+  /**
+   * Grid de problemas que resuelve el parasol. Fotos pendientes — hoy caen al
+   * placeholder de gradiente (ver docs/superpowers/specs/parasol-assets.md).
+   */
+  useCases: [
+    { label: 'MENOS CALOR', image: '/parasol/use-cases/calor.jpg', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
+    { label: 'MENOS RAJADURAS', image: '/parasol/use-cases/tablero.jpg', alt: 'Tablero protegido del sol, sin plásticos rajados' },
+    { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.jpg', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
+    { label: 'VOLANTE FRESCO', image: '/parasol/use-cases/volante.jpg', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
+    { label: 'MÁS FRESCO AL SUBIR', image: '/parasol/use-cases/aire.jpg', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },
+    { label: 'MENOS DECOLORACIÓN', image: '/parasol/use-cases/tapizados.jpg', alt: 'Asientos y tapizados sin decolorar por el sol' },
+  ],
   steps: [
     {
       n: 1,
       title: 'Sacalo de la funda',
       desc: 'Viene con su propia funda compacta, entra en la guantera o la puerta sin ocupar espacio.',
-      video: '/parasol/how-to-use/01-funda.mp4',
+      video: '/parasol/how-to-use/01-sacalo-de-la-funda.mp4',
     },
     {
       n: 2,
       title: 'Abrilo como un paraguas',
       desc: 'Un solo movimiento y se despliega completo — no hay que armar piezas ni acomodar varillas.',
-      video: '/parasol/how-to-use/02-abrir.mp4',
+      video: '/parasol/how-to-use/02-abrilo-como-paraguas.mp4',
     },
     {
       n: 3,
       title: 'Encajalo en el parabrisas',
       desc: 'Se acomoda por dentro, sostenido por los mismos paños de sol del auto. Sin ventosas, sin pegamento, sin dejar marcas.',
-      video: '/parasol/how-to-use/03-encajar.mp4',
+      video: '/parasol/how-to-use/03-encajalo-parabrisas.mp4',
     },
   ],
   benefits: [

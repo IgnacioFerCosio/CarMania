@@ -155,18 +155,35 @@ function HeroMedia({ media }: { media: LandingConfig['heroMedia'] }) {
       id="hero-media"
       className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-white/5 md:aspect-auto md:h-full"
     >
-      <video
-        src={media.videoSrc}
-        poster={media.poster}
-        autoPlay={true}
-        muted={true}
-        loop={true}
-        playsInline={true}
-        preload="metadata"
-        width={media.width}
-        height={media.height}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      {media.kind === 'image' ? (
+        // <img> plano (no next/image): en Cloudflare `/_next/image` no optimiza
+        // — pasar por ahí sería un salto extra en el camino del LCP y además
+        // desalinearía el `ReactDOM.preload()` de la página (que apunta al
+        // archivo real). `fetchPriority="high"` porque es el LCP.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={media.src}
+          alt=""
+          width={media.width}
+          height={media.height}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <video
+          src={media.src}
+          poster={media.poster}
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+          preload="metadata"
+          width={media.width}
+          height={media.height}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
 
       <div
         aria-hidden="true"
