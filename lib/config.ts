@@ -427,29 +427,83 @@ export const STORE_SECTIONS = {
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const INSTAGRAM = {
-  handle: '@carmaniaoficial', // TODO: confirmar el handle real
-  url: 'https://www.instagram.com/carmaniaoficial/', // TODO: confirmar
+  handle: '@carmania.ar',
+  url: 'https://www.instagram.com/carmania.ar/',
   // Línea de arriba de la grilla. Con `count` cargado se arma
   // "Sumate a los 12K que nos siguen en @handle"; con `count` en '' cae a
   // `leadPlain`. Dejalo vacío hasta tener el número real de seguidores.
-  count: '',
+  count: '', // TODO: seguidores reales, si querés publicarlos
   leadBefore: 'Sumate a los',
   leadAfter: 'que nos siguen en',
   leadPlain: 'Seguinos en',
+  /**
+   * Los archivos salen de las fotos del perfil, recortadas a 600x600 con el
+   * smart-crop de sharp y pasadas a webp. Van de la más nueva a la más vieja.
+   *
+   * `href` vacío = el tile manda al perfil. Si querés que cada foto abra su
+   * post, pegá acá el permalink (`https://www.instagram.com/p/XXXX/`).
+   */
   posts: [
-    // TODO: reemplazar por las fotos reales + el permalink de cada post.
-    { image: '/instagram/01.webp', alt: '', href: '' },
-    { image: '/instagram/02.webp', alt: '', href: '' },
-    { image: '/instagram/03.webp', alt: '', href: '' },
-    { image: '/instagram/04.webp', alt: '', href: '' },
-    { image: '/instagram/05.webp', alt: '', href: '' },
-    { image: '/instagram/06.webp', alt: '', href: '' },
-    { image: '/instagram/07.webp', alt: '', href: '' },
-    { image: '/instagram/08.webp', alt: '', href: '' },
-    { image: '/instagram/09.webp', alt: '', href: '' },
-    { image: '/instagram/10.webp', alt: '', href: '' },
-    { image: '/instagram/11.webp', alt: '', href: '' },
-    { image: '/instagram/12.webp', alt: '', href: '' },
+    {
+      image: '/instagram/01.webp',
+      alt: 'Soporte con el celular pegado al vidrio de la ventanilla del auto',
+      href: '',
+    },
+    {
+      image: '/instagram/02.webp',
+      alt: 'Celular montado en el soporte en la mesa de un café en la vereda',
+      href: '',
+    },
+    {
+      image: '/instagram/03.webp',
+      alt: 'Ala del avión sobre la cordillera',
+      href: '',
+    },
+    {
+      image: '/instagram/04.webp',
+      alt: 'Colocando el celular con el GPS en el soporte, adentro del auto',
+      href: '',
+    },
+    {
+      image: '/instagram/05.webp',
+      alt: 'Entrenando en el gimnasio con el celular montado filmando',
+      href: '',
+    },
+    {
+      image: '/instagram/06.webp',
+      alt: 'Celular sujetado al espejo del baño para maquillarse',
+      href: '',
+    },
+    {
+      image: '/instagram/07.webp',
+      alt: 'Manejando una Jeep con el celular montado mostrando el GPS',
+      href: '',
+    },
+    {
+      image: '/instagram/08.webp',
+      alt: 'Soporte adherido a la ventanilla del avión con el celular puesto',
+      href: '',
+    },
+    {
+      image: '/instagram/09.webp',
+      alt: 'Acercando el celular al soporte pegado al parabrisas',
+      href: '',
+    },
+    {
+      image: '/instagram/10.webp',
+      alt: 'Honda Civic estacionado bajo un árbol',
+      href: '',
+    },
+    {
+      image: '/instagram/11.webp',
+      alt: 'Elongando al lado de una camioneta blanca frente al río',
+      href: '',
+    },
+    {
+      image: '/instagram/12.webp',
+      alt: 'Apoyado en una Jeep Compass en un parque',
+      href: '',
+    },
   ],
 } as const;
 
