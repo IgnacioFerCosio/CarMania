@@ -239,6 +239,10 @@ export type StoreProduct = {
   image: string;         // ruta en /public
   href: string;
   fallbackPrice: number; // ARS, si la Storefront API no responde
+  /** Tag de spec arriba de la foto ("MAGSAFE + REGULABLE"). */
+  specTag: string;
+  /** Tag corto de variante/color, abajo a la derecha ("NEGRO"). */
+  variantTag: string;
 };
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
@@ -254,7 +258,35 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     // justo el tipo de desfase que el commit "sincronizar fallbacks con
     // Shopify" vino a limpiar.
     fallbackPrice: FALLBACK_PRICING.price,
+    specTag: 'MAGSAFE + IMÁN N52',
+    variantTag: 'NEGRO',
   },
+  {
+    // ⚠️ El producto todavía NO existe en Shopify con este handle:
+    // `getProduct('parasol-pro')` devuelve null y la card cae al
+    // `fallbackPrice`, que es el precio provisorio de PARASOL.fallbackPricing
+    // (ver el bloque de TODOs en lib/landings/parasol.ts). Antes de mandar
+    // tráfico a /tienda hay que crear el producto y confirmar el precio.
+    handle: 'parasol-pro',
+    title: 'Parasol PRO™',
+    blurb:
+      'Se abre como un paraguas y cubre todo el parabrisas en 3 segundos. Bloquea los UV y mantiene el interior fresco.',
+    image: '/parasol/hero/parasol-hero.webp',
+    href: '/parasol',
+    fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
+    specTag: 'APERTURA EN 3 SEGUNDOS',
+    variantTag: 'UNIVERSAL',
+  },
+] as const;
+
+/**
+ * Slots vacíos de la grilla — completan las 4 columnas mientras el catálogo
+ * tenga 2 productos. No son links: no hay a dónde ir todavía.
+ * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
+ */
+export const STORE_COMING_SOON = [
+  { id: 'slot-3', specTag: 'EN CAMINO', variantTag: '2026' },
+  { id: 'slot-4', specTag: 'EN CAMINO', variantTag: '2026' },
 ] as const;
 
 /** Copy del encabezado de /tienda. */
@@ -265,5 +297,126 @@ export const STORE_HEADLINES = {
   sub: 'Productos elegidos de a uno, probados en la calle argentina. Envío gratis a todo el país y 30 días para devolverlo si no te convence.',
   // Heading de la grilla — existe para que la página no salte de h1 (StoreHero)
   // a h3 (título de cada ProductCard) sin un h2 en el medio.
-  gridTitle: 'Nuestros productos',
+  // ProductGrid le concatena `STORE_SECTIONS.gridTitleAccent` en rojo, así que
+  // acá va sólo la primera parte.
+  gridTitle: 'Nuestros',
 } as const;
+
+/**
+ * Mensajes de la barra de anuncios de /tienda. Rotan en un marquee, como los
+ * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
+ */
+export const STORE_PROMO_MESSAGES = [
+  'Envío gratis a todo el país',
+  '30 días para devolverlo',
+  '3 cuotas sin interés con MercadoPago',
+] as const;
+
+/**
+ * Franja de 4 garantías, justo debajo del hero. Cada item se parte en dos
+ * líneas: `top` grande en blanco, `bottom` chico en accent.
+ */
+export const STORE_TRUST_STRIP = [
+  { icon: 'truck', top: 'Envío', bottom: 'Gratis' },
+  { icon: 'rotate-left', top: '30 días', bottom: 'Devolución' },
+  { icon: 'lock', top: 'Pago', bottom: 'Seguro' },
+  { icon: 'whatsapp', top: 'Soporte', bottom: 'Real' },
+] as const;
+
+/**
+ * Tiles de "Para cada lugar" — el carrusel horizontal debajo de la grilla.
+ * Reusa las fotos lifestyle del soporte que ya viven en /public/use-cases.
+ * `href` manda a la landing del producto que resuelve ese caso.
+ */
+export const STORE_ACTIVITIES = [
+  { label: 'AUTO', image: '/use-cases/auto.jpg', href: '/' },
+  { label: 'VIAJES', image: '/use-cases/viajes.jpg', href: '/' },
+  { label: 'CASA', image: '/use-cases/cocina.jpg', href: '/' },
+  { label: 'GYM', image: '/use-cases/gym.jpg', href: '/' },
+  { label: 'TRABAJO', image: '/use-cases/trabajo.jpg', href: '/' },
+  { label: 'ESPEJO', image: '/use-cases/espejo.jpg', href: '/' },
+  { label: 'VERANO', image: '/parasol/use-cases/calor.webp', href: '/parasol' },
+  { label: 'TABLERO', image: '/parasol/use-cases/tablero.webp', href: '/parasol' },
+] as const;
+
+/**
+ * Reseñas de la tienda — formato CARMOUNT: un título corto en mayúsculas que
+ * resume la reseña, después la cita y la firma.
+ *
+ * Son las reseñas REALES del soporte (SOPORTE.reviews), con el título
+ * agregado acá. Si sumás reseñas de otro producto, aclaralo en `product`.
+ */
+export const STORE_REVIEWS = [
+  {
+    title: 'NO SE MUEVE NI EN RIPIO',
+    text: 'Anduve por camino de ripio en Bariloche y el celular ni se movió. Los otros soportes que tuve se caían en el primer pozo.',
+    name: 'Diego',
+    location: 'NEUQUÉN',
+  },
+  {
+    title: 'CERO MARCAS EN EL TABLERO',
+    text: 'Lo que más me gustó es que lo saco y lo vuelvo a poner sin que quede pegote ni marca. En el auto de laburo eso me importaba.',
+    name: 'Lucía',
+    location: 'ROSARIO',
+  },
+  {
+    title: 'PARECE DE FÁBRICA',
+    text: 'Queda tan prolijo que un amigo me preguntó si venía con el auto. Es chiquito y no tapa nada del tablero.',
+    name: 'Martín',
+    location: 'CÓRDOBA',
+  },
+  {
+    title: 'UNO EN CADA AUTO',
+    text: 'Compré el pack de tres. Uno en la camioneta, uno en el auto de mi mujer y uno en el escritorio. Ya no busco dónde apoyar el celular.',
+    name: 'Sebastián',
+    location: 'MENDOZA',
+  },
+  {
+    title: 'EL IMÁN ES OTRA COSA',
+    text: 'Pensé que con la funda no iba a agarrar y agarra igual. Lo despegás de un tirón pero no se cae solo, es raro lo bien que está calibrado.',
+    name: 'Carolina',
+    location: 'LA PLATA',
+  },
+  {
+    title: 'LLEGÓ ANTES DE LO QUE PENSABA',
+    text: 'Lo pedí un martes y el jueves lo tenía. Vino bien embalado y con el aro de repuesto. Nada que reprochar.',
+    name: 'Federico',
+    location: 'SALTA',
+  },
+] as const;
+
+/** Copy de las secciones nuevas de /tienda. */
+export const STORE_SECTIONS = {
+  heroTitle: 'REINVENTÁ',
+  heroTitleAccent: 'TU AUTO',
+  heroSub: 'Los accesorios que tu auto necesitaba, elegidos de a uno.',
+  heroCta: 'Ver los productos',
+  gridEyebrow: 'El catálogo completo',
+  gridTitleAccent: 'productos',
+  // CARMOUNT cierra la grilla con "SHOP ALL PRODUCTS" → /shop. Nosotros no
+  // tenemos una segunda página de catálogo (esta ES el catálogo), así que el
+  // botón manda al más vendido, que es un destino real.
+  gridCtaLabel: 'Ver el más vendido',
+  gridCtaHref: '/',
+  activityTitle: 'Comprá por',
+  activityTitleAccent: 'momento',
+  reviewsEyebrow: 'Miles de conductores en toda la Argentina 🇦🇷',
+  reviewsTitle: 'No nos creas a nosotros.',
+} as const;
+
+/**
+ * Banda de números, debajo de las reseñas.
+ *
+ * ⚠️ PLACEHOLDERS — no hay fuente para estos números todavía. Antes de
+ * publicar: sacar los reales del panel de Shopify (clientes y unidades) o
+ * bajar el claim a algo verificable. Publicar cifras infladas es riesgo de
+ * ley de defensa del consumidor.
+ */
+export const STORE_STATS = [
+  // TODO: dato real del panel de Shopify (clientes únicos).
+  { value: '—', suffix: '+', label: 'Clientes felices' },
+  // TODO: dato real del panel de Shopify (unidades vendidas).
+  { value: '—', suffix: '+', label: 'Productos vendidos' },
+  // 23 provincias + CABA. Sin "+": es el total, no un piso.
+  { value: '24', suffix: '', label: 'Provincias con envío' },
+] as const;

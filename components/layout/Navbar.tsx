@@ -12,7 +12,13 @@ import { BRAND } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { CartButton } from '@/components/commerce/CartButton';
 
-export type NavLink = { href: string; label: string; highlight?: boolean };
+export type NavLink = {
+  href: string;
+  label: string;
+  highlight?: boolean;
+  /** Texto de la píldora al lado del link. Sólo se muestra con `highlight`. */
+  badge?: string;
+};
 
 // Links de la landing del soporte. Son el default para no tener que
 // pasarlos desde `app/page.tsx`, que ya los usaba implícitamente.
@@ -28,10 +34,12 @@ export function Navbar({
   links = LANDING_LINKS,
   homeHref = '#top',
   ctaHref = '#pricing',
+  ctaLabel = 'Aprovechá',
 }: {
   links?: NavLink[];
   homeHref?: string;
   ctaHref?: string;
+  ctaLabel?: string;
 } = {}) {
   return (
     <header
@@ -53,7 +61,7 @@ export function Navbar({
               {l.label}
               {l.highlight && (
                 <span className="rounded bg-accent px-1 py-0.5 text-[9px] font-black italic text-white">
-                  HOT
+                  {l.badge ?? 'HOT'}
                 </span>
               )}
             </Link>
@@ -85,7 +93,7 @@ export function Navbar({
             href={ctaHref}
             className="hidden h-10 items-center justify-center gap-1.5 rounded-full bg-accent px-5 text-xs font-black uppercase italic tracking-wider text-white shadow-[0_4px_14px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 md:inline-flex"
           >
-            Aprovechá
+            {ctaLabel}
             <Icon name="arrow-right" className="h-3.5 w-3.5" />
           </a>
           <CartButton />
