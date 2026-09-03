@@ -14,13 +14,10 @@ Todo bajo `/public/parasol/`.
 - ✅ `hero/parasol-hero.webp` — imagen del producto, LCP (PNG 5.5MB → webp 43KB, 1600×1600)
 - ✅ `how-to-use/01-sacalo-de-la-funda.mp4` · `02-abrilo-como-paraguas.mp4` · `03-encajalo-parabrisas.mp4` — re-encodeados H.264 sin audio, 720×720, ~0.6–1MB c/u (fuente ~7MB c/u)
 - ✅ `use-cases/{calor,tablero,privacidad,volante,aire,tapizados}.webp` — 6 fotos del grid (generadas con Gemini, optimizadas 800px webp, 33–83KB c/u)
+- ✅ `before-after/{sin,con}-parasol.webp` — comparador deslizable (Gemini, 1600px webp, ~100KB/83KB)
 
 **Pendientes:**
 
-- `before-after/sin-parasol.webp` + `before-after/con-parasol.webp` — **mismo
-  encuadre** (parabrisas/interior): una con sol directo sin parasol, otra con el
-  Parasol PRO puesto. Van en el comparador deslizable debajo de CarBrands. Hoy
-  caen al placeholder (gradiente); el deslizador igual funciona.
 - `bundles/ParasolX1.webp`, `ParasolX2.webp`, `ParasolX3.webp` — fotos de las cards de pricing.
 - reviews (opcional)
 
@@ -42,7 +39,7 @@ que `/parasol` reciba tráfico**.
 - [x] Imagen del hero — `hero/parasol-hero.webp`
 - [x] 3 videos de `HowItWorks`
 - [x] 6 fotos del grid de casos de uso — `use-cases/*.webp`
-- [ ] 2 fotos del comparador antes/después — `before-after/{sin,con}-parasol.webp` (mismo encuadre)
+- [x] 2 fotos del comparador antes/después — `before-after/{sin,con}-parasol.webp`
 - [ ] 3 fotos de bundle
 - [ ] **Reseñas reales** — reemplazar las inventadas de §4.1
 - [ ] **`socialProofCount` / `socialProofLabel` reales** — hoy "Miles de autos protegidos"
