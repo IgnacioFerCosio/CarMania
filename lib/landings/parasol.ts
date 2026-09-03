@@ -187,7 +187,7 @@ export const PARASOL = {
     faqTitle: 'Respondemos lo que más nos preguntan',
     carBrandsTitle: 'Se adapta a',
     carBrandsTitleAccent: 'cualquier parabrisas',
-    useCasesTitle: 'Menos calor. Menos desgaste.',
+    useCasesTitle: 'Cero calor. Cero desgaste.',
     // Sin prefijo "Para": los labels ya son frases ("MENOS CALOR", etc.).
     useCasesPrefix: '',
   },
@@ -195,16 +195,17 @@ export const PARASOL = {
   // extracción a un módulo compartido es una limpieza posterior).
   carBrands: SOPORTE.carBrands,
   /**
-   * Grid de problemas que resuelve el parasol. Fotos pendientes — hoy caen al
-   * placeholder de gradiente (ver docs/superpowers/specs/parasol-assets.md).
+   * Grid de problemas que resuelve el parasol. Primeras 3 = "CERO <problema>",
+   * últimas 3 = "MÁS <beneficio>". El label se pinta como en el soporte:
+   * primera palabra blanca, última en accent.
    */
   useCases: [
-    { label: 'MENOS CALOR', image: '/parasol/use-cases/calor.webp', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
-    { label: 'MENOS RAJADURAS', image: '/parasol/use-cases/tablero.webp', alt: 'Tablero protegido del sol, sin plásticos rajados' },
+    { label: 'CERO CALOR', image: '/parasol/use-cases/calor.webp', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
+    { label: 'CERO RAJADURAS', image: '/parasol/use-cases/tablero.webp', alt: 'Tablero protegido del sol, sin plásticos rajados' },
+    { label: 'CERO DECOLORACIÓN', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
+    { label: 'MÁS FRESCURA', image: '/parasol/use-cases/volante.webp', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
     { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.webp', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
-    { label: 'VOLANTE FRESCO', image: '/parasol/use-cases/volante.webp', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
-    { label: 'MÁS FRESCO AL SUBIR', image: '/parasol/use-cases/aire.webp', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },
-    { label: 'MENOS DECOLORACIÓN', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
+    { label: 'MÁS CONFORT', image: '/parasol/use-cases/aire.webp', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },
   ],
   steps: [
     {

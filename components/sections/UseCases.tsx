@@ -7,16 +7,30 @@
  * label. Cargá las fotos y se reemplazan solas.
  *
  * El prefijo del label ("Para AUTO" en el soporte, sin prefijo en el parasol)
- * sale de `config.sectionCopy.useCasesPrefix`.
+ * sale de `config.sectionCopy.useCasesPrefix`. Sin prefijo, el label se parte
+ * como el título: primera palabra blanca, última en accent.
  */
 import Image from 'next/image';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 
+/** Palabras en blanco + última palabra en accent (rojo). */
+function accentLastWord(text: string) {
+  const w = text.split(' ');
+  return w.map((word, i) =>
+    i === w.length - 1 ? (
+      <span key={i} className="text-accent">
+        {word}
+      </span>
+    ) : (
+      <span key={i}>{word} </span>
+    ),
+  );
+}
+
 export function UseCases({ config = SOPORTE }: { config?: LandingConfig } = {}) {
   const { useCases } = config;
   const { useCasesTitle, useCasesPrefix } = config.sectionCopy;
-  const words = useCasesTitle.split(' ');
   // 'Para ' en el soporte, '' en el parasol — un solo text node, sin marcador.
   const labelPrefix = useCasesPrefix ? `${useCasesPrefix} ` : '';
 
@@ -24,15 +38,7 @@ export function UseCases({ config = SOPORTE }: { config?: LandingConfig } = {}) 
     <section className="bg-[#24262A] py-14 sm:py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <h2 className="heading-display text-center text-2xl leading-tight sm:text-3xl md:text-4xl">
-          {words.map((w, i) =>
-            i === words.length - 1 ? (
-              <span key={i} className="text-accent">
-                {w}
-              </span>
-            ) : (
-              <span key={i}>{w} </span>
-            ),
-          )}
+          {accentLastWord(useCasesTitle)}
         </h2>
       </div>
 
@@ -51,8 +57,14 @@ export function UseCases({ config = SOPORTE }: { config?: LandingConfig } = {}) 
             />
 
             <span className="absolute bottom-2.5 left-2.5 font-display text-[11px] font-black italic uppercase tracking-wider text-white sm:bottom-3 sm:left-3 sm:text-xs md:text-sm lg:text-base">
-              {labelPrefix}
-              <span className="text-accent">{c.label}</span>
+              {labelPrefix ? (
+                <>
+                  {labelPrefix}
+                  <span className="text-accent">{c.label}</span>
+                </>
+              ) : (
+                accentLastWord(c.label)
+              )}
             </span>
           </li>
         ))}
