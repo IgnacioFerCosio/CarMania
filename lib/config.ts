@@ -405,6 +405,55 @@ export const STORE_SECTIONS = {
 } as const;
 
 /**
+ * ─────────────────────────────────────────────────────────────────────────
+ * INSTAGRAM — grilla curada, NO un feed en vivo.
+ *
+ * Por qué estática y no la API:
+ *  - La CSP de `_headers` no habilita Instagram en `connect-src` ni ningún
+ *    proveedor de widgets en `script-src`, así que un feed client-side no
+ *    carga. Abrirla en la página que cobra no vale la pena.
+ *  - La Basic Display API de Instagram se apagó en dic. 2024. El reemplazo
+ *    pide cuenta profesional + app de Meta + token de 60 días, y este repo
+ *    no tiene dónde guardar un secreto: las 4 env vars son `NEXT_PUBLIC_*`.
+ *  - Sin ISR en Cloudflare Pages el feed quedaría congelado hasta el deploy
+ *    igual, y las URLs de cdninstagram.com van firmadas y expiran.
+ *
+ * Si algún día se automatiza: un script pre-build que DESCARGUE las fotos a
+ * `/public/instagram/` y reescriba este array. El componente no cambia.
+ *
+ * PARA ACTUALIZAR: subí la foto a /public/instagram/ y poné el permalink del
+ * post en `href`. Los slots sin archivo muestran el placeholder con el
+ * glifo de Instagram, así que la grilla nunca se rompe.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export const INSTAGRAM = {
+  handle: '@carmaniaoficial', // TODO: confirmar el handle real
+  url: 'https://www.instagram.com/carmaniaoficial/', // TODO: confirmar
+  // Línea de arriba de la grilla. Con `count` cargado se arma
+  // "Sumate a los 12K que nos siguen en @handle"; con `count` en '' cae a
+  // `leadPlain`. Dejalo vacío hasta tener el número real de seguidores.
+  count: '',
+  leadBefore: 'Sumate a los',
+  leadAfter: 'que nos siguen en',
+  leadPlain: 'Seguinos en',
+  posts: [
+    // TODO: reemplazar por las fotos reales + el permalink de cada post.
+    { image: '/instagram/01.webp', alt: '', href: '' },
+    { image: '/instagram/02.webp', alt: '', href: '' },
+    { image: '/instagram/03.webp', alt: '', href: '' },
+    { image: '/instagram/04.webp', alt: '', href: '' },
+    { image: '/instagram/05.webp', alt: '', href: '' },
+    { image: '/instagram/06.webp', alt: '', href: '' },
+    { image: '/instagram/07.webp', alt: '', href: '' },
+    { image: '/instagram/08.webp', alt: '', href: '' },
+    { image: '/instagram/09.webp', alt: '', href: '' },
+    { image: '/instagram/10.webp', alt: '', href: '' },
+    { image: '/instagram/11.webp', alt: '', href: '' },
+    { image: '/instagram/12.webp', alt: '', href: '' },
+  ],
+} as const;
+
+/**
  * Banda de números, debajo de las reseñas.
  *
  * ⚠️ PLACEHOLDERS — no hay fuente para estos números todavía. Antes de

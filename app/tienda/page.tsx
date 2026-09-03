@@ -19,6 +19,7 @@ import { ProductGrid } from '@/components/sections/ProductGrid';
 import { ShopByActivity } from '@/components/sections/ShopByActivity';
 import { StoreReviews } from '@/components/sections/StoreReviews';
 import { StoreStats } from '@/components/sections/StoreStats';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
 import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
@@ -132,6 +133,11 @@ export default async function TiendaPage() {
 
         {/* 6. Banda de números */}
         <StoreStats />
+
+        {/* 7. Instagram — grilla curada, misma posición que en CARMOUNT
+            (pegada al footer). No es un feed en vivo: ver el bloque
+            INSTAGRAM en lib/config.ts. */}
+        <InstagramFeed />
       </main>
 
       <Footer />
