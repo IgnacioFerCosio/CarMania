@@ -13,12 +13,14 @@
  * y agregá `image: '/reviews/<n>.jpg'` por review.
  */
 import Image from 'next/image';
-import { BRAND, REVIEWS, RATING_BREAKDOWN } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 
-export function Reviews() {
-  const { average, total, stars } = RATING_BREAKDOWN;
+export function Reviews({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { brand, reviews, ratingBreakdown, sectionCopy } = config;
+  const { average, total, stars } = ratingBreakdown;
   const maxCount = Math.max(...stars.map((s) => s.count));
 
   return (
@@ -36,7 +38,7 @@ export function Reviews() {
             </div>
             <div className="min-w-0">
               <h2 className="font-display text-xl font-black italic uppercase tracking-wider text-white sm:text-2xl md:text-3xl">
-                Reseñas de <span className="text-accent">clientes</span>
+                {sectionCopy.reviewsTitle + ' '}<span className="text-accent">{sectionCopy.reviewsTitleAccent}</span>
               </h2>
               <p className="mt-1 text-xs text-ink-400 sm:text-sm">
                 Basado en {total} reseñas verificadas
@@ -70,12 +72,12 @@ export function Reviews() {
 
         {/* ── Grid de reviews ────────────────────────────────────────── */}
         <ul className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {REVIEWS.map((r, i) => (
+          {reviews.map((r, i) => (
             <li
               key={r.name + r.date}
               className="flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950"
             >
-              <ReviewImage initial={r.name[0]} index={i} image={'image' in r ? (r as { image: string }).image : undefined} />
+              <ReviewImage initial={r.name[0]} index={i} image={r.image} />
 
               <div className="flex flex-1 flex-col p-4 sm:p-5">
                 <div className="flex items-center gap-2">
@@ -111,8 +113,8 @@ export function Reviews() {
 
         {/* Counter de total */}
         <p className="mt-8 text-center text-[13px] leading-relaxed text-ink-400 sm:mt-10 sm:text-sm">
-          Sumate a los <span className="font-semibold text-white">{BRAND.socialProofCount}</span>{' '}
-          clientes que ya manejan tranquilos con CARMANIA.
+          Sumate a los <span className="font-semibold text-white">{brand.socialProofCount}</span>{' '}
+          {sectionCopy.reviewsFooter}
         </p>
       </div>
     </section>

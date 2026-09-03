@@ -4,9 +4,13 @@
  * oportunidad" sin saturar con otro pricing entero.
  */
 import { Icon } from '@/components/ui/Icon';
-import { BRAND, RETURNS, PAYMENTS } from '@/lib/config';
+import { RETURNS, PAYMENTS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 
-export function BackToPricingCTA() {
+export function BackToPricingCTA({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { brand } = config;
+
   return (
     <section className="bg-ink-950 py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
@@ -14,7 +18,7 @@ export function BackToPricingCTA() {
           ¿Listo para tener tu <span className="text-accent">CARMANIA</span>?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
-          {BRAND.socialProofCount} {BRAND.socialProofLabel} ya lo eligieron.
+          {brand.socialProofCount} {brand.socialProofLabel} ya lo eligieron.
           Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
           para devolverlo si no te convence.
         </p>

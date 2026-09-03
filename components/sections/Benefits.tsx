@@ -3,28 +3,30 @@
  * Las 2 primeras (con flag highlight=true) tienen acento rojo y borde
  * destacado para atraer la mirada antes que las otras.
  */
-import { BENEFITS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 
-export function Benefits() {
+export function Benefits({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { headlines, benefits } = config;
+
   return (
     <section id="benefits" className="bg-ink-950 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="text-center">
           <span className="inline-block text-xs font-semibold uppercase tracking-widest text-accent">
-            Por qué CARMANIA
+            {headlines.benefitsEyebrow}
           </span>
           <h2 className="mt-3 font-display text-3xl font-extrabold text-white md:text-5xl">
-            Pensado para autos argentinos
+            {headlines.benefitsTitle}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-ink-300">
-            Probado en pozos, ripio, autopista y calor. Cada detalle está calibrado para que
-            no te falle nunca.
+            {headlines.benefitsSub}
           </p>
         </div>
 
         <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {BENEFITS.map((b) => (
+          {benefits.map((b) => (
             <li
               key={b.title}
               className={`group relative overflow-hidden rounded-2xl border p-6 transition md:p-7 ${
