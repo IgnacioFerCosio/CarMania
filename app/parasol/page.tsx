@@ -16,6 +16,7 @@ import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { PitchBlock } from '@/components/sections/PitchBlock';
 import { UseCases } from '@/components/sections/UseCases';
+import { BeforeAfter } from '@/components/sections/BeforeAfter';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { Benefits } from '@/components/sections/Benefits';
@@ -121,31 +122,34 @@ export default async function ParasolPage() {
         {/* 3. Compatibilidad — "Se adapta a cualquier parabrisas" */}
         <CarBrands config={PARASOL} />
 
-        {/* 4. Cómo funciona (3 videos) */}
+        {/* 4. Antes / después — deslizador con y sin parasol */}
+        {PARASOL.beforeAfter && <BeforeAfter data={PARASOL.beforeAfter} />}
+
+        {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={PARASOL} />
 
         {/* vs. la alternativa mala ("el parasol de cartón") — desactivado por
             ahora, no borrar.
         <PitchBlock data={PARASOL.pitchBlocks[1]} /> */}
 
-        {/* 5. Pricing */}
+        {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={PARASOL} />
 
-        {/* 6. Specs / "Pensado para el sol argentino" — debajo del pricing */}
+        {/* 7. Specs / "Pensado para el sol argentino" — debajo del pricing */}
         <Benefits config={PARASOL} />
 
-        {/* 7. Reseñas */}
+        {/* 8. Reseñas */}
         <Reviews config={PARASOL} />
 
-        {/* 8. Garantía + medios de pago */}
+        {/* 9. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={PARASOL} />
         </div>
 
-        {/* 9. FAQ */}
+        {/* 10. FAQ */}
         <FAQ config={PARASOL} />
 
-        {/* 10. CTA final */}
+        {/* 11. CTA final */}
         <BackToPricingCTA config={PARASOL} />
       </main>
 

@@ -279,6 +279,21 @@ export const PARASOL = {
       body: 'Ya sabés cómo termina: el clásico plegable de cartón o tela fina se deforma, no cubre bien las puntas, se cae apenas movés el auto, y a los meses termina en la basura. El Parasol PRO se abre y cierra como un paraguas de verdad — mismo mecanismo resistente, pensado para durar.',
     },
   ],
+  /**
+   * Comparador before/after. Fotos pendientes (mismo encuadre: parabrisas al
+   * sol sin parasol / con parasol puesto) — ver parasol-assets.md.
+   */
+  beforeAfter: {
+    headline: 'EL MISMO AUTO. OTRO INTERIOR.',
+    accentWord: 'OTRO INTERIOR.',
+    body: 'Deslizá para ver la diferencia. A la izquierda, sol directo sobre el tablero y el volante. A la derecha, sombra total — puesto en 3 segundos.',
+    beforeSrc: '/parasol/before-after/sin-parasol.webp',
+    beforeAlt: 'Interior del auto con sol directo sobre el tablero y el volante, sin parasol',
+    beforeLabel: 'Sin parasol',
+    afterSrc: '/parasol/before-after/con-parasol.webp',
+    afterAlt: 'El mismo interior en sombra total con el Parasol PRO puesto en el parabrisas',
+    afterLabel: 'Con parasol',
+  },
   reviews: PARASOL_REVIEWS,
   ratingBreakdown: {
     average: 4.8,

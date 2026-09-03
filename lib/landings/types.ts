@@ -76,6 +76,20 @@ export type PitchBlockData = {
   body: string;
 };
 
+/** Comparador before/after con divisor deslizable (componente BeforeAfter). */
+export type BeforeAfterData = {
+  headline: string;
+  /** Subcadena de `headline` que se pinta en accent. */
+  accentWord: string;
+  body: string;
+  beforeSrc: string;
+  beforeAlt: string;
+  beforeLabel: string;
+  afterSrc: string;
+  afterAlt: string;
+  afterLabel: string;
+};
+
 export type HeroMedia = {
   /** 'video' → <video src poster>; 'image' → <Image src> (sin poster). */
   kind: 'video' | 'image';
@@ -155,6 +169,8 @@ export type LandingConfig = {
   steps: readonly Step[];
   benefits: readonly Benefit[];
   pitchBlocks: readonly PitchBlockData[];
+  /** Comparador before/after. Opcional — el soporte no lo usa. */
+  beforeAfter?: BeforeAfterData;
   reviews: readonly Review[];
   ratingBreakdown: {
     average: number;

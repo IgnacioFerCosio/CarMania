@@ -17,6 +17,10 @@ Todo bajo `/public/parasol/`.
 
 **Pendientes:**
 
+- `before-after/sin-parasol.webp` + `before-after/con-parasol.webp` — **mismo
+  encuadre** (parabrisas/interior): una con sol directo sin parasol, otra con el
+  Parasol PRO puesto. Van en el comparador deslizable debajo de CarBrands. Hoy
+  caen al placeholder (gradiente); el deslizador igual funciona.
 - `bundles/ParasolX1.webp`, `ParasolX2.webp`, `ParasolX3.webp` — fotos de las cards de pricing.
 - reviews (opcional)
 
@@ -38,6 +42,7 @@ que `/parasol` reciba tráfico**.
 - [x] Imagen del hero — `hero/parasol-hero.webp`
 - [x] 3 videos de `HowItWorks`
 - [x] 6 fotos del grid de casos de uso — `use-cases/*.webp`
+- [ ] 2 fotos del comparador antes/después — `before-after/{sin,con}-parasol.webp` (mismo encuadre)
 - [ ] 3 fotos de bundle
 - [ ] **Reseñas reales** — reemplazar las inventadas de §4.1
 - [ ] **`socialProofCount` / `socialProofLabel` reales** — hoy "Miles de autos protegidos"
