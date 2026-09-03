@@ -181,7 +181,7 @@ export const PARASOL = {
     pricingTitleAccent: '30 días gratis',
     reviewsTitle: 'Opiniones de',
     reviewsTitleAccent: 'clientes',
-    reviewsFooter: 'de autos que ya suben frescos.',
+    reviewsFooter: 'de autos que suben a la sombra.',
     faqEyebrow: 'Dudas frecuentes',
     faqTitle: 'Respondemos lo que más nos preguntan',
     carBrandsTitle: 'Se adapta a',

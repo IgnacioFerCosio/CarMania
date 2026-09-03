@@ -30,7 +30,7 @@ import {
 import { getVariantsByIds, type BundleData, type VariantPrice } from '@/lib/shopify';
 import { buildTiers, nextTierOf, type ResolvedTier } from '@/lib/tiers';
 import { track } from '@/lib/tracking';
-import { SOPORTE } from '@/lib/landings/soporte';
+import { UPSELL_CHAIN, BRAND_SOPORTE } from '@/lib/landings/soporte';
 import type { UpsellTier } from '@/lib/landings/types';
 
 const STORAGE_KEY = 'carmania_cart_id';
@@ -65,8 +65,8 @@ export function useCart() {
 
 export function CartProvider({
   bundlesData,
-  upsellChain = SOPORTE.upsellChain,
-  productName = SOPORTE.brand.tagline,
+  upsellChain = UPSELL_CHAIN,
+  productName = BRAND_SOPORTE.tagline,
   children,
 }: {
   bundlesData: Record<string, BundleData>;
@@ -270,7 +270,7 @@ export function CartProvider({
         setBusy(false);
       }
     },
-    [busy, cart, highlight, tiers],
+    [busy, cart, highlight, tiers, productName],
   );
 
   /** El upsell: cambia el producto de la línea, no la cantidad. */
@@ -327,7 +327,7 @@ export function CartProvider({
         setBusy(false);
       }
     },
-    [cart, busy, highlight],
+    [cart, busy, highlight, productName],
   );
 
   const removeLine = useCallback(
@@ -359,7 +359,7 @@ export function CartProvider({
     track.initiateCheckout(params);
     track.klaviyoStartedCheckout(params);
     window.location.href = withCampaignParams(cart.checkoutUrl);
-  }, [cart]);
+  }, [cart, productName]);
 
   const value: CartContextValue = {
     cart,

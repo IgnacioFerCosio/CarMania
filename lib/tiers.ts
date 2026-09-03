@@ -11,7 +11,7 @@
  * Los precios entran por parámetro (nunca hardcodeados acá) para que el copy
  * del upsell se actualice solo cuando cambien en Shopify.
  */
-import { SOPORTE } from './landings/soporte';
+import { UPSELL_CHAIN } from './landings/soporte';
 import type { TierId, UpsellTier } from './landings/types';
 import type { BundleData } from './shopify';
 import type { VariantPrice } from './shopify';
@@ -44,7 +44,7 @@ export type ResolvedTier = {
 export function buildTiers(
   bundlesData: Record<string, BundleData>,
   livePrices?: Record<string, VariantPrice>,
-  chain: readonly UpsellTier[] = SOPORTE.upsellChain,
+  chain: readonly UpsellTier[] = UPSELL_CHAIN,
 ): ResolvedTier[] {
   const tiers: ResolvedTier[] = [];
 
