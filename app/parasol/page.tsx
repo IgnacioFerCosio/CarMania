@@ -19,7 +19,7 @@ import { UseCases } from '@/components/sections/UseCases';
 import { BeforeAfter } from '@/components/sections/BeforeAfter';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
-import { Benefits } from '@/components/sections/Benefits';
+import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
 import { TrustBlock } from '@/components/sections/TrustBlock';
@@ -136,7 +136,7 @@ export default async function ParasolPage() {
         <Pricing productId={productId} bundlesData={bundlesData} config={PARASOL} />
 
         {/* 7. Specs / "Pensado para el sol argentino" — debajo del pricing */}
-        <Benefits config={PARASOL} />
+        <BenefitsShowcase config={PARASOL} />
 
         {/* 8. Reseñas */}
         <Reviews config={PARASOL} />

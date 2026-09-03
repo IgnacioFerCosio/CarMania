@@ -265,6 +265,12 @@ export const PARASOL = {
       highlight: false,
     },
   ],
+  // Imagen del render del producto para el showcase de beneficios. Por ahora
+  // reusa la del hero; se puede cambiar por un render dedicado.
+  benefitsImage: {
+    src: '/parasol/hero/parasol-hero.webp',
+    alt: 'Parasol PRO desplegado',
+  },
   pitchBlocks: [
     {
       eyebrow: 'El problema',

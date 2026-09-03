@@ -168,6 +168,12 @@ export type LandingConfig = {
   carBrands: CarBrand[];
   steps: readonly Step[];
   benefits: readonly Benefit[];
+  /**
+   * Imagen del producto para el componente `BenefitsShowcase` (cards flotando
+   * alrededor). Opcional — con esto la landing usa `BenefitsShowcase`, sin
+   * esto usa el grid plano de `Benefits`.
+   */
+  benefitsImage?: { src: string; alt: string };
   pitchBlocks: readonly PitchBlockData[];
   /** Comparador before/after. Opcional — el soporte no lo usa. */
   beforeAfter?: BeforeAfterData;
