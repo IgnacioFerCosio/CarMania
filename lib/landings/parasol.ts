@@ -141,7 +141,7 @@ export const PARASOL = {
   brand: {
     tagline: 'Parasol PRO™',
     productHandle: 'parasol-pro',
-    socialProofCount: 'Miles',
+    socialProofCount: 'Miles', // TODO: número real cuando haya ventas del parasol
     socialProofLabel: 'de autos protegidos',
     averageRating: 4.8,
     reviewsCount: PARASOL_REVIEWS.length, // TODO: reseñas reales
@@ -289,7 +289,8 @@ export const PARASOL = {
     },
     {
       q: '¿Cuánto tarda en llegar?',
-      a: 'El envío es gratis a todo el país. Según la zona llega en 24 a 72 horas hábiles, siempre con código de seguimiento para verlo en tiempo real desde que sale.',
+      // TODO: completar con los plazos reales de Andreani por zona antes de publicar
+      a: 'El envío es gratis a todo el país y sale con código de seguimiento para verlo en tiempo real desde que despachamos. Los plazos de entrega varían según la zona.',
     },
     {
       q: '¿Puedo devolverlo si no me convence?',
