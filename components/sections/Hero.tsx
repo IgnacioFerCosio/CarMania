@@ -91,8 +91,14 @@ export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
             {/* Métodos de pago */}
             <PaymentBadges />
 
-            {/* Testimonios rotativos */}
-            <HeroTestimonialCarousel />
+            {/* Testimonios rotativos.
+                HeroTestimonialCarousel es 'use client': pasarle una prop la
+                serializa en el payload RSC. Para el soporte las reseñas son
+                las del default del componente, así que omitimos la prop y el
+                HTML prerenderizado de / queda idéntico byte a byte. */}
+            <HeroTestimonialCarousel
+              {...(config.reviews === SOPORTE.reviews ? {} : { reviews: config.reviews })}
+            />
           </div>
 
           {/* Columna derecha — media slot grande */}

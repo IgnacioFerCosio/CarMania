@@ -3,12 +3,16 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { REVIEWS } from '@/lib/config';
+import type { Review } from '@/lib/landings/types';
 import { Stars } from '@/components/ui/Stars';
 
-const heroReviews = REVIEWS.slice(0, 3);
-
-export function HeroTestimonialCarousel() {
+export function HeroTestimonialCarousel({
+  reviews = REVIEWS,
+}: {
+  reviews?: readonly Review[];
+} = {}) {
   const [active, setActive] = useState(0);
+  const heroReviews = reviews.slice(0, 3);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -29,15 +33,23 @@ export function HeroTestimonialCarousel() {
               i === active ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
           >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
-              <Image
-                src={r.image}
-                alt={r.name}
-                fill
-                className="object-cover"
-                sizes="48px"
-              />
-            </div>
+            {r.image ? (
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
+                <Image
+                  src={r.image}
+                  alt={r.name}
+                  fill
+                  className="object-cover"
+                  sizes="48px"
+                />
+              </div>
+            ) : (
+              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-ink-700 to-ink-900 ring-1 ring-inset ring-ink-700">
+                <div className="flex h-full w-full items-center justify-center text-sm font-black italic text-white">
+                  {r.name[0]}
+                </div>
+              </div>
+            )}
             <div className="flex-1 text-sm">
               <Stars rating={r.stars} size={14} />
               <p className="mt-1.5 italic leading-relaxed text-ink-200">
