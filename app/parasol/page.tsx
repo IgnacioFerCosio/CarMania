@@ -118,33 +118,34 @@ export default async function ParasolPage() {
         {/* 2. Grid de problemas que resuelve el parasol */}
         <UseCases config={PARASOL} />
 
-        {/* 3. Cómo funciona (3 videos) */}
-        <HowItWorks config={PARASOL} />
-
-        {/* 4. Compatibilidad — "Se adapta a cualquier parabrisas" */}
+        {/* 3. Compatibilidad — "Se adapta a cualquier parabrisas" */}
         <CarBrands config={PARASOL} />
 
-        {/* 5. vs. la alternativa mala — "el parasol de cartón" */}
-        <PitchBlock data={PARASOL.pitchBlocks[1]} />
+        {/* 4. Cómo funciona (3 videos) */}
+        <HowItWorks config={PARASOL} />
 
-        {/* 6. Pricing */}
+        {/* vs. la alternativa mala ("el parasol de cartón") — desactivado por
+            ahora, no borrar.
+        <PitchBlock data={PARASOL.pitchBlocks[1]} /> */}
+
+        {/* 5. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={PARASOL} />
 
-        {/* 7. Specs / "Pensado para el sol argentino" — debajo del pricing */}
+        {/* 6. Specs / "Pensado para el sol argentino" — debajo del pricing */}
         <Benefits config={PARASOL} />
 
-        {/* 8. Reseñas */}
+        {/* 7. Reseñas */}
         <Reviews config={PARASOL} />
 
-        {/* 9. Garantía + medios de pago */}
+        {/* 8. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={PARASOL} />
         </div>
 
-        {/* 10. FAQ */}
+        {/* 9. FAQ */}
         <FAQ config={PARASOL} />
 
-        {/* 11. CTA final */}
+        {/* 10. CTA final */}
         <BackToPricingCTA config={PARASOL} />
       </main>
 
