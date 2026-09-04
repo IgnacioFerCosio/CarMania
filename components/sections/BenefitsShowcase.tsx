@@ -2,8 +2,11 @@
  * BENEFITS SHOWCASE — imagen del producto al centro con las 6 cards de
  * beneficio "flotando" alrededor (sombra fuerte + leve rotación + overlap).
  *
+ * El rojo (borde + chip) es el estado hover, no una marca fija en las
+ * cards con `highlight`: se enciende la que el usuario esté mirando.
+ *
  * Desktop: 3 cards a cada lado, montadas sobre la imagen.
- * Mobile:  columna única, cards fanadas, imagen arriba.
+ * Mobile:  imagen a todo el ancho y las 6 cards en una grilla 2x3.
  *
  * Alternativa al grid plano de `Benefits.tsx` — se usa en /parasol.
  * Necesita `config.benefitsImage`; el resto sale de `config.headlines` y
@@ -21,25 +24,30 @@ const CSS = `
 .bshow__product img{position:relative;width:100%;border-radius:16px;display:block}
 .bshow__card{background:#151515;border:1px solid #2a2a2a;border-radius:14px;padding:16px 16px 15px;
   box-shadow:0 18px 34px -12px rgba(0,0,0,.75),0 4px 10px rgba(0,0,0,.5);
-  transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s,border-color .22s}
-.bshow__chip{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#242424;color:#c9c9c9;margin-bottom:11px}
+  transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s,border-color .22s,background .22s}
+.bshow__chip{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#242424;color:#c9c9c9;margin-bottom:11px;transition:background .22s,color .22s}
 .bshow__card h3{font-size:14px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:1.15;color:#f4f4f4}
 .bshow__card p{margin-top:6px;font-size:12.5px;color:#8f8f8f;line-height:1.5}
-.bshow__card--hi{background:#1b1210;border-color:rgba(215,7,7,.5)}
-.bshow__card--hi .bshow__chip{background:#D70707;color:#fff}
-.bshow__card:hover{transform:translateY(-6px) rotate(0deg);z-index:5;border-color:#3a3a3a;
+.bshow__card:hover{transform:translateY(-6px) rotate(0deg);z-index:5;background:#1b1210;border-color:rgba(215,7,7,.5);
   box-shadow:0 26px 48px -14px rgba(0,0,0,.8),0 6px 14px rgba(0,0,0,.55)}
+.bshow__card:hover .bshow__chip{background:#D70707;color:#fff}
 
 @media (max-width:980px){
-  .bshow__product{order:-1;margin-bottom:18px}
-  .bshow__product img{max-width:200px;margin:0 auto}
-  .bshow__product::before{inset:-6% -8%}
-  .bshow__col{align-items:center;width:100%}
-  .bshow__col .bshow__card{width:min(400px,94%)}
-  .bshow__col .bshow__card + .bshow__card{margin-top:-8px}
-  .bshow__col .bshow__card:nth-child(odd){transform:rotate(-1.5deg)}
-  .bshow__col .bshow__card:nth-child(even){transform:rotate(1.5deg)}
-  .bshow__col--right{margin-top:-8px}
+  /* Ficha técnica: la foto a todo el ancho y los 6 beneficios en un bloque
+     2x3. El fan de cards que usa el desktop no se puede traer tal cual: ahí
+     las dos columnas se montan SOBRE la imagen, y en una sola columna el
+     mismo solape sólo hace que las cards se pisen entre ellas.
+     Un display:contents en las columnas saca esos dos divs del árbol de cajas,
+     así las 6 cards pasan a ser items directos de la grilla sin tocar el DOM. */
+  .bshow{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:stretch}
+  .bshow__col{display:contents}
+  .bshow__product{grid-column:1/-1;order:-1;margin-bottom:20px}
+  .bshow__product::before{inset:-8% -12%}
+  .bshow__product img{max-width:100%;border-radius:14px}
+  .bshow__card{padding:13px 11px 14px}
+  .bshow__chip{width:30px;height:30px;margin-bottom:9px}
+  /* Sin descripción: a dos columnas no entra sin desbalancear las alturas. */
+  .bshow__card p{display:none}
 }
 @media (min-width:981px){
   .bshow{flex-direction:row;justify-content:center;align-items:center}
@@ -65,7 +73,7 @@ const CSS = `
 
 function ShowcaseCard({ b }: { b: Benefit }) {
   return (
-    <article className={`bshow__card${b.highlight ? ' bshow__card--hi' : ''}`}>
+    <article className="bshow__card">
       <span className="bshow__chip">
         <Icon name={b.icon as never} className="h-[18px] w-[18px]" />
       </span>
