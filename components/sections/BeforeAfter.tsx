@@ -6,6 +6,8 @@
  *
  * - `beforeSrc` es la capa de arriba, recortada desde la izquierda hasta el
  *   divisor. `afterSrc` es la capa de abajo, siempre completa.
+ * - Cada label se recorta con su propia foto, así que en los extremos queda
+ *   sólo el de la imagen que se está viendo.
  * - Arrastre con mouse y touch; flechas ← → / Home / End con el teclado.
  * - Si una foto todavía no existe, atrás queda un gradiente con la inicial.
  *
@@ -89,15 +91,26 @@ export function BeforeAfter({ data }: { data: BeforeAfterData }) {
             style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
           >
             <BAImage src={beforeSrc} alt={beforeAlt} initial={beforeLabel[0]} />
+
+            {/* El label vive DENTRO de la capa recortada, así lo tapa el mismo
+                divisor que se come su foto: al arrastrar del todo a la
+                izquierda desaparece junto con ella. */}
+            <span className="pointer-events-none absolute bottom-3 left-3 rounded-md bg-black/60 px-2 py-1 font-display text-[10px] font-black uppercase tracking-wider text-white backdrop-blur sm:text-xs">
+              {beforeLabel}
+            </span>
           </div>
 
-          {/* Labels fijos en cada esquina inferior */}
-          <span className="pointer-events-none absolute bottom-3 left-3 rounded-md bg-black/60 px-2 py-1 font-display text-[10px] font-black uppercase tracking-wider text-white backdrop-blur sm:text-xs">
-            {beforeLabel}
-          </span>
-          <span className="pointer-events-none absolute bottom-3 right-3 rounded-md bg-accent/80 px-2 py-1 font-display text-[10px] font-black uppercase tracking-wider text-white backdrop-blur sm:text-xs">
-            {afterLabel}
-          </span>
+          {/* El label del after necesita su propia capa con el recorte inverso
+              (la foto de after es la base y no está recortada). Sólo se ve
+              sobre la franja de after que está a la vista. */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
+          >
+            <span className="absolute bottom-3 right-3 rounded-md bg-accent/80 px-2 py-1 font-display text-[10px] font-black uppercase tracking-wider text-white backdrop-blur sm:text-xs">
+              {afterLabel}
+            </span>
+          </div>
 
           {/* Divisor + manija */}
           <div
