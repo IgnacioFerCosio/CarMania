@@ -13,9 +13,9 @@ import { useScrolledPastNavbar } from '@/components/layout/useScrolledPastNavbar
 import { Icon } from '@/components/ui/Icon';
 
 export function FloatingCartButton() {
-  const { cart, openCart, open } = useCart();
+  const { count, openCart, open } = useCart();
   const scrolledPast = useScrolledPastNavbar();
-  const count = cart?.totalQuantity ?? 0;
+  // `count` del contexto: no parpadea en 0 mientras rehidrata (ver CartProvider).
 
   // Mientras el drawer está abierto no tiene sentido ofrecer el botón.
   const show = scrolledPast && !open;

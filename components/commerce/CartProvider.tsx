@@ -3,9 +3,19 @@
 /**
  * Estado global del carrito.
  *
- * Persistencia: solo el ID del carrito en localStorage. Todo lo demás (líneas,
- * precios, totales) es siempre lo que devuelve Shopify — nunca guardamos
- * precios del lado del cliente, así no hay forma de que se desincronicen.
+ * Persistencia: el ID del carrito y NADA MÁS que el total de unidades. Las
+ * líneas, los precios y los totales son siempre lo que devuelve Shopify —
+ * nunca guardamos precios del lado del cliente, así no hay forma de que se
+ * desincronicen.
+ *
+ * Por qué además el contador: rehidratar pide el carrito a Shopify, y ese
+ * viaje arranca recién cuando montan los efectos. Medido en /parasol: la
+ * página queda interactiva a los ~107 ms y la respuesta del carrito llega a
+ * los ~1050 ms. En esa ventana el badge del navbar mostraba 0, o sea que en
+ * cada cambio de página el carrito parecía vacío — se leía como que no
+ * persistía. Guardar el número (no el contenido) deja el badge correcto desde
+ * el primer frame y Shopify sigue siendo la única fuente de verdad para todo
+ * lo demás.
  *
  * No hay cuenta de cliente logueada: el carrito vive en este navegador.
  */
@@ -34,6 +44,8 @@ import { UPSELL_CHAIN, BRAND_SOPORTE } from '@/lib/landings/soporte';
 import type { UpsellTier } from '@/lib/landings/types';
 
 const STORAGE_KEY = 'carmania_cart_id';
+/** Total de unidades, sólo para pintar el badge mientras responde Shopify. */
+const COUNT_KEY = 'carmania_cart_count';
 /** Dónde guardamos los parámetros de campaña de la visita. */
 const UTM_KEY = 'carmania_utm';
 /** Qué parámetros reenviamos al checkout. */
@@ -47,6 +59,8 @@ type CartContextValue = {
   error: string | null;
   /** Línea que el drawer debe resaltar (se apaga sola a los ~2 s). */
   highlightedLineId: string | null;
+  /** Unidades en el carrito. Cae al valor guardado hasta que llega Shopify. */
+  count: number;
   openCart: () => void;
   closeCart: () => void;
   addTier: (variantId: string) => Promise<void>;
@@ -80,6 +94,9 @@ export function CartProvider({
   const [error, setError] = useState<string | null>(null);
   const [livePrices, setLivePrices] = useState<Record<string, VariantPrice>>();
   const [highlightedLineId, setHighlightedLineId] = useState<string | null>(null);
+  // Arranca en null y lo llena un efecto: leer localStorage durante el render
+  // rompe la hidratación, porque el servidor no puede saber ese número.
+  const [storedCount, setStoredCount] = useState<number | null>(null);
 
   const highlightTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -116,22 +133,43 @@ export function CartProvider({
     const stored = safeGet(STORAGE_KEY);
     if (!stored) return;
 
+    // Antes del viaje a Shopify: el badge ya puede mostrar el número correcto.
+    const n = Number(safeGet(COUNT_KEY));
+    if (Number.isFinite(n) && n > 0) setStoredCount(n);
+
     getCart(stored)
       .then((c) => {
         if (cancelled) return;
         // null ⇒ el carrito venció o ya se compró. Se descarta y el próximo
         // "agregar" arranca uno nuevo.
-        if (!c) safeRemove(STORAGE_KEY);
-        else setCart(c);
+        if (!c) {
+          safeRemove(STORAGE_KEY);
+          safeRemove(COUNT_KEY);
+          setStoredCount(null);
+        } else setCart(c);
       })
       .catch(() => {
-        if (!cancelled) safeRemove(STORAGE_KEY);
+        if (cancelled) return;
+        // El carrito puede seguir existiendo y haber fallado la red. Se
+        // conserva el ID; lo que se apaga es el número optimista, para no
+        // dejar un badge que no se corresponde con nada que se pueda abrir.
+        setStoredCount(null);
       });
 
     return () => {
       cancelled = true;
     };
   }, []);
+
+  // ── Espejo del contador en localStorage ───────────────────────────────────
+  // Va acá y no en cada mutación: así cubre agregar, quitar y cambiar de pack
+  // sin tener que acordarse en cada una.
+  useEffect(() => {
+    if (!cart) return;
+    if (cart.totalQuantity > 0) safeSet(COUNT_KEY, String(cart.totalQuantity));
+    else safeRemove(COUNT_KEY);
+    setStoredCount(null); // ya hay carrito real: el número optimista sobra
+  }, [cart]);
 
   // ── Precios vivos: se piden al abrir el drawer ────────────────────────────
   // La página se prerenderiza en el build y Cloudflare no revalida, así que
@@ -363,6 +401,8 @@ export function CartProvider({
 
   const value: CartContextValue = {
     cart,
+    // Mientras Shopify no conteste, vale el número guardado.
+    count: cart?.totalQuantity ?? storedCount ?? 0,
     tiers,
     open,
     busy,
