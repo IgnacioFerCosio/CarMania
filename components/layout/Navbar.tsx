@@ -4,8 +4,7 @@
  * Abajo de xl los links no entran (ver NavMobileMenu), así que van adentro
  * del menú hamburguesa, a la izquierda; queda logo centrado + CTA + carrito.
  *
- * El link a la tienda va primero en las dos variantes: es el único que sale de
- * la página, el resto son anclas a secciones. En `/tienda` se pasa
+ * El link a la tienda va primero en las dos variantes. En `/tienda` se pasa
  * `storeHref={null}` porque ahí no tendría a dónde ir.
  *
  * Scrollea con la página (no queda fijo). Cuando se va de pantalla, el acceso
@@ -71,15 +70,12 @@ export function Navbar({
             Las 3 columnas van con col-start explícito: abajo de xl este <nav>
             es display:none y sale de la grilla, así que sin esto el logo se
             correría a la columna 1 y quedaría descentrado. */}
-        <nav className="col-start-1 hidden items-center gap-3 whitespace-nowrap text-xs font-bold uppercase tracking-wider text-ink-200 xl:flex">
+        <nav className="col-start-1 hidden items-center gap-4 whitespace-nowrap text-xs font-bold uppercase tracking-wider text-ink-200 xl:flex">
           {storeHref && (
             <Link
               href={storeHref}
-              // En blanco y con ícono: es el único que sale de la página, el
-              // resto son anclas a secciones de esta misma.
-              className="inline-flex items-center gap-1.5 text-white transition hover:text-accent"
+              className="group relative inline-flex items-center gap-1 transition hover:text-white"
             >
-              <Icon name="store" className="h-3.5 w-3.5" />
               {storeLabel}
             </Link>
           )}
