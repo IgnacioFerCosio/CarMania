@@ -80,6 +80,45 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
 - `npm run dev` — entorno de desarrollo
 - `npm run build` — build de producción
 - `npx tsc --noEmit` — chequeo de tipos
+- **`npm test`** — verificación completa, ver abajo
+
+## Testing
+
+`npm test` corre cinco pasos y corta al primer fallo. **Correlo antes de dar
+cualquier cambio por bueno.** No necesita ninguna dependencia extra.
+
+| Paso | Qué protege |
+|---|---|
+| `tsc` | tipos |
+| `check:assets` | que exista en `/public` todo lo que el código pide |
+| `check:csp` | que las dos copias de la CSP digan lo mismo |
+| `build` | que compile |
+| `gate` | que ninguna página haya cambiado sin querer |
+
+Buildea en `.next-verify`, así que **no le rompe el cache al `next dev`** que
+tengas levantado.
+
+**El gate de prerender** es el que más vale. Compara el HTML prerenderizado de
+las 4 rutas contra un baseline en `tests/baseline/`. Existe porque acá casi
+todo es compartido: tocar el Navbar, `lib/config.ts` o el `CartProvider` mueve
+las cuatro páginas a la vez, y `/` es la que factura.
+
+Un `DIFF` **no es necesariamente un error**. Si el cambio era a propósito:
+mirá el diff que te imprime, confirmá que es lo que querías, y aceptalo con
+`npm run gate:capture`. Lo que el gate impide es que algo se cuele sin que
+nadie lo haya mirado.
+
+**`check:assets`** compara contra el `readdir` real y no con `existsSync`,
+porque Cloudflare distingue mayúsculas y Windows no: `/Parasol/foto.webp`
+contra una carpeta `parasol/` anda en local y tira 404 en producción. Ya pasó.
+Los archivos que todavía no existen viven en la lista `PENDIENTES` del script,
+cada uno con su motivo.
+
+**`check:csp`** compara `_headers` (la que se sirve) contra `next.config.js`
+(la de dev). Desincronizarlas falla en silencio: agregás un dominio en dev,
+anda todo, y en producción la CSP lo bloquea sin un solo error visible.
+
+Si agregás una landing, sumá su ruta a `ROUTES` en `scripts/prerender-gate.sh`.
 
 ## Gotchas
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
