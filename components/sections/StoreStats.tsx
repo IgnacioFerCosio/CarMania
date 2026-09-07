@@ -51,12 +51,13 @@ function useCountUp(target: number, start: boolean) {
 
 function Stat({
   value,
-  suffix,
+  prefix,
   label,
   start,
 }: {
   value: string;
-  suffix: string;
+  /** Va DELANTE del número: "+3.500", no "3.500+". */
+  prefix: string;
   label: string;
   start: boolean;
 }) {
@@ -64,8 +65,8 @@ function Stat({
   return (
     <li className="px-4 py-6 text-center">
       <p className="font-display text-3xl font-black italic leading-none text-white tabular-nums sm:text-4xl md:text-6xl">
+        {prefix && <span className="text-accent">{prefix}</span>}
         {n.toLocaleString('es-AR')}
-        {suffix && <span className="text-accent">{suffix}</span>}
       </p>
       <p className="mt-2.5 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-300 sm:text-xs">
         {label}
@@ -109,7 +110,7 @@ export function StoreStats() {
           <Stat
             key={s.label}
             value={s.value}
-            suffix={s.suffix}
+            prefix={s.prefix}
             label={s.label}
             start={start}
           />

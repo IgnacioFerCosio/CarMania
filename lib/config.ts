@@ -291,7 +291,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     title: 'Parasol PRO™',
     blurb:
       'Se abre como un paraguas y cubre todo el parabrisas en 3 segundos. Bloquea los UV y mantiene el interior fresco.',
-    image: '/parasol/hero/parasol-hero.webp',
+    image: '/parasol/hero/parasol-hero-oscuro.webp',
     href: '/parasol',
     fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
     specTag: 'ABRE EN 3 SEGUNDOS',
@@ -564,12 +564,12 @@ export const INSTAGRAM = {
  */
 export const STORE_STATS = [
   // Mismo número que `BRAND.socialProofCount`, que ya se publica en la landing.
-  { value: '3.500', suffix: '+', label: 'Clientes felices' },
+  { value: '3.500', prefix: '+', label: 'Clientes felices' },
   // ESTIMADO, no medido: sale de los ~3.500 clientes por un promedio de 2
   // unidades por compra (se vende en packs de 1, 2 y 3). Redondeado hacia
   // abajo a propósito. TODO: reemplazar por las unidades reales del panel de
   // Shopify cuando estén a mano.
-  { value: '7.000', suffix: '+', label: 'Productos vendidos' },
+  { value: '7.000', prefix: '+', label: 'Productos vendidos' },
   // 23 provincias + CABA. Sin "+": es el total, no un piso.
-  { value: '24', suffix: '', label: 'Provincias con envío' },
+  { value: '24', prefix: '', label: 'Provincias con envío' },
 ] as const;

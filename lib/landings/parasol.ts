@@ -247,7 +247,7 @@ export const PARASOL = {
   heroMedia: {
     // Imagen (no video): render del producto. Es el LCP de /parasol.
     kind: 'image',
-    src: '/parasol/hero/parasol-hero.webp',
+    src: '/parasol/hero/parasol-hero-oscuro.webp',
     width: 1600,
     height: 1600,
     badgeLine1: 'SE ABRE EN',
@@ -345,7 +345,7 @@ export const PARASOL = {
   // Imagen del render del producto para el showcase de beneficios. Por ahora
   // reusa la del hero; se puede cambiar por un render dedicado.
   benefitsImage: {
-    src: '/parasol/hero/parasol-hero.webp',
+    src: '/parasol/hero/parasol-hero-oscuro.webp',
     alt: 'Parasol PRO desplegado',
   },
   pitchBlocks: [
