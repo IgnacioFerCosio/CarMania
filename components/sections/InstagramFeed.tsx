@@ -100,8 +100,9 @@ export function InstagramFeed() {
   // Duplicamos para que el rebobinado no se note (ver comentario de arriba).
   const items = [...posts, ...posts];
 
+  // `pb-0`: las fotos cierran contra el footer, sin franja gris muerta abajo.
   return (
-    <section className="bg-[#24262A] py-12 sm:py-16 md:py-20">
+    <section className="bg-[#24262A] pb-0 pt-9 sm:pt-11 md:pt-12">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center font-display text-sm font-black uppercase italic tracking-wide text-white sm:text-base md:text-lg">
           <InstagramGlyph className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -130,7 +131,7 @@ export function InstagramFeed() {
           El riel NO puede tener padding propio: `scrollBy(clientWidth)` avanza
           el ancho del viewport del contenedor, y con padding ese ancho deja de
           ser un múltiplo exacto del tile (se desalinea y el rebobinado salta). */}
-      <div className="mt-7 sm:mt-9">
+      <div className="mt-6 sm:mt-7">
         <div
           ref={trackRef}
           role="region"

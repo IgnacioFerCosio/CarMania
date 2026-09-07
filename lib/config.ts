@@ -344,7 +344,7 @@ export const STORE_HEADLINES = {
 export const STORE_PROMO_MESSAGES = [
   'Envío gratis a todo el país',
   'Garantía de 30 días',
-  '3 cuotas sin interés con MercadoPago',
+  '3 cuotas sin interés',
 ] as const;
 
 /**
