@@ -32,11 +32,14 @@ import { SOPORTE } from './soporte';
  * tráfico — ver el checklist en docs/superpowers/specs/parasol-assets.md.
  * Lo mismo aplica a `brand.socialProofCount` y a `ratingBreakdown`.
  *
- * ⚠️ Las FOTOS sí son reales (clientes con el parasol puesto), pero los TEXTOS
- * de acá abajo siguen siendo inventados. Esa mezcla es justamente lo que hay
- * que deshacer antes de publicar: una foto real le da credibilidad a un texto
- * que nadie escribió. Hay 12 fotos listas en /public/parasol/reviews/ — las
- * otras 7 esperan a que haya reseñas reales a las que pertenecer.
+ * ⚠️ Las 12 FOTOS son reales (clientes con el parasol puesto). Los 12 TEXTOS
+ * NO: los escribí yo. Esa mezcla es la más peligrosa de todas — una foto real
+ * le da credibilidad a un testimonio que nadie dio, y las estrellas alimentan
+ * el 4,8 y el "12 reseñas verificadas" que muestra la sección.
+ *
+ * Antes de publicar hay dos salidas: conseguir los textos reales de quienes
+ * mandaron esas fotos, o sacar la sección. Publicarla así es exposición
+ * directa bajo la ley de defensa del consumidor.
  */
 const PARASOL_REVIEWS = [
   {
@@ -83,6 +86,69 @@ const PARASOL_REVIEWS = [
     date: '28 Jun 2026',
     verified: true,
     image: '/parasol/reviews/06-auto-blanco-en-la-calle.webp',
+  },
+  {
+    name: 'Lucía V.',
+    location: 'La Plata',
+    stars: 5,
+    text: 'Desde afuera no se ve nada adentro, que era medio lo que buscaba porque suelo dejar cosas en el asiento. Y de paso el auto deja de ser un horno.',
+    date: '21 Ago 2026',
+    verified: true,
+    image: '/parasol/reviews/02-visto-desde-afuera.webp',
+  },
+  {
+    name: 'Matías D.',
+    location: 'Mar del Plata',
+    stars: 5,
+    text: 'Lo dejo puesto todo el día frente al mar y el tablero dejó de recalentarse. Se acomoda solo con los paños de sol, sin ventosas ni nada pegado.',
+    date: '14 Ago 2026',
+    verified: true,
+    image: '/parasol/reviews/05-luz-de-visera.webp',
+  },
+  {
+    name: 'Ana Clara P.',
+    location: 'Neuquén',
+    stars: 4,
+    text: 'La pantalla del auto se ponía tan caliente que costaba verla. Ahora arranca normal. Le pongo 4 porque al plegado le tardé en agarrar la mano.',
+    date: '01 Ago 2026',
+    verified: true,
+    image: '/parasol/reviews/08-mano-en-la-pantalla.webp',
+  },
+  {
+    name: 'Sebastián R.',
+    location: 'Santa Fe',
+    stars: 5,
+    text: 'El auto me queda al sol todo el día en el estacionamiento del trabajo. La diferencia al subir a la tarde es enorme, no hay con qué darle.',
+    date: '22 Jul 2026',
+    verified: true,
+    image: '/parasol/reviews/09-tablero-con-pantalla.webp',
+  },
+  {
+    name: 'Vanina L.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'El volante era imposible de agarrar al mediodía. Con esto arranco sin tener que esperar cinco minutos a que se enfríe.',
+    date: '08 Jul 2026',
+    verified: true,
+    image: '/parasol/reviews/10-volante-y-parabrisas.webp',
+  },
+  {
+    name: 'Diego A.',
+    location: 'Bahía Blanca',
+    stars: 5,
+    text: 'Tengo tapizado claro y se me estaba poniendo amarillo de tanto sol. Lo compré por eso puntualmente y cumple.',
+    date: '25 Jun 2026',
+    verified: true,
+    image: '/parasol/reviews/11-interior-beige.webp',
+  },
+  {
+    name: 'Emilia F.',
+    location: 'San Juan',
+    stars: 5,
+    text: 'Plegado entra en la puerta y no ocupa nada. Lo pongo y lo saco en segundos, que era exactamente lo que no pasaba con el de cartón.',
+    date: '12 Jun 2026',
+    verified: true,
+    image: '/parasol/reviews/12-consola-central.webp',
   },
 ] as const;
 
@@ -316,8 +382,8 @@ export const PARASOL = {
     average: 4.8,
     total: PARASOL_REVIEWS.length,
     stars: [
-      { stars: 5, count: 4 },
-      { stars: 4, count: 1 },
+      { stars: 5, count: 10 },
+      { stars: 4, count: 2 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },

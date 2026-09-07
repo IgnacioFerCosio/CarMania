@@ -28,6 +28,7 @@ import { HowItWorks } from '@/components/sections/HowItWorks';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
+import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
 import { TrustBlock } from '@/components/sections/TrustBlock';
 import { FAQ } from '@/components/sections/FAQ';
 import { BackToPricingCTA } from '@/components/sections/BackToPricingCTA';
@@ -141,7 +142,9 @@ export default async function SopladorPage() {
         <BenefitsShowcase config={SOPLADOR} />
 
         {/* 9. Reseñas */}
-        <Reviews config={SOPLADOR} />
+        <Reviews config={SOPLADOR}>
+          <ReviewsExpandable reviews={SOPLADOR.reviews} collapseAfter={8} />
+        </Reviews>
 
         {/* 10. Garantía + medios de pago */}
         <div id="trust">

@@ -22,6 +22,7 @@ import { HowItWorks } from '@/components/sections/HowItWorks';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
+import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
 import { TrustBlock } from '@/components/sections/TrustBlock';
 import { FAQ } from '@/components/sections/FAQ';
 import { BackToPricingCTA } from '@/components/sections/BackToPricingCTA';
@@ -139,7 +140,9 @@ export default async function ParasolPage() {
         <BenefitsShowcase config={PARASOL} />
 
         {/* 8. Reseñas */}
-        <Reviews config={PARASOL} />
+        <Reviews config={PARASOL}>
+          <ReviewsExpandable reviews={PARASOL.reviews} collapseAfter={8} />
+        </Reviews>
 
         {/* 9. Garantía + medios de pago */}
         <div id="trust">
