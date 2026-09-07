@@ -9,7 +9,10 @@
         "dev"
       ],
       "port": 3000,
-      "autoPort": true
+      "autoPort": true,
+      "env": {
+        "NEXT_BUILD_DIR": ".next-preview"
+      }
     },
     {
       "name": "carmania-prod",
@@ -19,7 +22,10 @@
         "start"
       ],
       "port": 3000,
-      "autoPort": true
+      "autoPort": true,
+      "env": {
+        "NEXT_BUILD_DIR": ".next-preview"
+      }
     }
   ]
 }
