@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // Carpeta de build. Por defecto `.next`, la misma que usa `next dev`.
+  // Un `npm run build` con el dev server levantado le corrompe el cache al
+  // dev ("Cannot find module ./XXX.js", páginas sin estilos), así que para
+  // verificar sin pisar la sesión de desarrollo se corre apuntando a otra:
+  //   NEXT_BUILD_DIR=.next-verify npm run build
+  // En Cloudflare la variable no existe y el build sale en `.next` como
+  // siempre; no hay que tocar nada del lado del hosting.
+  distDir: process.env.NEXT_BUILD_DIR || '.next',
+
   // No exponemos en los headers que el sitio corre sobre Next.js.
   poweredByHeader: false,
 

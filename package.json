@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check:assets": "node scripts/check-assets.mjs",
+    "check:csp": "node scripts/check-csp.mjs",
+    "gate": "bash scripts/prerender-gate.sh",
+    "gate:capture": "bash scripts/prerender-gate.sh capture",
+    "test": "bash scripts/verify.sh"
   },
   "dependencies": {
     "next": "^14.2.35",

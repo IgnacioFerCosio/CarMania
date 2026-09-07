@@ -5,8 +5,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Evitamos que los glow/blur absolutos generen scroll lateral en mobile */
+    /* Evitamos que los glow/blur absolutos generen scroll lateral en mobile.
+       `clip` y no `hidden`: `hidden` convierte al elemento en contenedor de
+       scroll, y eso rompe `position: sticky` en sus hijos (la barra de oferta
+       de /tienda dejaba de pegarse arriba). `clip` recorta igual sin crear el
+       contenedor. La línea `hidden` queda antes como fallback para navegadores
+       sin soporte de `clip`. */
     overflow-x: hidden;
+    overflow-x: clip;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -14,6 +20,7 @@
     text-rendering: optimizeLegibility;
     font-feature-settings: 'cv02', 'cv03', 'cv04';
     overflow-x: hidden;
+    overflow-x: clip;
     width: 100%;
     /* Padding inferior solo en mobile para que el sticky ATC y el float
        de WhatsApp no tapen el último bloque (Footer / CTA back-to-pricing). */
@@ -73,4 +80,25 @@
   width: max-content;
   animation: marquee-right 30s linear infinite;
   will-change: transform;
+}
+
+/* Pulso del neón de SubPromoBar. La animación va sobre `opacity` y no sobre
+   `text-shadow` para que la componga el compositor y no repinte en cada
+   frame — la barra es sticky y se repinta con cada scroll. */
+@keyframes neon-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+.neon-pulse {
+  animation: neon-breathe 2.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .neon-pulse {
+    animation: none;
+  }
 }

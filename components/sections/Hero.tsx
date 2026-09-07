@@ -12,11 +12,25 @@
  * (/public/hero/VideoPrincipal.mp4) con su poster webp. Es el elemento LCP
  * de la página — cualquier cambio acá se nota en Core Web Vitals.
  */
-import { BRAND, HEADLINES } from '@/lib/config';
+import { PAYMENT_LOGOS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { HeroTestimonialCarousel } from '@/components/ui/HeroTestimonialCarousel';
 
-export function Hero() {
+function escapeRegExp(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function highlight(text: string, terms: string[]) {
+  if (terms.length === 0) return [text];
+  const re = new RegExp(`(${terms.map(escapeRegExp).join('|')})`, 'g');
+  return text.split(re);
+}
+
+export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { headlines, heroMedia, heroSubHighlights, brand } = config;
+
   return (
     <section id="top" className="relative overflow-hidden bg-ink-950">
       {/* Glow sutil de fondo */}
@@ -32,16 +46,16 @@ export function Hero() {
       <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:pb-16 sm:pt-10 md:px-6 md:pb-24 md:pt-16">
         {/* Headline grande centrado arriba */}
         <h1 className="heading-display text-center text-[26px] leading-[1.05] sm:text-3xl sm:leading-[0.95] md:text-5xl lg:text-6xl">
-          {HEADLINES.heroLine1}{' '}
-          <span className="text-accent">{HEADLINES.heroLine2}</span>
+          {headlines.heroLine1}{' '}
+          <span className="text-accent">{headlines.heroLine2}</span>
         </h1>
 
         <div className="mt-7 grid items-start gap-7 sm:mt-10 sm:gap-10 md:mt-14 md:grid-cols-2 md:items-stretch md:gap-12">
           {/* Columna izquierda — copy + CTA + social proof */}
           <div className="order-2 md:order-1">
             <p className="max-w-xl text-[15px] leading-relaxed text-ink-200 sm:text-base md:text-lg">
-              {HEADLINES.heroSub.split(/(MagSafe|GPS)/).map((chunk, i) =>
-                chunk === 'MagSafe' || chunk === 'GPS' ? (
+              {highlight(headlines.heroSub, [...heroSubHighlights]).map((chunk, i) =>
+                heroSubHighlights.includes(chunk) ? (
                   <span key={i} className="font-bold italic text-accent">
                     {chunk}
                   </span>
@@ -69,22 +83,28 @@ export function Hero() {
               <span aria-hidden="true">🏆</span>
               <span>
                 <strong className="font-black italic text-accent">
-                  {BRAND.socialProofCount}
+                  {brand.socialProofCount}
                 </strong>{' '}
-                {BRAND.socialProofLabel} en Argentina
+                {brand.socialProofLabel} en Argentina
               </span>
             </p>
 
             {/* Métodos de pago */}
             <PaymentBadges />
 
-            {/* Testimonios rotativos */}
-            <HeroTestimonialCarousel />
+            {/* Testimonios rotativos.
+                HeroTestimonialCarousel es 'use client': pasarle una prop la
+                serializa en el payload RSC. Para el soporte las reseñas son
+                las del default del componente, así que omitimos la prop y el
+                HTML prerenderizado de / queda idéntico byte a byte. */}
+            <HeroTestimonialCarousel
+              {...(config.reviews === SOPORTE.reviews ? {} : { reviews: config.reviews })}
+            />
           </div>
 
           {/* Columna derecha — media slot grande */}
           <div className="order-1 md:order-2">
-            <HeroMedia />
+            <HeroMedia media={heroMedia} />
           </div>
         </div>
       </div>
@@ -95,14 +115,6 @@ export function Hero() {
 // width/height = relación de aspecto real de cada SVG (viewBox). El tamaño
 // pintado lo define el CSS (h-6/h-8 + w-auto), pero los atributos le dan al
 // navegador el aspect-ratio para reservar el ancho antes de que cargue.
-const PAYMENT_LOGOS = [
-  { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
-  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
-  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
-  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
-  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
-];
-
 function PaymentBadges() {
   return (
     <ul className="mt-6 flex flex-wrap items-center gap-2">
@@ -130,41 +142,52 @@ function PaymentBadges() {
 }
 
 
-function HeroMedia() {
+function HeroMedia({ media }: { media: LandingConfig['heroMedia'] }) {
   return (
     <div
       id="hero-media"
       className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-white/5 md:aspect-auto md:h-full"
     >
-      {/* Video del producto — servido desde /public (mismo origen) para no
-          pagar DNS + TLS de un CDN externo en el camino crítico del LCP.
-          El `poster` (webp de 17 KB, primer frame) es lo que realmente pinta
-          el LCP: aparece al instante mientras el mp4 todavía baja. */}
-      <video
-        src="/hero/VideoPrincipal.mp4"
-        poster="/hero/VideoPrincipal-poster.webp"
-        autoPlay={true}
-        muted={true}
-        loop={true}
-        playsInline={true}
-        preload="metadata"
-        width={720}
-        height={1280}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      {media.kind === 'image' ? (
+        // <img> plano (no next/image): en Cloudflare `/_next/image` no optimiza
+        // — pasar por ahí sería un salto extra en el camino del LCP y además
+        // desalinearía el `ReactDOM.preload()` de la página (que apunta al
+        // archivo real). `fetchPriority="high"` porque es el LCP.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={media.src}
+          alt=""
+          width={media.width}
+          height={media.height}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <video
+          src={media.src}
+          poster={media.poster}
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+          preload="metadata"
+          width={media.width}
+          height={media.height}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
 
-      {/* Overlay sutil para que el badge sea legible sobre el video */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"
       />
 
-      {/* Badge en la esquina inferior derecha */}
       <div className="absolute bottom-4 right-4 max-w-[60%] text-right sm:bottom-5 sm:right-5">
         <span className="font-display text-2xl font-black italic uppercase leading-none text-white drop-shadow-lg sm:text-3xl md:text-5xl">
-          NO SE
+          {media.badgeLine1}
           <br />
-          CAE MÁS
+          {media.badgeLine2}
         </span>
       </div>
     </div>

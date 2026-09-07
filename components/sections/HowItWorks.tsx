@@ -3,31 +3,30 @@
  * Los videos se reproducen solos, sin sonido y en loop (igual que el hero).
  * Sin texto flotando encima del video.
  */
-import { HEADLINES, STEPS_V2 } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { LazyVideo } from '@/components/ui/LazyVideo';
 
-// Rutas de los videos de /public/how-to-use/ — se sirven desde el mismo
-// origen. Ojo: la CSP de `_headers` tiene `media-src 'self'`, así que apuntar
-// esto a un CDN externo hace que los videos no carguen en producción.
-const STEP_VIDEOS = [
-  '/how-to-use/InstalaLaBase.mp4',
-  '/how-to-use/ajustaAngulo.mp4',
-  '/how-to-use/colocaTuCelu.mp4',
-];
+// Los videos de cada paso viven en /public/how-to-use/ y se sirven desde el
+// mismo origen (`s.video` en config). Ojo: la CSP de `_headers` tiene
+// `media-src 'self'`, así que apuntar esto a un CDN externo hace que los
+// videos no carguen en producción.
 
-export function HowItWorks() {
+export function HowItWorks({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { headlines, steps } = config;
+
   return (
     <section id="how" className="bg-[#24262A] py-14 sm:py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="text-center">
-          <p className="eyebrow">{HEADLINES.howItWorksLabel}</p>
+          <p className="eyebrow">{headlines.howItWorksLabel}</p>
           <h2 className="heading-display mt-2 text-2xl leading-tight sm:text-3xl md:text-5xl">
-            {HEADLINES.howItWorksTitle}
+            {headlines.howItWorksTitle}
           </h2>
         </div>
 
         <ol className="mt-8 grid gap-4 sm:mt-12 sm:gap-5 md:mt-16 md:grid-cols-3 md:gap-6">
-          {STEPS_V2.map((s, i) => (
+          {steps.map((s) => (
             <li
               key={s.n}
               className="overflow-hidden rounded-2xl border border-ink-800 bg-ink-950"
@@ -36,7 +35,7 @@ export function HowItWorks() {
                   reserva el espacio aunque el video todavía no se haya montado. */}
               <div className="relative aspect-video w-full overflow-hidden bg-ink-900 sm:aspect-[6/5]">
                 <LazyVideo
-                  src={STEP_VIDEOS[i]}
+                  src={s.video}
                   className="h-full w-full object-cover"
                 />
               </div>

@@ -9,8 +9,10 @@ import { useCart } from './CartProvider';
 import { Icon } from '@/components/ui/Icon';
 
 export function CartButton({ className = '' }: { className?: string }) {
-  const { cart, openCart } = useCart();
-  const count = cart?.totalQuantity ?? 0;
+  // `count` y no `cart.totalQuantity`: mientras el carrito se rehidrata contra
+  // Shopify vale el número guardado, así el badge no parpadea en 0 en cada
+  // cambio de página (ver CartProvider).
+  const { count, openCart } = useCart();
 
   return (
     <button

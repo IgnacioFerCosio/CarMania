@@ -1,11 +1,8 @@
 import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
-import {
-  BRAND,
-  BUNDLES,
-  PAYMENTS,
-  RETURNS,
-} from '@/lib/config';
+import { PAYMENTS, RETURNS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 import { BuyButton } from '@/components/commerce/BuyButton';
@@ -13,9 +10,11 @@ import { BuyButton } from '@/components/commerce/BuyButton';
 type Props = {
   productId: string;
   bundlesData: Record<string, BundleData>; // keyed by productId
+  config?: LandingConfig;
 };
 
-export function Pricing({ productId, bundlesData }: Props) {
+export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
+  const { brand, bundles, sectionCopy } = config;
 
   return (
     <section
@@ -32,14 +31,15 @@ export function Pricing({ productId, bundlesData }: Props) {
         {/* ── Header — rating + título + sub pills ───────────────────── */}
         <div className="text-center">
           <div className="inline-flex items-center gap-2">
-            <Stars rating={BRAND.averageRating} size={18} />
+            <Stars rating={brand.averageRating} size={18} />
             <span className="text-sm font-semibold text-accent">
-              {BRAND.averageRating}/5 · {BRAND.socialProofCount} {BRAND.socialProofLabel}
+              {brand.averageRating}/5 · {brand.socialProofCount} {brand.socialProofLabel}
             </span>
           </div>
 
           <h2 className="heading-display mt-3 text-2xl leading-tight sm:mt-4 sm:text-3xl md:text-5xl lg:text-6xl">
-            Probá tu CARMANIA <span className="text-accent">30 días gratis</span>
+            {`${sectionCopy.pricingTitle} `}
+            <span className="text-accent">{sectionCopy.pricingTitleAccent}</span>
           </h2>
 
           <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-300 sm:mt-6 sm:gap-x-6 sm:text-xs md:text-sm">
@@ -80,7 +80,7 @@ export function Pricing({ productId, bundlesData }: Props) {
 
         {/* ── Grid de bundles ────────────────────────────────────────── */}
         <ul className="mt-8 grid gap-5 sm:mt-10 sm:gap-6 md:mt-12 md:grid-cols-3">
-          {BUNDLES.map((b, idx) => {
+          {bundles.map((b) => {
             const shopifyData = bundlesData[b.productId];
             const bundleTotal = shopifyData?.price ?? b.fallbackPrice;
             const bundleCompare = shopifyData?.compareAtPrice ?? b.fallbackCompare;
@@ -134,7 +134,7 @@ export function Pricing({ productId, bundlesData }: Props) {
                 </div>
 
                 {/* Foto del producto */}
-                <BundleImage index={idx + 1} accent={b.recommended} />
+                <BundleImage src={b.image} alt={b.label} accent={b.recommended} />
 
                 {/* Precios */}
                 <div className="mt-2 text-center">
@@ -242,15 +242,23 @@ export function Pricing({ productId, bundlesData }: Props) {
   );
 }
 
-function BundleImage({ index, accent }: { index: number; accent: boolean }) {
+function BundleImage({
+  src,
+  alt,
+  accent,
+}: {
+  src: string;
+  alt: string;
+  accent: boolean;
+}) {
   return (
     <div
       className={`relative my-5 aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ${accent ? 'ring-1 ring-inset ring-accent/30' : 'ring-1 ring-inset ring-ink-800'
         }`}
     >
       <Image
-        src={`/bundles/BundleX${index}.webp`}
-        alt={`Bundle opción ${index}`}
+        src={src}
+        alt={alt}
         fill
         className="object-cover"
         sizes="(min-width: 768px) 33vw, 100vw"

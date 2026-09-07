@@ -5,10 +5,12 @@
  * Solo una pregunta abierta a la vez (UX más limpia y mobile-first).
  */
 import { useState } from 'react';
-import { FAQ as ITEMS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 
-export function FAQ() {
+export function FAQ({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { faq, sectionCopy } = config;
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -16,15 +18,15 @@ export function FAQ() {
       <div className="mx-auto max-w-3xl px-4 md:px-6">
         <div className="text-center">
           <span className="inline-block text-[11px] font-semibold uppercase tracking-widest text-accent sm:text-xs">
-            Dudas frecuentes
+            {sectionCopy.faqEyebrow}
           </span>
           <h2 className="mt-2 font-display text-2xl font-extrabold leading-tight text-white sm:mt-3 sm:text-3xl md:text-5xl">
-            Respondemos lo que más nos preguntan
+            {sectionCopy.faqTitle}
           </h2>
         </div>
 
         <ul className="mt-8 divide-y divide-ink-800 overflow-hidden rounded-2xl border border-ink-800 bg-ink-900/50 sm:mt-12">
-          {ITEMS.map((item, i) => {
+          {faq.map((item, i) => {
             const isOpen = open === i;
             return (
               <li key={item.q}>

@@ -6,9 +6,12 @@
  * tipo "sello" arriba, descripción abajo. Debajo, bloque "Certificado por"
  * con los logos / nombres de certificaciones.
  */
-import { QUALITY_BADGES, CERTIFICATIONS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 
-export function TrustBlock() {
+export function TrustBlock({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { qualityBadges } = config;
+
   return (
     <section className="bg-ink-900 py-14 sm:py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
@@ -21,7 +24,7 @@ export function TrustBlock() {
 
         {/* 3 cards */}
         <ul className="mt-10 grid gap-4 sm:mt-14 sm:gap-6 md:grid-cols-3 md:gap-8">
-          {QUALITY_BADGES.map((q) => (
+          {qualityBadges.map((q) => (
             <li
               key={q.title}
               className="rounded-2xl border border-ink-800 bg-ink-950 p-5 text-center sm:rounded-3xl sm:p-7 md:p-9"

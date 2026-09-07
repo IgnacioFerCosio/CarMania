@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 /**
  * Genera /sitemap.xml en build.
- * El sitio tiene dos rutas indexables: la landing del soporte (one-page) y
- * la home de tienda en /tienda.
+ * El sitio tiene cuatro rutas indexables: la landing del soporte (one-page),
+ * la home de tienda en /tienda y las landings de /parasol y /soplador.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -18,6 +18,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: 'https://oferta.carmaniaoficial.com/parasol',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://oferta.carmaniaoficial.com/soplador',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
   ];
 }

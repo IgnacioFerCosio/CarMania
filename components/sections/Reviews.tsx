@@ -5,20 +5,39 @@
  *   Izquierda: "RESEÑAS" + rating promedio grande
  *   Derecha:   Barras de % por estrella (5/4/3/2/1)
  *
- * Cards: imagen del cliente (placeholder), nombre + verified, stars, texto
- * con clamp + link "...Ver más".
+ * Cards: imagen del cliente, nombre + verified, stars y texto con clamp. El
+ * markup de la card vive en `ReviewCard`, compartido con la variante que se
+ * despliega.
+ *
+ * La grilla se puede reemplazar pasando `children` — es lo que hacen
+ * /parasol y /soplador con `ReviewsExpandable`, que corta en 8 y suma un
+ * "Ver más".
+ *
+ * Por qué un slot y no un prop `collapseAfter`: con el prop, este archivo
+ * tenía que importar el componente cliente, y ese import mete la referencia
+ * en el manifiesto de TODA ruta que renderice Reviews — `/` se llevaba ~1 kB
+ * de JS por una rama que nunca toma. Con el slot, el import vive en la página
+ * que lo usa y `/` no se entera.
  *
  * Cuando integres un sistema real de reviews (Loox / Judge.me / Stamped),
  * reemplazá REVIEWS por el fetch de su API manteniendo el mismo shape
  * y agregá `image: '/reviews/<n>.jpg'` por review.
  */
-import Image from 'next/image';
-import { BRAND, REVIEWS, RATING_BREAKDOWN } from '@/lib/config';
-import { Icon } from '@/components/ui/Icon';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 import { Stars } from '@/components/ui/Stars';
+import { ReviewCard } from './ReviewCard';
 
-export function Reviews() {
-  const { average, total, stars } = RATING_BREAKDOWN;
+export function Reviews({
+  config = SOPORTE,
+  children,
+}: {
+  config?: LandingConfig;
+  /** Reemplaza la grilla por defecto. Ver `ReviewsExpandable`. */
+  children?: React.ReactNode;
+} = {}) {
+  const { brand, reviews, ratingBreakdown, sectionCopy } = config;
+  const { average, total, stars } = ratingBreakdown;
   const maxCount = Math.max(...stars.map((s) => s.count));
 
   return (
@@ -36,7 +55,7 @@ export function Reviews() {
             </div>
             <div className="min-w-0">
               <h2 className="font-display text-xl font-black italic uppercase tracking-wider text-white sm:text-2xl md:text-3xl">
-                Reseñas de <span className="text-accent">clientes</span>
+                {sectionCopy.reviewsTitle + ' '}<span className="text-accent">{sectionCopy.reviewsTitleAccent}</span>
               </h2>
               <p className="mt-1 text-xs text-ink-400 sm:text-sm">
                 Basado en {total} reseñas verificadas
@@ -69,96 +88,21 @@ export function Reviews() {
         </div>
 
         {/* ── Grid de reviews ────────────────────────────────────────── */}
-        <ul className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {REVIEWS.map((r, i) => (
-            <li
-              key={r.name + r.date}
-              className="flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950"
-            >
-              <ReviewImage initial={r.name[0]} index={i} image={'image' in r ? (r as { image: string }).image : undefined} />
-
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-sm font-bold uppercase tracking-wider text-white">
-                    {r.name}
-                  </span>
-                  {r.verified && (
-                    <span
-                      className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-accent/15 text-accent"
-                      title="Compra verificada"
-                    >
-                      <Icon name="check" className="h-3 w-3" />
-                    </span>
-                  )}
-                </div>
-
-                <div className="mt-1.5">
-                  <Stars rating={r.stars} size={13} />
-                </div>
-
-                <p className="mt-3 text-sm leading-relaxed text-ink-200 line-clamp-5">
-                  {r.text}
-                </p>
-
-                <div className="mt-3 flex items-center justify-between text-[11px] text-ink-400">
-                  <span>{r.location}</span>
-                  <span>{r.date}</span>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {children ?? (
+          <ul className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {reviews.map((r, i) => (
+              <ReviewCard key={r.name + r.date} review={r} index={i} />
+            ))}
+          </ul>
+        )}
 
         {/* Counter de total */}
         <p className="mt-8 text-center text-[13px] leading-relaxed text-ink-400 sm:mt-10 sm:text-sm">
-          Sumate a los <span className="font-semibold text-white">{BRAND.socialProofCount}</span>{' '}
-          clientes que ya manejan tranquilos con CARMANIA.
+          Sumate a los <span className="font-semibold text-white">{brand.socialProofCount}</span>{' '}
+          {sectionCopy.reviewsFooter}
         </p>
       </div>
     </section>
   );
 }
 
-/**
- * Imagen de la review — placeholder gradiente con inicial. Cuando tengas
- * fotos reales que mandan los clientes (o de Loox / Judge.me), reemplazá
- * el div por <Image src={r.image} ... fill className="object-cover" />.
- */
-function ReviewImage({ initial, index, image }: { initial: string; index: number; image?: string }) {
-  const variants = [
-    'from-ink-700 via-ink-800 to-ink-950',
-    'from-ink-800 via-ink-900 to-black',
-    'from-ink-900 via-ink-800 to-ink-950',
-    'from-ink-800 via-black to-ink-900',
-  ];
-  const bg = variants[index % variants.length];
-
-  return (
-    <div className={`relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br ${bg}`}>
-      {image ? (
-        <Image
-          src={image}
-          alt={`Foto de reseña`}
-          fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
-        />
-      ) : (
-        <>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(215,7,7,0.15),transparent_60%)]"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-display text-7xl font-black italic text-white/10">
-              {initial}
-            </span>
-          </div>
-          <div className="absolute left-3 top-3 rounded-md border border-white/15 bg-black/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur">
-            Foto cliente
-          </div>
-        </>
-      )}
-    </div>
-  );
-}

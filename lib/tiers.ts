@@ -11,7 +11,8 @@
  * Los precios entran por parámetro (nunca hardcodeados acá) para que el copy
  * del upsell se actualice solo cuando cambien en Shopify.
  */
-import { UPSELL_CHAIN, type TierId } from './config';
+import { UPSELL_CHAIN } from './landings/soporte';
+import type { TierId, UpsellTier } from './landings/types';
 import type { BundleData } from './shopify';
 import type { VariantPrice } from './shopify';
 
@@ -34,14 +35,20 @@ export type ResolvedTier = {
  * `bundlesData` viene del servidor (resuelto en el build). `livePrices` es el
  * refetch client-side; cuando está, pisa a los precios del build, que en
  * Cloudflare pueden estar viejos.
+ *
+ * `chain` defaultea a la del soporte para no romper a los llamadores viejos.
+ * Las páginas pasan la UNIÓN de las chains de todas las landings, porque el
+ * carrito persiste entre páginas: sin eso, una línea del otro producto cae en
+ * `tierOf() → null` y pierde su banner de upsell.
  */
 export function buildTiers(
   bundlesData: Record<string, BundleData>,
   livePrices?: Record<string, VariantPrice>,
+  chain: readonly UpsellTier[] = UPSELL_CHAIN,
 ): ResolvedTier[] {
   const tiers: ResolvedTier[] = [];
 
-  for (const t of UPSELL_CHAIN) {
+  for (const t of chain) {
     const data = bundlesData[t.productId];
     const variantId = data?.variantId || t.fallbackVariantId;
     if (!variantId) continue;

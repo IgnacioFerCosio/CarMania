@@ -7,25 +7,30 @@
  * `null`, mostramos el nombre en texto monocromo. Apenas le pongas la ruta
  * del SVG (ej. '/brands/toyota.svg'), automáticamente reemplaza al texto.
  */
-import { CAR_BRANDS, HEADLINES } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import type { LandingConfig } from '@/lib/landings/types';
 
-export function CarBrands() {
+export function CarBrands({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+  const { carBrands } = config;
+  const { carBrandsTitle, carBrandsTitleAccent } = config.sectionCopy;
   // Duplicamos la lista para que el marquee loopee sin "salto"
-  const items = [...CAR_BRANDS, ...CAR_BRANDS];
+  const items = [...carBrands, ...carBrands];
 
   return (
     <section className="bg-ink-950 py-10 sm:py-12 md:py-16">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <h2 className="heading-display text-center text-2xl leading-tight sm:text-3xl md:text-4xl">
-          {HEADLINES.carCompat.split(/(cualquier auto)/).map((chunk, i) =>
-            chunk === 'cualquier auto' ? (
-              <span key={i} className="text-accent">
-                {chunk}
-              </span>
-            ) : (
-              <span key={i}>{chunk}</span>
-            ),
-          )}
+          {`${carBrandsTitle} ${carBrandsTitleAccent}`
+            .split(new RegExp(`(${carBrandsTitleAccent})`))
+            .map((chunk, i) =>
+              chunk === carBrandsTitleAccent ? (
+                <span key={i} className="text-accent">
+                  {chunk}
+                </span>
+              ) : (
+                <span key={i}>{chunk}</span>
+              ),
+            )}
         </h2>
       </div>
 

@@ -10,18 +10,26 @@
  */
 import type { Metadata } from 'next';
 import { PromoBar } from '@/components/layout/PromoBar';
+import { SubPromoBar } from '@/components/layout/SubPromoBar';
 import { Navbar, type NavLink } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { StoreHero } from '@/components/sections/StoreHero';
 import { ProductGrid } from '@/components/sections/ProductGrid';
-import { TrustBlock } from '@/components/sections/TrustBlock';
-import { CarBrands } from '@/components/sections/CarBrands';
+import { ShopByActivity } from '@/components/sections/ShopByActivity';
+import { StoreReviews } from '@/components/sections/StoreReviews';
+import { StoreStats } from '@/components/sections/StoreStats';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
 import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { STORE_PRODUCTS, UPSELL_CHAIN, type StoreProduct } from '@/lib/config';
+import {
+  STORE_PRODUCTS,
+  STORE_PROMO_MESSAGES,
+  UPSELL_CHAIN,
+  type StoreProduct,
+} from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Tienda — CARMANIA',
@@ -41,7 +49,14 @@ export const metadata: Metadata = {
   alternates: { canonical: '/tienda' },
 };
 
-const STORE_LINKS: NavLink[] = [{ href: '#productos', label: 'Productos' }];
+const STORE_LINKS: NavLink[] = [
+  { href: '/', label: 'Soporte PRO', highlight: true, badge: 'TOP' },
+  // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
+  // iguales se anulan entre sí. Además el nav no da para tres píldoras.
+  { href: '/parasol', label: 'Parasol PRO' },
+  { href: '/soplador', label: 'Soplador PRO', highlight: true, badge: 'NUEVO' },
+  { href: '#productos', label: 'Ver todo' },
+];
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual. Mismo valor que app/page.tsx,
@@ -93,16 +108,37 @@ export default async function TiendaPage() {
 
   return (
     <CartProvider bundlesData={bundlesData}>
-      <PromoBar />
-      <Navbar links={STORE_LINKS} homeHref="/tienda" ctaHref="#productos" />
+      <PromoBar messages={STORE_PROMO_MESSAGES} />
+      <Navbar
+        links={STORE_LINKS}
+        homeHref="/tienda"
+        ctaHref="#productos"
+        ctaLabel="Ver productos"
+        // Ya estamos en la tienda: el acceso directo no tendría a dónde ir.
+        storeHref={null}
+      />
+      <SubPromoBar href="#productos" />
 
       <main>
+        {/* 1. Hero a sangre — incluye la franja de garantías como overlay */}
         <StoreHero />
+
+        {/* 2. Grilla de productos */}
         <ProductGrid products={products} />
-        <div id="trust">
-          <TrustBlock />
-        </div>
-        <CarBrands />
+
+        {/* 3. "Comprá por momento" — carrusel de casos de uso */}
+        <ShopByActivity />
+
+        {/* 4. Reseñas */}
+        <StoreReviews />
+
+        {/* 5. Banda de números */}
+        <StoreStats />
+
+        {/* 6. Instagram — grilla curada, misma posición que en CARMOUNT
+            (pegada al footer). No es un feed en vivo: ver el bloque
+            INSTAGRAM en lib/config.ts. */}
+        <InstagramFeed />
       </main>
 
       <Footer />

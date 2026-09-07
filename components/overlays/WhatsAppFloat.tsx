@@ -10,7 +10,9 @@ import { useEffect, useState } from 'react';
 import { WHATSAPP } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 
-export function WhatsAppFloat() {
+export function WhatsAppFloat({
+  prefilled = WHATSAPP.prefilled,
+}: { prefilled?: string } = {}) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export function WhatsAppFloat() {
     return () => window.clearTimeout(t);
   }, []);
 
-  const url = `https://wa.me/${WHATSAPP.number}?text=${encodeURIComponent(WHATSAPP.prefilled)}`;
+  const url = `https://wa.me/${WHATSAPP.number}?text=${encodeURIComponent(prefilled)}`;
 
   return (
     <a

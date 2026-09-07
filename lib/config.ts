@@ -1,28 +1,60 @@
 /**
- * Brand + landing config.
- * 90 % de los textos editables del landing viven acá.
- * Tocando este archivo cambiás copy, precios fallback, urgencia, badges,
- * WhatsApp, sin meterte con los componentes.
+ * Config global de marca + de `/tienda`, y re-export de compat de la data del
+ * soporte.
+ *
+ * La data product-específica de la landing `/` (copy, precios fallback,
+ * bundles, reviews, FAQ, marcas…) se mudó a `lib/landings/soporte.ts`. Acá
+ * quedan los símbolos globales (marca, envío, pagos, WhatsApp, tracking, promo
+ * bars) y los de `/tienda`, más un bloque de re-export que mantiene andando
+ * los ~32 imports que todavía leen estos nombres desde `@/lib/config`.
  */
+import {
+  SOPORTE,
+  FALLBACK_PRICING,
+  HEADLINES,
+  CAR_BRANDS,
+  STEPS_V2,
+  BENEFITS,
+  REVIEWS,
+  RATING_BREAKDOWN,
+  FAQ,
+  QUALITY_BADGES,
+  CERTIFICATIONS,
+  TRUST_PILLARS,
+  BUNDLES,
+  UPSELL_CHAIN,
+} from './landings/soporte';
 
-export const BRAND = {
-  name: 'CARMANIA',
-  tagline: 'Soporte Magnético PRO™',
-  productHandle: 'soporte-magnetico-pro',
-  socialProofCount: '+3.500',
-  socialProofLabel: 'clientes felices',
-  averageRating: 4.9,
-  reviewsCount: 412,
-} as const;
+// ─────────────────────────────────────────────────────────────────────────
+// Re-export de compatibilidad. Los componentes migran de a poco a leer la
+// config por prop; mientras tanto estos nombres mantienen andando los imports
+// que todavía no se tocaron. NO agregues símbolos nuevos acá: lo que es de un
+// producto va en `lib/landings/<producto>.ts`.
+// ─────────────────────────────────────────────────────────────────────────
+export type { TierId } from './landings/types';
+export {
+  FALLBACK_PRICING,
+  HEADLINES,
+  CAR_BRANDS,
+  STEPS_V2,
+  BENEFITS,
+  REVIEWS,
+  RATING_BREAKDOWN,
+  FAQ,
+  QUALITY_BADGES,
+  CERTIFICATIONS,
+  TRUST_PILLARS,
+  BUNDLES,
+  UPSELL_CHAIN,
+};
 
 /**
- * Precios fallback en ARS (se usan si la Storefront API no responde).
- * Los precios "vivos" se traen del producto en Shopify en build time.
+ * `name` es global de marca; el resto sale de la config del soporte. Así lo
+ * consumen `Navbar`, `Hero`, `Pricing`, `Reviews` y `CartProvider` hoy.
  */
-export const FALLBACK_PRICING = {
-  price: 39990,
-  compareAtPrice: 60000,
-  currency: 'ARS',
+export const BRAND = {
+  name: 'CARMANIA',
+  ...SOPORTE.brand,
 } as const;
 
 export const URGENCY = {
@@ -41,6 +73,23 @@ export const PAYMENTS = {
   provider: 'MercadoPago',
 } as const;
 
+/**
+ * Logos de medios de pago. Vivían dentro de Hero.tsx; se subieron acá porque
+ * ahora también los usa la grilla de /tienda.
+ *
+ * `w`/`h` son las dimensiones intrínsecas del SVG: el tamaño pintado lo define
+ * el CSS, pero los atributos le dan al navegador el aspect-ratio para reservar
+ * el ancho antes de que cargue. `lg` marca los que necesitan ir más grandes
+ * para leerse parejo (el de Mercado Pago es apaisado).
+ */
+export const PAYMENT_LOGOS = [
+  { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
+  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
+  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
+  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
+  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
+] as const;
+
 export const RETURNS = {
   days: 30,
   label: 'Devolución 30 días sin preguntas',
@@ -54,28 +103,6 @@ export const WHATSAPP = {
 
 export const TRACKING = {
   metaPixelId: '877870938398833',
-} as const;
-
-export const HEADLINES = {
-  // Hero — Bold italic UPPERCASE. La última frase resaltada en accent (rojo).
-  heroLine1: 'El soporte definitivo',
-  heroLine2: 'para tu celular',
-  heroSub:
-    'Se adhiere al auto, al espejo, al escritorio o a la pared. Compatible con MagSafe para GPS, llamadas y filmar contenido.',
-  heroBadge: 'NO SE CAE MÁS', // Texto sobre la imagen del producto en el hero (editable)
-  pain: '¿Cuántas veces se te cayó el celular manejando?',
-  painSub:
-    'Estás siguiendo el GPS, te suena un mensaje, y cuando volvés a mirar la pantalla está en el piso del acompañante. Los soportes baratos no aguantan ni dos pozos sin soltarse.',
-  finalCta: 'Manejá tranquilo. Tu celular no se mueve más.',
-  // Bloques nuevos de la versión rediseñada
-  useCases: 'Un soporte. Todos los lugares.',
-  carCompat: 'Compatible con cualquier auto',
-  whatsInBox: 'Sacalo, instalalo, te olvidás.',
-  whatsInBoxSub:
-    'Pensado para la vida real, no solo para el auto. Pegalo al parabrisas para usar GPS, a la pared de la cocina para seguir recetas, o al espejo del baño para filmarte. Lo movés de lugar en segundos.',
-  whatsInBoxNoTools: 'Fácil de mover y reutilizar. Sin herramientas, sin marcas.',
-  howItWorksLabel: 'Fácil de instalar',
-  howItWorksTitle: '¿Cómo funciona?',
 } as const;
 
 /**
@@ -110,20 +137,6 @@ export const MEDIA_FEATURED = {
 } as const;
 
 /**
- * Grid de "Un soporte, todos los lugares" — 6 cards con imagen de fondo
- * + label de categoría. Las imágenes las cargás en /public/use-cases/.
- * Si la imagen no existe, se muestra un placeholder con gradiente.
- */
-export const USE_CASES = [
-  { label: 'AUTO', image: '/use-cases/auto.jpg' },
-  { label: 'VIAJES', image: '/use-cases/viajes.jpg' },
-  { label: 'TRABAJO', image: '/use-cases/trabajo.jpg' },
-  { label: 'GYM', image: '/use-cases/gym.jpg' },
-  { label: 'ESPEJO', image: '/use-cases/espejo.jpg' },
-  { label: 'COCINA', image: '/use-cases/cocina.jpg' },
-] as const;
-
-/**
  * Superficies compatibles — strip horizontal de 6 fotos lifestyle
  * mostrando dónde se adhiere el soporte. Sección "Un soporte, cualquier
  * superficie" que va debajo de Pricing.
@@ -136,29 +149,6 @@ export const SURFACES = [
   { label: 'MADERA', image: '/surfaces/wood.jpg' },
   { label: 'PIEDRA', image: '/surfaces/Stone2.jpg' },
 ] as const;
-
-/**
- * Marcas de autos compatibles. Por ahora son nombres en texto.
- * Si querés mostrar logos reales, ponelos en /public/brands/<slug>.svg
- * y cambiá el `logo` con la ruta.
- */
-// `w`/`h` son la relación de aspecto real del SVG (su viewBox). El alto
-// pintado lo fija el CSS (h-7/h-9/h-10); los atributos sólo sirven para que
-// el navegador reserve el ancho correcto y el marquee no salte al cargar.
-export const CAR_BRANDS = [
-  { name: 'Toyota',        logo: '/brands/toyota.svg',     softWhite: false, w: 251,  h: 42   },
-  { name: 'Ford',          logo: '/brands/ford.svg',       softWhite: true,  w: 1000, h: 345  },
-  { name: 'Chevrolet',     logo: '/brands/chevrolet.svg',  softWhite: false, w: 700,  h: 327  },
-  { name: 'Volkswagen',    logo: '/brands/volkswagen.svg', softWhite: false, w: 1024, h: 1024 },
-  { name: 'Renault',       logo: '/brands/renault.svg',    softWhite: false, w: 500,  h: 438  },
-  { name: 'Peugeot',       logo: '/brands/peugeot.svg',    softWhite: true,  w: 1587, h: 1123 },
-  { name: 'Fiat',          logo: '/brands/fiat.svg',       softWhite: false, w: 110,  h: 68   },
-  { name: 'Honda',         logo: '/brands/honda.svg',      softWhite: false, w: 2000, h: 1605 },
-  { name: 'Nissan',        logo: '/brands/nissan.svg',     softWhite: false, w: 265,  h: 221  },
-  { name: 'Mercedes-Benz', logo: '/brands/mercedes.svg',   softWhite: false, w: 1000, h: 1001 },
-  { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true,  w: 200,  h: 200  },
-  { name: 'Audi',          logo: '/brands/audi.svg',       softWhite: false, w: 403,  h: 210  },
-];
 
 /**
  * Carrusel de la sección WhatsInBox. Todas las imágenes viven en
@@ -197,31 +187,6 @@ export const WHATS_IN_BOX = [
   'Kit de limpieza',
 ] as const;
 
-/**
- * Pasos de "Cómo funciona" con imagen.
- * Las imágenes van en /public/steps/.
- */
-export const STEPS_V2 = [
-  {
-    n: 1,
-    title: 'Instalá la base',
-    desc: 'Pegá la base de succión a cualquier superficie lisa — parabrisas, espejo, escritorio. Girá el anillo inferior para fijarla.',
-    image: '/steps/01-instalar.jpg',
-  },
-  {
-    n: 2,
-    title: 'Ajustá el ángulo',
-    desc: 'Usá las articulaciones para inclinar, rotar o girar el soporte. Lo orientás exactamente como te queda mejor para ver.',
-    image: '/steps/02-ajustar.jpg',
-  },
-  {
-    n: 3,
-    title: 'Colocá el celular',
-    desc: 'Acercá tu celular al MagSafe y queda fijo al instante. Sin MagSafe nativo, usás la chapita metálica que viene incluida.',
-    image: '/steps/03-colocar.jpg',
-  },
-] as const;
-
 export const PAIN_POINTS = {
   before: [
     'Soportes que se sueltan en cada pozo',
@@ -253,311 +218,6 @@ export const HOW_IT_WORKS = [
   },
 ] as const;
 
-type Benefit = { icon: string; title: string; desc: string; highlight: boolean };
-
-export const BENEFITS: readonly Benefit[] = [
-  {
-    icon: 'shield',
-    title: 'Imán N52 grado militar',
-    desc: 'El neodimio más fuerte que existe en venta civil. Aguanta hasta 500 g — celulares grandes con funda gruesa incluidos — y no se mueve ni en caminos de ripio.',
-    highlight: true,
-  },
-  {
-    icon: 'vacuum',
-    title: 'Sujeción al vacío real',
-    desc: 'Base con palanca de succión que se adhiere al instante a cualquier superficie lisa. Apretás, y queda firme como soldado.',
-    highlight: true,
-  },
-  {
-    icon: 'leaf',
-    title: 'No daña tu celular',
-    desc: 'El campo magnético está calibrado: no afecta GPS, brújula, batería, ni la carga inalámbrica. 100% seguro probado.',
-    highlight: false,
-  },
-  {
-    icon: 'rotate',
-    title: 'Rotación 360° con bloqueo',
-    desc: 'Bola articulada de aluminio aeroespacial. Ajustás el ángulo perfecto y se queda exactamente ahí.',
-    highlight: false,
-  },
-  {
-    icon: 'sparkles',
-    title: 'Sin pegamentos ni residuos',
-    desc: 'Lo movés de auto en auto sin dejar una sola marca. Lo regalás, lo prestás, lo cambiás de lugar — siempre queda como nuevo.',
-    highlight: false,
-  },
-  {
-    icon: 'bolt',
-    title: 'Carga rápida compatible',
-    desc: 'Diseño abierto: enchufás el cable mientras está colocado. USB-C, Lightning o inalámbrica, todo funciona.',
-    highlight: false,
-  },
-];
-
-export const REVIEWS = [
-  {
-    name: 'Martín G.',
-    location: 'Buenos Aires',
-    stars: 5,
-    text: 'Lo uso hace 3 meses en mi Corolla y no se movió ni un milímetro. Probé tres soportes antes y todos terminaron en la guantera. Este es otra historia.',
-    date: '12 Mar 2026',
-    verified: true,
-    image: '/Reviews/revw5.webp',
-  },
-  {
-    name: 'Sofía R.',
-    location: 'Córdoba',
-    stars: 5,
-    text: 'Llegó en 2 días con seguimiento. Lo instalé sin tocar nada del auto y aguanta mi iPhone 14 Pro como si nada. Súper recomendado.',
-    date: '28 Feb 2026',
-    verified: true,
-    image: '/Reviews/revw6.webp',
-  },
-  {
-    name: 'Diego P.',
-    location: 'Mendoza',
-    stars: 5,
-    text: 'Ni en los pozos de la 7 se mueve. Lo paso del auto mío al de mi vieja en segundos, sin pegamento ni marcas. Buenísimo.',
-    date: '21 Feb 2026',
-    verified: true,
-    image: '/Reviews/revw7.webp',
-  },
-  {
-    name: 'Lucía M.',
-    location: 'Rosario',
-    stars: 5,
-    text: 'La chapita magnética quedó perfecta y el soporte no se movió ni un centímetro desde que lo instalé. Lo tengo en el parabrisas hace más de un mes y aguanta todo: pozos, frenadas, calor. Diez puntos.',
-    date: '10 Feb 2026',
-    verified: true,
-    image: '/Reviews/revv1-500x500.jpg',
-  },
-  {
-    name: 'Federico A.',
-    location: 'La Plata',
-    stars: 5,
-    text: 'Compra protegida con MP, llegó en 48hs y la calidad es muy superior a lo que esperaba. Vale cada peso. Ya le compré uno a mi hermano.',
-    date: '02 Feb 2026',
-    verified: true,
-    image: '/Reviews/revv2-500x500.jpg',
-  },
-  {
-    name: 'Valentina C.',
-    location: 'Tucumán',
-    stars: 5,
-    text: 'Lo tengo pegado en el parabrisas hace dos meses y ni con el calor del verano se despegó. Mi celular siempre a la vista para el GPS. Lo recomiendo a todo el mundo.',
-    date: '18 Ene 2026',
-    verified: true,
-    image: '/Reviews/clutchXrev2.jpg',
-  },
-  {
-    name: 'Ramiro S.',
-    location: 'Salta',
-    stars: 5,
-    text: 'Tengo un Xiaomi sin MagSafe y con el aro que viene incluido funciona perfectísimo. Se siente sólido, no tiene nada que ver con los soportes de pinza que usaba antes.',
-    date: '09 Ene 2026',
-    verified: true,
-    image: '/Reviews/clutchXrev5.jpg',
-  },
-  {
-    name: 'Carolina B.',
-    location: 'Mar del Plata',
-    stars: 5,
-    text: 'Ruta Buenos Aires–MDP ida y vuelta y el celular quieto todo el viaje. El imán es una bestia. Además el empaque está muy cuidado, se nota que es un producto serio.',
-    date: '27 Dic 2025',
-    verified: true,
-    image: '/Reviews/clutchXrev6.jpg',
-  },
-] as const;
-
-export const FAQ = [
-  {
-    q: '¿De verdad sostiene el celular en pozos y caminos de ripio?',
-    a: 'Sí. El N52 es el grado más alto de imán neodimio que se vende. Aguanta hasta 500g sin moverse — eso incluye un iPhone 15 Pro Max o un Samsung S24 Ultra con funda. Lo probaron miles de clientes en Argentina, en autos de calle y en rutas de tierra.',
-  },
-  {
-    q: '¿No daña la pintura ni los plásticos del auto?',
-    a: 'Para nada. La base es de vacío, no de pegamento. Se levanta limpia cuando vos quieras y no deja una sola marca. Lo podés cambiar de auto las veces que necesites.',
-  },
-  {
-    q: '¿Funciona con celulares grandes o con funda gruesa?',
-    a: 'Sí. El soporte es compatible con MagSafe: si tu iPhone tiene MagSafe nativo (como el iPhone 12 y posteriores), lo colocás directamente y queda fijo al instante. Si tu celular no cuenta con MagSafe, en el kit viene incluido un aro metálico adhesivo que pegás en el back de tu celu o de la funda, y a partir de ahí funciona igual. Recomendamos que la funda sea compatible con MagSafe para la mejor adherencia.',
-  },
-  {
-    q: '¿El imán le borra datos al celular o le hace mal?',
-    a: 'No. Los celulares modernos no usan memoria magnética — los iPhones, Samsungs, Motorolas y Xiaomis de los últimos 10 años son completamente inmunes. El imán no afecta la pantalla, la batería, el GPS ni la carga inalámbrica.',
-  },
-] as const;
-
-export const TRUST_PILLARS = [
-  {
-    icon: 'mp',
-    title: 'Compra protegida',
-    desc: 'Pagás con MercadoPago. Si algo no sale como esperabas, MP te devuelve la plata.',
-  },
-  {
-    icon: 'truck',
-    title: 'Envío con seguimiento',
-    desc: 'Gratis a todo el país. Te llega un código para seguirlo en tiempo real desde que sale.',
-  },
-  {
-    icon: 'rotate-left',
-    title: 'Devolución 30 días',
-    desc: 'Si no te convence, lo devolvés sin preguntas en los primeros 30 días. Te devolvemos cada peso.',
-  },
-] as const;
-
-/**
- * ─────────────────────────────────────────────────────────────────────────
- * BUNDLES — Cada bundle es un PRODUCTO independiente en Shopify (con su
- * propio precio, compareAtPrice y discount config).
- *
- *   Bundle x1 → productId 8264328118387
- *   Bundle x2 → productId 8270224392307
- *   Bundle x3 → productId 8270224425075
- *
- * En tiempo de render fetcheamos la primera variante de cada producto y
- * obtenemos su variantId + precios. Los `fallback*` solo se usan si la
- * Storefront API falla.
- * ─────────────────────────────────────────────────────────────────────────
- */
-/**
- * Todos los ids válidos de la escalera de tiers, de single a x6. Vive acá
- * (no en lib/tiers.ts) porque es la data — BUNDLES/UPSELL_CHAIN — la que
- * define qué ids existen; lib/tiers.ts solo la consume.
- */
-export type TierId = 'single' | 'double' | 'triple' | 'x4' | 'x5' | 'x6';
-
-type Bundle = {
-  id: 'single' | 'double' | 'triple';
-  productId: string;      // GID del producto Shopify
-  /**
-   * GID de la variante. Los bundles tienen una sola variante cada uno.
-   * Normalmente lo resuelve `getBundlesData()` en el build; esto es el
-   * fallback para que el carrito siga funcionando si esa llamada falla.
-   * Verificados contra la tienda real (4xf11b-u0.myshopify.com).
-   */
-  fallbackVariantId: string;
-  label: string;
-  subtitle: string;
-  quantity: number;       // solo display ("1 unidad", "2 unidades", etc.)
-  unitsLabel: string;
-  badge: string | null;
-  bonus: string;
-  freeShipping: boolean;
-  recommended: boolean;
-  fallbackPrice: number;   // ARS — usado si Shopify API no responde
-  fallbackCompare: number; // ARS
-};
-
-export const BUNDLES: readonly Bundle[] = [
-  {
-    id: 'single',
-    productId: 'gid://shopify/Product/8264328118387',
-    fallbackVariantId: 'gid://shopify/ProductVariant/44945337450611',
-    label: 'LLEVÁ 1',
-    subtitle: 'Un soporte. Mil usos.',
-    quantity: 1,
-    unitsLabel: '1 unidad',
-    badge: null,
-    bonus: '+ 1 chapita MagSafe',
-    freeShipping: false,
-    recommended: false,
-    fallbackPrice: 39990,
-    fallbackCompare: 60000,
-  },
-  {
-    id: 'double',
-    productId: 'gid://shopify/Product/8270224392307',
-    fallbackVariantId: 'gid://shopify/ProductVariant/44965343035507',
-    label: 'LLEVÁ 2',
-    subtitle: '50% OFF en la 2ª unidad.',
-    quantity: 2,
-    unitsLabel: '2 unidades · 2ª al 50%',
-    badge: 'MÁS ELEGIDO',
-    bonus: '+ 2 chapitas MagSafe',
-    freeShipping: true,
-    recommended: true,
-    fallbackPrice: 59985,
-    fallbackCompare: 120000,
-  },
-  {
-    id: 'triple',
-    productId: 'gid://shopify/Product/8270224425075',
-    fallbackVariantId: 'gid://shopify/ProductVariant/44965343199347',
-    label: 'LLEVÁ 3',
-    subtitle: 'La 3ª unidad es GRATIS.',
-    quantity: 3,
-    unitsLabel: '3 unidades · 3ª GRATIS',
-    badge: 'MEJOR PRECIO',
-    bonus: '+ 3 chapitas MagSafe',
-    freeShipping: true,
-    recommended: false,
-    fallbackPrice: 74990,
-    fallbackCompare: 180000,
-  },
-];
-
-/**
- * ─────────────────────────────────────────────────────────────────────────
- * UPSELL_CHAIN — la escalera completa del banner "Sumá una unidad más" del
- * carrito (lib/tiers.ts la recorre por posición, sin casos por id).
- *
- * A propósito NO es lo mismo que BUNDLES: BUNDLES son los 3 packs que se ven
- * como card en /#pricing (Llevá 1 / Llevá 2 / Llevá 3). Pack x4/x5/x6 existen
- * en Shopify pero NO están en ninguna colección ni en la landing — solo se
- * llega a ellos vía el upsell del carrito. Si agregáramos esos 3 directo a
- * BUNDLES, `Pricing.tsx` (que hace `BUNDLES.map(...)`) los mostraría como
- * card sin querer.
- *
- * Los primeros 3 niveles se derivan de BUNDLES (misma fuente, sin duplicar
- * datos); los 3 nuevos van fallbackVariantId/fallbackPrice, igual que los
- * anteriores. Verificados contra la tienda real, 2026-08-30.
- * ─────────────────────────────────────────────────────────────────────────
- */
-type UpsellTier = {
-  id: TierId;
-  productId: string;      // GID del producto Shopify
-  fallbackVariantId: string;
-  quantity: number;       // unidades físicas que entrega este nivel
-  unitsLabel: string;     // copy del banner: "Pasás a 4 unidades..."
-  fallbackPrice: number;  // ARS — usado si Shopify API no responde
-};
-
-export const UPSELL_CHAIN: readonly UpsellTier[] = [
-  ...BUNDLES.map((b): UpsellTier => ({
-    id: b.id,
-    productId: b.productId,
-    fallbackVariantId: b.fallbackVariantId,
-    quantity: b.quantity,
-    unitsLabel: b.unitsLabel,
-    fallbackPrice: b.fallbackPrice,
-  })),
-  {
-    id: 'x4',
-    productId: 'gid://shopify/Product/8379013693555',
-    fallbackVariantId: 'gid://shopify/ProductVariant/45421351731315',
-    quantity: 4,
-    unitsLabel: '4 unidades',
-    fallbackPrice: 89989,
-  },
-  {
-    id: 'x5',
-    productId: 'gid://shopify/Product/8379013595251',
-    fallbackVariantId: 'gid://shopify/ProductVariant/45421351501939',
-    quantity: 5,
-    unitsLabel: '5 unidades',
-    fallbackPrice: 99988,
-  },
-  {
-    id: 'x6',
-    productId: 'gid://shopify/Product/8379012939891',
-    fallbackVariantId: 'gid://shopify/ProductVariant/45421349765235',
-    quantity: 6,
-    unitsLabel: '6 unidades',
-    fallbackPrice: 109987,
-  },
-];
-
 /**
  * Specs técnicas del producto — sección "Nano-tech".
  * Las medidas las usamos visualmente alrededor del producto.
@@ -575,61 +235,6 @@ export const TECH_SPECS = {
     { label: 'Diámetro base', value: '60 mm', sub: '2.36 in' },
     { label: 'Altura base', value: '40 mm', sub: '1.57 in' },
   ],
-} as const;
-
-/**
- * Rating breakdown — barras de % por estrella para el header de Reviews.
- * Los totales acá deberían sumar BRAND.reviewsCount.
- */
-export const RATING_BREAKDOWN = {
-  average: 4.9,
-  total: 412,
-  stars: [
-    { stars: 5, count: 372 },
-    { stars: 4, count: 32 },
-    { stars: 3, count: 5 },
-    { stars: 2, count: 2 },
-    { stars: 1, count: 1 },
-  ],
-} as const;
-
-/**
- * Quality Guaranteed — 3 cards con badge circular grande estilo "sello".
- * Reemplaza el TrustBlock anterior con un layout más visual.
- */
-export const QUALITY_BADGES = [
-  {
-    badge: '30',
-    badgeSub: 'DÍAS',
-    title: 'DEVOLUCIÓN 30 DÍAS',
-    desc:
-      'Si por cualquier motivo decidís que CARMANIA no es para vos, te devolvemos cada peso dentro de los 30 días posteriores a la entrega.',
-  },
-  {
-    badge: '1',
-    badgeSub: 'AÑO',
-    title: 'GARANTÍA 1 AÑO',
-    desc:
-      'Si tu soporte CARMANIA no funciona como esperabas, te reparamos las piezas o te lo reemplazamos completo. Vos seguís manejando tranquilo.',
-  },
-  {
-    badge: '★',
-    badgeSub: 'USUARIOS',
-    title: 'PROBADO POR CLIENTES REALES',
-    desc:
-      'Para crear el CARMANIA definitivo, cada decisión de diseño la validamos con clientes reales. El producto es lo que es gracias a ellos.',
-  },
-] as const;
-
-/**
- * Certificaciones que mostramos abajo del bloque de garantía.
- * Si todavía no las tenés, dejá `enabled: false` y desaparece la fila.
- */
-export const CERTIFICATIONS = {
-  enabled: true,
-  title: 'Certificado por',
-  desc: 'Nuestra fábrica fue revisada y aprobada por las agencias relevantes — incluyendo la FDA y los estándares europeos RoHS y CE.',
-  items: ['FDA', 'RoHS', 'CE'],
 } as const;
 
 /**
@@ -651,6 +256,12 @@ export type StoreProduct = {
   image: string;         // ruta en /public
   href: string;
   fallbackPrice: number; // ARS, si la Storefront API no responde
+  /** Tag de spec arriba de la foto ("MAGSAFE + REGULABLE"). */
+  specTag: string;
+  /** Badge destacado arriba a la derecha de la foto ("TOP VENTAS"). */
+  badge: string;
+  /** Le agrega el ícono de fuego al badge. Reservado para el más vendido. */
+  badgeHot?: boolean;
 };
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
@@ -666,7 +277,64 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     // justo el tipo de desfase que el commit "sincronizar fallbacks con
     // Shopify" vino a limpiar.
     fallbackPrice: FALLBACK_PRICING.price,
+    specTag: 'MAGSAFE + IMÁN N52',
+    badge: 'TOP VENTAS',
+    badgeHot: true,
   },
+  {
+    // ⚠️ El producto todavía NO existe en Shopify con este handle:
+    // `getProduct('parasol-pro')` devuelve null y la card cae al
+    // `fallbackPrice`, que es el precio provisorio de PARASOL.fallbackPricing
+    // (ver el bloque de TODOs en lib/landings/parasol.ts). Antes de mandar
+    // tráfico a /tienda hay que crear el producto y confirmar el precio.
+    handle: 'parasol-pro',
+    title: 'Parasol PRO™',
+    blurb:
+      'Se abre como un paraguas y cubre todo el parabrisas en 3 segundos. Bloquea los UV y mantiene el interior fresco.',
+    image: '/parasol/hero/parasol-hero-oscuro.webp',
+    href: '/parasol',
+    fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
+    specTag: 'ABRE EN 3 SEGUNDOS',
+    badge: 'UNIVERSAL',
+  },
+  {
+    // ⚠️ Igual que el parasol: el producto todavía NO existe en Shopify con
+    // este handle, así que la card cae al `fallbackPrice` provisorio (ver el
+    // bloque de TODOs en lib/landings/soplador.ts).
+    handle: 'soplador-turbo-pro',
+    title: 'Soplador Turbo PRO™',
+    blurb:
+      'Motor turbo del tamaño de tu mano. Saca el polvo de las rejillas, los tapizados y cada rincón donde no llega el trapo.',
+    image: '/soplador/hero/soplador-hero.webp',
+    href: '/soplador',
+    fallbackPrice: 24990, // TODO PRECIO REAL — espejo de SOPLADOR.fallbackPricing.price
+    specTag: 'RECARGABLE USB',
+    badge: 'NUEVO',
+  },
+] as const;
+
+/**
+ * Beneficios de precio, en una fila de chips arriba de la grilla.
+ *
+ * Todo lo de acá tiene que ser verificable. El 3x2 lo es: el pack x3 sale
+ * $74.990 y dos unidades sueltas $79.980 (ver BUNDLES en landings/soporte.ts),
+ * así que llevarse tres sale menos que pagar dos. Si alguna vez cambian esos
+ * precios y deja de cumplirse, hay que sacar el chip.
+ */
+export const STORE_PRICE_PERKS = [
+  { icon: 'fire', label: '3x2 en packs' },
+  { icon: 'mp', label: '3 cuotas sin interés' },
+  { icon: 'truck', label: 'Envío gratis a todo el país' },
+  { icon: 'shield', label: 'Garantía de 30 días' },
+] as const;
+
+/**
+ * Slots vacíos de la grilla — completan las 4 columnas mientras el catálogo
+ * tenga 2 productos. No son links: no hay a dónde ir todavía.
+ * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
+ */
+export const STORE_COMING_SOON = [
+  { id: 'slot-4', specTag: 'EN CAMINO', badge: '2026' },
 ] as const;
 
 /** Copy del encabezado de /tienda. */
@@ -677,5 +345,231 @@ export const STORE_HEADLINES = {
   sub: 'Productos elegidos de a uno, probados en la calle argentina. Envío gratis a todo el país y 30 días para devolverlo si no te convence.',
   // Heading de la grilla — existe para que la página no salte de h1 (StoreHero)
   // a h3 (título de cada ProductCard) sin un h2 en el medio.
-  gridTitle: 'Nuestros productos',
+  // ProductGrid le concatena `STORE_SECTIONS.gridTitleAccent` en rojo, así que
+  // acá va sólo la primera parte.
+  gridTitle: 'Nuestros',
 } as const;
+
+/**
+ * Mensajes de la barra de anuncios de /tienda. Rotan en un marquee, como los
+ * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
+ */
+export const STORE_PROMO_MESSAGES = [
+  'Envío gratis a todo el país',
+  'Garantía de 30 días',
+  '3 cuotas sin interés',
+] as const;
+
+/**
+ * Franja de 4 garantías, justo debajo del hero. Cada item se parte en dos
+ * líneas: `top` grande en blanco, `bottom` chico en accent.
+ */
+export const STORE_TRUST_STRIP = [
+  { icon: 'truck', top: 'Envío', bottom: 'Gratis' },
+  { icon: 'rotate-left', top: '30 días', bottom: 'Devolución' },
+  { icon: 'lock', top: 'Pago', bottom: 'Seguro' },
+  { icon: 'whatsapp', top: 'Soporte', bottom: 'Real' },
+] as const;
+
+/**
+ * Tiles de "Para cada lugar" — el carrusel horizontal debajo de la grilla.
+ * Reusa las fotos lifestyle del soporte que ya viven en /public/use-cases.
+ * `href` manda a la landing del producto que resuelve ese caso.
+ */
+export const STORE_ACTIVITIES = [
+  { label: 'AUTO', image: '/use-cases/auto.jpg', href: '/' },
+  { label: 'VIAJES', image: '/use-cases/viajes.jpg', href: '/' },
+  { label: 'CASA', image: '/use-cases/cocina.jpg', href: '/' },
+  { label: 'GYM', image: '/use-cases/gym.jpg', href: '/' },
+  { label: 'TRABAJO', image: '/use-cases/trabajo.jpg', href: '/' },
+  { label: 'ESPEJO', image: '/use-cases/espejo.jpg', href: '/' },
+  { label: 'VERANO', image: '/parasol/use-cases/calor.webp', href: '/parasol' },
+  { label: 'TABLERO', image: '/parasol/use-cases/tablero.webp', href: '/parasol' },
+] as const;
+
+/**
+ * Reseñas de la tienda — formato CARMOUNT: un título corto en mayúsculas que
+ * resume la reseña, después la cita y la firma.
+ *
+ * Son las reseñas REALES del soporte (SOPORTE.reviews), con el título
+ * agregado acá. Si sumás reseñas de otro producto, aclaralo en `product`.
+ */
+export const STORE_REVIEWS = [
+  {
+    title: 'NO SE MUEVE NI EN RIPIO',
+    text: 'Anduve por camino de ripio en Bariloche y el celular ni se movió. Los otros soportes que tuve se caían en el primer pozo.',
+    name: 'Diego',
+    location: 'NEUQUÉN',
+  },
+  {
+    title: 'CERO MARCAS',
+    text: 'Lo que más me gustó es que lo saco y lo vuelvo a poner sin que quede pegote ni marca. En el auto de laburo eso me importa.',
+    name: 'Lucía',
+    location: 'ROSARIO',
+  },
+  {
+    title: 'PARECE DE FÁBRICA',
+    text: 'Queda tan prolijo que un amigo me preguntó si venía con el auto. Es chiquito y no tapa nada del tablero.',
+    name: 'Martín',
+    location: 'CÓRDOBA',
+  },
+  {
+    title: 'UNO EN CADA AUTO',
+    text: 'Compré el pack de tres. Uno en la camioneta, uno en el auto de mi mujer y uno en el escritorio. Ya no busco dónde apoyar el celular.',
+    name: 'Sebastián',
+    location: 'MENDOZA',
+  },
+  {
+    title: 'EL IMÁN ES OTRA COSA',
+    text: 'Pensé que sin el aro no iba a agarrar y agarra igual. Tengo un iPhone 16 Pro Max y lo pongo de cualquier manera que se queda firme. Muy bueno.',
+    name: 'Carolina',
+    location: 'LA PLATA',
+  },
+  {
+    title: 'LLEGÓ ANTES DE LO QUE PENSABA',
+    text: 'Lo pedí un martes y el viernes lo tenía. Vino bien embalado. Nada que reprochar.',
+    name: 'Federico',
+    location: 'SALTA',
+  },
+] as const;
+
+/** Copy de las secciones nuevas de /tienda. */
+export const STORE_SECTIONS = {
+  heroTitle: 'REINVENTÁ',
+  heroTitleAccent: 'TU AUTO',
+  heroSub: 'Los accesorios que tu auto necesitaba, elegidos de a uno.',
+  heroCta: 'Ver los productos',
+  gridEyebrow: 'El catálogo completo',
+  gridTitleAccent: 'productos',
+  // CARMOUNT cierra la grilla con "SHOP ALL PRODUCTS" → /shop. Nosotros no
+  // tenemos una segunda página de catálogo (esta ES el catálogo) y cada card
+  // ya linkea a su landing, así que el cierre son los medios de pago.
+  paymentsLabel: 'Pagá como quieras',
+  activityTitle: 'Comprá por',
+  activityTitleAccent: 'momento',
+  reviewsEyebrow: 'Miles de conductores en toda la Argentina 🇦🇷',
+  reviewsTitle: 'No nos creas a nosotros.',
+} as const;
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ * INSTAGRAM — grilla curada, NO un feed en vivo.
+ *
+ * Por qué estática y no la API:
+ *  - La CSP de `_headers` no habilita Instagram en `connect-src` ni ningún
+ *    proveedor de widgets en `script-src`, así que un feed client-side no
+ *    carga. Abrirla en la página que cobra no vale la pena.
+ *  - La Basic Display API de Instagram se apagó en dic. 2024. El reemplazo
+ *    pide cuenta profesional + app de Meta + token de 60 días, y este repo
+ *    no tiene dónde guardar un secreto: las 4 env vars son `NEXT_PUBLIC_*`.
+ *  - Sin ISR en Cloudflare Pages el feed quedaría congelado hasta el deploy
+ *    igual, y las URLs de cdninstagram.com van firmadas y expiran.
+ *
+ * Si algún día se automatiza: un script pre-build que DESCARGUE las fotos a
+ * `/public/instagram/` y reescriba este array. El componente no cambia.
+ *
+ * PARA ACTUALIZAR: subí la foto a /public/instagram/ y poné el permalink del
+ * post en `href`. Los slots sin archivo muestran el placeholder con el
+ * glifo de Instagram, así que la grilla nunca se rompe.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export const INSTAGRAM = {
+  handle: '@carmania.ar',
+  url: 'https://www.instagram.com/carmania.ar/',
+  // Línea de arriba de la grilla. Con `count` cargado se arma
+  // "Sumate a los 12K que nos siguen en @handle"; con `count` en '' cae a
+  // `leadPlain`. Dejalo vacío hasta tener el número real de seguidores.
+  count: '', // TODO: seguidores reales, si querés publicarlos
+  leadBefore: 'Sumate a los',
+  leadAfter: 'que nos siguen en',
+  leadPlain: 'Seguinos en',
+  /**
+   * Los archivos salen de las fotos del perfil, recortadas a 600x600 con el
+   * smart-crop de sharp y pasadas a webp. Van de la más nueva a la más vieja.
+   *
+   * `href` vacío = el tile manda al perfil. Si querés que cada foto abra su
+   * post, pegá acá el permalink (`https://www.instagram.com/p/XXXX/`).
+   */
+  posts: [
+    {
+      image: '/instagram/01.webp',
+      alt: 'Soporte con el celular pegado al vidrio de la ventanilla del auto',
+      href: '',
+    },
+    {
+      image: '/instagram/02.webp',
+      alt: 'Celular montado en el soporte en la mesa de un café en la vereda',
+      href: '',
+    },
+    {
+      image: '/instagram/03.webp',
+      alt: 'Ala del avión sobre la cordillera',
+      href: '',
+    },
+    {
+      image: '/instagram/04.webp',
+      alt: 'Colocando el celular con el GPS en el soporte, adentro del auto',
+      href: '',
+    },
+    {
+      image: '/instagram/05.webp',
+      alt: 'Entrenando en el gimnasio con el celular montado filmando',
+      href: '',
+    },
+    {
+      image: '/instagram/06.webp',
+      alt: 'Celular sujetado al espejo del baño para maquillarse',
+      href: '',
+    },
+    {
+      image: '/instagram/07.webp',
+      alt: 'Manejando una Jeep con el celular montado mostrando el GPS',
+      href: '',
+    },
+    {
+      image: '/instagram/08.webp',
+      alt: 'Soporte adherido a la ventanilla del avión con el celular puesto',
+      href: '',
+    },
+    {
+      image: '/instagram/09.webp',
+      alt: 'Acercando el celular al soporte pegado al parabrisas',
+      href: '',
+    },
+    {
+      image: '/instagram/10.webp',
+      alt: 'Honda Civic estacionado bajo un árbol',
+      href: '',
+    },
+    {
+      image: '/instagram/11.webp',
+      alt: 'Elongando al lado de una camioneta blanca frente al río',
+      href: '',
+    },
+    {
+      image: '/instagram/12.webp',
+      alt: 'Apoyado en una Jeep Compass en un parque',
+      href: '',
+    },
+  ],
+} as const;
+
+/**
+ * Banda de números, debajo de las reseñas.
+ *
+ * ⚠️ PLACEHOLDERS — no hay fuente para estos números todavía. Antes de
+ * publicar: sacar los reales del panel de Shopify (clientes y unidades) o
+ * bajar el claim a algo verificable. Publicar cifras infladas es riesgo de
+ * ley de defensa del consumidor.
+ */
+export const STORE_STATS = [
+  // Mismo número que `BRAND.socialProofCount`, que ya se publica en la landing.
+  { value: '3.500', prefix: '+', label: 'Clientes felices' },
+  // ESTIMADO, no medido: sale de los ~3.500 clientes por un promedio de 2
+  // unidades por compra (se vende en packs de 1, 2 y 3). Redondeado hacia
+  // abajo a propósito. TODO: reemplazar por las unidades reales del panel de
+  // Shopify cuando estén a mano.
+  { value: '7.000', prefix: '+', label: 'Productos vendidos' },
+  // 23 provincias + CABA. Sin "+": es el total, no un piso.
+  { value: '24', prefix: '', label: 'Provincias con envío' },
+] as const;
