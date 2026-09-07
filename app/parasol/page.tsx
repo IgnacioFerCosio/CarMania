@@ -107,7 +107,7 @@ export default async function ParasolPage() {
     >
       <CountdownBanner />
       <PromoBar />
-      <Navbar links={PARASOL_LINKS} homeHref="#top" ctaHref="#pricing" />
+      <Navbar links={PARASOL_LINKS} ctaHref="#pricing" />
 
       <main>
         {/* 1. Hero */}

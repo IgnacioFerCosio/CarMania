@@ -115,7 +115,7 @@ export default async function TiendaPage() {
         // Ya estamos en la tienda: el acceso directo no tendría a dónde ir.
         storeHref={null}
       />
-      <SubPromoBar />
+      <SubPromoBar href="#productos" />
 
       <main>
         {/* 1. Hero a sangre */}

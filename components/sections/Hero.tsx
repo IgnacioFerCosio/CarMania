@@ -12,6 +12,7 @@
  * (/public/hero/VideoPrincipal.mp4) con su poster webp. Es el elemento LCP
  * de la página — cualquier cambio acá se nota en Core Web Vitals.
  */
+import { PAYMENT_LOGOS } from '@/lib/config';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -114,14 +115,6 @@ export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
 // width/height = relación de aspecto real de cada SVG (viewBox). El tamaño
 // pintado lo define el CSS (h-6/h-8 + w-auto), pero los atributos le dan al
 // navegador el aspect-ratio para reservar el ancho antes de que cargue.
-const PAYMENT_LOGOS = [
-  { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
-  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
-  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
-  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
-  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
-];
-
 function PaymentBadges() {
   return (
     <ul className="mt-6 flex flex-wrap items-center gap-2">

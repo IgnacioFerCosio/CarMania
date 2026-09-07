@@ -37,13 +37,14 @@ const LANDING_LINKS: NavLink[] = [
 
 export function Navbar({
   links = LANDING_LINKS,
-  homeHref = '#top',
+  homeHref = '/tienda',
   ctaHref = '#pricing',
   ctaLabel = 'Aprovechá',
   storeHref = '/tienda',
   storeLabel = 'Tienda',
 }: {
   links?: NavLink[];
+  /** A dónde lleva el logo. Por defecto la tienda, también en las landings. */
   homeHref?: string;
   ctaHref?: string;
   ctaLabel?: string;

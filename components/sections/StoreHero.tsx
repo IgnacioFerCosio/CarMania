@@ -10,7 +10,7 @@
  * descomentá el <img> de abajo y dejá los gradientes como overlay: ya están
  * calibrados para que el texto siga legible encima.
  */
-import { BRAND, STORE_HEADLINES, STORE_SECTIONS } from '@/lib/config';
+import { BRAND, STORE_SECTIONS } from '@/lib/config';
 import { Stars } from '@/components/ui/Stars';
 import { Icon } from '@/components/ui/Icon';
 
@@ -34,17 +34,38 @@ export function StoreHero() {
       </div>
 
       <div className="mx-auto flex min-h-[62vh] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:min-h-[68vh] sm:py-24 md:px-6 md:py-32">
-        <p className="eyebrow">{STORE_HEADLINES.eyebrow}</p>
-
-        <h1 className="heading-display mt-3 text-[clamp(2.4rem,10vw,6rem)] leading-[0.92]">
+        <h1 className="heading-display text-[clamp(2rem,7.5vw,4.25rem)] leading-[0.95]">
           {STORE_SECTIONS.heroTitle}{' '}
           <span className="relative inline-block text-accent">
             {STORE_SECTIONS.heroTitleAccent}
-            {/* Subrayado accent, como el de CARMOUNT bajo "YOUR DRIVE" */}
-            <span
+            {/* Trazo de tiza: un SVG dibujado a mano alzada en vez de la barra
+                recta. Va con `preserveAspectRatio="none"` para que se estire
+                al ancho de la palabra sea cual sea, y con dos trazos de
+                distinto grosor y opacidad — un solo trazo parejo vuelve a
+                leerse como un subrayado. */}
+            <svg
               aria-hidden="true"
-              className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-accent md:-bottom-2 md:h-[5px]"
-            />
+              viewBox="0 0 300 22"
+              preserveAspectRatio="none"
+              className="absolute -bottom-3 left-0 h-[0.32em] w-full overflow-visible text-accent md:-bottom-4"
+            >
+              <path
+                d="M4 13.5c38-5.5 84-8 128-7.5 46 .5 92 3.5 164 9"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="6"
+                strokeLinecap="round"
+                opacity="0.95"
+              />
+              <path
+                d="M12 18.5c46-4 96-5.5 142-5 40 .5 82 2.5 140 6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                opacity="0.5"
+              />
+            </svg>
           </span>
         </h1>
 
@@ -60,11 +81,13 @@ export function StoreHero() {
           <Icon name="arrow-right" className="h-4 w-4" />
         </a>
 
+        {/* Sin número de promedio a propósito: 5 estrellas llenas y el conteo
+            de clientes. Un "4.9" invita a buscar de dónde sale. */}
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-ink-300 sm:text-sm">
-          <Stars rating={BRAND.averageRating} />
+          <Stars rating={5} />
           <span>
-            <strong className="text-white">{BRAND.averageRating}</strong> ·{' '}
-            {BRAND.socialProofCount} {BRAND.socialProofLabel}
+            <strong className="text-white">{BRAND.socialProofCount}</strong>{' '}
+            {BRAND.socialProofLabel}
           </span>
         </div>
       </div>

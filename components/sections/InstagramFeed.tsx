@@ -8,10 +8,11 @@
  * exactamente lo mismo — sus 12 fotos también son estáticas.
  *
  * Cómo funciona el loop, porque tiene una vuelta de tuerca:
+ *  - Va a sangre y sin separación entre fotos, como la tira de CARMOUNT.
  *  - Cada tile ocupa exactamente 1/6 del ancho del riel (1/3 en mobile, 1/4
- *    en sm). Sin `gap`: el aire entre fotos es padding de cada tile. Así
- *    `clientWidth` es SIEMPRE un número exacto de tiles y `scrollBy` avanza
- *    justo una pantalla en cualquier breakpoint, sin cuentas ni matchMedia.
+ *    en sm), sin `gap` ni padding: así `clientWidth` es SIEMPRE un número
+ *    exacto de tiles y `scrollBy` avanza justo una pantalla en cualquier
+ *    breakpoint, sin cuentas ni matchMedia.
  *  - La lista va DUPLICADA. Cuando terminó de pasar la primera copia,
  *    volvemos el scroll al principio sin animación: lo que se ve en ese
  *    momento es idéntico, así que el salto es invisible y el movimiento
@@ -26,6 +27,36 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { INSTAGRAM } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
+
+/**
+ * Glifo de Instagram con el degradé de la marca (amarillo → naranja → fucsia
+ * → violeta). El `Icon` compartido pinta con `currentColor` y acá hace falta
+ * el multicolor, así que va aparte.
+ */
+function InstagramGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <defs>
+        <radialGradient id="ig-brand" cx="30%" cy="107%" r="150%">
+          <stop offset="0%" stopColor="#FDF497" />
+          <stop offset="26%" stopColor="#FD5949" />
+          <stop offset="60%" stopColor="#D6249F" />
+          <stop offset="100%" stopColor="#285AEB" />
+        </radialGradient>
+      </defs>
+      <g
+        fill="none"
+        stroke="url(#ig-brand)"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.2" cy="6.8" r="1.15" fill="url(#ig-brand)" stroke="none" />
+      </g>
+    </svg>
+  );
+}
 
 /** Cada cuánto avanza una pantalla. */
 const SLIDE_MS = 4000;
@@ -73,7 +104,7 @@ export function InstagramFeed() {
     <section className="bg-[#24262A] py-12 sm:py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center font-display text-sm font-black uppercase italic tracking-wide text-white sm:text-base md:text-lg">
-          <Icon name="instagram" className="h-5 w-5 text-accent sm:h-6 sm:w-6" />
+          <InstagramGlyph className="h-5 w-5 sm:h-6 sm:w-6" />
           {count ? (
             <>
               <span>{leadBefore}</span>
@@ -94,19 +125,18 @@ export function InstagramFeed() {
         </p>
       </div>
 
-      {/* El riel NO puede tener padding propio: `scrollBy(clientWidth)` avanza
+      {/* A sangre y sin separación: las fotos ocupan todo el ancho de la
+          pantalla y se tocan entre sí, como la tira de CARMOUNT.
+          El riel NO puede tener padding propio: `scrollBy(clientWidth)` avanza
           el ancho del viewport del contenedor, y con padding ese ancho deja de
-          ser un múltiplo exacto del tile (se desalinea y el rebobinado salta).
-          Los márgenes los pone este wrapper. El `-mx` compensa el padding
-          interno de los tiles para que las fotos queden al ras del contenedor
-          — es margen, no padding, así que no toca el clientWidth del riel. */}
-      <div className="mx-auto mt-7 max-w-7xl px-4 sm:mt-9 md:px-6">
+          ser un múltiplo exacto del tile (se desalinea y el rebobinado salta). */}
+      <div className="mt-7 sm:mt-9">
         <div
           ref={trackRef}
           role="region"
           aria-label={`Fotos de ${handle} en Instagram`}
           tabIndex={0}
-          className="-mx-1 flex snap-x snap-mandatory overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-1.5 [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {items.map((p, i) => {
             // La segunda copia existe sólo para el loop: fuera del tab order y
@@ -115,7 +145,7 @@ export function InstagramFeed() {
             return (
               <div
                 key={`${p.image}-${i}`}
-                className="w-1/3 shrink-0 grow-0 snap-start px-1 sm:w-1/4 sm:px-1.5 lg:w-1/6"
+                className="w-1/3 shrink-0 grow-0 snap-start sm:w-1/4 lg:w-1/6"
                 {...(clone ? { 'aria-hidden': true } : {})}
               >
                 <a
@@ -125,7 +155,7 @@ export function InstagramFeed() {
                   rel="noopener noreferrer"
                   tabIndex={clone ? -1 : undefined}
                   aria-label={p.alt || `Ver publicación ${i + 1} en Instagram`}
-                  className="group relative block aspect-square overflow-hidden rounded-lg bg-ink-900"
+                  className="group relative block aspect-square overflow-hidden bg-ink-900"
                 >
                   {/* Placeholder — mientras carga o si la foto no existe */}
                   <span
@@ -139,7 +169,7 @@ export function InstagramFeed() {
                     src={p.image}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 16vw, (min-width: 640px) 25vw, 33vw"
+                    sizes="(min-width: 1024px) 17vw, (min-width: 640px) 25vw, 34vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 

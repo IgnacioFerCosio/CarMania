@@ -2,8 +2,11 @@
  * Cards de la grilla de /tienda.
  *
  * Formato tomado de CARMOUNT: foto grande del producto sobre un fondo suave,
- * un tag de spec arriba a la izquierda, un tag de variante arriba a la
+ * un tag de spec arriba a la izquierda, un badge destacado arriba a la
  * derecha, y el título debajo de la foto.
+ *
+ * La card no muestra precio: el precio de entrada depende del pack y se
+ * argumenta en la landing. Acá sólo se invita a entrar.
  *
  * `ProductCard` es un link entero a la landing del producto, no un botón de
  * compra: la venta se argumenta en la landing, no acá.
@@ -15,7 +18,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { StoreProduct } from '@/lib/config';
-import { formatARS } from '@/lib/shopify';
+import { Icon } from '@/components/ui/Icon';
 
 /** Píldora chica de tag. Compartida por las dos cards. */
 function Tag({
@@ -29,7 +32,7 @@ function Tag({
     <span
       className={
         tone === 'accent'
-          ? 'rounded-full bg-accent px-2.5 py-1 text-[9px] font-black uppercase italic tracking-wider text-white sm:text-[10px]'
+          ? 'inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[9px] font-black uppercase italic tracking-wider text-white shadow-[0_2px_10px_rgba(215,7,7,0.5)] sm:text-[10px]'
           : 'rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur-sm sm:text-[10px]'
       }
     >
@@ -38,13 +41,7 @@ function Tag({
   );
 }
 
-export function ProductCard({
-  product,
-  price,
-}: {
-  product: StoreProduct;
-  price: number;
-}) {
+export function ProductCard({ product }: { product: StoreProduct }) {
   return (
     <Link
       href={product.href}
@@ -67,7 +64,12 @@ export function ProductCard({
           <span className="hidden sm:block">
             <Tag>{product.specTag}</Tag>
           </span>
-          <Tag tone="accent">{product.variantTag}</Tag>
+          <Tag tone="accent">
+            {product.badgeHot && (
+              <Icon name="fire" className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+            )}
+            {product.badge}
+          </Tag>
         </div>
       </div>
 
@@ -79,16 +81,7 @@ export function ProductCard({
           {product.blurb}
         </p>
 
-        <div className="mt-4 flex items-baseline gap-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-ink-500">
-            Desde
-          </span>
-          <span className="text-lg font-black text-white sm:text-xl">
-            {formatARS(price)}
-          </span>
-        </div>
-
-        <span className="mt-3 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+        <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">
           Ver producto
           <span aria-hidden="true" className="transition group-hover:translate-x-0.5">
             →
@@ -105,10 +98,10 @@ export function ProductCard({
  */
 export function ComingSoonCard({
   specTag,
-  variantTag,
+  badge,
 }: {
   specTag: string;
-  variantTag: string;
+  badge: string;
 }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border border-dashed border-ink-700 bg-ink-950/60">
@@ -123,7 +116,7 @@ export function ComingSoonCard({
           <span className="hidden sm:block">
             <Tag>{specTag}</Tag>
           </span>
-          <Tag>{variantTag}</Tag>
+          <Tag>{badge}</Tag>
         </div>
       </div>
 

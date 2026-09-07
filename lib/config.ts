@@ -73,6 +73,23 @@ export const PAYMENTS = {
   provider: 'MercadoPago',
 } as const;
 
+/**
+ * Logos de medios de pago. Vivían dentro de Hero.tsx; se subieron acá porque
+ * ahora también los usa la grilla de /tienda.
+ *
+ * `w`/`h` son las dimensiones intrínsecas del SVG: el tamaño pintado lo define
+ * el CSS, pero los atributos le dan al navegador el aspect-ratio para reservar
+ * el ancho antes de que cargue. `lg` marca los que necesitan ir más grandes
+ * para leerse parejo (el de Mercado Pago es apaisado).
+ */
+export const PAYMENT_LOGOS = [
+  { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
+  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
+  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
+  { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
+  { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
+] as const;
+
 export const RETURNS = {
   days: 30,
   label: 'Devolución 30 días sin preguntas',
@@ -241,8 +258,10 @@ export type StoreProduct = {
   fallbackPrice: number; // ARS, si la Storefront API no responde
   /** Tag de spec arriba de la foto ("MAGSAFE + REGULABLE"). */
   specTag: string;
-  /** Tag corto de variante/color, abajo a la derecha ("NEGRO"). */
-  variantTag: string;
+  /** Badge destacado arriba a la derecha de la foto ("TOP VENTAS"). */
+  badge: string;
+  /** Le agrega el ícono de fuego al badge. Reservado para el más vendido. */
+  badgeHot?: boolean;
 };
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
@@ -259,7 +278,8 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     // Shopify" vino a limpiar.
     fallbackPrice: FALLBACK_PRICING.price,
     specTag: 'MAGSAFE + IMÁN N52',
-    variantTag: 'NEGRO',
+    badge: 'TOP VENTAS',
+    badgeHot: true,
   },
   {
     // ⚠️ El producto todavía NO existe en Shopify con este handle:
@@ -275,8 +295,23 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     href: '/parasol',
     fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
     specTag: 'APERTURA EN 3 SEGUNDOS',
-    variantTag: 'UNIVERSAL',
+    badge: 'NUEVO',
   },
+] as const;
+
+/**
+ * Beneficios de precio, en una fila de chips arriba de la grilla.
+ *
+ * Todo lo de acá tiene que ser verificable. El 3x2 lo es: el pack x3 sale
+ * $74.990 y dos unidades sueltas $79.980 (ver BUNDLES en landings/soporte.ts),
+ * así que llevarse tres sale menos que pagar dos. Si alguna vez cambian esos
+ * precios y deja de cumplirse, hay que sacar el chip.
+ */
+export const STORE_PRICE_PERKS = [
+  { icon: 'fire', label: '3x2 en packs' },
+  { icon: 'mp', label: '3 cuotas sin interés' },
+  { icon: 'truck', label: 'Envío gratis a todo el país' },
+  { icon: 'shield', label: 'Garantía de 30 días' },
 ] as const;
 
 /**
@@ -285,8 +320,8 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
  * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
  */
 export const STORE_COMING_SOON = [
-  { id: 'slot-3', specTag: 'EN CAMINO', variantTag: '2026' },
-  { id: 'slot-4', specTag: 'EN CAMINO', variantTag: '2026' },
+  { id: 'slot-3', specTag: 'EN CAMINO', badge: '2026' },
+  { id: 'slot-4', specTag: 'EN CAMINO', badge: '2026' },
 ] as const;
 
 /** Copy del encabezado de /tienda. */
@@ -308,7 +343,7 @@ export const STORE_HEADLINES = {
  */
 export const STORE_PROMO_MESSAGES = [
   'Envío gratis a todo el país',
-  '30 días para devolverlo',
+  'Garantía de 30 días',
   '3 cuotas sin interés con MercadoPago',
 ] as const;
 
@@ -394,10 +429,9 @@ export const STORE_SECTIONS = {
   gridEyebrow: 'El catálogo completo',
   gridTitleAccent: 'productos',
   // CARMOUNT cierra la grilla con "SHOP ALL PRODUCTS" → /shop. Nosotros no
-  // tenemos una segunda página de catálogo (esta ES el catálogo), así que el
-  // botón manda al más vendido, que es un destino real.
-  gridCtaLabel: 'Ver el más vendido',
-  gridCtaHref: '/',
+  // tenemos una segunda página de catálogo (esta ES el catálogo) y cada card
+  // ya linkea a su landing, así que el cierre son los medios de pago.
+  paymentsLabel: 'Pagá como quieras',
   activityTitle: 'Comprá por',
   activityTitleAccent: 'momento',
   reviewsEyebrow: 'Miles de conductores en toda la Argentina 🇦🇷',
@@ -516,10 +550,13 @@ export const INSTAGRAM = {
  * ley de defensa del consumidor.
  */
 export const STORE_STATS = [
-  // TODO: dato real del panel de Shopify (clientes únicos).
-  { value: '—', suffix: '+', label: 'Clientes felices' },
-  // TODO: dato real del panel de Shopify (unidades vendidas).
-  { value: '—', suffix: '+', label: 'Productos vendidos' },
+  // Mismo número que `BRAND.socialProofCount`, que ya se publica en la landing.
+  { value: '3.500', suffix: '+', label: 'Clientes felices' },
+  // ESTIMADO, no medido: sale de los ~3.500 clientes por un promedio de 2
+  // unidades por compra (se vende en packs de 1, 2 y 3). Redondeado hacia
+  // abajo a propósito. TODO: reemplazar por las unidades reales del panel de
+  // Shopify cuando estén a mano.
+  { value: '7.000', suffix: '+', label: 'Productos vendidos' },
   // 23 provincias + CABA. Sin "+": es el total, no un piso.
   { value: '24', suffix: '', label: 'Provincias con envío' },
 ] as const;
