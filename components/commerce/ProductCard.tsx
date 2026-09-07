@@ -52,16 +52,17 @@ export function ProductCard({ product }: { product: StoreProduct }) {
       {/* `m-2 mb-0` + radio propio: la foto queda despegada del borde de la
           card, así el redondeo se ve en las cuatro esquinas y no sólo en las
           de arriba, que son las que ya daba el `rounded-2xl` de la card.
-          El degradado tiene que cerrar MÁS CLARO que el fondo de la card
-          (#0A0A0A): con el anterior, que terminaba en #0F0F10, las esquinas
-          redondeadas quedaban invisibles por falta de contraste. */}
+          La foto va con `object-cover` y sin padding: llena la caja entera y
+          el `overflow-hidden` la recorta contra el radio, así lo redondeado
+          es la imagen y no un contenedor con la foto flotando adentro.
+          El degradado quedó de fallback mientras carga. */}
       <div className="relative m-2 mb-0 aspect-square overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_38%,#31343A,#191B1F_78%)]">
         <Image
           src={product.image}
           alt={product.title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-contain p-5 sm:p-6"
+          className="object-cover"
         />
 
         {/* p-2 y no p-3: el inset de la foto dejó los tags 4px cortos y
