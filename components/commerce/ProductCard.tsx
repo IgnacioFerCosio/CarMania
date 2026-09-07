@@ -49,16 +49,24 @@ export function ProductCard({ product }: { product: StoreProduct }) {
     >
       {/* El contenedor cuadrado reserva el espacio antes de que cargue la
           imagen, así la grilla no salta (mismo patrón que HowItWorks). */}
-      <div className="relative aspect-square w-full overflow-hidden bg-[radial-gradient(circle_at_50%_38%,#26282C,#0F0F10_72%)]">
+      {/* `m-2 mb-0` + radio propio: la foto queda despegada del borde de la
+          card, así el redondeo se ve en las cuatro esquinas y no sólo en las
+          de arriba, que son las que ya daba el `rounded-2xl` de la card.
+          El degradado tiene que cerrar MÁS CLARO que el fondo de la card
+          (#0A0A0A): con el anterior, que terminaba en #0F0F10, las esquinas
+          redondeadas quedaban invisibles por falta de contraste. */}
+      <div className="relative m-2 mb-0 aspect-square overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_38%,#31343A,#191B1F_78%)]">
         <Image
           src={product.image}
           alt={product.title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-contain p-5 transition duration-500 group-hover:scale-105 sm:p-6"
+          className="object-contain p-5 sm:p-6"
         />
 
-        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
+        {/* p-2 y no p-3: el inset de la foto dejó los tags 4px cortos y
+            partían en dos líneas. */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-2">
           {/* El tag de spec es largo y en la card de 2 columnas de mobile se
               parte en tres líneas. Ahí queda sólo el de variante. */}
           <span className="hidden sm:block">
@@ -105,14 +113,14 @@ export function ComingSoonCard({
 }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border border-dashed border-ink-700 bg-ink-950/60">
-      <div className="relative aspect-square w-full overflow-hidden bg-[radial-gradient(circle_at_50%_38%,#1B1C1F,#0C0C0D_72%)]">
+      <div className="relative m-2 mb-0 aspect-square overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_38%,#212327,#121316_78%)]">
         {/* Silueta: el mismo cuadrado de una foto, pero vacío */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="font-display text-6xl font-black italic text-white/[0.05] sm:text-7xl">
             ?
           </span>
         </div>
-        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-3">
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-2">
           <span className="hidden sm:block">
             <Tag>{specTag}</Tag>
           </span>

@@ -294,7 +294,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     image: '/parasol/hero/parasol-hero.webp',
     href: '/parasol',
     fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
-    specTag: 'APERTURA EN 3 SEGUNDOS',
+    specTag: 'ABRE EN 3 SEGUNDOS',
     badge: 'UNIVERSAL',
   },
   {
