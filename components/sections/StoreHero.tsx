@@ -58,8 +58,11 @@ export function StoreHero() {
         <div className="absolute left-1/2 top-1/2 h-[520px] w-[900px] max-w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(215,7,7,0.30),transparent_75%)] blur-2xl" />
         {/* Barrido de luz superior, como el reflejo de un parabrisas */}
         <div className="absolute inset-x-0 top-0 h-1/2 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.06),transparent)]" />
-        {/* Viñeta inferior para anclar el CTA */}
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[linear-gradient(to_top,#0A0A0A_10%,transparent)]" />
+        {/* Viñeta inferior para anclar el CTA. Semitransparente y corta a
+            propósito: antes llegaba a #0A0A0A OPACO sobre los 2/3 de abajo,
+            que es justo donde va la franja de garantías — el overlay era
+            translúcido pero atrás no quedaba video, sólo negro. */}
+        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-[linear-gradient(to_top,rgba(10,10,10,0.5),transparent)]" />
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 py-20 text-center [text-shadow:0_2px_18px_rgba(0,0,0,0.75)] sm:py-24 md:px-6 md:py-28">
