@@ -112,6 +112,8 @@ export default async function TiendaPage() {
         homeHref="/tienda"
         ctaHref="#productos"
         ctaLabel="Ver productos"
+        // Ya estamos en la tienda: el acceso directo no tendría a dónde ir.
+        storeHref={null}
       />
       <SubPromoBar />
 

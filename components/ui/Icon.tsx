@@ -22,6 +22,8 @@ type IconName =
   | 'star'
   | 'star-half'
   | 'chevron-down'
+  | 'menu'
+  | 'store'
   | 'whatsapp'
   | 'instagram'
   | 'cart'
@@ -165,6 +167,18 @@ const PATHS: Record<IconName, JSX.Element> = {
       d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.4 14.4c-.2.6-1.2 1.2-1.7 1.3-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.4-3.7-4.5-3.9-.1-.2-1.1-1.4-1.1-2.7s.7-1.9 1-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2 0 .4 0 .5l-.4.5-.3.4c-.1.1-.2.3 0 .5.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.7-.1l2 .9c.2.1.4.2.5.3 0 .2 0 .9-.2 1.6Z"
       fill="currentColor"
     />
+  ),
+  menu: (
+    <g stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </g>
+  ),
+  store: (
+    <g stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 9h16v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" />
+      <path d="M3 9l1.6-4.4A1 1 0 0 1 5.5 4h13a1 1 0 0 1 .9.6L21 9" />
+      <path d="M9.5 20v-5h5v5" />
+    </g>
   ),
   instagram: (
     <g stroke="currentColor" strokeWidth="1.7" fill="none" strokeLinejoin="round">
