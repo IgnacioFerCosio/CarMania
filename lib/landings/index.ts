@@ -9,9 +9,11 @@
  */
 import { SOPORTE } from './soporte';
 import { PARASOL } from './parasol';
+import { SOPLADOR } from './soplador';
 import type { UpsellTier } from './types';
 
 export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
   ...SOPORTE.upsellChain,
   ...PARASOL.upsellChain,
+  ...SOPLADOR.upsellChain,
 ];

@@ -52,7 +52,10 @@ export const metadata: Metadata = {
 
 const STORE_LINKS: NavLink[] = [
   { href: '/', label: 'Soporte PRO', highlight: true, badge: 'TOP' },
-  { href: '/parasol', label: 'Parasol PRO', highlight: true, badge: 'NUEVO' },
+  // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
+  // iguales se anulan entre sí. Además el nav no da para tres píldoras.
+  { href: '/parasol', label: 'Parasol PRO' },
+  { href: '/soplador', label: 'Soplador PRO', highlight: true, badge: 'NUEVO' },
   { href: '#productos', label: 'Ver todo' },
 ];
 

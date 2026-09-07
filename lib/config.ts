@@ -295,6 +295,20 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     href: '/parasol',
     fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
     specTag: 'APERTURA EN 3 SEGUNDOS',
+    badge: 'UNIVERSAL',
+  },
+  {
+    // ⚠️ Igual que el parasol: el producto todavía NO existe en Shopify con
+    // este handle, así que la card cae al `fallbackPrice` provisorio (ver el
+    // bloque de TODOs en lib/landings/soplador.ts).
+    handle: 'soplador-turbo-pro',
+    title: 'Soplador Turbo PRO™',
+    blurb:
+      'Motor turbo del tamaño de tu mano. Saca el polvo de las rejillas, los tapizados y cada rincón donde no llega el trapo.',
+    image: '/soplador/hero/soplador-hero.webp',
+    href: '/soplador',
+    fallbackPrice: 24990, // TODO PRECIO REAL — espejo de SOPLADOR.fallbackPricing.price
+    specTag: 'RECARGABLE USB',
     badge: 'NUEVO',
   },
 ] as const;
@@ -320,7 +334,6 @@ export const STORE_PRICE_PERKS = [
  * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
  */
 export const STORE_COMING_SOON = [
-  { id: 'slot-3', specTag: 'EN CAMINO', badge: '2026' },
   { id: 'slot-4', specTag: 'EN CAMINO', badge: '2026' },
 ] as const;
 
