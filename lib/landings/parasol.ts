@@ -31,6 +31,12 @@ import { SOPORTE } from './soporte';
  * NO PUBLICAR ASÍ. Reemplazar por reseñas reales antes de que /parasol reciba
  * tráfico — ver el checklist en docs/superpowers/specs/parasol-assets.md.
  * Lo mismo aplica a `brand.socialProofCount` y a `ratingBreakdown`.
+ *
+ * ⚠️ Las FOTOS sí son reales (clientes con el parasol puesto), pero los TEXTOS
+ * de acá abajo siguen siendo inventados. Esa mezcla es justamente lo que hay
+ * que deshacer antes de publicar: una foto real le da credibilidad a un texto
+ * que nadie escribió. Hay 12 fotos listas en /public/parasol/reviews/ — las
+ * otras 7 esperan a que haya reseñas reales a las que pertenecer.
  */
 const PARASOL_REVIEWS = [
   {
@@ -40,6 +46,7 @@ const PARASOL_REVIEWS = [
     text: 'Lo dejo todo el día al sol en el laburo y ahora subo a un auto que se banca. El volante ya no quema y el aire enfría en la mitad de tiempo. Otra vida.',
     date: '18 Ago 2026',
     verified: true,
+    image: '/parasol/reviews/01-tablero-y-volante.webp',
   },
   {
     name: 'Paula R.',
@@ -48,6 +55,7 @@ const PARASOL_REVIEWS = [
     text: 'Se abre como un paraguas, literal un movimiento y ya está puesto. El de cartón que tenía antes no cubría las puntas y se me caía cada vez que arrancaba.',
     date: '05 Ago 2026',
     verified: true,
+    image: '/parasol/reviews/04-varillas-desde-abajo.webp',
   },
   {
     name: 'Gonzalo M.',
@@ -56,6 +64,7 @@ const PARASOL_REVIEWS = [
     text: 'Tengo una Amarok y entró perfecto en el parabrisas, pensé que iba a quedar chico. Se sostiene solo con los paños de sol, sin ventosas ni nada pegado.',
     date: '24 Jul 2026',
     verified: true,
+    image: '/parasol/reviews/07-camioneta-interior-claro.webp',
   },
   {
     name: 'Julieta S.',
@@ -64,6 +73,7 @@ const PARASOL_REVIEWS = [
     text: 'Cumple muy bien, el tablero dejó de recalentarse. Le saco una estrella porque la funda me costó un poco al principio para volver a guardarlo, después le agarrás la mano.',
     date: '11 Jul 2026',
     verified: true,
+    image: '/parasol/reviews/03-pantalla-central.webp',
   },
   {
     name: 'Fernando A.',
@@ -72,6 +82,7 @@ const PARASOL_REVIEWS = [
     text: 'Acá el sol pega fuerte de verdad. Con esto el auto queda a la sombra completa, el plástico del tablero ya no se pone hirviendo. Lo guardo en la puerta y no molesta.',
     date: '28 Jun 2026',
     verified: true,
+    image: '/parasol/reviews/06-auto-blanco-en-la-calle.webp',
   },
 ] as const;
 

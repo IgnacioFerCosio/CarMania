@@ -402,8 +402,8 @@ export const STORE_REVIEWS = [
     location: 'NEUQUÉN',
   },
   {
-    title: 'CERO MARCAS EN EL TABLERO',
-    text: 'Lo que más me gustó es que lo saco y lo vuelvo a poner sin que quede pegote ni marca. En el auto de laburo eso me importaba.',
+    title: 'CERO MARCAS',
+    text: 'Lo que más me gustó es que lo saco y lo vuelvo a poner sin que quede pegote ni marca. En el auto de laburo eso me importa.',
     name: 'Lucía',
     location: 'ROSARIO',
   },
@@ -421,13 +421,13 @@ export const STORE_REVIEWS = [
   },
   {
     title: 'EL IMÁN ES OTRA COSA',
-    text: 'Pensé que con la funda no iba a agarrar y agarra igual. Lo despegás de un tirón pero no se cae solo, es raro lo bien que está calibrado.',
+    text: 'Pensé que sin el aro no iba a agarrar y agarra igual. Tengo un iPhone 16 Pro Max y lo pongo de cualquier manera que se queda firme. Muy bueno.',
     name: 'Carolina',
     location: 'LA PLATA',
   },
   {
     title: 'LLEGÓ ANTES DE LO QUE PENSABA',
-    text: 'Lo pedí un martes y el jueves lo tenía. Vino bien embalado y con el aro de repuesto. Nada que reprochar.',
+    text: 'Lo pedí un martes y el viernes lo tenía. Vino bien embalado. Nada que reprochar.',
     name: 'Federico',
     location: 'SALTA',
   },
