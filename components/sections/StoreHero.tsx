@@ -5,10 +5,14 @@
  * tonos con una barra accent debajo, subtítulo, CTA en píldora y la prueba
  * social con estrellas.
  *
- * SLOT DE IMAGEN: el fondo es un placeholder hecho con gradientes (glow rojo
- * + viñeta), no una foto. Cuando tengas la foto del interior del auto,
- * descomentá el <img> de abajo y dejá los gradientes como overlay: ya están
- * calibrados para que el texto siga legible encima.
+ * El fondo es un video en loop (montaje de 4 planos, 7,5 s) sobre su propio
+ * poster. Los gradientes quedaron como overlay encima, que es para lo que
+ * estaban calibrados: sin ellos el texto blanco no se sostiene sobre el plano
+ * del desierto, que es casi blanco.
+ *
+ * El video va detrás de un poster que SIEMPRE se pinta, así el hero nunca
+ * arranca en negro; y con `motion-reduce:hidden` desaparece para quien pidió
+ * menos movimiento, que se queda con la imagen fija.
  */
 import { BRAND, STORE_SECTIONS } from '@/lib/config';
 import { Stars } from '@/components/ui/Stars';
@@ -17,14 +21,29 @@ import { Icon } from '@/components/ui/Icon';
 export function StoreHero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink-950">
-      {/* ── Fondo placeholder ─────────────────────────────────────────────
-          Reemplazo: poné acá la foto y borrá el div de gradientes.
-          <Image src="/tienda/hero.webp" alt="" fill priority
-                 className="object-cover opacity-60" />
-      */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
-        {/* Base: degradé diagonal frío para que el rojo no se vea plano */}
-        <div className="absolute inset-0 bg-[linear-gradient(160deg,#24262A_0%,#141517_45%,#0A0A0A_100%)]" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-cover bg-center"
+        // El poster como fondo del contenedor y no sólo como atributo del
+        // <video>: así cubre también el caso de reduced-motion, donde el
+        // <video> no se muestra.
+        style={{ backgroundImage: "url('/tienda/hero/hero-poster.webp')" }}
+      >
+        <video
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          poster="/tienda/hero/hero-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/tienda/hero/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Scrim: antes acá había un degradé opaco. Ahora tiene que dejar ver
+            el video pero sostener el texto encima. */}
+        <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(36,38,42,0.78)_0%,rgba(20,21,23,0.72)_45%,rgba(10,10,10,0.85)_100%)]" />
         {/* Glow accent detrás del título */}
         <div className="absolute left-1/2 top-1/2 h-[520px] w-[900px] max-w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(215,7,7,0.30),transparent_75%)] blur-2xl" />
         {/* Barrido de luz superior, como el reflejo de un parabrisas */}
