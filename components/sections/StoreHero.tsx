@@ -6,9 +6,15 @@
  * social con estrellas.
  *
  * El fondo es un video en loop (montaje de 4 planos, 7,5 s) sobre su propio
- * poster. Los gradientes quedaron como overlay encima, que es para lo que
- * estaban calibrados: sin ellos el texto blanco no se sostiene sobre el plano
- * del desierto, que es casi blanco.
+ * poster, y cubre TODA la sección — incluida la franja de garantías, que va
+ * como overlay translúcido al pie en vez de ser una sección aparte. Eso le da
+ * al video bastante más alto y lo recorta menos.
+ *
+ * Sobre la legibilidad: el velo se mantiene liviano para no tapar el video, y
+ * el trabajo pesado lo hacen dos cosas más localizadas — una sombra sobre el
+ * texto y un oscurecimiento en la banda del medio. Un velo parejo y fuerte
+ * lograba lo mismo, pero apagaba el video entero. Hace falta porque el tercer
+ * plano (el derrape en la arena) es casi blanco.
  *
  * El video va detrás de un poster que SIEMPRE se pinta, así el hero nunca
  * arranca en negro; y con `motion-reduce:hidden` desaparece para quien pidió
@@ -17,10 +23,11 @@
 import { BRAND, STORE_SECTIONS } from '@/lib/config';
 import { Stars } from '@/components/ui/Stars';
 import { Icon } from '@/components/ui/Icon';
+import { StoreTrustStrip } from '@/components/sections/StoreTrustStrip';
 
 export function StoreHero() {
   return (
-    <section className="relative isolate overflow-hidden bg-ink-950">
+    <section className="relative isolate flex min-h-[78vh] flex-col overflow-hidden bg-ink-950 sm:min-h-[82vh]">
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-cover bg-center"
@@ -41,9 +48,12 @@ export function StoreHero() {
           <source src="/tienda/hero/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Scrim: antes acá había un degradé opaco. Ahora tiene que dejar ver
-            el video pero sostener el texto encima. */}
-        <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(36,38,42,0.78)_0%,rgba(20,21,23,0.72)_45%,rgba(10,10,10,0.85)_100%)]" />
+        {/* Velo general, liviano: sólo baja el brillo para que el rojo y el
+            blanco no compitan con el video. */}
+        <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(30,32,36,0.42)_0%,rgba(16,17,19,0.34)_45%,rgba(10,10,10,0.55)_100%)]" />
+        {/* Banda oscura sólo detrás del bloque de texto, difuminada a los
+            costados: ahí sí hace falta contraste. */}
+        <div className="absolute inset-x-0 top-1/2 h-[62%] -translate-y-1/2 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(0,0,0,0.55),transparent_75%)]" />
         {/* Glow accent detrás del título */}
         <div className="absolute left-1/2 top-1/2 h-[520px] w-[900px] max-w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(215,7,7,0.30),transparent_75%)] blur-2xl" />
         {/* Barrido de luz superior, como el reflejo de un parabrisas */}
@@ -52,7 +62,7 @@ export function StoreHero() {
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[linear-gradient(to_top,#0A0A0A_10%,transparent)]" />
       </div>
 
-      <div className="mx-auto flex min-h-[62vh] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center sm:min-h-[68vh] sm:py-24 md:px-6 md:py-32">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 py-20 text-center [text-shadow:0_2px_18px_rgba(0,0,0,0.75)] sm:py-24 md:px-6 md:py-28">
         <h1 className="heading-display text-[clamp(2rem,7.5vw,4.25rem)] leading-[0.95]">
           {STORE_SECTIONS.heroTitle}{' '}
           <span className="relative inline-block text-accent">
@@ -110,6 +120,9 @@ export function StoreHero() {
           </span>
         </div>
       </div>
+
+      {/* Overlay al pie, sobre el mismo video */}
+      <StoreTrustStrip />
     </section>
   );
 }

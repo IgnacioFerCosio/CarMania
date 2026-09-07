@@ -14,7 +14,6 @@ import { SubPromoBar } from '@/components/layout/SubPromoBar';
 import { Navbar, type NavLink } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { StoreHero } from '@/components/sections/StoreHero';
-import { StoreTrustStrip } from '@/components/sections/StoreTrustStrip';
 import { ProductGrid } from '@/components/sections/ProductGrid';
 import { ShopByActivity } from '@/components/sections/ShopByActivity';
 import { StoreReviews } from '@/components/sections/StoreReviews';
@@ -121,25 +120,22 @@ export default async function TiendaPage() {
       <SubPromoBar href="#productos" />
 
       <main>
-        {/* 1. Hero a sangre */}
+        {/* 1. Hero a sangre — incluye la franja de garantías como overlay */}
         <StoreHero />
 
-        {/* 2. Franja de garantías */}
-        <StoreTrustStrip />
-
-        {/* 3. Grilla de productos */}
+        {/* 2. Grilla de productos */}
         <ProductGrid products={products} />
 
-        {/* 4. "Comprá por momento" — carrusel de casos de uso */}
+        {/* 3. "Comprá por momento" — carrusel de casos de uso */}
         <ShopByActivity />
 
-        {/* 5. Reseñas */}
+        {/* 4. Reseñas */}
         <StoreReviews />
 
-        {/* 6. Banda de números */}
+        {/* 5. Banda de números */}
         <StoreStats />
 
-        {/* 7. Instagram — grilla curada, misma posición que en CARMOUNT
+        {/* 6. Instagram — grilla curada, misma posición que en CARMOUNT
             (pegada al footer). No es un feed en vivo: ver el bloque
             INSTAGRAM en lib/config.ts. */}
         <InstagramFeed />
