@@ -84,16 +84,22 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
 
 ## Testing
 
-`npm test` corre cinco pasos y corta al primer fallo. **Correlo antes de dar
-cualquier cambio por bueno.** No necesita ninguna dependencia extra.
+`npm test` corre siete pasos y corta al primer fallo. **Correlo antes de dar
+cualquier cambio por bueno.** La única dependencia es Vitest (dev), porque
+Node no resuelve los imports sin extensión de `lib/`.
 
 | Paso | Qué protege |
 |---|---|
 | `tsc` | tipos |
+| `test:unit` | la escalera de upsell (`lib/tiers.ts`) y los invariantes de la config |
 | `check:assets` | que exista en `/public` todo lo que el código pide |
 | `check:csp` | que las dos copias de la CSP digan lo mismo |
+| `check:shopify` | que cada producto de la config exista **desde el canal de la landing** |
 | `build` | que compile |
 | `gate` | que ninguna página haya cambiado sin querer |
+
+**Lo que NO cubre:** el carrito en el browser (agregar, upsell, persistir entre
+páginas). Eso es client-side contra Shopify en vivo y hoy se prueba a mano.
 
 Buildea en `.next-verify`, así que **no le rompe el cache al `next dev`** que
 tengas levantado.
@@ -118,7 +124,27 @@ cada uno con su motivo.
 (la de dev). Desincronizarlas falla en silencio: agregás un dominio en dev,
 anda todo, y en producción la CSP lo bloquea sin un solo error visible.
 
-Si agregás una landing, sumá su ruta a `ROUTES` en `scripts/prerender-gate.sh`.
+**`test:unit`** (`tests/unit/`) prueba `nextTierOf` y compañía con una chain
+de mentira — en particular que el último nivel de un producto no ofrezca el
+primero del siguiente como upsell — y que la config cierre: precios tachados
+mayores que los reales, unidades que suben en cada nivel, GIDs sin repetir
+entre productos, `fallbackPricing` espejo del x1, la card de `/tienda` con el
+mismo handle y precio que su landing, y que las promesas del copy ("2ª al
+50%", "3ª GRATIS", "3x2 en packs") cierren contra los números, con $10 de
+tolerancia por el redondeo de Shopify.
+
+**`check:shopify`** (`tests/contract/`) pega a la Storefront API con el mismo
+token público que usa la página. Verifica que cada `productId` cargado sea
+visible desde ese canal, que su variante sea el `fallbackVariantId`, que el
+precio y el tachado coincidan con el fallback, y que `productHandle` resuelva.
+Existe porque un producto puede estar activo en el admin y no publicado al
+canal "Carmania Headless" — la API lo devuelve `null` y el botón falla con
+"No pudimos agregar el producto"; pasó con los packs del parasol (bundles,
+que el admin publica sólo desde el listado). Necesita red y `.env.local`; sin
+eso se saltea avisando, para que `npm test` siga sirviendo offline.
+
+Si agregás una landing: sumá su ruta a `ROUTES` en `scripts/prerender-gate.sh`
+y su config a `LANDINGS` en los dos tests.
 
 ## Gotchas
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
