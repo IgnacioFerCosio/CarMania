@@ -75,11 +75,16 @@ export function tierOf(
 }
 
 /**
- * El tier siguiente en la escalera, o null si ya está en el último nivel de
- * UPSELL_CHAIN o si el variantId no corresponde a ningún tier conocido.
- * Como es puramente posicional (índice + 1), el tope se ajusta solo con lo
- * que tenga la lista — hoy es x6, pero si se agrega o saca un nivel esto no
- * necesita tocarse.
+ * El tier siguiente en la escalera, o null si ya está en el último nivel o
+ * si el variantId no corresponde a ningún tier conocido. Como es posicional
+ * (índice + 1), el tope se ajusta solo con lo que tenga la lista — hoy es x6,
+ * pero si se agrega o saca un nivel esto no necesita tocarse.
+ *
+ * Las páginas pasan la UNIÓN de las chains de todos los productos, una detrás
+ * de otra. El siguiente por índice del último nivel de un producto es el
+ * primero del producto siguiente (soporte x6 → parasol x1), que no es un
+ * upsell. Dentro de una escalera las unidades siempre suben, así que un
+ * "siguiente" con menos unidades es un cambio de producto y se corta ahí.
  */
 export function nextTierOf(
   tiers: ResolvedTier[],
@@ -87,7 +92,9 @@ export function nextTierOf(
 ): ResolvedTier | null {
   const i = tiers.findIndex((t) => t.variantId === variantId);
   if (i === -1 || i === tiers.length - 1) return null;
-  return tiers[i + 1];
+  const next = tiers[i + 1];
+  if (next.units <= tiers[i].units) return null;
+  return next;
 }
 
 /**

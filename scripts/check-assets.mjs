@@ -62,10 +62,6 @@ const PENDIENTES = new Set([
   '/soplador/bundles/SopladorX1.webp',
   '/soplador/bundles/SopladorX2.webp',
   '/soplador/bundles/SopladorX3.webp',
-  // Packs del parasol: faltan las 3 fotos. Ver parasol-assets.md
-  '/parasol/bundles/ParasolX1.webp',
-  '/parasol/bundles/ParasolX2.webp',
-  '/parasol/bundles/ParasolX3.webp',
 
   // ── Config inerte: se referencia pero NO se renderiza, así que no puede
   // dar 404. Está acá para que el check no la marque, no porque haya que

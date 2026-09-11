@@ -10,14 +10,14 @@
  * permitido (la extracción a un módulo compartido es una limpieza posterior).
  *
  * ⚠️ PLACEHOLDERS pendientes antes de que /parasol reciba tráfico:
- *   - Precios (`fallbackPricing`, `bundles[].fallbackPrice/Compare`,
- *     `upsellChain`): el producto no está cotizado — marcados `// TODO PRECIO REAL`.
- *   - Shopify: los 3 productos no existen; `productId`/`fallbackVariantId` en
- *     `''`. Con `''` el BuyButton queda deshabilitado ("Producto no
- *     disponible") en vez de habilitarse contra un merchandise inexistente.
- *   - Media bajo `/parasol/...`: los archivos todavía no existen.
  *   - Reseñas / `brand.socialProofCount` / `ratingBreakdown`: inventadas
  *     (ver el bloque de aviso sobre `PARASOL_REVIEWS`).
+ *
+ * Shopify (sincronizado 2026-09-11): los 3 productos existen y los precios de
+ * `fallbackPrice`/`fallbackCompare`/`fallbackPricing` son espejo de lo que
+ * está cargado. Ojo que el handle del x1 es `parasol-pro™` — CON el ™, porque
+ * Shopify lo generó a partir del título y quedó así. `getProduct('parasol-pro')`
+ * devuelve null.
  */
 import type { Bundle, LandingConfig, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
@@ -155,8 +155,8 @@ const PARASOL_REVIEWS = [
 const PARASOL_BUNDLES: readonly Bundle[] = [
   {
     id: 'single',
-    productId: '', // TODO SHOPIFY — el producto x1 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/8391166427251',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45459641532531',
     label: 'LLEVÁ 1',
     subtitle: 'Un parasol. Cero horno.',
     quantity: 1,
@@ -165,14 +165,14 @@ const PARASOL_BUNDLES: readonly Bundle[] = [
     bonus: '+ funda incluida',
     freeShipping: true,
     recommended: false,
-    fallbackPrice: 29990, // TODO PRECIO REAL
-    fallbackCompare: 45000, // TODO PRECIO REAL
+    fallbackPrice: 44990,
+    fallbackCompare: 70000,
     image: '/parasol/bundles/ParasolX1.webp',
   },
   {
     id: 'double',
-    productId: '', // TODO SHOPIFY — el producto x2 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/8391168163955',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45459651526771',
     label: 'LLEVÁ 2',
     subtitle: '50% OFF en la 2ª unidad.',
     quantity: 2,
@@ -181,14 +181,14 @@ const PARASOL_BUNDLES: readonly Bundle[] = [
     bonus: '+ 2 fundas incluidas',
     freeShipping: true,
     recommended: true,
-    fallbackPrice: 44985, // TODO PRECIO REAL
-    fallbackCompare: 90000, // TODO PRECIO REAL
+    fallbackPrice: 67490,
+    fallbackCompare: 140000,
     image: '/parasol/bundles/ParasolX2.webp',
   },
   {
     id: 'triple',
-    productId: '', // TODO SHOPIFY — el producto x3 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/8391177502835',
+    fallbackVariantId: 'gid://shopify/ProductVariant/45459680362611',
     label: 'LLEVÁ 3',
     subtitle: 'La 3ª unidad es GRATIS.',
     quantity: 3,
@@ -197,8 +197,8 @@ const PARASOL_BUNDLES: readonly Bundle[] = [
     bonus: '+ 3 fundas incluidas',
     freeShipping: true,
     recommended: false,
-    fallbackPrice: 59980, // TODO PRECIO REAL
-    fallbackCompare: 135000, // TODO PRECIO REAL
+    fallbackPrice: 89990,
+    fallbackCompare: 210000,
     image: '/parasol/bundles/ParasolX3.webp',
   },
 ];
@@ -217,16 +217,17 @@ const PARASOL_UPSELL_CHAIN: readonly UpsellTier[] = PARASOL_BUNDLES.map(
 export const PARASOL = {
   brand: {
     tagline: 'Parasol PRO™',
-    productHandle: 'parasol-pro',
+    // Con ™: es el handle real que generó Shopify (ver el docblock de arriba).
+    productHandle: 'parasol-pro™',
     socialProofCount: 'Miles', // TODO: número real cuando haya ventas del parasol
     socialProofLabel: 'de autos protegidos',
     averageRating: 4.8,
     reviewsCount: PARASOL_REVIEWS.length, // TODO: reseñas reales
   },
-  // TODO PRECIO REAL — coincide con el bundle x1; el producto no está cotizado.
+  // Espejo del bundle x1 en Shopify.
   fallbackPricing: {
-    price: 29990,
-    compareAtPrice: 45000,
+    price: 44990,
+    compareAtPrice: 70000,
     currency: 'ARS',
   },
   headlines: {

@@ -282,18 +282,15 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     badgeHot: true,
   },
   {
-    // ⚠️ El producto todavía NO existe en Shopify con este handle:
-    // `getProduct('parasol-pro')` devuelve null y la card cae al
-    // `fallbackPrice`, que es el precio provisorio de PARASOL.fallbackPricing
-    // (ver el bloque de TODOs en lib/landings/parasol.ts). Antes de mandar
-    // tráfico a /tienda hay que crear el producto y confirmar el precio.
-    handle: 'parasol-pro',
+    // Con ™: es el handle que Shopify generó a partir del título. Sin el ™
+    // `getProduct` devuelve null y la card cae al fallback.
+    handle: 'parasol-pro™',
     title: 'Parasol PRO™',
     blurb:
       'Se abre como un paraguas y cubre todo el parabrisas en 3 segundos. Bloquea los UV y mantiene el interior fresco.',
     image: '/parasol/hero/parasol-hero-oscuro.webp',
     href: '/parasol',
-    fallbackPrice: 29990, // TODO PRECIO REAL — espejo de PARASOL.fallbackPricing.price
+    fallbackPrice: 44990, // espejo de PARASOL.fallbackPricing.price
     specTag: 'ABRE EN 3 SEGUNDOS',
     badge: 'UNIVERSAL',
   },

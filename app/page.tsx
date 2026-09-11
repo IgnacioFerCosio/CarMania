@@ -37,7 +37,8 @@ import { GuaranteeBadge } from '@/components/overlays/GuaranteeBadge';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
 import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { BRAND, BUNDLES, FALLBACK_PRICING, UPSELL_CHAIN } from '@/lib/config';
+import { BRAND, BUNDLES, FALLBACK_PRICING } from '@/lib/config';
+import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual.
@@ -84,11 +85,15 @@ export default async function HomePage() {
   try {
     const [product, data] = await Promise.all([
       getProduct(BRAND.productHandle),
-      // UPSELL_CHAIN, no BUNDLES: incluye tambien Pack x4/x5/x6, que solo
-      // existen para el upsell del carrito. Sin esto, esos 3 niveles nunca
-      // reciben precio real en el build y dependen enteramente del refetch
-      // client-side (que puede fallar en silencio) — ver lib/tiers.ts.
-      getBundlesData(UPSELL_CHAIN.map((t) => t.productId)),
+      // ALL_UPSELL_CHAINS, no BUNDLES: incluye Pack x4/x5/x6 (que solo
+      // existen para el upsell del carrito) y los tiers de las otras landings.
+      // El carrito persiste entre páginas: una línea del parasol vista desde
+      // acá necesita su precio y su chain para conservar el banner de upsell.
+      // Sin esto, esos niveles dependen enteramente del refetch client-side
+      // (que puede fallar en silencio) — ver lib/tiers.ts.
+      // `filter(Boolean)`: el soplador todavía no existe en Shopify y un GID
+      // vacío devuelve un error top-level, no un nodo null.
+      getBundlesData(ALL_UPSELL_CHAINS.map((t) => t.productId).filter(Boolean)),
     ]);
     if (product) productId = product.id;
     bundlesData = data;
@@ -108,7 +113,7 @@ export default async function HomePage() {
   const stickyCompare = stickyData?.compareAtPrice ?? recommendedBundle.fallbackCompare;
 
   return (
-    <CartProvider bundlesData={bundlesData}>
+    <CartProvider bundlesData={bundlesData} upsellChain={ALL_UPSELL_CHAINS}>
       {/* Header stack. Sólo el banner de oferta queda fijo arriba; la promo
           bar y el navbar scrollean con la página. */}
       <CountdownBanner />

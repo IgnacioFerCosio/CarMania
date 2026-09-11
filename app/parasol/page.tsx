@@ -76,9 +76,9 @@ export default async function ParasolPage() {
   let bundlesData: Record<string, BundleData> = {};
   let price = PARASOL.fallbackPricing.price;
 
-  // Los productos del parasol todavía no existen: sus productId son ''. Pedirle
-  // a Shopify un GID vacío o inventado devuelve un error top-level (no un nodo
-  // null), así que filtramos antes de preguntar.
+  // Los productos del soplador todavía no existen: sus productId son ''.
+  // Pedirle a Shopify un GID vacío o inventado devuelve un error top-level (no
+  // un nodo null), así que filtramos antes de preguntar.
   const ids = ALL_UPSELL_CHAINS.map((t) => t.productId).filter(Boolean);
 
   if (ids.length > 0) {

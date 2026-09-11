@@ -16,10 +16,10 @@ Todo bajo `/public/parasol/`.
 - ✅ `use-cases/{calor,tablero,privacidad,volante,aire,tapizados}.webp` — 6 fotos del grid (generadas con Gemini, optimizadas 800px webp, 33–83KB c/u)
 - ✅ `before-after/{sin,con}-parasol.webp` — comparador deslizable (Gemini, 1600px webp, ~100KB/83KB)
 
-**Pendientes:**
+- ✅ `bundles/ParasolX1.webp`, `ParasolX2.webp`, `ParasolX3.webp` — las mismas fotos que tienen los productos en Shopify (x1 es el hero; x2/x3 generadas con Gemini), 1600px webp, 51–82KB c/u
+- ✅ `reviews/*.webp` — 12 fotos
 
-- `bundles/ParasolX1.webp`, `ParasolX2.webp`, `ParasolX3.webp` — fotos de las cards de pricing.
-- reviews (opcional)
+**Pendientes:** nada.
 
 **CSP:** todos los `<video>` deben servirse desde `/public` (`media-src 'self'`
 en `_headers`). Apuntar a un CDN externo los rompe en producción.
@@ -34,22 +34,24 @@ config, que está en producción).
 Nada de esto bloquea el scaffold, pero **todo tiene que estar tildado antes de
 que `/parasol` reciba tráfico**.
 
-- [ ] Precios reales en `bundles` (los 3) — reemplazan los placeholders
-- [ ] `productId` + `fallbackVariantId` reales de Shopify (los 3) — hoy en `''`
+- [x] Precios reales en `bundles` (los 3) — espejo de Shopify (2026-09-11)
+- [x] `productId` + `fallbackVariantId` reales de Shopify (los 3)
+- [ ] **Publicar Pack x2 y Pack x3 al canal "Carmania Headless"** en Shopify.
+      Hoy están sólo en Tienda online + Facebook & Instagram: la Storefront
+      API devuelve `null` para los dos, así que la landing no puede leerlos ni
+      agregarlos al carrito. El x1 sí está publicado.
 - [x] Imagen del hero — `hero/parasol-hero.webp`
 - [x] 3 videos de `HowItWorks`
 - [x] 6 fotos del grid de casos de uso — `use-cases/*.webp`
 - [x] 2 fotos del comparador antes/después — `before-after/{sin,con}-parasol.webp`
-- [ ] 3 fotos de bundle
+- [x] 3 fotos de bundle
 - [ ] **Reseñas reales** — reemplazar las inventadas de §4.1
 - [ ] **`socialProofCount` / `socialProofLabel` reales** — hoy "Miles de autos protegidos"
 - [ ] **`ratingBreakdown` real** — coherente con las reseñas reales
 - [ ] Redeploy después de tocar precios (ver CLAUDE.md → Gotchas: el ISR no
       corre en Cloudflare, los precios se congelan en el build)
 - [ ] Verificar el Pixel con Meta Pixel Helper por si la CSP bloqueó algo
-- [ ] Pasar `upsellChain={ALL_UPSELL_CHAINS}` en app/page.tsx y app/tienda/page.tsx
+- [x] Pasar `upsellChain={ALL_UPSELL_CHAINS}` en app/page.tsx y app/tienda/page.tsx
       (y cambiar el `ids` a `ALL_UPSELL_CHAINS.map(t => t.productId).filter(Boolean)`).
-      Necesario para que una línea de parasol en el carrito conserve su banner de
-      upsell si el usuario la ve desde / o /tienda. Hoy es imposible (BuyButton
-      del parasol deshabilitado), pero apenas existan los variant IDs reales de
-      Shopify hay que hacerlo.
+      Hecho el 2026-09-11 junto con los IDs; `nextTierOf` corta en el borde
+      entre productos para que soporte x6 no ofrezca "parasol x1" como upsell.
