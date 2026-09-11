@@ -36,10 +36,15 @@ que `/parasol` reciba tráfico**.
 
 - [x] Precios reales en `bundles` (los 3) — espejo de Shopify (2026-09-11)
 - [x] `productId` + `fallbackVariantId` reales de Shopify (los 3)
-- [ ] **Publicar Pack x2 y Pack x3 al canal "Carmania Headless"** en Shopify.
-      Hoy están sólo en Tienda online + Facebook & Instagram: la Storefront
-      API devuelve `null` para los dos, así que la landing no puede leerlos ni
-      agregarlos al carrito. El x1 sí está publicado.
+- [x] **Publicar Pack x2 y Pack x3 al canal "Carmania Headless"** (2026-09-11).
+      Los packs son bundles de Shopify Bundles (`requiresComponents: true`,
+      2×/3× la variante del x1) y al crearlos quedaron sólo en Tienda online +
+      Facebook & Instagram: la Storefront API los devolvía `null` y el botón
+      tiraba "No pudimos agregar el producto". Ojo para el soplador: en la
+      ficha de un bundle el admin NO muestra el canal Headless; se publica
+      desde el listado de productos (tildar → ⋯ → Agregar a canales de venta).
+      Verificado: cartCreate, upsell x2→x3 (cartLinesUpdate entre bundles) y
+      persistencia del carrito hacia `/` andan.
 - [x] Imagen del hero — `hero/parasol-hero.webp`
 - [x] 3 videos de `HowItWorks`
 - [x] 6 fotos del grid de casos de uso — `use-cases/*.webp`
