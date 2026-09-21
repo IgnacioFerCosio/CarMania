@@ -1,3 +1,9 @@
+# Los chunks de /_next/static llevan hash en el nombre: cambian de URL en
+# cada build, así que se pueden cachear un año sin riesgo. Sin esto Cloudflare
+# los sirve con revalidación y cada visita repetida paga un RTT por archivo.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN

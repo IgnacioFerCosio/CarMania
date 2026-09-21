@@ -71,8 +71,11 @@ export const HERO_MEDIA = {
   kind: 'video',
   src: '/hero/VideoPrincipal.mp4',
   poster: '/hero/VideoPrincipal-poster.webp',
-  width: 720,
-  height: 1280,
+  // 576×1024 H.264 sin audio, CRF 31, ~0,9 MB (el original de 720p con
+  // audio pesaba 2,2 MB y en 4G lento tardaba más de 10 s en bajar). La
+  // caja del hero nunca supera los ~600 px de ancho, así que no se nota.
+  width: 576,
+  height: 1024,
   badgeLine1: 'NO SE',
   badgeLine2: 'CAE MÁS',
 } as const;
@@ -131,7 +134,7 @@ export const CAR_BRANDS = [
   { name: 'Nissan',        logo: '/brands/nissan.svg',     softWhite: false, w: 265,  h: 221  },
   { name: 'Mercedes-Benz', logo: '/brands/mercedes.svg',   softWhite: false, w: 1000, h: 1001 },
   { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true,  w: 200,  h: 200  },
-  { name: 'Audi',          logo: '/brands/audi.svg',       softWhite: false, w: 403,  h: 210  },
+  { name: 'Audi',          logo: '/brands/audi.webp',      softWhite: false, w: 400,  h: 209  },
 ];
 
 /**

@@ -129,11 +129,12 @@ function PaymentBadges() {
             width={p.w}
             height={p.h}
             decoding="async"
-            className={`${p.lg ? 'h-8' : 'h-6'} w-auto
-    /* brightness(0) lo hace negro, invert(1) lo pasa a blanco puro */
-    [filter:brightness(0)_invert(1)] 
-    opacity-80 
-    hover:opacity-100 transition-opacity`}
+            // aspect-ratio explícito: con `w-auto` el ancho se resuelve recién
+            // cuando carga el SVG y el h1 de arriba se movía (CLS 0,05–0,08,
+            // el mayor de la página). brightness(0) lo hace negro, invert(1)
+            // lo pasa a blanco puro.
+            style={{ aspectRatio: `${p.w} / ${p.h}` }}
+            className={`${p.lg ? 'h-8' : 'h-6'} w-auto [filter:brightness(0)_invert(1)] opacity-80 transition-opacity hover:opacity-100`}
           />
         </li>
       ))}

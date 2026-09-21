@@ -38,16 +38,15 @@ export function MetaPixel({ pixelId }: Props) {
           fbq('track', 'PageView');
         `}
       </Script>
-      <noscript>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          height="1"
-          width="1"
-          style={{ display: 'none' }}
-          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
+      {/* Como string y no como JSX: React hoistea un <link rel="preload"
+          as="image"> por cada <img> que ve, incluso adentro de <noscript>, y
+          el pixel de fallback terminaba precargado en el <head> compitiendo
+          con el LCP. Con el HTML como string, React no lo ve. */}
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1" alt="" />`,
+        }}
+      />
     </>
   );
 }

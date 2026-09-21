@@ -28,14 +28,25 @@ import { StoreTrustStrip } from '@/components/sections/StoreTrustStrip';
 export function StoreHero() {
   return (
     <section className="relative isolate flex min-h-[78vh] flex-col overflow-hidden bg-ink-950 sm:min-h-[82vh]">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-cover bg-center"
-        // El poster como fondo del contenedor y no sólo como atributo del
-        // <video>: así cubre también el caso de reduced-motion, donde el
-        // <video> no se muestra.
-        style={{ backgroundImage: "url('/tienda/hero/hero-poster.webp')" }}
-      >
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        {/* El poster como <img> propio debajo del <video>, y no como
+            background-image: es el LCP de la página, y una imagen de CSS
+            recién se descubre cuando el CSS ya parseó — un <img> con
+            fetchPriority="high" la ve el preload scanner en el HTML. (Un
+            ReactDOM.preload() no sirve: viaja en el payload RSC y el
+            prefetch del link "Tienda" del navbar lo ejecuta en / y /parasol,
+            que terminaban bajando este poster sin necesitarlo.) Cubre además
+            el caso de reduced-motion, donde el <video> no se muestra. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/tienda/hero/hero-poster.webp"
+          alt=""
+          width={1600}
+          height={900}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <video
           className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
           poster="/tienda/hero/hero-poster.webp"

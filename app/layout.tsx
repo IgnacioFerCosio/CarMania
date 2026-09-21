@@ -84,10 +84,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           data-cf-beacon='{"token": "7324ac88c1c24a8ab7fe57cca550f06c"}'
         />
 
-        {/* Klaviyo */}
+        {/* Klaviyo. `lazyOnload` (después de window.load) y no
+            `afterInteractive`: no hay nada de Klaviyo above the fold, y los
+            eventos de lib/tracking.ts van a la cola `_learnq`, que el script
+            drena cuando carga. Sacarlo del camino crítico le devuelve ~200 ms
+            de main thread a la hidratación en celulares lentos. */}
         <Script
           src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=RLXPcd"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </body>
     </html>
