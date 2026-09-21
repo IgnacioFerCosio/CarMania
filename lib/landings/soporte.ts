@@ -365,7 +365,7 @@ export const BUNDLES: readonly Bundle[] = [
     recommended: true,
     fallbackPrice: 59985,
     fallbackCompare: 120000,
-    image: '/bundles/BundleX2.webp',
+    image: '/bundles/bundle-x2-soporte.webp',
   },
   {
     id: 'triple',
