@@ -50,9 +50,10 @@ const STORE_LINKS: NavLink[] = [
   // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
   // iguales se anulan entre sí. Además el nav no da para tres píldoras.
   { href: '/parasol', label: 'Parasol PRO' },
-  { href: '/soplador', label: 'Soplador PRO', highlight: true, badge: 'NUEVO' },
   { href: '#productos', label: 'Ver todo' },
 ];
+// El soplador no está en STORE_LINKS a propósito: mientras tenga `comingSoon`
+// la ruta responde 404. Cuando se publique, va acá con `badge: 'NUEVO'`.
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual. Mismo valor que app/page.tsx,

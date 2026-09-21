@@ -1,7 +1,12 @@
 # Soplador Turbo PRO™ — checklist antes de publicar `/soplador`
 
-La landing está armada y navegable, pero **no está lista para recibir
-tráfico**. Todo lo de acá está marcado con `// TODO` en el código.
+La landing está armada pero **no está lista para recibir tráfico**, así que
+en producción está oculta: `comingSoon: true` en `STORE_PRODUCTS`
+(`lib/config.ts`) hace que `/soplador` responda 404, que no vaya al sitemap
+ni al nav de `/tienda`, y que la card del catálogo se vea como
+"Próximamente" sin link. **Publicarla es sacar ese flag** — y sumar el link
+al nav de `/tienda` con `badge: 'NUEVO'`. Todo lo de acá está marcado con
+`// TODO` en el código.
 
 Producto de origen: **X8 Mini Soplador Inalámbrico**, LAMBO TECH, modelo
 `LT-25119`. Se vende **sólo el negro** (el proveedor también lo hace en
@@ -9,7 +14,7 @@ morado). Costo del proveedor: **US$ 11,00 por unidad**, caja de 60.
 
 ---
 
-## 1. Imágenes y videos — NINGUNO existe todavía
+## 1. Imágenes y videos — sólo existe el hero (2026-09-21)
 
 Todas las rutas ya están cableadas en `lib/landings/soplador.ts`. Apenas
 pongas los archivos con estos nombres, aparecen solos.

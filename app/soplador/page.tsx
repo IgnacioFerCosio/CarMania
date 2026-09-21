@@ -14,8 +14,13 @@
  * Ojo: los 3 productos todavía no existen en Shopify (productId en ''), así
  * que los botones de compra quedan deshabilitados a propósito. Ver el
  * checklist en docs/superpowers/specs/soplador-assets.md.
+ *
+ * MIENTRAS el soplador tenga `comingSoon: true` en STORE_PRODUCTS esta ruta
+ * responde 404: la landing está en producción pero no se puede abrir. El
+ * catálogo la muestra como "Próximamente". Sacar el flag la publica.
  */
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import ReactDOM from 'react-dom';
 import { Navbar, type NavLink } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
@@ -42,10 +47,20 @@ import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { SOPLADOR } from '@/lib/landings/soplador';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
+import { STORE_PRODUCTS, isPublished } from '@/lib/config';
+
+const SOPLADOR_STORE = STORE_PRODUCTS.find((p) => p.href === '/soplador')!;
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
+// `generateMetadata` y no `metadata`: Next resuelve la metadata ANTES de que
+// el componente llame a notFound(), y el título del producto quedaba en el
+// payload de la página 404. Mientras no esté publicada, no hay nada que decir.
+export function generateMetadata(): Metadata {
+  return isPublished(SOPLADOR_STORE) ? METADATA : {};
+}
+
+const METADATA: Metadata = {
   title: SOPLADOR.metadata.title,
   description: SOPLADOR.metadata.description,
   // Next NO hace deep-merge de `openGraph` entre layout y page: el objeto de
@@ -69,6 +84,8 @@ const SOPLADOR_LINKS: NavLink[] = [
 ];
 
 export default async function SopladorPage() {
+  if (!isPublished(SOPLADOR_STORE)) notFound();
+
   // La imagen del hero es el LCP de ESTA página. `ReactDOM.preload()` (vs. un
   // <link> JSX) la hoistea cerca del principio de <head>. Apunta al archivo
   // real — el <img> del hero también, sin doble fetch.

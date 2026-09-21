@@ -9,7 +9,10 @@
  * argumenta en la landing. Acá sólo se invita a entrar.
  *
  * `ProductCard` es un link entero a la landing del producto, no un botón de
- * compra: la venta se argumenta en la landing, no acá.
+ * compra: la venta se argumenta en la landing, no acá. Con `comingSoon` la
+ * misma card se ve completa (foto, título, texto) pero no es link: la
+ * landing existe y todavía no se publica, y linkear a un 404 es peor que no
+ * linkear.
  * `ComingSoonCard` rellena la grilla mientras el catálogo no llegue a 4 — no
  * es link porque todavía no hay a dónde ir.
  *
@@ -17,7 +20,7 @@
  */
 import Image from 'next/image';
 import Link from 'next/link';
-import type { StoreProduct } from '@/lib/config';
+import { isPublished, type StoreProduct } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 
 /** Píldora chica de tag. Compartida por las dos cards. */
@@ -42,11 +45,12 @@ function Tag({
 }
 
 export function ProductCard({ product }: { product: StoreProduct }) {
-  return (
-    <Link
-      href={product.href}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950 transition duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.9)]"
-    >
+  const published = isPublished(product);
+  const className =
+    'group flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950 transition duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.9)]';
+
+  const inner = (
+    <>
       {/* El contenedor cuadrado reserva el espacio antes de que cargue la
           imagen, así la grilla no salta (mismo patrón que HowItWorks). */}
       {/* `m-2 mb-0` + radio propio: la foto queda despegada del borde de la
@@ -73,11 +77,13 @@ export function ProductCard({ product }: { product: StoreProduct }) {
           <span className="hidden sm:block">
             <Tag>{product.specTag}</Tag>
           </span>
+          {/* "Próximamente" pisa al badge de config: es el dato que importa
+              mientras no se pueda abrir. */}
           <Tag tone="accent">
-            {product.badgeHot && (
+            {published && product.badgeHot && (
               <Icon name="fire" className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
             )}
-            {product.badge}
+            {published ? product.badge : 'Próximamente'}
           </Tag>
         </div>
       </div>
@@ -90,14 +96,28 @@ export function ProductCard({ product }: { product: StoreProduct }) {
           {product.blurb}
         </p>
 
-        <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">
-          Ver producto
-          <span aria-hidden="true" className="transition group-hover:translate-x-0.5">
-            →
+        {published ? (
+          <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+            Ver producto
+            <span aria-hidden="true" className="transition group-hover:translate-x-0.5">
+              →
+            </span>
           </span>
-        </span>
+        ) : (
+          <span className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
+            Muy pronto en la tienda
+          </span>
+        )}
       </div>
+    </>
+  );
+
+  return published ? (
+    <Link href={product.href} className={className}>
+      {inner}
     </Link>
+  ) : (
+    <div className={className}>{inner}</div>
   );
 }
 

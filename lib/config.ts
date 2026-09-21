@@ -262,7 +262,19 @@ export type StoreProduct = {
   badge: string;
   /** Le agrega el ícono de fuego al badge. Reservado para el más vendido. */
   badgeHot?: boolean;
+  /**
+   * La landing existe en el repo pero todavía no se publica: la card se ve
+   * en el catálogo (foto, título, "Próximamente") pero no linkea, la ruta
+   * responde 404, y no va al sitemap ni al nav de /tienda. Es UN solo flag
+   * para que no quede a medio ocultar.
+   */
+  comingSoon?: boolean;
 };
+
+/** Las cards que sí se pueden abrir. */
+export function isPublished(product: StoreProduct): boolean {
+  return !product.comingSoon;
+}
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
   {
@@ -295,9 +307,10 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     badge: 'UNIVERSAL',
   },
   {
-    // ⚠️ Igual que el parasol: el producto todavía NO existe en Shopify con
-    // este handle, así que la card cae al `fallbackPrice` provisorio (ver el
-    // bloque de TODOs en lib/landings/soplador.ts).
+    // ⚠️ La landing está incompleta y el producto NO existe en Shopify (la
+    // card cae al `fallbackPrice` provisorio, ver los TODOs en
+    // lib/landings/soplador.ts). Por eso `comingSoon`: se muestra en el
+    // catálogo como "Próximamente" y /soplador da 404 hasta sacar el flag.
     handle: 'soplador-turbo-pro',
     title: 'Soplador Turbo PRO™',
     blurb:
@@ -307,6 +320,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     fallbackPrice: 24990, // TODO PRECIO REAL — espejo de SOPLADOR.fallbackPricing.price
     specTag: 'RECARGABLE USB',
     badge: 'NUEVO',
+    comingSoon: true,
   },
 ] as const;
 

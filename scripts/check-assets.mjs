@@ -46,8 +46,8 @@ const ASSET_RE = /(["'`])(\/[^"'`\s]+\.(?:webp|jpe?g|png|svg|gif|mp4|webm|avif|i
  * Ver docs/superpowers/specs/soplador-assets.md
  */
 const PENDIENTES = new Set([
-  // Landing del soplador: no hay ni una imagen todavía.
-  '/soplador/hero/soplador-hero.webp',
+  // Landing del soplador: sólo existe el hero (que también es la foto de la
+  // card en /tienda).
   '/soplador/use-cases/rejillas.webp',
   '/soplador/use-cases/tapizados.webp',
   '/soplador/use-cases/tablero.webp',
