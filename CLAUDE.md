@@ -73,6 +73,13 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
   producción.
 - La CSP permite explícitamente `connect.facebook.net` / `facebook.com`
   (Meta Pixel) y `*.myshopify.com` (el `cartCreate` corre client-side).
+- Los dos hosts raros de `connect-src` (`…ecs.us-east-2.on.aws` y
+  `…us-central1.run.app`) son el **Conversions API Gateway** del pixel: la
+  config del pixel (`connect.facebook.net/signals/config/<id>`, clave
+  `openbridge`) le dice al navegador que mande una copia de cada evento ahí.
+  Sin permitirlos, el pixel clásico anda igual pero la copia por servidor se
+  descarta en silencio (sólo se ve en la consola). Si Meta rota esos hosts,
+  hay que actualizarlos: se leen de esa misma URL de config.
 - Tras un deploy, verificar el Pixel con la extensión **Meta Pixel Helper**
   por si la CSP bloqueó algo.
 
