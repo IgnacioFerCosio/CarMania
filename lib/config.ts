@@ -157,6 +157,10 @@ export const SURFACES = [
  * con el texto cortado.
  *
  * Para sumar o sacar slides, editá este array — el componente se adapta solo.
+ *
+ * Nombres en kebab-case a propósito: el optimizador de imágenes de Next
+ * cachea por URL, así que reemplazar un archivo con el mismo nombre deja la
+ * imagen vieja en dev. Si renovás una infografía, renombrala.
  */
 export const WHATS_IN_BOX_GALLERY = [
   {
@@ -164,16 +168,20 @@ export const WHATS_IN_BOX_GALLERY = [
     alt: 'Contenido de la caja del Soporte Magnético PRO™',
   },
   {
-    src: '/what-includes/CompatibilidadUniversal.webp',
-    alt: 'Cómo instalar el anillo magnético si tu teléfono no tiene MagSafe, en 3 pasos',
+    src: '/what-includes/compatibilidad-universal.webp',
+    alt: 'Compatibilidad universal: si tu celular no tiene MagSafe, limpiá la funda, pegá el aro magnético y dejalo reposar 60 minutos',
   },
   {
-    src: '/what-includes/FuncionaConTodos.webp',
-    alt: 'Compatible con iPhone 12 y posteriores, y con Android usando el anillo metálico incluido',
+    src: '/what-includes/funciona-con-todos.webp',
+    alt: 'Funciona con todos los celulares: iPhone 12 en adelante y fundas MagSafe directo; el resto con el aro metálico incluido',
   },
   {
-    src: '/what-includes/guiaInstalacion.webp',
-    alt: 'Guía de instalación del soporte con succión en el tablero o el parabrisas, en 4 pasos',
+    src: '/what-includes/guia-instalacion.webp',
+    alt: 'Guía de instalación en 4 pasos: limpiá la superficie, apoyá el soporte, girá el seguro en la dirección de la flecha, y girá hacia Open para sacarlo',
+  },
+  {
+    src: '/what-includes/cuantos-lugares.webp',
+    alt: '¿Cuántos lugares podés contar? El soporte en el parabrisas, el tablero, la consola, el espejo y la puerta de un mismo auto',
   },
 ] as const;
 

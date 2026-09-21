@@ -63,16 +63,16 @@ export function TechSpecs() {
 
 /**
  * Imagen técnica real del producto con las medidas.
- * Archivo: /public/medidas/medidas.webp
+ * Archivo: /public/medidas/medidas-soporte.webp (cuadrada, 1600×1600).
  */
 function TechImage() {
   return (
     <div className="relative mx-auto w-full max-w-2xl">
       <Image
-        src="/medidas/medidas.webp"
-        alt="Dimensiones del Soporte Magnético PRO™"
+        src="/medidas/medidas-soporte.webp"
+        alt="Dimensiones del Soporte Magnético PRO™: 113 mm de alto, 60 mm de base y 40 mm plegado. Funciona con MagSafe."
         width={800}
-        height={600}
+        height={800}
         className="h-auto w-full rounded-2xl"
         sizes="(min-width: 768px) 672px, 100vw"
       />
