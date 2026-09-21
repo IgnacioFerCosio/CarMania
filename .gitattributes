@@ -1,0 +1,4 @@
+# Los baselines del gate se comparan byte a byte contra la salida de sed en
+# bash: con autocrlf=true, git los reescribía con CRLF al hacer checkout y el
+# diff daba el archivo entero. Siempre LF.
+tests/baseline/*.html text eol=lf

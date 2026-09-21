@@ -74,10 +74,12 @@ fi
 rc=0
 for f in "${ROUTES[@]}"; do
   norm "$DIST/server/app/$f.html" > "/tmp/gate-$f.html"
-  if diff -q "$BASE/$f.html" "/tmp/gate-$f.html" >/dev/null; then
+  # --strip-trailing-cr: si git reescribió el baseline con CRLF (Windows), que
+  # no cuente como diff. .gitattributes lo fuerza a LF, esto es el cinturón.
+  if diff -q --strip-trailing-cr "$BASE/$f.html" "/tmp/gate-$f.html" >/dev/null; then
     echo "OK    $f"
   else
-    echo "DIFF  $f    → diff $BASE/$f.html /tmp/gate-$f.html"
+    echo "DIFF  $f    → diff --strip-trailing-cr $BASE/$f.html /tmp/gate-$f.html"
     rc=1
   fi
 done

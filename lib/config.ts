@@ -310,7 +310,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
       'Se abre como un paraguas y cubre todo el parabrisas en 3 segundos. Bloquea los UV y mantiene el interior fresco.',
     image: '/parasol/hero/parasol-hero-oscuro.webp',
     href: '/parasol',
-    fallbackPrice: 44990, // espejo de PARASOL.fallbackPricing.price
+    fallbackPrice: 49990, // espejo de PARASOL.fallbackPricing.price
     specTag: 'ABRE EN 3 SEGUNDOS',
     badge: 'UNIVERSAL',
   },
