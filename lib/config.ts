@@ -172,7 +172,7 @@ export const WHATS_IN_BOX_GALLERY = [
     alt: 'Compatibilidad universal: si tu celular no tiene MagSafe, limpiá la funda, pegá el aro magnético y dejalo reposar 60 minutos',
   },
   {
-    src: '/what-includes/funciona-con-todos.webp',
+    src: '/what-includes/funciona-con-todos-los-celulares.webp',
     alt: 'Funciona con todos los celulares: iPhone 12 en adelante y fundas MagSafe directo; el resto con el aro metálico incluido',
   },
   {
