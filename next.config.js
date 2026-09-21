@@ -45,7 +45,7 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline'" + devEval + " https://connect.facebook.net https://www.googletagmanager.com https://static.klaviyo.com https://static.cloudflareinsights.com https://*.klaviyo.com; style-src 'self' 'unsafe-inline' https://*.klaviyo.com; img-src 'self' data: blob: https:; font-src 'self' https://*.klaviyo.com; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com https://www.googletagmanager.com https://www.google-analytics.com https://cloudflareinsights.com https://*.klaviyo.com; frame-src https://www.facebook.com https://www.googletagmanager.com https://*.klaviyo.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline'" + devEval + " https://connect.facebook.net https://static.klaviyo.com https://static.cloudflareinsights.com https://*.klaviyo.com; style-src 'self' 'unsafe-inline' https://*.klaviyo.com; img-src 'self' data: blob: https:; font-src 'self' https://*.klaviyo.com; media-src 'self'; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://*.myshopify.com https://cloudflareinsights.com https://*.klaviyo.com; frame-src https://www.facebook.com https://*.klaviyo.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'",
           },
         ],
       },

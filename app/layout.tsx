@@ -6,8 +6,6 @@ import { TRACKING } from '@/lib/config';
 import { MetaPixel } from '@/components/analytics/MetaPixel';
 import './globals.css';
 
-const GTM_ID = 'GTM-TMK9STLD';
-
 // Cargamos Inter en su versión variable para tener todos los pesos (incluido 900)
 // y ambos estilos (normal + italic). Eso nos habilita los headlines en
 // "BOLD ITALIC UPPERCASE" sin tener que sumar otra fuente.
@@ -50,33 +48,16 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es-AR" className={inter.variable}>
-      <head>
-        {/* Google Tag Manager — script principal */}
-        <Script
-          id="gtm"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`,
-          }}
-        />
-      </head>
+      {/* Sin Google Tag Manager (2026-09-21): el contenedor GTM-TMK9STLD
+          tenía una sola etiqueta, GA4 (G-0Z48MJSSZ2), y GA4 no se usa. Eran
+          290 KB y ~260 ms de main thread por visita — el INP de producción
+          estaba en 81% "bueno" y los terceros eran la causa. La analítica
+          queda en Cloudflare Web Analytics + Meta Pixel + Klaviyo, que van
+          por su cuenta. Si vuelve, hay que reabrir googletagmanager.com y
+          google-analytics.com en las DOS CSP (_headers y next.config.js). */}
       <body className="font-sans">
-        {/* Google Tag Manager — noscript fallback */}
-        <noscript>
-          <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
         <MetaPixel pixelId={TRACKING.metaPixelId || process.env.NEXT_PUBLIC_META_PIXEL_ID} />
         {children}
-        {/* Vercel analytics removed — using Cloudflare + GTM + MetaPixel instead */}
         {/* Cloudflare Web Analytics */}
         <Script
           src="https://static.cloudflareinsights.com/beacon.min.js"
