@@ -63,10 +63,12 @@ const PARASOL_LINKS: NavLink[] = [
 ];
 
 export default async function ParasolPage() {
-  // La imagen del hero (`heroMedia.src`, un webp) es el LCP de ESTA página.
-  // `ReactDOM.preload()` (vs. un <link> JSX) la hoistea cerca del principio de
-  // <head>. Apunta al archivo real — el <img> del hero también, sin doble fetch.
-  ReactDOM.preload(PARASOL.heroMedia.src, {
+  // El poster del video del hero es el LCP de ESTA página (igual que en la
+  // home). `ReactDOM.preload()` (vs. un <link> JSX) lo hoistea cerca del
+  // principio de <head>. Apunta al mismo archivo que el `poster` del <video>,
+  // sin doble fetch. Con `kind: 'image'` el LCP es `src` y no hay poster.
+  const heroLcp = PARASOL.heroMedia.poster ?? PARASOL.heroMedia.src;
+  ReactDOM.preload(heroLcp, {
     as: 'image',
     fetchPriority: 'high',
     type: 'image/webp',

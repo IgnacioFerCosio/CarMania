@@ -246,11 +246,15 @@ export const PARASOL = {
       'Verano tras verano de dejar el auto al rayo del sol. Cada detalle está pensado para que no se convierta en un horno.',
   },
   heroMedia: {
-    // Imagen (no video): render del producto. Es el LCP de /parasol.
-    kind: 'image',
-    src: '/parasol/hero/parasol-hero-oscuro.webp',
-    width: 1600,
-    height: 1600,
+    kind: 'video',
+    src: '/parasol/hero/parasol-hero.mp4',
+    poster: '/parasol/hero/parasol-hero-poster.webp',
+    // 720×720 H.264 sin audio, CRF 31, ~1,1 MB (el original de 1080×1080 con
+    // audio pesaba 18 MB). Mismo criterio que el hero de la home: la caja del
+    // hero nunca supera los ~600 px de ancho. El poster es el primer frame
+    // del video ya encodeado, así no salta al arrancar, y es el LCP.
+    width: 720,
+    height: 720,
     badgeLine1: 'SE ABRE EN',
     badgeLine2: '3 SEGUNDOS',
   },
