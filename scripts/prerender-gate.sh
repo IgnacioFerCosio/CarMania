@@ -37,16 +37,22 @@ cd "$(git rev-parse --show-toplevel)"
 
 BASE="tests/baseline"
 # Misma carpeta que el build de verificación, para no pisar el .next que tenga
-# levantado un dev server. Ver `distDir` en next.config.js.
-DIST="${NEXT_BUILD_DIR:-.next}"
+# levantado un dev server. Ver `distDir` en next.config.js. El default es el
+# de `npm test`: el flujo documentado es "npm test da DIFF → gate:capture", y
+# con `.next` de default el capture leía otro build (o ninguno).
+DIST="${NEXT_BUILD_DIR:-.next-verify}"
 # Las rutas prerenderizadas. Si agregás una landing, sumala acá.
 ROUTES=(index tienda parasol soplador)
 mode="${1:-check}"
 
-if [ ! -d "$DIST/server/app" ]; then
-  echo "No encuentro $DIST/server/app — corré el build primero." >&2
-  exit 2
-fi
+# Todas las páginas, antes de tocar nada. Sin esto, `norm … > baseline` trunca
+# el baseline y RECIÉN AHÍ falla el sed: quedaba vacío en el working copy.
+for f in "${ROUTES[@]}"; do
+  if [ ! -f "$DIST/server/app/$f.html" ]; then
+    echo "No encuentro $DIST/server/app/$f.html — corré 'npm test' (o el build) primero." >&2
+    exit 2
+  fi
+done
 
 norm() {
   sed -E \
