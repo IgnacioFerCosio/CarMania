@@ -80,6 +80,12 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
   Sin permitirlos, el pixel clásico anda igual pero la copia por servidor se
   descarta en silencio (sólo se ve en la consola). Si Meta rota esos hosts,
   hay que actualizarlos: se leen de esa misma URL de config.
+- `form-action` permite `https://www.facebook.com` a propósito: cuando la URL
+  de un evento del pixel pasa los 2048 caracteres (le pasa a `AddToCart` y a
+  los `SubscribedButtonClick` automáticos), Chrome lo manda como POST de un
+  `<form>` a `facebook.com/tr/` en un iframe oculto. Sin ese permiso la CSP
+  lo bloquea y el pixel recién reintenta por `fetch` 5 s después — si el
+  usuario navega antes (p. ej. `InitiateCheckout` → checkout), se pierde.
 - Tras un deploy, verificar el Pixel con la extensión **Meta Pixel Helper**
   por si la CSP bloqueó algo.
 
