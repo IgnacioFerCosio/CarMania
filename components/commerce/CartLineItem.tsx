@@ -57,6 +57,12 @@ export function CartLineItem({ line, highlighted, busy, onRemove, children }: Pr
                 </span>
               )}
               {line.productTitle}
+              {line.discountTitle && (
+                <span className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
+                  <Icon name="check" className="h-3.5 w-3.5 shrink-0" />
+                  {line.discountTitle}
+                </span>
+              )}
             </h3>
             <button
               type="button"

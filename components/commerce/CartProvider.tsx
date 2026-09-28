@@ -39,8 +39,10 @@ import {
 } from '@/lib/cart';
 import { getVariantsByIds, type BundleData, type VariantPrice } from '@/lib/shopify';
 import { buildTiers, nextTierOf, type ResolvedTier } from '@/lib/tiers';
+import { crossSellFor, type ResolvedCrossSell } from '@/lib/crossSell';
 import { track } from '@/lib/tracking';
 import { UPSELL_CHAIN, BRAND_SOPORTE } from '@/lib/landings/soporte';
+import { CROSS_SELLS } from '@/lib/landings';
 import type { UpsellTier } from '@/lib/landings/types';
 
 const STORAGE_KEY = 'carmania_cart_id';
@@ -54,6 +56,8 @@ const UTM_RE = /^(utm_[a-z_]+|gclid|fbclid|ttclid)$/i;
 type CartContextValue = {
   cart: Cart | null;
   tiers: ResolvedTier[];
+  /** La venta cruzada que corresponde al carrito actual, o null. */
+  crossSell: ResolvedCrossSell | null;
   open: boolean;
   busy: boolean;
   error: string | null;
@@ -104,6 +108,19 @@ export function CartProvider({
   const tiers = useMemo(
     () => buildTiers(bundlesData, livePrices, upsellChain),
     [bundlesData, livePrices, upsellChain],
+  );
+
+  const crossSell = useMemo(
+    () =>
+      cart
+        ? crossSellFor(
+            cart.lines.map((l) => l.merchandiseId),
+            CROSS_SELLS,
+            bundlesData,
+            livePrices,
+          )
+        : null,
+    [cart, bundlesData, livePrices],
   );
 
   // ── Guardar los parámetros de campaña de la visita ────────────────────────
@@ -404,6 +421,7 @@ export function CartProvider({
     // Mientras Shopify no conteste, vale el número guardado.
     count: cart?.totalQuantity ?? storedCount ?? 0,
     tiers,
+    crossSell,
     open,
     busy,
     error,

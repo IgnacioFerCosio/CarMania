@@ -42,6 +42,31 @@ export type UpsellTier = {
   fallbackPrice: number;
 };
 
+/**
+ * Venta cruzada del carrito: con cualquier nivel de un producto en el
+ * carrito, se ofrece el x1 del otro con descuento.
+ *
+ * El descuento NO lo aplica este código: es un descuento automático
+ * "Comprá X, llevá Y" cargado en Shopify, que lo aplica en el carrito y lo
+ * vuelve a validar en el checkout (si sacan el producto que lo habilita, se
+ * cae solo). `discountAmount` es sólo el espejo para anunciar el precio antes
+ * de agregarlo: si cambiás el descuento en Shopify, cambialo acá también.
+ */
+export type CrossSell = {
+  /** La escalera que habilita la oferta (cualquier nivel cuenta). */
+  triggers: readonly UpsellTier[];
+  /**
+   * La escalera del producto ofrecido. Se ofrece `offers[0]` (el x1), y sólo
+   * si NINGÚN nivel de esta escalera está ya en el carrito.
+   */
+  offers: readonly UpsellTier[];
+  /** Pesos que descuenta Shopify sobre el x1. */
+  discountAmount: number;
+  name: string;
+  pitch: string;
+  image: string;
+};
+
 export type Review = {
   name: string;
   location: string;

@@ -15,6 +15,7 @@ import { Icon } from '@/components/ui/Icon';
 import { useCart } from './CartProvider';
 import { CartLineItem } from './CartLineItem';
 import { UpsellBanner } from './UpsellBanner';
+import { CrossSellCard } from './CrossSellCard';
 
 export function CartDrawer({
   ctaHref = '#pricing',
@@ -30,11 +31,13 @@ export function CartDrawer({
   const {
     cart,
     tiers,
+    crossSell,
     open,
     busy,
     error,
     highlightedLineId,
     closeCart,
+    addTier,
     upgradeLine,
     removeLine,
     checkout,
@@ -175,34 +178,49 @@ export function CartDrawer({
               </a>
             </div>
           ) : (
-            <ul className="space-y-3">
-              {cart.lines.map((line) => {
-                const current = tierOf(tiers, line.merchandiseId);
-                const next = current
-                  ? nextTierOf(tiers, line.merchandiseId)
-                  : null;
+            <>
+              <ul className="space-y-3">
+                {cart.lines.map((line) => {
+                  // Una línea con la venta cruzada aplicada no ofrece subir de
+                  // pack: el banner resta precios de lista y prometería menos de
+                  // lo que sube el total, porque el pack no lleva ese descuento.
+                  const current = line.discountTitle
+                    ? null
+                    : tierOf(tiers, line.merchandiseId);
+                  const next = current
+                    ? nextTierOf(tiers, line.merchandiseId)
+                    : null;
 
-                return (
-                  <CartLineItem
-                    key={line.id}
-                    line={line}
-                    highlighted={highlightedLineId === line.id}
-                    busy={busy}
-                    onRemove={() => removeLine(line.id)}
-                  >
-                    {current && next && (
-                      <UpsellBanner
-                        current={current}
-                        next={next}
-                        quantity={line.quantity}
-                        busy={busy}
-                        onUpgrade={() => upgradeLine(line.id, next.variantId)}
-                      />
-                    )}
-                  </CartLineItem>
-                );
-              })}
-            </ul>
+                  return (
+                    <CartLineItem
+                      key={line.id}
+                      line={line}
+                      highlighted={highlightedLineId === line.id}
+                      busy={busy}
+                      onRemove={() => removeLine(line.id)}
+                    >
+                      {current && next && (
+                        <UpsellBanner
+                          current={current}
+                          next={next}
+                          quantity={line.quantity}
+                          busy={busy}
+                          onUpgrade={() => upgradeLine(line.id, next.variantId)}
+                        />
+                      )}
+                    </CartLineItem>
+                  );
+                })}
+              </ul>
+
+              {crossSell && (
+                <CrossSellCard
+                  offer={crossSell}
+                  busy={busy}
+                  onAdd={() => addTier(crossSell.variantId)}
+                />
+              )}
+            </>
           )}
         </div>
 

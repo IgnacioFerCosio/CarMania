@@ -23,6 +23,12 @@ export type CartLine = {
   compareAtPrice: number | null;
   /** Total de la línea ya con descuentos de Shopify aplicados. */
   lineTotal: number;
+  /**
+   * Nombre del descuento automático que baja el precio de esta línea (la
+   * venta cruzada, ver `CROSS_SELLS`), o null. Shopify también lista el
+   * descuento en la línea que lo habilita, con monto 0: esa no cuenta.
+   */
+  discountTitle: string | null;
 };
 
 export type Cart = {
@@ -64,6 +70,14 @@ const CART_FRAGMENT = /* GraphQL */ `
           cost {
             totalAmount {
               amount
+            }
+          }
+          discountAllocations {
+            discountedAmount {
+              amount
+            }
+            ... on CartAutomaticDiscountAllocation {
+              title
             }
           }
           merchandise {
@@ -108,6 +122,10 @@ type RawCart = {
         id: string;
         quantity: number;
         cost: { totalAmount: { amount: string } };
+        discountAllocations: {
+          discountedAmount: { amount: string };
+          title?: string;
+        }[];
         merchandise: {
           id: string;
           price: { amount: string };
@@ -142,6 +160,10 @@ function normalize(raw: RawCart): Cart | null {
         ? parseFloat(e.node.merchandise.compareAtPrice.amount)
         : null,
       lineTotal: parseFloat(e.node.cost.totalAmount.amount),
+      discountTitle:
+        e.node.discountAllocations.find(
+          (d) => d.title && parseFloat(d.discountedAmount.amount) > 0,
+        )?.title ?? null,
     })),
   };
 }
