@@ -24,23 +24,27 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
  * Viven acá y no en cada landing porque cada una apunta a la OTRA: soporte
  * importando parasol y parasol importando soporte cerraría un ciclo.
  *
- * Cada entrada tiene su gemelo en Shopify → Descuentos (automáticos,
- * creados el 2026-09-28). Sólo aplican a 1 unidad por pedido y NO se
- * combinan entre sí: si no, con ambos productos se descontarían los dos.
- *   · "Combo Soporte + Parasol" — cualquier soporte → parasol x1 −$20.000
- *   · "Combo Parasol + Soporte" — cualquier parasol → soporte x1 −$20.000
+ * LA REGLA: soporte + parasol en el carrito, en el pack que sea, = el total
+ * baja `CROSS_SELL_DISCOUNT`. Nada más. No importa el orden, ni los packs, ni
+ * cuántas veces se agregue o saque algo.
  *
- * ⚠️ Los montos TIENEN que ser iguales. Con los dos productos en el carrito
- * se cumplen las dos condiciones y Shopify aplica una sola, la que elige él
- * (la más grande; en empate, la que quiere — hoy la del soporte). No hay
- * forma de decirle "la del producto que entró último". Con montos iguales da
- * lo mismo cuál gane: el total baja siempre `CROSS_SELL_DISCOUNT`, que es lo
- * que anuncia la card. Por eso la card promete cuánto sube el total, no el
- * precio de una línea. El test de config lo hace cumplir.
+ * Shopify lo cumple con dos descuentos automáticos "Comprá X, llevá Y"
+ * (Shopify → Descuentos, creados el 2026-09-28), 1 unidad por pedido y NO
+ * combinables entre sí (si no, con ambos productos se descontarían los dos):
+ *   · "Combo Soporte + Parasol" — cualquier soporte → cualquier parasol
+ *   · "Combo Parasol + Soporte" — cualquier parasol → cualquier soporte
+ * Los dos "cualquier" importan: si el descuento fuera sólo sobre el x1, subir
+ * de pack lo rompería y el banner de pack prometería menos de lo que sube el
+ * total. Así, cada producto conserva siempre su propio upsell.
  *
- * Se necesitan los dos (y no uno solo) por los packs: "comprá soporte,
- * llevá parasol x1" cubre al que entró por el parasol x1, pero no al que
- * tiene el parasol x2 o x3, porque ahí no hay un x1 al que descontarle.
+ * ⚠️ Los montos TIENEN que ser iguales. Con los dos productos se cumplen las
+ * dos condiciones y Shopify aplica una sola, la que elige él (la más grande;
+ * en empate, la que quiere). Con montos iguales da lo mismo cuál gane. Por
+ * eso también el drawer muestra el combo como del par (franja y pie) y no en
+ * la línea que Shopify eligió. El test de config lo hace cumplir.
+ *
+ * Si agregás un pack nuevo a una escalera, sumalo también a los dos
+ * descuentos en Shopify (en "Comprá" de uno y en "Llevá" del otro).
  *
  * El soplador no entra: todavía no está incorporado como producto.
  */

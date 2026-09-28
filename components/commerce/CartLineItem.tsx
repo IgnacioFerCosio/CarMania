@@ -15,21 +15,12 @@ import { Icon } from '@/components/ui/Icon';
 type Props = {
   line: CartLine;
   highlighted: boolean;
-  /** Etiqueta del combo, para la línea que entró desde la venta cruzada. */
-  comboTag?: string | null;
   busy: boolean;
   onRemove: () => void;
   children?: React.ReactNode;
 };
 
-export function CartLineItem({
-  line,
-  highlighted,
-  comboTag,
-  busy,
-  onRemove,
-  children,
-}: Props) {
+export function CartLineItem({ line, highlighted, busy, onRemove, children }: Props) {
   // Sin el combo: ese descuento se muestra aparte, en el pie del drawer.
   const price = line.lineTotal + line.comboDiscount;
 
@@ -69,12 +60,6 @@ export function CartLineItem({
                 </span>
               )}
               {line.productTitle}
-              {comboTag && (
-                <span className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
-                  <Icon name="check" className="h-3.5 w-3.5 shrink-0" />
-                  {comboTag}
-                </span>
-              )}
             </h3>
             <button
               type="button"

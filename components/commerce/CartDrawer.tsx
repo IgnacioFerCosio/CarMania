@@ -33,7 +33,6 @@ export function CartDrawer({
     cart,
     tiers,
     crossSell,
-    comboBlockedLineIds,
     open,
     busy,
     error,
@@ -112,10 +111,11 @@ export function CartDrawer({
   // automáticos), no sólo la diferencia contra el precio de lista.
   const savings = cart ? Math.max(0, compareTotal - cart.total) : 0;
 
-  // El combo va en su propia fila y no dentro de "Descuentos" ni en una
-  // línea: Shopify elige a qué línea se lo aplica (en x1 + x1, siempre a la
-  // misma), así que pegado a una línea parecería que el descuento es del
-  // otro producto. Las líneas muestran su precio sin el combo.
+  // El combo es del par, no de un producto: va en la franja de arriba y en
+  // su propia fila del pie, nunca pegado a una línea. Shopify elige a cuál
+  // se lo aplica (en x1 + x1, siempre a la misma), así que en una línea
+  // parecería que el descuento es sólo de ese producto. Las líneas muestran
+  // su precio sin el combo.
   const comboTotal =
     cart?.lines.reduce((acc, l) => acc + l.comboDiscount, 0) ?? 0;
   const otherSavings = Math.max(0, savings - comboTotal);
@@ -189,14 +189,23 @@ export function CartDrawer({
             </div>
           ) : (
             <>
+              {comboTotal > 0 && (
+                <p className="mb-3 flex items-center gap-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3 py-2.5">
+                  <Icon name="check" className="h-5 w-5 shrink-0 text-emerald-400" />
+                  <span className="leading-tight">
+                    <span className="block font-display text-[13px] font-black uppercase italic tracking-wider text-emerald-400">
+                      {CROSS_SELL_LABEL}
+                    </span>
+                    <span className="block text-[12px] text-ink-300">
+                      Aplicado: −{formatARS(comboTotal)} en el total
+                    </span>
+                  </span>
+                </p>
+              )}
+
               <ul className="space-y-3">
                 {cart.lines.map((line) => {
-                  // Con el combo en juego, el banner de pack queda sólo en el
-                  // producto elegido primero, y nunca donde prometería menos
-                  // de lo que sube el total. Ver `comboBlocksUpsell`.
-                  const current = comboBlockedLineIds.has(line.id)
-                    ? null
-                    : tierOf(tiers, line.merchandiseId);
+                  const current = tierOf(tiers, line.merchandiseId);
                   const next = current
                     ? nextTierOf(tiers, line.merchandiseId)
                     : null;
@@ -206,9 +215,6 @@ export function CartDrawer({
                       key={line.id}
                       line={line}
                       highlighted={highlightedLineId === line.id}
-                      comboTag={
-                        line.crossSell && comboTotal > 0 ? CROSS_SELL_LABEL : null
-                      }
                       busy={busy}
                       onRemove={() => removeLine(line.id)}
                     >
@@ -230,7 +236,7 @@ export function CartDrawer({
                 <CrossSellCard
                   offer={crossSell}
                   busy={busy}
-                  onAdd={() => addTier(crossSell.variantId, { crossSell: true })}
+                  onAdd={() => addTier(crossSell.variantId)}
                 />
               )}
             </>

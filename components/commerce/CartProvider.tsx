@@ -35,16 +35,11 @@ import {
   removeCartLine,
   swapCartLine,
   updateCartLineQuantity,
-  CROSS_SELL_ATTR,
   type Cart,
 } from '@/lib/cart';
 import { getVariantsByIds, type BundleData, type VariantPrice } from '@/lib/shopify';
 import { buildTiers, nextTierOf, type ResolvedTier } from '@/lib/tiers';
-import {
-  comboBlocksUpsell,
-  crossSellFor,
-  type ResolvedCrossSell,
-} from '@/lib/crossSell';
+import { crossSellFor, type ResolvedCrossSell } from '@/lib/crossSell';
 import { track } from '@/lib/tracking';
 import { UPSELL_CHAIN, BRAND_SOPORTE } from '@/lib/landings/soporte';
 import { CROSS_SELLS } from '@/lib/landings';
@@ -63,8 +58,6 @@ type CartContextValue = {
   tiers: ResolvedTier[];
   /** La venta cruzada que corresponde al carrito actual, o null. */
   crossSell: ResolvedCrossSell | null;
-  /** Líneas a las que el combo les saca el banner de pack (ver comboBlocksUpsell). */
-  comboBlockedLineIds: ReadonlySet<string>;
   open: boolean;
   busy: boolean;
   error: string | null;
@@ -74,8 +67,7 @@ type CartContextValue = {
   count: number;
   openCart: () => void;
   closeCart: () => void;
-  /** `crossSell`: viene de la card "Completá tu auto"; marca la línea. */
-  addTier: (variantId: string, opts?: { crossSell?: boolean }) => Promise<void>;
+  addTier: (variantId: string) => Promise<void>;
   upgradeLine: (lineId: string, nextVariantId: string) => Promise<void>;
   removeLine: (lineId: string) => Promise<void>;
   checkout: () => void;
@@ -130,15 +122,6 @@ export function CartProvider({
         : null,
     [cart, bundlesData, livePrices],
   );
-
-  const comboBlockedLineIds = useMemo(() => {
-    const ids = new Set<string>();
-    if (!cart) return ids;
-    for (const l of cart.lines) {
-      if (comboBlocksUpsell(l, cart.lines, CROSS_SELLS, bundlesData)) ids.add(l.id);
-    }
-    return ids;
-  }, [cart, bundlesData]);
 
   // ── Guardar los parámetros de campaña de la visita ────────────────────────
   // En la tienda nativa Shopify captura la atribución con sus propios scripts.
@@ -266,7 +249,7 @@ export function CartProvider({
    *    un callejón sin salida: no habría forma de comprar 6 unidades.
    */
   const addTier = useCallback(
-    async (variantId: string, opts?: { crossSell?: boolean }) => {
+    async (variantId: string) => {
       if (busy) return;
       setError(null);
 
@@ -312,12 +295,9 @@ export function CartProvider({
 
       setBusy(true);
       try {
-        const attributes = opts?.crossSell
-          ? [{ key: CROSS_SELL_ATTR, value: '1' }]
-          : undefined;
         const next = cart
-          ? await addCartLine(cart.id, variantId, 1, attributes)
-          : await createCart(variantId, 1, attributes);
+          ? await addCartLine(cart.id, variantId, 1)
+          : await createCart(variantId, 1);
 
         setCart(next);
         safeSet(STORAGE_KEY, next.id);
@@ -442,7 +422,6 @@ export function CartProvider({
     count: cart?.totalQuantity ?? storedCount ?? 0,
     tiers,
     crossSell,
-    comboBlockedLineIds,
     open,
     busy,
     error,

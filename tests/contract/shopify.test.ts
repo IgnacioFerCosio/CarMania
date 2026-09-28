@@ -10,6 +10,11 @@
  * y el admin no mostraba el canal en la ficha). El handle con `™` también
  * se hubiera visto acá.
  *
+ * También arma carritos (sin comprar nada; Shopify los descarta solos) para
+ * verificar que los descuentos automáticos del combo sigan cargados como dice
+ * `CROSS_SELLS`: el monto se puede cambiar en el admin sin tocar el repo, y
+ * entonces la card anuncia un precio y el checkout cobra otro.
+ *
  * Necesita red y las variables de `.env.local`. Sin ellas se saltea y lo
  * dice — no falla, para que `npm test` siga sirviendo offline.
  *
@@ -20,6 +25,7 @@ import { readFileSync } from 'node:fs';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
+import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
 import type { LandingConfig, UpsellTier } from '@/lib/landings/types';
 
 // ── Entorno ──────────────────────────────────────────────────────────────
@@ -161,3 +167,60 @@ describe.runIf(configurado).each(LANDINGS)('Shopify · %s', (_ruta, cfg) => {
     expect(v.compareAtPrice ? Number(v.compareAtPrice.amount) : null).toBe(single.fallbackCompare);
   });
 });
+
+// ── El combo (descuentos automáticos de Shopify) ──────────────────────────
+const CART_QUERY = /* GraphQL */ `
+  mutation Combo($lines: [CartLineInput!]!) {
+    cartCreate(input: { lines: $lines }) {
+      cart { cost { totalAmount { amount } } }
+      userErrors { message }
+    }
+  }
+`;
+
+async function totalDe(tiers: UpsellTier[]): Promise<number> {
+  const data = await storefront<{
+    cartCreate: { cart: { cost: { totalAmount: { amount: string } } } | null; userErrors: { message: string }[] };
+  }>(CART_QUERY, {
+    lines: tiers.map((t) => ({ merchandiseId: t.fallbackVariantId, quantity: 1 })),
+  });
+  if (data.cartCreate.userErrors.length) {
+    throw new Error(data.cartCreate.userErrors.map((e) => e.message).join('; '));
+  }
+  return Number(data.cartCreate.cart!.cost.totalAmount.amount);
+}
+
+// Cada par una sola vez: CROSS_SELLS tiene A→B y B→A, pero es el mismo combo.
+const PARES = CROSS_SELLS.filter(
+  (cs, i) => !CROSS_SELLS.slice(0, i).some((o) => o.triggers === cs.offers),
+);
+
+describe.runIf(configurado).each(PARES.map((cs) => [cs.name, cs] as const))(
+  'Shopify · combo con %s',
+  (_nombre, cs) => {
+    const a = cs.triggers;
+    const b = cs.offers;
+    // Las esquinas: x1 y el pack más grande de cada lado. Si el descuento
+    // quedara sólo sobre el x1 (o faltara un pack en "Comprá"/"Llevá"),
+    // alguna de estas lo agarra.
+    const casos: [string, UpsellTier[]][] = [
+      [`${a[0].id} + ${b[0].id}`, [a[0], b[0]]],
+      [`${a[0].id} + ${b.at(-1)!.id}`, [a[0], b.at(-1)!]],
+      [`${a.at(-1)!.id} + ${b[0].id}`, [a.at(-1)!, b[0]]],
+      [`${a.at(-1)!.id} + ${b.at(-1)!.id}`, [a.at(-1)!, b.at(-1)!]],
+    ];
+
+    it.each(casos)('%s: el total baja exactamente CROSS_SELL_DISCOUNT', async (_caso, lineas) => {
+      const lista = lineas.reduce((acc, t) => acc + t.fallbackPrice, 0);
+      expect(
+        await totalDe(lineas),
+        `El combo no descuenta $${CROSS_SELL_DISCOUNT}. ¿Cambiaron los descuentos "Combo …" en Shopify? (monto, productos de "Comprá"/"Llevá", o se combinan entre sí)`,
+      ).toBe(lista - CROSS_SELL_DISCOUNT);
+    });
+
+    it('un solo producto, aunque sean dos líneas, no tiene combo', async () => {
+      const lineas = [a[0], a.at(-1)!];
+      expect(await totalDe(lineas)).toBe(lineas.reduce((acc, t) => acc + t.fallbackPrice, 0));
+    });
+  },
+);

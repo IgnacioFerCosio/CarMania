@@ -26,6 +26,14 @@ presencia web del producto.
   que compita en los resultados de Google.
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
+- **Combo soporte + parasol:** con los dos productos en el carrito, en el
+  pack que sea, el total baja $20.000. Lo cobra Shopify con dos descuentos
+  automáticos "Comprá X, llevá Y" ("Combo Soporte + Parasol" / "Combo
+  Parasol + Soporte"), no combinables entre sí y **con el mismo monto**. El
+  repo sólo lo espeja (`CROSS_SELLS` en `lib/landings/index.ts`) para la card
+  "Completá tu auto" del carrito. Si cambiás el monto en Shopify, cambiá
+  `CROSS_SELL_DISCOUNT`; si agregás un pack, sumalo a los dos descuentos.
+  `check:shopify` falla si quedan desfasados.
 - **Pixel de Meta:** los eventos `PageView` / `ViewContent` / `AddToCart` /
   `InitiateCheckout` se disparan desde el código de la landing. El evento
   **`Purchase` ocurre en el checkout de Shopify** y debe configurarse del
@@ -107,7 +115,7 @@ Node no resuelve los imports sin extensión de `lib/`.
 | `test:unit` | la escalera de upsell (`lib/tiers.ts`) y los invariantes de la config |
 | `check:assets` | que exista en `/public` todo lo que el código pide |
 | `check:csp` | que las dos copias de la CSP digan lo mismo |
-| `check:shopify` | que cada producto de la config exista **desde el canal de la landing** |
+| `check:shopify` | que cada producto de la config exista **desde el canal de la landing**, y que el combo descuente lo que dice la config |
 | `build` | que compile |
 | `gate` | que ninguna página haya cambiado sin querer |
 

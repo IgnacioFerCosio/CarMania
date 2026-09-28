@@ -31,18 +31,7 @@ export type CartLine = {
    * tiene la tienda son los del combo. Si se agrega otro, separarlos acá.
    */
   comboDiscount: number;
-  /** La línea entró desde la card de venta cruzada (atributo `_cross_sell`). */
-  crossSell: boolean;
 };
-
-/**
- * Atributo de línea que marca lo que se sumó desde la card de venta cruzada.
- * Con el guion bajo adelante, Shopify no lo muestra en el checkout. Vive en el
- * carrito de Shopify (no en localStorage) para que viaje con él entre páginas.
- */
-export const CROSS_SELL_ATTR = '_cross_sell';
-
-type LineAttributes = { key: string; value: string }[];
 
 export type Cart = {
   id: string;
@@ -90,9 +79,6 @@ const CART_FRAGMENT = /* GraphQL */ `
               amount
             }
           }
-          crossSell: attribute(key: "${CROSS_SELL_ATTR}") {
-            value
-          }
           merchandise {
             ... on ProductVariant {
               id
@@ -136,7 +122,6 @@ type RawCart = {
         quantity: number;
         cost: { totalAmount: { amount: string } };
         discountAllocations: { discountedAmount: { amount: string } }[];
-        crossSell: { value: string } | null;
         merchandise: {
           id: string;
           price: { amount: string };
@@ -175,7 +160,6 @@ function normalize(raw: RawCart): Cart | null {
         (acc, d) => acc + parseFloat(d.discountedAmount.amount),
         0,
       ),
-      crossSell: e.node.crossSell !== null,
     })),
   };
 }
@@ -190,7 +174,6 @@ function throwOnUserErrors(errs: { message: string }[] | undefined) {
 export async function createCart(
   merchandiseId: string,
   quantity = 1,
-  attributes?: LineAttributes,
 ): Promise<Cart> {
   const data = await shopifyFetch<{
     cartCreate: { cart: RawCart; userErrors: { message: string }[] };
@@ -208,7 +191,7 @@ export async function createCart(
         }
       }
     `,
-    { lines: [{ merchandiseId, quantity, attributes }] },
+    { lines: [{ merchandiseId, quantity }] },
     { revalidate: 0 },
   );
 
@@ -248,7 +231,6 @@ export async function addCartLine(
   cartId: string,
   merchandiseId: string,
   quantity = 1,
-  attributes?: LineAttributes,
 ): Promise<Cart> {
   const data = await shopifyFetch<{
     cartLinesAdd: { cart: RawCart; userErrors: { message: string }[] };
@@ -266,7 +248,7 @@ export async function addCartLine(
         }
       }
     `,
-    { cartId, lines: [{ merchandiseId, quantity, attributes }] },
+    { cartId, lines: [{ merchandiseId, quantity }] },
     { revalidate: 0 },
   );
 

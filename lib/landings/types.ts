@@ -44,7 +44,8 @@ export type UpsellTier = {
 
 /**
  * Venta cruzada del carrito: con cualquier nivel de un producto en el
- * carrito, se ofrece el x1 del otro con descuento.
+ * carrito, se ofrece el x1 del otro con el descuento del combo (ver la regla
+ * en `CROSS_SELLS`).
  *
  * El descuento NO lo aplica este código: es un descuento automático
  * "Comprá X, llevá Y" cargado en Shopify, que lo aplica en el carrito y lo
