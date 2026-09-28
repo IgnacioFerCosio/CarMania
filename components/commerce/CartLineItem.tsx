@@ -15,12 +15,24 @@ import { Icon } from '@/components/ui/Icon';
 type Props = {
   line: CartLine;
   highlighted: boolean;
+  /** Etiqueta del combo, para la línea que entró desde la venta cruzada. */
+  comboTag?: string | null;
   busy: boolean;
   onRemove: () => void;
   children?: React.ReactNode;
 };
 
-export function CartLineItem({ line, highlighted, busy, onRemove, children }: Props) {
+export function CartLineItem({
+  line,
+  highlighted,
+  comboTag,
+  busy,
+  onRemove,
+  children,
+}: Props) {
+  // Sin el combo: ese descuento se muestra aparte, en el pie del drawer.
+  const price = line.lineTotal + line.comboDiscount;
+
   return (
     <li
       className={`rounded-2xl border p-3 transition-colors duration-500 sm:p-4 ${
@@ -57,10 +69,10 @@ export function CartLineItem({ line, highlighted, busy, onRemove, children }: Pr
                 </span>
               )}
               {line.productTitle}
-              {line.discountTitle && (
+              {comboTag && (
                 <span className="mt-1 flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
                   <Icon name="check" className="h-3.5 w-3.5 shrink-0" />
-                  {line.discountTitle}
+                  {comboTag}
                 </span>
               )}
             </h3>
@@ -77,7 +89,7 @@ export function CartLineItem({ line, highlighted, busy, onRemove, children }: Pr
 
           <div className="mt-auto flex items-baseline gap-2 pt-2">
             <span className="font-display text-lg font-black text-white sm:text-xl">
-              {formatARS(line.lineTotal)}
+              {formatARS(price)}
             </span>
             {line.compareAtPrice && line.compareAtPrice > line.unitPrice && (
               <span className="text-xs text-ink-500 line-through">

@@ -7,7 +7,7 @@
  * cliente ve un precio y el checkout le cobra otro.
  */
 import { describe, it, expect } from 'vitest';
-import { crossSellFor } from '@/lib/crossSell';
+import { comboBlocksUpsell, crossSellFor } from '@/lib/crossSell';
 import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
 import type { CrossSell, UpsellTier } from '@/lib/landings/types';
 import type { BundleData } from '@/lib/shopify';
@@ -84,6 +84,51 @@ describe('crossSellFor', () => {
   it('no anuncia un precio en cero o negativo', () => {
     const caro: CrossSell[] = [{ ...CS[0], discountAmount: 50 }];
     expect(crossSellFor([v(A[0])], caro, {})).toBeNull();
+  });
+});
+
+describe('comboBlocksUpsell', () => {
+  // A = "soporte", B = "parasol". `cruz` = entró desde la card.
+  const linea = (t: UpsellTier, cruz = false) => ({ merchandiseId: v(t), crossSell: cruz });
+  type Linea = ReturnType<typeof linea>;
+  const bloquea = (l: Linea, ...resto: (UpsellTier | Linea)[]) =>
+    comboBlocksUpsell(
+      l,
+      [l, ...resto.map((x) => ('merchandiseId' in x ? x : linea(x)))].filter(
+        (x, i, arr) => arr.findIndex((y) => y.merchandiseId === x.merchandiseId) === i,
+      ),
+      CS,
+      {},
+    );
+
+  it('sin el otro producto no se mete: vale el banner de siempre', () => {
+    expect(bloquea(linea(A[0]), A[0])).toBe(false);
+    // Aunque la marca haya quedado de antes (sacaron el otro producto).
+    expect(bloquea(linea(B[0], true), B[0])).toBe(false);
+  });
+
+  it('x1 + x1: el banner lo conserva el elegido primero, no el de la card', () => {
+    expect(bloquea(linea(A[0]), A[0], B[0])).toBe(false);
+    expect(bloquea(linea(B[0], true), A[0], B[0])).toBe(true);
+    // Y al revés, si se entró por B.
+    expect(bloquea(linea(B[0]), A[0], B[0])).toBe(false);
+    expect(bloquea(linea(A[0], true), A[0], B[0])).toBe(true);
+  });
+
+  it('si las dos quedaron marcadas, ninguna pierde el banner por la marca', () => {
+    expect(bloquea(linea(A[0], true), linea(B[0], true))).toBe(false);
+    expect(bloquea(linea(B[0], true), linea(A[0], true))).toBe(false);
+  });
+
+  it('un pack con el complemento x1: el pack sigue ofreciendo subir', () => {
+    // Subir A x2 → x3 deja el combo en pie (B x1 sigue ahí).
+    expect(bloquea(linea(A[1]), A[1], B[0])).toBe(false);
+  });
+
+  it('un x1 sin x1 del otro lado no ofrece pack, aunque haya entrado primero', () => {
+    // A x1 + B x2: subir A dejaría dos packs y el combo se caería.
+    expect(bloquea(linea(A[0]), A[0], B[1])).toBe(true);
+    expect(bloquea(linea(B[1]), A[0], B[1])).toBe(false);
   });
 });
 

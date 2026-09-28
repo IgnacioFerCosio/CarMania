@@ -64,3 +64,6 @@ export const CROSS_SELLS: readonly CrossSell[] = [
     image: SOPORTE.bundles[0].image,
   },
 ];
+
+/** Cómo se llama el combo en el pie del carrito. */
+export const CROSS_SELL_LABEL = 'Combo Soporte + Parasol';

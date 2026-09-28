@@ -24,12 +24,25 @@ export type CartLine = {
   /** Total de la línea ya con descuentos de Shopify aplicados. */
   lineTotal: number;
   /**
-   * Nombre del descuento automático que baja el precio de esta línea (la
-   * venta cruzada, ver `CROSS_SELLS`), o null. Shopify también lista el
-   * descuento en la línea que lo habilita, con monto 0: esa no cuenta.
+   * Pesos que el combo (descuento automático, ver `CROSS_SELLS`) le resta a
+   * esta línea. Ya están descontados de `lineTotal`. Qué línea lo recibe lo
+   * decide Shopify, así que el drawer lo muestra aparte, en el pie.
+   * Suma todos los descuentos automáticos de la línea: hoy los únicos que
+   * tiene la tienda son los del combo. Si se agrega otro, separarlos acá.
    */
-  discountTitle: string | null;
+  comboDiscount: number;
+  /** La línea entró desde la card de venta cruzada (atributo `_cross_sell`). */
+  crossSell: boolean;
 };
+
+/**
+ * Atributo de línea que marca lo que se sumó desde la card de venta cruzada.
+ * Con el guion bajo adelante, Shopify no lo muestra en el checkout. Vive en el
+ * carrito de Shopify (no en localStorage) para que viaje con él entre páginas.
+ */
+export const CROSS_SELL_ATTR = '_cross_sell';
+
+type LineAttributes = { key: string; value: string }[];
 
 export type Cart = {
   id: string;
@@ -76,9 +89,9 @@ const CART_FRAGMENT = /* GraphQL */ `
             discountedAmount {
               amount
             }
-            ... on CartAutomaticDiscountAllocation {
-              title
-            }
+          }
+          crossSell: attribute(key: "${CROSS_SELL_ATTR}") {
+            value
           }
           merchandise {
             ... on ProductVariant {
@@ -122,10 +135,8 @@ type RawCart = {
         id: string;
         quantity: number;
         cost: { totalAmount: { amount: string } };
-        discountAllocations: {
-          discountedAmount: { amount: string };
-          title?: string;
-        }[];
+        discountAllocations: { discountedAmount: { amount: string } }[];
+        crossSell: { value: string } | null;
         merchandise: {
           id: string;
           price: { amount: string };
@@ -160,10 +171,11 @@ function normalize(raw: RawCart): Cart | null {
         ? parseFloat(e.node.merchandise.compareAtPrice.amount)
         : null,
       lineTotal: parseFloat(e.node.cost.totalAmount.amount),
-      discountTitle:
-        e.node.discountAllocations.find(
-          (d) => d.title && parseFloat(d.discountedAmount.amount) > 0,
-        )?.title ?? null,
+      comboDiscount: e.node.discountAllocations.reduce(
+        (acc, d) => acc + parseFloat(d.discountedAmount.amount),
+        0,
+      ),
+      crossSell: e.node.crossSell !== null,
     })),
   };
 }
@@ -178,6 +190,7 @@ function throwOnUserErrors(errs: { message: string }[] | undefined) {
 export async function createCart(
   merchandiseId: string,
   quantity = 1,
+  attributes?: LineAttributes,
 ): Promise<Cart> {
   const data = await shopifyFetch<{
     cartCreate: { cart: RawCart; userErrors: { message: string }[] };
@@ -195,7 +208,7 @@ export async function createCart(
         }
       }
     `,
-    { lines: [{ merchandiseId, quantity }] },
+    { lines: [{ merchandiseId, quantity, attributes }] },
     { revalidate: 0 },
   );
 
@@ -235,6 +248,7 @@ export async function addCartLine(
   cartId: string,
   merchandiseId: string,
   quantity = 1,
+  attributes?: LineAttributes,
 ): Promise<Cart> {
   const data = await shopifyFetch<{
     cartLinesAdd: { cart: RawCart; userErrors: { message: string }[] };
@@ -252,7 +266,7 @@ export async function addCartLine(
         }
       }
     `,
-    { cartId, lines: [{ merchandiseId, quantity }] },
+    { cartId, lines: [{ merchandiseId, quantity, attributes }] },
     { revalidate: 0 },
   );
 
