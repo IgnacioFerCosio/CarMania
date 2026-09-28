@@ -60,7 +60,7 @@ export type CrossSell = {
    * si NINGÚN nivel de esta escalera está ya en el carrito.
    */
   offers: readonly UpsellTier[];
-  /** Pesos que descuenta Shopify sobre el x1. */
+  /** Pesos que descuenta Shopify. Igual en todas: ver `CROSS_SELLS`. */
   discountAmount: number;
   name: string;
   pitch: string;

@@ -8,9 +8,10 @@
  * es "otro producto". Si los dos compitieran en el mismo lugar se leerían
  * como dos ofertas iguales y el cliente no elegiría ninguna.
  *
- * El precio con descuento es un anuncio: el que lo cobra es el descuento
- * automático de Shopify (ver `CROSS_SELLS`). Una vez agregado, la línea
- * muestra lo que devuelve el carrito real.
+ * Promete cuánto SUBE EL TOTAL ("sumalo por $X"), igual que el UpsellBanner,
+ * y no el precio con el que queda la línea: el descuento lo aplica Shopify y
+ * puede ponerlo en la línea del otro producto (ver `CROSS_SELLS`). El total,
+ * en cambio, baja siempre lo mismo.
  */
 import { formatARS } from '@/lib/shopify';
 import type { ResolvedCrossSell } from '@/lib/crossSell';
@@ -59,6 +60,7 @@ export function CrossSellCard({ offer, busy, onAdd }: Props) {
 
           <div className="mt-auto flex items-end justify-between gap-2 pt-2">
             <div className="leading-tight">
+              <span className="block text-[11px] text-ink-400">Sumalo por solo</span>
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-lg font-black text-accent sm:text-xl">
                   {formatARS(offer.offerPrice)}
@@ -68,7 +70,7 @@ export function CrossSellCard({ offer, busy, onAdd }: Props) {
                 </span>
               </div>
               <span className="block text-[11px] text-ink-400">
-                Precio especial por llevarlo junto
+                Combo: {formatARS(offer.discountAmount)} menos llevando los dos
               </span>
             </div>
 

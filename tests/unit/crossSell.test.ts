@@ -8,7 +8,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { crossSellFor } from '@/lib/crossSell';
-import { CROSS_SELLS } from '@/lib/landings';
+import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
 import type { CrossSell, UpsellTier } from '@/lib/landings/types';
 import type { BundleData } from '@/lib/shopify';
 
@@ -98,6 +98,13 @@ describe('CROSS_SELLS (config real)', () => {
     // El producto que habilita no puede ser el mismo que se ofrece.
     const triggerIds = new Set(cs.triggers.map((t) => t.productId));
     expect(cs.offers.some((t) => triggerIds.has(t.productId))).toBe(false);
+  });
+
+  it('todas descuentan lo mismo', () => {
+    // Con los dos productos en el carrito Shopify aplica UN descuento y elige
+    // él cuál. Sólo con montos iguales el total sube lo que anunció la card.
+    const montos = new Set(CROSS_SELLS.map((cs) => cs.discountAmount));
+    expect([...montos]).toEqual([CROSS_SELL_DISCOUNT]);
   });
 
   it('cada oferta tiene su vuelta: si A ofrece B, B ofrece A', () => {

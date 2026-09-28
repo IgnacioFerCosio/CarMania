@@ -15,7 +15,11 @@ export type ResolvedCrossSell = {
   image: string;
   /** Precio de lista del x1: lo que pagaría sin la oferta. */
   price: number;
-  /** Precio con el descuento automático de Shopify aplicado. */
+  /**
+   * Cuánto sube el total del carrito al sumarlo. NO es necesariamente el
+   * precio con el que queda esta línea: Shopify puede ponerle el descuento a
+   * la otra (ver `CROSS_SELLS`). Lo que sí es siempre cierto es el total.
+   */
   offerPrice: number;
   discountAmount: number;
 };
