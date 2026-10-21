@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/favicon.png",
+    "/logo.png",
+    "/logo.webp",
+    "/Reviews/*",
+    "/brands/*",
+    "/bundles/*",
+    "/hero/*",
+    "/how-to-use/*",
+    "/instagram/*",
+    "/medidas/*",
+    "/payments/*",
+    "/surfaces/*",
+    "/use-cases/*",
+    "/what-includes/*",
+    "/parasol/bundles/*",
+    "/parasol/use-cases/*",
+    "/parasol/hero/*",
+    "/parasol/reviews/*",
+    "/parasol/before-after/*",
+    "/parasol/how-to-use/*",
+    "/tienda/hero/*",
+    "/soplador/hero/*"
+  ]
+}

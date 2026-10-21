@@ -8,6 +8,7 @@
 #   2. test:unit      — la escalera de upsell y los invariantes de la config
 #   3. check:assets   — que exista todo lo que el código pide de /public
 #   4. check:csp      — que las dos copias de la CSP digan lo mismo
+#      check:routes   — que /public no pase por la Function de Cloudflare
 #   5. check:shopify  — que lo que la config dice que existe, exista desde el
 #                       canal de la landing (necesita red y .env.local; si no
 #                       están, se saltea y lo dice)
@@ -42,6 +43,7 @@ node scripts/check-assets.mjs
 
 paso "4/7  CSP"
 node scripts/check-csp.mjs
+node scripts/check-routes.mjs
 
 paso "5/7  Shopify"
 npx vitest run tests/contract --reporter=dot
