@@ -4,12 +4,11 @@
  * Misma estructura y componentes que la del parasol (`app/parasol/page.tsx`):
  * lo único que cambia es la config que reciben las secciones.
  *
- * Dos diferencias de armado respecto del parasol, a propósito:
- *  - No se renderiza `CarBrands`: un soplador no tiene compatibilidad por
- *    marca de auto, así que la tira de logos sería relleno.
- *  - Sí se renderizan los dos `PitchBlock` (en /parasol están comentados).
- *    Acá el segundo es el argumento más fuerte de la página — el costo
- *    recurrente de las latas de aire comprimido.
+ * Una diferencia de armado respecto del parasol, a propósito: no se
+ * renderiza `CarBrands`. Un soplador no tiene compatibilidad por marca de
+ * auto, así que la tira de logos sería relleno. Los dos `PitchBlock` ("El
+ * polvo siempre gana en los rincones" y "Dejá de comprar latas") tampoco
+ * van, igual que en /parasol; su copy sigue en `SOPLADOR.pitchBlocks`.
  *
  * Ojo: los 3 productos todavía no existen en Shopify (productId en ''), así
  * que los botones de compra quedan deshabilitados a propósito. Ver el
@@ -27,7 +26,6 @@ import { Navbar, type NavLink } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
-import { PitchBlock } from '@/components/sections/PitchBlock';
 import { UseCases } from '@/components/sections/UseCases';
 import { BeforeAfter } from '@/components/sections/BeforeAfter';
 import { HowItWorks } from '@/components/sections/HowItWorks';
@@ -137,41 +135,35 @@ export default async function SopladorPage() {
         {/* 1. Hero */}
         <Hero config={SOPLADOR} />
 
-        {/* 2. El problema — el polvo en los rincones */}
-        <PitchBlock data={SOPLADOR.pitchBlocks[0]} />
-
-        {/* 3. Grid de dónde se usa */}
+        {/* 2. Grid de dónde se usa */}
         <UseCases config={SOPLADOR} />
 
-        {/* 4. Antes / después — las rejillas con y sin una pasada */}
+        {/* 3. Antes / después — las rejillas con y sin una pasada */}
         {SOPLADOR.beforeAfter && <BeforeAfter data={SOPLADOR.beforeAfter} />}
 
-        {/* 5. Cómo funciona (3 videos) */}
+        {/* 4. Cómo funciona (3 videos) */}
         <HowItWorks config={SOPLADOR} />
 
-        {/* 6. vs. la alternativa mala — las latas de aire comprimido */}
-        <PitchBlock data={SOPLADOR.pitchBlocks[1]} />
-
-        {/* 7. Pricing */}
+        {/* 5. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={SOPLADOR} />
 
-        {/* 8. Specs / beneficios */}
+        {/* 6. Specs / beneficios */}
         <BenefitsShowcase config={SOPLADOR} />
 
-        {/* 9. Reseñas */}
+        {/* 7. Reseñas */}
         <Reviews config={SOPLADOR}>
           <ReviewsExpandable reviews={SOPLADOR.reviews} collapseAfter={8} />
         </Reviews>
 
-        {/* 10. Garantía + medios de pago */}
+        {/* 8. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={SOPLADOR} />
         </div>
 
-        {/* 11. FAQ */}
+        {/* 9. FAQ */}
         <FAQ config={SOPLADOR} />
 
-        {/* 12. CTA final */}
+        {/* 10. CTA final */}
         <BackToPricingCTA config={SOPLADOR} />
       </main>
 
