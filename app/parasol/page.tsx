@@ -10,7 +10,7 @@
  */
 import type { Metadata } from 'next';
 import ReactDOM from 'react-dom';
-import { Navbar, type NavLink } from '@/components/layout/Navbar';
+import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
@@ -54,13 +54,6 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: PARASOL.metadata.canonical },
 };
-
-const PARASOL_LINKS: NavLink[] = [
-  { href: '#how', label: 'Cómo funciona' },
-  { href: '#pricing', label: 'Oferta', highlight: true },
-  { href: '#reviews', label: 'Opiniones' },
-  { href: '#faq', label: 'FAQ' },
-];
 
 export default async function ParasolPage() {
   // El poster del video del hero es el LCP de ESTA página (igual que en la
@@ -110,7 +103,9 @@ export default async function ParasolPage() {
     >
       <CountdownBanner />
       <PromoBar />
-      <Navbar links={PARASOL_LINKS} ctaHref="#pricing" />
+      {/* Mismos links que el soporte (default del Navbar): todas las
+          landings tienen las mismas secciones. */}
+      <Navbar />
 
       <main>
         {/* 1. Hero */}

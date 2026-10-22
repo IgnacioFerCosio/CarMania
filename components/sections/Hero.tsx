@@ -29,7 +29,7 @@ function highlight(text: string, terms: string[]) {
 }
 
 export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
-  const { headlines, heroMedia, heroSubHighlights, brand } = config;
+  const { headlines, heroMedia, heroSubHighlights } = config;
 
   return (
     <section id="top" className="relative overflow-hidden bg-ink-950">
@@ -78,14 +78,16 @@ export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
               </a>
             </div>
 
-            {/* Social proof inline */}
+            {/* Social proof inline. Es de la marca, no del producto: todas las
+                landings muestran los clientes de CARMANIA (los del soporte),
+                no el `brand.socialProofCount` de su propia config. */}
             <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-ink-200 sm:text-sm">
               <span aria-hidden="true">🏆</span>
               <span>
                 <strong className="font-black italic text-accent">
-                  {brand.socialProofCount}
+                  {SOPORTE.brand.socialProofCount}
                 </strong>{' '}
-                {brand.socialProofLabel} en Argentina
+                {SOPORTE.brand.socialProofLabel} en Argentina
               </span>
             </p>
 

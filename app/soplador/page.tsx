@@ -22,7 +22,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ReactDOM from 'react-dom';
-import { Navbar, type NavLink } from '@/components/layout/Navbar';
+import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
@@ -75,13 +75,6 @@ const METADATA: Metadata = {
   alternates: { canonical: SOPLADOR.metadata.canonical },
 };
 
-const SOPLADOR_LINKS: NavLink[] = [
-  { href: '#how', label: 'Cómo funciona' },
-  { href: '#pricing', label: 'Oferta', highlight: true },
-  { href: '#reviews', label: 'Opiniones' },
-  { href: '#faq', label: 'FAQ' },
-];
-
 export default async function SopladorPage() {
   if (!isPublished(SOPLADOR_STORE)) notFound();
 
@@ -130,7 +123,9 @@ export default async function SopladorPage() {
     >
       <CountdownBanner />
       <PromoBar />
-      <Navbar links={SOPLADOR_LINKS} ctaHref="#pricing" />
+      {/* Mismos links que el soporte (default del Navbar): todas las
+          landings tienen las mismas secciones. */}
+      <Navbar />
 
       <main>
         {/* 1. Hero */}

@@ -25,8 +25,9 @@ export type NavLink = {
   badge?: string;
 };
 
-// Links de la landing del soporte. Son el default para no tener que
-// pasarlos desde `app/page.tsx`, que ya los usaba implícitamente.
+// Links de las landings de producto (/, /parasol, /soplador): todas tienen
+// las mismas secciones, así que comparten este default. Sólo /tienda pasa
+// los suyos.
 const LANDING_LINKS: NavLink[] = [
   { href: '#how', label: 'Cómo funciona' },
   { href: '#pricing', label: 'Oferta', highlight: true },
