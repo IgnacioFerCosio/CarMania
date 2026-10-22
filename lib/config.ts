@@ -279,9 +279,14 @@ export type StoreProduct = {
   comingSoon?: boolean;
 };
 
-/** Las cards que sí se pueden abrir. */
+/**
+ * Las cards que sí se pueden abrir. En `npm run dev` todo cuenta como
+ * publicado, para poder armar y navegar una landing con `comingSoon`
+ * (card, nav de /tienda y la ruta). El build de producción corre con
+ * NODE_ENV=production, así que ahí el flag manda.
+ */
 export function isPublished(product: StoreProduct): boolean {
-  return !product.comingSoon;
+  return !product.comingSoon || process.env.NODE_ENV === 'development';
 }
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [

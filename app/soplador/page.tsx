@@ -18,7 +18,7 @@
  * MIENTRAS el soplador tenga `comingSoon: true` en STORE_PRODUCTS esta ruta
  * responde 404: la landing está en producción pero no se puede abrir. El
  * catálogo la muestra como "Próximamente". Sacar el flag la publica. En
- * `npm run dev` se abre igual (ver `VISIBLE`).
+ * `npm run dev` se abre igual (ver `isPublished`).
  */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -51,19 +51,13 @@ import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { STORE_PRODUCTS, isPublished } from '@/lib/config';
 
 const SOPLADOR_STORE = STORE_PRODUCTS.find((p) => p.href === '/soplador')!;
-
-// En `npm run dev` la landing se abre aunque tenga `comingSoon`, para poder
-// armarla. El build de producción corre con NODE_ENV=production, así que ahí
-// sigue dando 404. El catálogo y el sitemap no cambian: usan `isPublished`.
-const VISIBLE = isPublished(SOPLADOR_STORE) || process.env.NODE_ENV === 'development';
-
 export const revalidate = 300;
 
 // `generateMetadata` y no `metadata`: Next resuelve la metadata ANTES de que
 // el componente llame a notFound(), y el título del producto quedaba en el
 // payload de la página 404. Mientras no esté publicada, no hay nada que decir.
 export function generateMetadata(): Metadata {
-  return VISIBLE ? METADATA : {};
+  return isPublished(SOPLADOR_STORE) ? METADATA : {};
 }
 
 const METADATA: Metadata = {
@@ -90,7 +84,7 @@ const SOPLADOR_LINKS: NavLink[] = [
 ];
 
 export default async function SopladorPage() {
-  if (!VISIBLE) notFound();
+  if (!isPublished(SOPLADOR_STORE)) notFound();
 
   // La imagen del hero es el LCP de ESTA página. `ReactDOM.preload()` (vs. un
   // <link> JSX) la hoistea cerca del principio de <head>. Apunta al archivo

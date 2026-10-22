@@ -24,7 +24,12 @@ import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
+import {
+  STORE_PRODUCTS,
+  STORE_PROMO_MESSAGES,
+  isPublished,
+  type StoreProduct,
+} from '@/lib/config';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 
 export const metadata: Metadata = {
@@ -50,10 +55,13 @@ const STORE_LINKS: NavLink[] = [
   // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
   // iguales se anulan entre sí. Además el nav no da para tres píldoras.
   { href: '/parasol', label: 'Parasol PRO' },
+  // El soplador entra sólo si está publicado: mientras tenga `comingSoon` la
+  // ruta responde 404 (salvo en `npm run dev`, ver `isPublished`).
+  ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && isPublished(p)).map(
+    (p): NavLink => ({ href: p.href, label: 'Soplador PRO', badge: 'NUEVO' }),
+  ),
   { href: '#productos', label: 'Ver todo' },
 ];
-// El soplador no está en STORE_LINKS a propósito: mientras tenga `comingSoon`
-// la ruta responde 404. Cuando se publique, va acá con `badge: 'NUEVO'`.
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual. Mismo valor que app/page.tsx,
