@@ -63,19 +63,32 @@ precios se resuelven en el build, si estas variables faltan el build sale
 con los precios fallback de `lib/config.ts` en vez de fallar.
 
 ## Seguridad
-- Headers configurados en `_headers` (formato de Cloudflare Pages): CSP,
-  HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
-  Permissions-Policy. **No hay `vercel.json`.** `next.config.js` tiene su
-  propio `headers()` casi idéntico, pero el que se sirve en producción es
-  el de `_headers` — editá ese.
+- **Los headers de producción salen del `headers()` de `next.config.js`**:
+  CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+  Permissions-Policy. **No hay `vercel.json`.** `next-on-pages` los compila
+  en la Function, así que llegan a las 4 páginas y a todo lo que pasa por
+  ella.
+- **El `_headers` de la raíz NO se aplica en prod.** Cloudflare sólo lee un
+  `_headers` dentro del directorio de salida, y el build copia `/public`,
+  no la raíz. Verificado en producción (2026-10-22): los assets estáticos
+  traen sólo los defaults de Pages (`Referrer-Policy`, `nosniff`,
+  `Access-Control-Allow-Origin`) y `/_next/static` el `Cache-Control` que
+  autogenera `next-on-pages`, no el de `_headers`. El archivo queda como
+  espejo de la CSP para `check:csp`; si cambiás un header, el que manda es
+  `next.config.js`.
+- Desde `_routes.json`, `/public` se sirve como estático, fuera de la
+  Function: imágenes y videos llegan **sin** CSP/HSTS/X-Frame-Options. No es
+  un riesgo (esos headers protegen el HTML, y las páginas los tienen), pero
+  no esperes verlos en un asset.
 - **El dev server necesita `'unsafe-eval'`; producción NO.** Fast Refresh de
   Next compila con `eval`, así que sin ese flag el `npm run dev` tira un
   `EvalError` que mata el bundle del cliente entero: se cae la hidratación y
   los componentes `'use client'` dejan de montarse (los `<video>` de
   `LazyVideo` desaparecen sin dejar rastro en el DOM). Por eso el
   `headers()` de `next.config.js` lo agrega **solo** cuando
-  `NODE_ENV === 'development'`. No lo copies a `_headers`: fuera de esa
-  condición, la CSP de ambos archivos tiene que quedar espejada byte a byte.
+  `NODE_ENV === 'development'` — en el build de producción no entra. No lo
+  copies a `_headers`: fuera de esa condición, la CSP de ambos archivos
+  tiene que quedar espejada byte a byte.
 - La CSP tiene `media-src 'self'`: **los videos tienen que estar en
   `/public`.** Apuntar un `<video>` a un CDN externo los rompe en
   producción.
@@ -141,9 +154,11 @@ contra una carpeta `parasol/` anda en local y tira 404 en producción. Ya pasó.
 Los archivos que todavía no existen viven en la lista `PENDIENTES` del script,
 cada uno con su motivo.
 
-**`check:csp`** compara `_headers` (la que se sirve) contra `next.config.js`
-(la de dev). Desincronizarlas falla en silencio: agregás un dominio en dev,
-anda todo, y en producción la CSP lo bloquea sin un solo error visible.
+**`check:csp`** compara `_headers` contra `next.config.js`. Ojo: la que se
+sirve en producción es la de `next.config.js` (ver Seguridad), no la de
+`_headers` como dicen los mensajes del script y el comentario de
+`next.config.js`. El chequeo igual sirve para que nadie edite sólo
+`_headers` creyendo que cambia prod.
 
 **`test:unit`** (`tests/unit/`) prueba `nextTierOf` y compañía con una chain
 de mentira — en particular que el último nivel de un producto no ofrezca el
