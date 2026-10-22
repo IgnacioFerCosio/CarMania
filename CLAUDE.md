@@ -154,11 +154,10 @@ contra una carpeta `parasol/` anda en local y tira 404 en producción. Ya pasó.
 Los archivos que todavía no existen viven en la lista `PENDIENTES` del script,
 cada uno con su motivo.
 
-**`check:csp`** compara `_headers` contra `next.config.js`. Ojo: la que se
-sirve en producción es la de `next.config.js` (ver Seguridad), no la de
-`_headers` como dicen los mensajes del script y el comentario de
-`next.config.js`. El chequeo igual sirve para que nadie edite sólo
-`_headers` creyendo que cambia prod.
+**`check:csp`** compara `_headers` contra `next.config.js`. La que se sirve en
+producción es la de `next.config.js` (ver Seguridad); el chequeo existe para
+que nadie edite sólo `_headers` creyendo que cambia prod, y falla si
+`'unsafe-eval'` se cuela en el build de producción.
 
 **`test:unit`** (`tests/unit/`) prueba `nextTierOf` y compañía con una chain
 de mentira — en particular que el último nivel de un producto no ofrezca el

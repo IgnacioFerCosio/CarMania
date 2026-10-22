@@ -29,8 +29,10 @@ const nextConfig = {
     // Fast Refresh de Next compila con `eval` en desarrollo, asi que el dev
     // server necesita 'unsafe-eval' o el bundle del cliente muere entero (se
     // cae la hidratacion y, entre otras cosas, los <video> de LazyVideo nunca
-    // se montan). En produccion NO va: ahi los headers los sirve `_headers`
-    // y esta CSP tiene que quedar espejada con ese archivo.
+    // se montan). En produccion NO va. Estos son los headers que se sirven en
+    // prod: next-on-pages compila este headers() en la Function de Cloudflare.
+    // El `_headers` de la raiz NO se aplica (no llega al directorio de salida);
+    // queda como espejo y check:csp exige que diga lo mismo que esta CSP.
     const devEval = process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : '';
 
     return [
