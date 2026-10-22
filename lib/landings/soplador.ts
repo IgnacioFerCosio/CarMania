@@ -308,6 +308,28 @@ export const SOPLADOR = {
     afterAlt: 'Las mismas rejillas limpias después de usar el Soplador Turbo PRO',
     afterLabel: 'Después',
   },
+  /**
+   * "Qué incluye": la lista es la misma que el `bonus` del pack x1 (boquilla
+   * + cable). TODO VERIFICAR contra una caja real: si el proveedor suma algo
+   * más (bolsa, boquillas extra), agregarlo acá y en los `bonus`.
+   * El carrusel tiene sólo el render del hero hasta que haya infografías
+   * propias (ver soplador-assets.md).
+   */
+  whatsInBox: {
+    headline: 'Cargalo, apuntá y soplá.',
+    lead: 'Pensado para el auto',
+    body: ', y para todo lo demás. Sacá el polvo de las rejillas y los tapizados, del teclado de la compu o de la salida de aire de la notebook. Entra en la guantera y lo llevás a donde haga falta.',
+    note: 'Inalámbrico y recargable por USB. Sin latas descartables ni compresor.',
+    items: ['Soplador Turbo PRO™', 'Boquilla intercambiable', 'Cable de carga USB'],
+    gallery: [
+      {
+        src: '/soplador/hero/soplador-hero.webp',
+        alt: 'Soplador Turbo PRO en negro, con su boquilla intercambiable',
+      },
+    ],
+    // Inventada, como todas las del soplador (ver SOPLADOR_REVIEWS).
+    testimonial: SOPLADOR_REVIEWS[2],
+  },
   reviews: SOPLADOR_REVIEWS,
   ratingBreakdown: {
     average: 4.8,

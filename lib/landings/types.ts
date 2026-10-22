@@ -102,6 +102,24 @@ export type PitchBlockData = {
   body: string;
 };
 
+/**
+ * Sección "qué incluye" (componente WhatsInBox): carrusel a la izquierda,
+ * copy + lista de la caja + CTA + una reseña a la derecha.
+ */
+export type WhatsInBoxData = {
+  /** La última palabra se pinta en accent. */
+  headline: string;
+  /** Arranque del párrafo, en negrita itálica accent. */
+  lead: string;
+  /** Sigue pegado a `lead`: arrancá con coma o espacio. */
+  body: string;
+  /** Línea chica debajo del párrafo. */
+  note: string;
+  items: readonly string[];
+  gallery: readonly { src: string; alt: string }[];
+  testimonial: Review;
+};
+
 /** Comparador before/after con divisor deslizable (componente BeforeAfter). */
 export type BeforeAfterData = {
   headline: string;
@@ -203,6 +221,11 @@ export type LandingConfig = {
   pitchBlocks: readonly PitchBlockData[];
   /** Comparador before/after. Opcional — el soporte no lo usa. */
   beforeAfter?: BeforeAfterData;
+  /**
+   * Sección "qué incluye". Opcional — la del soporte todavía lee sus
+   * constantes de `lib/config.ts` (ver WhatsInBox.tsx).
+   */
+  whatsInBox?: WhatsInBoxData;
   reviews: readonly Review[];
   ratingBreakdown: {
     average: number;

@@ -3,31 +3,43 @@
  * descripción + listado de "qué incluye la caja" + CTA + testimonial chico
  * a la derecha.
  *
- * SLOT DE IMAGEN: hay un placeholder grande. Reemplazá el <ProductPhoto />
- * por <Image src="/box/producto.jpg" alt="..." fill className="object-contain" />
- * cuando tengas la foto del producto sobre fondo negro.
+ * Recibe el contenido por `data` (`LandingConfig.whatsInBox`). Sin `data`
+ * arma la del soporte con sus constantes de `lib/config.ts`, que es como la
+ * usa `/` desde antes de que hubiera otras landings.
  */
 import { HEADLINES, WHATS_IN_BOX, WHATS_IN_BOX_GALLERY, REVIEWS } from '@/lib/config';
+import type { WhatsInBoxData } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 import { ProductCarousel } from '@/components/ui/ProductCarousel';
 
-const TESTIMONIAL = REVIEWS[2]; // segunda muestra de social proof, distinto de la del hero
+const SOPORTE_LEAD = 'Pensado para la vida real';
 
-export function WhatsInBox() {
+const SOPORTE_DATA: WhatsInBoxData = {
+  headline: HEADLINES.whatsInBox,
+  lead: SOPORTE_LEAD,
+  body: HEADLINES.whatsInBoxSub.slice(SOPORTE_LEAD.length),
+  note: HEADLINES.whatsInBoxNoTools,
+  items: WHATS_IN_BOX,
+  gallery: WHATS_IN_BOX_GALLERY,
+  testimonial: REVIEWS[2], // segunda muestra de social proof, distinto de la del hero
+};
+
+export function WhatsInBox({ data = SOPORTE_DATA }: { data?: WhatsInBoxData }) {
+  const { testimonial } = data;
   return (
     <section className="relative bg-ink-950 py-14 sm:py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="grid items-center gap-8 sm:gap-10 md:grid-cols-2 md:gap-16">
           {/* Carrusel — primero en mobile, izquierda en desktop */}
           <div className="order-1 md:order-1">
-            <ProductCarousel slides={WHATS_IN_BOX_GALLERY} />
+            <ProductCarousel slides={data.gallery} />
           </div>
 
           {/* Texto */}
           <div className="order-2 md:order-2">
             <h2 className="heading-display text-2xl leading-tight sm:text-3xl md:text-5xl">
-              {HEADLINES.whatsInBox.split(' ').map((w, i, arr) =>
+              {data.headline.split(' ').map((w, i, arr) =>
                 i === arr.length - 1 ? (
                   <span key={i} className="text-accent">
                     {w}
@@ -39,12 +51,12 @@ export function WhatsInBox() {
             </h2>
 
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink-200 sm:mt-5 sm:text-base md:text-lg">
-              <strong className="italic text-accent">Pensado para la vida real</strong>, no
-              solo para el auto. {HEADLINES.whatsInBoxSub.replace('Pensado para la vida real, no solo para el auto. ', '')}
+              <strong className="italic text-accent">{data.lead}</strong>
+              {data.body}
             </p>
 
             <p className="mt-3 text-sm leading-relaxed text-ink-300 sm:mt-4">
-              {HEADLINES.whatsInBoxNoTools}
+              {data.note}
             </p>
 
             {/* Qué viene en la caja */}
@@ -53,7 +65,7 @@ export function WhatsInBox() {
                 ¿Qué incluye?
               </h3>
               <ul className="mt-3 grid gap-2 text-sm text-ink-200">
-                {WHATS_IN_BOX.map((item) => (
+                {data.items.map((item) => (
                   <li key={item} className="flex items-start gap-2">
                     <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                     <span>{item}</span>
@@ -77,17 +89,17 @@ export function WhatsInBox() {
             <div className="mt-7 flex max-w-md items-start gap-3 border-t border-ink-800 pt-5">
               <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-ink-700 to-ink-900 ring-1 ring-inset ring-ink-700">
                 <div className="flex h-full w-full items-center justify-center text-sm font-black italic text-white">
-                  {TESTIMONIAL.name[0]}
+                  {testimonial.name[0]}
                 </div>
               </div>
               <div className="flex-1 text-sm">
-                <Stars rating={TESTIMONIAL.stars} size={13} />
+                <Stars rating={testimonial.stars} size={13} />
                 <p className="mt-1 italic leading-snug text-ink-200">
-                  &ldquo;{TESTIMONIAL.text}&rdquo;
+                  &ldquo;{testimonial.text}&rdquo;
                 </p>
                 <p className="mt-1.5 text-xs font-bold text-white">
-                  {TESTIMONIAL.name}{' '}
-                  <span className="font-normal text-ink-400">/ {TESTIMONIAL.location}</span>
+                  {testimonial.name}{' '}
+                  <span className="font-normal text-ink-400">/ {testimonial.location}</span>
                 </p>
               </div>
             </div>

@@ -27,6 +27,7 @@ import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
+import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { BeforeAfter } from '@/components/sections/BeforeAfter';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
@@ -138,32 +139,35 @@ export default async function SopladorPage() {
         {/* 2. Grid de dónde se usa */}
         <UseCases config={SOPLADOR} />
 
-        {/* 3. Antes / después — las rejillas con y sin una pasada */}
+        {/* 3. Qué incluye — carrusel + caja + reseña, como en / */}
+        {SOPLADOR.whatsInBox && <WhatsInBox data={SOPLADOR.whatsInBox} />}
+
+        {/* 4. Antes / después — las rejillas con y sin una pasada */}
         {SOPLADOR.beforeAfter && <BeforeAfter data={SOPLADOR.beforeAfter} />}
 
-        {/* 4. Cómo funciona (3 videos) */}
+        {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={SOPLADOR} />
 
-        {/* 5. Pricing */}
+        {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={SOPLADOR} />
 
-        {/* 6. Specs / beneficios */}
+        {/* 7. Specs / beneficios */}
         <BenefitsShowcase config={SOPLADOR} />
 
-        {/* 7. Reseñas */}
+        {/* 8. Reseñas */}
         <Reviews config={SOPLADOR}>
           <ReviewsExpandable reviews={SOPLADOR.reviews} collapseAfter={8} />
         </Reviews>
 
-        {/* 8. Garantía + medios de pago */}
+        {/* 9. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={SOPLADOR} />
         </div>
 
-        {/* 9. FAQ */}
+        {/* 10. FAQ */}
         <FAQ config={SOPLADOR} />
 
-        {/* 10. CTA final */}
+        {/* 11. CTA final */}
         <BackToPricingCTA config={SOPLADOR} />
       </main>
 
