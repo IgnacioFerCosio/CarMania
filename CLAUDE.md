@@ -168,6 +168,15 @@ Si agregás una landing: sumá su ruta a `ROUTES` en `scripts/prerender-gate.sh`
 y su config a `LANDINGS` en los dos tests.
 
 ## Gotchas
+- **`_routes.json` decide qué pasa por la Function de Cloudflare.** Cada
+  request que entra al `_worker.js` cuenta contra el límite del plan de
+  Workers; sin este archivo entraba todo /public (logos, fotos, videos) y una
+  visita a / sumaba ~35 requests. Ahora las carpetas de /public se sirven
+  como estáticos. Si agregás una carpeta a /public, sumala a `exclude`
+  (`check:routes` falla si no). **No excluyas** las páginas ni
+  `/_next/image`: esas las resuelve la Function. Ojo con `/parasol`,
+  `/tienda` y `/soplador`, que son página y carpeta a la vez: se excluyen
+  sus subcarpetas, nunca `/parasol/*`.
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
   `revalidate = 300` y `lib/shopify.ts` pasa `next: { revalidate: 300 }`,
   pero **el ISR no corre en Cloudflare Pages**: las rutas con `revalidate` se

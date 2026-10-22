@@ -11,6 +11,7 @@
     "check:shopify": "vitest run tests/contract",
     "check:assets": "node scripts/check-assets.mjs",
     "check:csp": "node scripts/check-csp.mjs",
+    "check:routes": "node scripts/check-routes.mjs",
     "gate": "bash scripts/prerender-gate.sh",
     "gate:capture": "bash scripts/prerender-gate.sh capture",
     "test": "bash scripts/verify.sh"
