@@ -25,6 +25,14 @@ const nextConfig = {
     // soporte cae a WebP automáticamente.
     formats: ['image/avif', 'image/webp'],
   },
+  // /soporte no tiene página propia (sólo /soporte/instalacion, la del QR de
+  // la caja): la landing del soporte es /. next-on-pages compila esto en la
+  // Function igual que headers(); un `_redirects` de Cloudflare no serviría,
+  // porque no se aplica a lo que resuelve el `_worker.js`.
+  async redirects() {
+    return [{ source: '/soporte', destination: '/', statusCode: 301 }];
+  },
+
   async headers() {
     // Fast Refresh de Next compila con `eval` en desarrollo, asi que el dev
     // server necesita 'unsafe-eval' o el bundle del cliente muere entero (se

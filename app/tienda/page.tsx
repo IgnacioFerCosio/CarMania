@@ -11,7 +11,7 @@
 import type { Metadata } from 'next';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { SubPromoBar } from '@/components/layout/SubPromoBar';
-import { Navbar, type NavLink } from '@/components/layout/Navbar';
+import { Navbar, storeLinks } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { StoreHero } from '@/components/sections/StoreHero';
 import { ProductGrid } from '@/components/sections/ProductGrid';
@@ -24,12 +24,7 @@ import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import {
-  STORE_PRODUCTS,
-  STORE_PROMO_MESSAGES,
-  isPublished,
-  type StoreProduct,
-} from '@/lib/config';
+import { STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 
 export const metadata: Metadata = {
@@ -49,19 +44,6 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: '/tienda' },
 };
-
-const STORE_LINKS: NavLink[] = [
-  { href: '/', label: 'Soporte PRO', highlight: true, badge: 'TOP' },
-  // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
-  // iguales se anulan entre sí. Además el nav no da para tres píldoras.
-  { href: '/parasol', label: 'Parasol PRO' },
-  // El soplador entra sólo si está publicado: mientras tenga `comingSoon` la
-  // ruta responde 404 (salvo en `npm run dev`, ver `isPublished`).
-  ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && isPublished(p)).map(
-    (p): NavLink => ({ href: p.href, label: 'Soplador PRO', badge: 'NUEVO' }),
-  ),
-  { href: '#productos', label: 'Ver todo' },
-];
 
 // Re-renderizamos cada 5 minutos para reflejar cambios de precio en
 // Shopify sin tener que hacer build manual. Mismo valor que app/page.tsx,
@@ -117,7 +99,7 @@ export default async function TiendaPage() {
     <CartProvider bundlesData={bundlesData} upsellChain={ALL_UPSELL_CHAINS}>
       <PromoBar messages={STORE_PROMO_MESSAGES} />
       <Navbar
-        links={STORE_LINKS}
+        links={storeLinks()}
         homeHref="/tienda"
         ctaHref="#productos"
         ctaLabel="Ver productos"

@@ -15,11 +15,16 @@
  *   1. Que todo lo que está en /public quede cubierto por algún exclude.
  *      Si agregás una carpeta nueva y no la sumás, no se rompe nada: sólo
  *      vuelve a pasar por la Function y a contar. Por eso falla acá.
- *   2. Que ningún exclude tape una página (/, /parasol, /tienda, /soplador)
- *      ni las imágenes optimizadas (/_next/image), que SÍ las resuelve la
- *      Function. Excluir eso las rompe en producción.
+ *   2. Que ningún exclude tape una página (/, /parasol, /soporte/instalacion…),
+ *      un redirect de next.config.js (/soporte) ni las imágenes optimizadas
+ *      (/_next/image), que SÍ los resuelve la Function. Excluir eso los rompe
+ *      en producción.
+ *
+ * Las páginas se buscan en todo `app/`, anidadas incluidas: `/soporte` no
+ * tiene page.tsx pero `/soporte/instalacion` sí, y un `/soporte/*` la taparía.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { join, relative, sep } from 'node:path';
 
 const ROOT = process.cwd();
@@ -46,16 +51,27 @@ for (const file of walk(publicDir)) {
   if (!excluded(url)) problemas.push(`  /public sin excluir: ${url}`);
 }
 
-// 2. Páginas y optimizador fuera de los excludes.
-const appDir = join(ROOT, 'app');
-const paginas = ['/'];
-for (const name of readdirSync(appDir)) {
-  const dir = join(appDir, name);
-  if (statSync(dir).isDirectory() && readdirSync(dir).includes('page.tsx')) paginas.push('/' + name);
-}
+// 2. Páginas, redirects y optimizador fuera de los excludes.
+// Los grupos `(x)` no suman segmento a la URL; las carpetas `_x` son privadas.
+const paginas = [];
+const buscarPaginas = (dir, segmentos) => {
+  if (readdirSync(dir).includes('page.tsx')) paginas.push('/' + segmentos.join('/'));
+  for (const name of readdirSync(dir)) {
+    if (name.startsWith('_') || name.startsWith('.')) continue;
+    const sub = join(dir, name);
+    if (!statSync(sub).isDirectory()) continue;
+    buscarPaginas(sub, /^\(.*\)$/.test(name) ? segmentos : [...segmentos, name]);
+  }
+};
+buscarPaginas(join(ROOT, 'app'), []);
+
+const nextConfig = createRequire(import.meta.url)(join(ROOT, 'next.config.js'));
+const redirects = (await nextConfig.redirects?.()) ?? [];
+const rutas = [...paginas, ...redirects.map((r) => r.source)];
+
 const imprescindibles = [
-  ...paginas,
-  ...paginas.filter((p) => p !== '/').map((p) => p + '/'),
+  ...rutas,
+  ...rutas.filter((p) => p !== '/').map((p) => p + '/'),
   '/_next/image',
   '/robots.txt',
   '/sitemap.xml',
@@ -68,4 +84,6 @@ if (problemas.length) {
   console.error('_routes.json desincronizado:\n' + problemas.join('\n'));
   process.exit(1);
 }
-console.log(`OK    routes (${exclude.length} excludes, ${paginas.length} páginas libres)`);
+console.log(
+  `OK    routes (${exclude.length} excludes, ${paginas.length} páginas y ${redirects.length} redirects libres)`,
+);

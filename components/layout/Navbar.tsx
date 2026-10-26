@@ -12,7 +12,7 @@
  */
 import Image from 'next/image';
 import Link from 'next/link';
-import { BRAND } from '@/lib/config';
+import { BRAND, STORE_PRODUCTS, isPublished } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { CartButton } from '@/components/commerce/CartButton';
 import { NavMobileMenu } from './NavMobileMenu';
@@ -35,6 +35,26 @@ const LANDING_LINKS: NavLink[] = [
   { href: '#trust', label: 'Garantías' },
   { href: '#faq', label: 'FAQ' },
 ];
+
+/**
+ * Links de /tienda. También los usa la guía de instalación, que comparte el
+ * header de la tienda: ahí `#productos` no existe, así que pasa
+ * `/tienda#productos`.
+ */
+export function storeLinks(productosHref = '#productos'): NavLink[] {
+  return [
+    { href: '/', label: 'Soporte PRO', highlight: true, badge: 'TOP' },
+    // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
+    // iguales se anulan entre sí. Además el nav no da para tres píldoras.
+    { href: '/parasol', label: 'Parasol PRO' },
+    // El soplador entra sólo si está publicado: mientras tenga `comingSoon` la
+    // ruta responde 404 (salvo en `npm run dev`, ver `isPublished`).
+    ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && isPublished(p)).map(
+      (p): NavLink => ({ href: p.href, label: 'Soplador PRO', badge: 'NUEVO' }),
+    ),
+    { href: productosHref, label: 'Ver todo' },
+  ];
+}
 
 export function Navbar({
   links = LANDING_LINKS,

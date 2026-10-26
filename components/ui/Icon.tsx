@@ -7,7 +7,7 @@
  */
 import type { SVGProps } from 'react';
 
-type IconName =
+export type IconName =
   | 'shield'
   | 'vacuum'
   | 'leaf'

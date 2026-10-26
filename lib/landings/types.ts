@@ -9,6 +9,7 @@
  * se cierra un ciclo, porque `STORE_PRODUCTS` (en config.ts) usa
  * `FALLBACK_PRICING` (acá).
  */
+import type { IconName } from '@/components/ui/Icon';
 
 /** Todos los ids válidos de la escalera de tiers, de single a x6. */
 export type TierId = 'single' | 'double' | 'triple' | 'x4' | 'x5' | 'x6';
@@ -256,5 +257,70 @@ export type LandingConfig = {
     ogTitle: string;
     ogDescription: string;
     canonical: string;
+  };
+};
+
+/**
+ * Guía de instalación post-compra (`/<producto>/instalacion`), la página a la
+ * que lleva el QR de la caja. La arma `InstallGuide` con un objeto de estos
+ * por producto, en `lib/landings/instalacion/<producto>.ts`.
+ *
+ * No es una página de venta: no hay precios, ni countdown, ni Shopify en el
+ * build. Las secciones opcionales se omiten si el producto no las necesita
+ * (el parasol no tiene aro, por ejemplo).
+ */
+export type InstallStep = {
+  title: string;
+  desc: string;
+  /**
+   * Clip del paso, en /public. Sin clip se muestra `icon` en su lugar: es
+   * mejor un paso sin video que uno con un clip de otra cosa.
+   */
+  video?: string;
+  icon?: IconName;
+};
+
+export type InstallGuideConfig = {
+  metadata: { title: string; description: string };
+  eyebrow: string;
+  title: string;
+  /** Subcadena de `title` que se pinta en accent. */
+  titleAccent: string;
+  intro: string;
+  /** El único video que carga sin esperar al scroll. Cuadrado, en /public. */
+  video: { src: string; poster: string };
+  box: {
+    title: string;
+    items: readonly { qty: string; name: string; note?: string }[];
+  };
+  /** "¿Necesitás el aro?" — dos o más casos lado a lado. */
+  ring?: {
+    title: string;
+    cases: readonly {
+      who: string;
+      verdict: string;
+      desc: string;
+      /** `ok` = no tenés que hacer nada; `action` = hay un paso extra. */
+      tone: 'ok' | 'action';
+    }[];
+  };
+  steps: { title: string; items: readonly InstallStep[] };
+  /** Card destacada debajo de los pasos (cómo sacarlo, cómo guardarlo…). */
+  tip?: { title: string; desc: string };
+  troubleshooting: { title: string; items: readonly { q: string; a: string }[] };
+  help: {
+    title: string;
+    whatsappLabel: string;
+    whatsappPrefilled: string;
+    instagramLead: string;
+  };
+  /** Una sola card discreta al final. Sin precio ni countdown. */
+  crossSell?: {
+    eyebrow: string;
+    name: string;
+    pitch: string;
+    image: string;
+    href: string;
+    cta: string;
   };
 };

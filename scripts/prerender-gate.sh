@@ -41,8 +41,10 @@ BASE="tests/baseline"
 # de `npm test`: el flujo documentado es "npm test da DIFF → gate:capture", y
 # con `.next` de default el capture leía otro build (o ninguno).
 DIST="${NEXT_BUILD_DIR:-.next-verify}"
-# Las rutas prerenderizadas. Si agregás una landing, sumala acá.
-ROUTES=(index tienda parasol soplador)
+# Las rutas prerenderizadas. Si agregás una landing, sumala acá. Las anidadas
+# van con su ruta (`soporte/instalacion`); su baseline se aplana con guiones
+# (`soporte-instalacion.html`), ver `plano`.
+ROUTES=(index tienda parasol soplador soporte/instalacion)
 mode="${1:-check}"
 
 # Todas las páginas, antes de tocar nada. Sin esto, `norm … > baseline` trunca
@@ -53,6 +55,8 @@ for f in "${ROUTES[@]}"; do
     exit 2
   fi
 done
+
+plano() { echo "${1//\//-}"; }
 
 norm() {
   sed -E \
@@ -71,7 +75,7 @@ norm() {
 if [ "$mode" = "capture" ]; then
   mkdir -p "$BASE"
   for f in "${ROUTES[@]}"; do
-    norm "$DIST/server/app/$f.html" > "$BASE/$f.html"
+    norm "$DIST/server/app/$f.html" > "$BASE/$(plano "$f").html"
     echo "capturado  $f"
   done
   exit 0
@@ -79,13 +83,15 @@ fi
 
 rc=0
 for f in "${ROUTES[@]}"; do
-  norm "$DIST/server/app/$f.html" > "/tmp/gate-$f.html"
+  b="$BASE/$(plano "$f").html"
+  t="/tmp/gate-$(plano "$f").html"
+  norm "$DIST/server/app/$f.html" > "$t"
   # --strip-trailing-cr: si git reescribió el baseline con CRLF (Windows), que
   # no cuente como diff. .gitattributes lo fuerza a LF, esto es el cinturón.
-  if diff -q --strip-trailing-cr "$BASE/$f.html" "/tmp/gate-$f.html" >/dev/null; then
+  if diff -q --strip-trailing-cr "$b" "$t" >/dev/null; then
     echo "OK    $f"
   else
-    echo "DIFF  $f    → diff --strip-trailing-cr $BASE/$f.html /tmp/gate-$f.html"
+    echo "DIFF  $f    → diff --strip-trailing-cr $b $t"
     rc=1
   fi
 done

@@ -23,7 +23,17 @@ presencia web del producto.
   en Cloudflare es que **no hay ISR** (ver Gotchas).
 - **SEO: la landing SÍ se indexa** (`robots`/`sitemap` + `index: true` en
   metadata). Es la única presencia web del producto, no hay tienda general
-  que compita en los resultados de Google.
+  que compita en los resultados de Google. La excepción son las guías de
+  instalación (abajo): `noindex` y fuera del sitemap.
+- **Guías de instalación post-compra:** `/soporte/instalacion` es a donde
+  lleva el QR de la caja. No es una página de venta: estática (sin Shopify
+  en el build), `noindex`, sin ViewContent (sólo el PageView del layout).
+  Plantilla `components/install/InstallGuide.tsx` + una config por producto
+  en `lib/landings/instalacion/<producto>.ts`; para el parasol es sumar esa
+  config y `app/parasol/instalacion/page.tsx`. Assets en
+  `/public/instalacion/<producto>/` (una sola carpeta excluida en
+  `_routes.json`, sin chocar con ninguna página). `/soporte` no tiene página:
+  301 a `/` desde `redirects()` de `next.config.js`.
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el
@@ -66,7 +76,7 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
 - **Los headers de producción salen del `headers()` de `next.config.js`**:
   CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
   Permissions-Policy. **No hay `vercel.json`.** `next-on-pages` los compila
-  en la Function, así que llegan a las 4 páginas y a todo lo que pasa por
+  en la Function, así que llegan a todas las páginas y a todo lo que pasa por
   ella.
 - **El `_headers` de la raíz NO se aplica en prod.** Cloudflare sólo lee un
   `_headers` dentro del directorio de salida, y el build copia `/public`,
@@ -139,7 +149,7 @@ Buildea en `.next-verify`, así que **no le rompe el cache al `next dev`** que
 tengas levantado.
 
 **El gate de prerender** es el que más vale. Compara el HTML prerenderizado de
-las 4 rutas contra un baseline en `tests/baseline/`. Existe porque acá casi
+las 5 rutas contra un baseline en `tests/baseline/`. Existe porque acá casi
 todo es compartido: tocar el Navbar, `lib/config.ts` o el `CartProvider` mueve
 las cuatro páginas a la vez, y `/` es la que factura.
 
@@ -179,7 +189,9 @@ que el admin publica sólo desde el listado). Necesita red y `.env.local`; sin
 eso se saltea avisando, para que `npm test` siga sirviendo offline.
 
 Si agregás una landing: sumá su ruta a `ROUTES` en `scripts/prerender-gate.sh`
-y su config a `LANDINGS` en los dos tests.
+y su config a `LANDINGS` en los dos tests. Una guía de instalación va sólo a
+`ROUTES` (`parasol/instalacion`; el baseline se aplana a
+`parasol-instalacion.html`): no tiene bundles que testear.
 
 ## Gotchas
 - **`_routes.json` decide qué pasa por la Function de Cloudflare.** Cada
@@ -190,7 +202,9 @@ y su config a `LANDINGS` en los dos tests.
   (`check:routes` falla si no). **No excluyas** las páginas ni
   `/_next/image`: esas las resuelve la Function. Ojo con `/parasol`,
   `/tienda` y `/soplador`, que son página y carpeta a la vez: se excluyen
-  sus subcarpetas, nunca `/parasol/*`.
+  sus subcarpetas, nunca `/parasol/*`. `check:routes` busca páginas en todo
+  `app/` (anidadas incluidas, como `/soporte/instalacion`) y también protege
+  los `redirects()` de `next.config.js`.
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
   `revalidate = 300` y `lib/shopify.ts` pasa `next: { revalidate: 300 }`,
   pero **el ISR no corre en Cloudflare Pages**: las rutas con `revalidate` se
