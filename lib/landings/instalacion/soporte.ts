@@ -26,10 +26,9 @@ export const SOPORTE_INSTALACION = {
   title: 'Instalalo en 1 minuto',
   titleAccent: '1 minuto',
 
-  // PLACEHOLDER hasta que esté el video real: los clips de /how-to-use más
-  // tres fotos de guia-instalacion.webp (limpiar, trabar, sacarlo), unidos
-  // con ffmpeg. El definitivo reemplaza este mismo archivo, y el poster es su
-  // primer frame. Cuadrado, H.264, sin audio y < 2 MB.
+  // PLACEHOLDER hasta que esté el video real: los tres clips de /how-to-use
+  // unidos con ffmpeg. El definitivo reemplaza este mismo archivo, y el
+  // poster es su primer frame. Cuadrado, H.264, sin audio y < 2 MB.
   video: {
     src: '/instalacion/soporte/instalacion.mp4',
     poster: '/instalacion/soporte/instalacion-poster.webp',
@@ -102,7 +101,7 @@ export const SOPORTE_INSTALACION = {
         q: 'El imán agarra poco',
         a: [
           'Si usás una funda que no es MagSafe, tenés que usar el aro en la parte de afuera de la funda.',
-          'Revisá que el aro no haya quedado imantado: si lo despegaste o estuvo pegado a otro imán, puede magnetizarse y repeler. Sacalo y pegá el de repuesto.',
+          'Fijate que no haya un aro pegado al imán del soporte. Los aros vienen sueltos en la caja y a veces llegan pegados al imán: como son redondos igual que él, parecen parte del soporte. Sacalo y va a agarrar firme.',
         ],
       },
       {
