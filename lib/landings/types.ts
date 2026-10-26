@@ -266,18 +266,15 @@ export type LandingConfig = {
  * por producto, en `lib/landings/instalacion/<producto>.ts`.
  *
  * No es una página de venta: no hay precios, ni countdown, ni Shopify en el
- * build. Las secciones opcionales se omiten si el producto no las necesita
- * (el parasol no tiene aro, por ejemplo).
+ * build. Va con más imagen y video que texto; `ring` es opcional (el parasol
+ * no tiene aro, por ejemplo).
  */
-export type InstallStep = {
-  title: string;
-  desc: string;
-  /**
-   * Clip del paso, en /public. Sin clip se muestra `icon` en su lugar: es
-   * mejor un paso sin video que uno con un clip de otra cosa.
-   */
-  video?: string;
-  icon?: IconName;
+export type InstallImage = {
+  src: string;
+  /** Las imágenes traen texto adentro: el alt lo repite entero. */
+  alt: string;
+  width: number;
+  height: number;
 };
 
 export type InstallGuideConfig = {
@@ -286,41 +283,46 @@ export type InstallGuideConfig = {
   title: string;
   /** Subcadena de `title` que se pinta en accent. */
   titleAccent: string;
-  intro: string;
-  /** El único video que carga sin esperar al scroll. Cuadrado, en /public. */
+  /**
+   * El video completo de la instalación, de punta a punta. El único que carga
+   * sin esperar al scroll. Cuadrado, en /public.
+   */
   video: { src: string; poster: string };
   box: {
     title: string;
     items: readonly { qty: string; name: string; note?: string }[];
   };
-  /** "¿Necesitás el aro?" — dos o más casos lado a lado. */
+  steps: {
+    title: string;
+    image: InstallImage;
+    /**
+     * Una línea corta por paso. Repite lo que dice la imagen porque a 375 px
+     * el texto de la imagen queda de ~8 px.
+     */
+    items: readonly string[];
+  };
+  /** El aro metálico adhesivo, para celulares o fundas sin MagSafe. */
   ring?: {
     title: string;
-    cases: readonly {
-      who: string;
-      verdict: string;
-      desc: string;
-      /** `ok` = no tenés que hacer nada; `action` = hay un paso extra. */
-      tone: 'ok' | 'action';
-    }[];
+    lead: string;
+    image: InstallImage;
+    /** La regla que no se puede pasar por alto (dónde va el aro). */
+    rule: { title: string; desc: string };
+    stepsImage: InstallImage;
+    steps: readonly string[];
+    notes: readonly { icon: IconName; text: string }[];
   };
-  steps: { title: string; items: readonly InstallStep[] };
-  /** Card destacada debajo de los pasos (cómo sacarlo, cómo guardarlo…). */
-  tip?: { title: string; desc: string };
-  troubleshooting: { title: string; items: readonly { q: string; a: string }[] };
+  troubleshooting: {
+    title: string;
+    /** Cada respuesta es una lista corta: un ítem por cosa para probar. */
+    items: readonly { q: string; a: readonly string[] }[];
+  };
   help: {
     title: string;
     whatsappLabel: string;
     whatsappPrefilled: string;
     instagramLead: string;
   };
-  /** Una sola card discreta al final. Sin precio ni countdown. */
-  crossSell?: {
-    eyebrow: string;
-    name: string;
-    pitch: string;
-    image: string;
-    href: string;
-    cta: string;
-  };
+  /** Botón de cierre, a la tienda. Nada de venta cruzada puntual. */
+  outro: { label: string; href: string };
 };

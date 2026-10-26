@@ -3,32 +3,33 @@
  *
  * Es a donde lleva el QR de la caja: el cliente YA compró. El objetivo es que
  * lo instale bien en un minuto y no tenga que escribirnos, así que acá no va
- * nada de venta (salvo una card discreta del parasol al final).
+ * nada de venta: el cierre lleva a /tienda y nada más.
  *
  * Todo el copy de la página sale de este objeto; `InstallGuide` no tiene
  * textos propios. Para otro producto: copiá este archivo como
  * `instalacion/<producto>.ts` y sumá su `app/<producto>/instalacion/page.tsx`.
  *
- * Assets en /public/instalacion/soporte/ (excluido en _routes.json).
+ * Assets propios en /public/instalacion/soporte/ (excluido en _routes.json).
+ * Las imágenes son las del carrusel "Qué incluye" (/public/what-includes/).
+ * QueIncluye.webp NO va: muestra el adhesivo que el kit nuevo ya no trae.
  */
-import { PARASOL } from '../parasol';
 import type { InstallGuideConfig } from '../types';
 
 export const SOPORTE_INSTALACION = {
   metadata: {
     title: 'Instalación — Soporte Magnético PRO™ | CARMANIA',
     description:
-      'Cómo instalar tu Soporte Magnético PRO™ en 1 minuto: qué trae la caja, cuándo usar el aro y qué hacer si algo no funciona.',
+      'Cómo instalar tu Soporte Magnético PRO™ en 1 minuto: el video completo, cuándo usar el aro y qué hacer si algo no funciona.',
   },
 
-  eyebrow: 'Guía de instalación',
-  title: 'Instalá tu Soporte Magnético PRO en 1 minuto',
-  titleAccent: 'en 1 minuto',
-  intro: 'Mirá el video o seguí los 4 pasos de abajo. Si algo no funciona, la respuesta está al final.',
+  eyebrow: 'Soporte Magnético PRO™',
+  title: 'Instalalo en 1 minuto',
+  titleAccent: '1 minuto',
 
-  // PLACEHOLDER: los tres clips de /how-to-use encadenados y comprimidos.
-  // El video real va en este mismo archivo (y su poster, el primer frame).
-  // Cuadrado, H.264, sin audio y < 2 MB, como el resto.
+  // PLACEHOLDER hasta que esté el video real: los clips de /how-to-use más
+  // tres fotos de guia-instalacion.webp (limpiar, trabar, sacarlo), unidos
+  // con ffmpeg. El definitivo reemplaza este mismo archivo, y el poster es su
+  // primer frame. Cuadrado, H.264, sin audio y < 2 MB.
   video: {
     src: '/instalacion/soporte/instalacion.mp4',
     poster: '/instalacion/soporte/instalacion-poster.webp',
@@ -40,78 +41,81 @@ export const SOPORTE_INSTALACION = {
     title: 'Qué trae tu caja',
     items: [
       { qty: '1', name: 'Soporte Magnético PRO™' },
-      { qty: '2', name: 'Aros metálicos negros', note: 'Para celulares sin MagSafe' },
+      { qty: '2', name: 'Aros metálicos adhesivos', note: 'Uno de repuesto' },
       { qty: '2', name: 'Toallitas de limpieza', note: '1 húmeda + 1 seca' },
-    ],
-  },
-
-  ring: {
-    title: '¿Necesitás el aro?',
-    cases: [
-      {
-        who: 'iPhone con MagSafe',
-        verdict: 'No hace falta',
-        desc: 'Sin funda o con funda MagSafe, el imán agarra directo. Guardá los aros de repuesto.',
-        tone: 'ok',
-      },
-      {
-        who: 'Otro celular o funda común',
-        verdict: 'Pegá el aro',
-        desc: 'Limpiá la funda con las toallitas y pegá el aro centrado en la parte de afuera de la funda.',
-        tone: 'action',
-      },
     ],
   },
 
   steps: {
     title: 'Paso a paso',
+    image: {
+      src: '/what-includes/guia-instalacion.webp',
+      alt: 'Guía de instalación en 4 pasos: 1, limpiá el tablero o el parabrisas. 2, apoyá firme el soporte sobre la superficie limpia. 3, mientras hacés presión, girá el seguro en la dirección de la flecha. 4, para sacarlo, girá hacia Open y levantá desde el costado.',
+      width: 1600,
+      height: 1600,
+    },
     items: [
-      {
-        title: 'Limpiá la superficie',
-        desc: 'Pasá primero la toallita 1 (húmeda) y después la 2 (seca). Esperá a que quede bien seca.',
-        icon: 'sparkles',
-      },
-      {
-        title: 'Apoyá la base',
-        desc: 'Sacale el film al gel y apoyá la base firme en una zona plana del tablero o del vidrio.',
-        video: '/instalacion/soporte/02-apoya-la-base.mp4',
-      },
-      {
-        title: 'Trabá el anillo',
-        desc: 'Presioná la base y girá el anillo hasta que trabe.',
-        icon: 'rotate',
-      },
-      {
-        title: 'Ajustá y acercá el celu',
-        desc: 'Ajustá el brazo y el giro 360° a tu gusto y acercá el celular: queda pegado al instante.',
-        video: '/instalacion/soporte/04-ajusta-y-acerca.mp4',
-      },
+      'Limpiá con la toallita 1 y secá con la 2.',
+      'Apoyá la base firme sobre la superficie limpia.',
+      'Presioná y girá el seguro hasta que trabe.',
+      'Para sacarlo: girá a OPEN y tirá de la lengüeta.',
     ],
   },
 
-  tip: {
-    title: 'Para sacarlo',
-    desc: 'Girá el anillo a OPEN y tirá de la lengüeta.',
+  ring: {
+    title: '¿Necesitás el aro?',
+    lead: 'Sólo si tu celular o tu funda no son MagSafe. Si ya lo son, no hace falta.',
+    image: {
+      src: '/what-includes/funciona-con-todos-los-celulares.webp',
+      alt: 'Funciona con todos los celulares. Listo para MagSafe: iPhone 12 en adelante y celulares con funda MagSafe. Usá el aro metálico incluido para celulares sin MagSafe y fundas sin MagSafe.',
+      width: 1600,
+      height: 1600,
+    },
+    rule: {
+      title: 'Del lado de afuera de la funda, centrado',
+      desc: 'Nunca entre la funda y el celular.',
+    },
+    stepsImage: {
+      src: '/what-includes/compatibilidad-universal.webp',
+      alt: 'Si tu celular no tiene MagSafe: 1, limpiá la parte trasera de tu funda con las toallitas. 2, pegá el aro magnético en la parte externa de la funda y presioná 10 segundos. 3, dejalo reposar 60 minutos antes de usarlo. Si tu celular o funda ya son compatibles con MagSafe, no hace falta instalar el aro.',
+      width: 1600,
+      height: 1600,
+    },
+    steps: [
+      'Limpiá atrás de la funda con la toallita 1 y secá con la 2.',
+      'Pegá el aro centrado y presioná fuerte 10 segundos.',
+      'Dejalo reposar 60 minutos antes de usarlo.',
+    ],
+    notes: [
+      { icon: 'plus', text: 'La caja trae 2 aros: uno de repuesto, o para otro celular.' },
+      {
+        icon: 'alert',
+        text: 'Para sacar el celu, deslizalo de costado. Si tirás hacia afuera, con el tiempo despegás el aro.',
+      },
+    ],
   },
 
   troubleshooting: {
     title: 'Si algo no funciona',
     items: [
       {
-        q: 'Se despega',
-        a: 'Lavá la base con agua, dejala secar al aire y volvé a instalarla: recupera la adherencia.',
-      },
-      {
-        q: 'Mi tablero es texturado o de cuero',
-        a: 'El gel necesita una superficie lisa. Probá en una zona más lisa del tablero o directamente en el vidrio.',
-      },
-      {
         q: 'El imán agarra poco',
-        a: 'Casi siempre es una funda muy gruesa entre el imán y el celular. Pegá el aro en la parte de afuera de la funda y va a agarrar firme.',
+        a: [
+          'Si usás una funda que no es MagSafe, tenés que usar el aro en la parte de afuera de la funda.',
+          'Revisá que el aro no haya quedado imantado: si lo despegaste o estuvo pegado a otro imán, puede magnetizarse y repeler. Sacalo y pegá el de repuesto.',
+        ],
       },
       {
-        q: 'No pega en el tablero',
-        a: 'Repetí la limpieza con las dos toallitas y esperá a que seque. Apoyá la base en una zona plana, presioná unos segundos y recién ahí trabá el anillo. Si el tablero es curvo, usá el vidrio.',
+        q: 'Se me despega el aro adhesivo',
+        a: [
+          'Algunas fundas (silicona, cuero, con textura o con recubrimiento antiadherente) no dejan que el adhesivo pegue bien.',
+          'Probá con otra funda o pasate a una funda MagSafe.',
+          'Para sacar el celu, deslizalo de costado, sin tironear.',
+        ],
+      },
+      {
+        q: 'La base se despega',
+        a: ['Lavala con agua, dejala secar al aire y vuelve a agarrar como nueva.'],
       },
     ],
   },
@@ -124,12 +128,5 @@ export const SOPORTE_INSTALACION = {
     instagramLead: 'Tips y novedades en',
   },
 
-  crossSell: {
-    eyebrow: 'Completá tu auto',
-    name: PARASOL.brand.tagline,
-    pitch: 'Tu auto fresco aunque quede al sol.',
-    image: PARASOL.bundles[0].image,
-    href: '/parasol',
-    cta: 'Conocelo',
-  },
+  outro: { label: 'Mirá todos nuestros productos', href: '/tienda' },
 } satisfies InstallGuideConfig;

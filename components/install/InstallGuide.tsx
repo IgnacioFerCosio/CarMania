@@ -5,39 +5,36 @@
  * `InstallGuideConfig` y `lib/landings/instalacion/`). Una sola columna,
  * pensada para 375 px; en desktop sólo se centra.
  *
+ * Más imagen que texto: el video completo arriba, las imágenes del carrusel
+ * enteras (object-contain) y, debajo de cada una, una línea corta por paso —
+ * a 375 px el texto que traen las imágenes queda ilegible.
+ *
  * Server Component a propósito: lo único interactivo es el desplegable de
  * "Si algo no funciona", y va con <details> nativo, sin JS.
  *
- * Carga: el video principal es el único que baja de entrada (con poster,
- * para que haya algo apenas abre). Los clips de los pasos van con LazyVideo
- * y las imágenes con loading="lazy".
+ * Carga: el video es lo único que baja de entrada (con poster, para que haya
+ * algo apenas abre). Las imágenes van con loading="lazy".
  */
-import Link from 'next/link';
 import { INSTAGRAM, WHATSAPP } from '@/lib/config';
-import type { InstallGuideConfig } from '@/lib/landings/types';
+import type { InstallGuideConfig, InstallImage } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
-import { LazyVideo } from '@/components/ui/LazyVideo';
 
 export function InstallGuide({ config }: { config: InstallGuideConfig }) {
-  const { box, ring, steps, tip, troubleshooting, help, crossSell } = config;
+  const { box, steps, ring, troubleshooting, help, outro } = config;
   const whatsappUrl = `https://wa.me/${WHATSAPP.number}?text=${encodeURIComponent(help.whatsappPrefilled)}`;
 
   return (
-    <main className="mx-auto max-w-2xl px-4 pb-12 pt-7 sm:pt-10 md:px-6 md:pt-14">
-      {/* 1. Título + video principal */}
+    <main className="mx-auto max-w-2xl px-4 pb-12 pt-6 sm:pt-10 md:px-6 md:pt-12">
+      {/* 1. Título corto + video completo, a sangre en mobile */}
       <header className="text-center">
         <p className="eyebrow">{config.eyebrow}</p>
-        <h1 className="heading-display mt-2 text-[28px] leading-[1.05] sm:text-4xl md:text-5xl">
+        <h1 className="heading-display mt-1.5 text-[34px] leading-none sm:text-5xl">
           <Accented text={config.title} accent={config.titleAccent} />
         </h1>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-300 md:text-base">
-          {config.intro}
-        </p>
       </header>
 
-      <div className="mt-6 aspect-square w-full overflow-hidden rounded-2xl border border-ink-800 bg-ink-900 md:mt-8">
-        {/* Con `controls`, a diferencia de los clips: acá el cliente puede
-            querer pausar o volver atrás para ver un paso. */}
+      <div className="-mx-4 mt-5 aspect-square overflow-hidden bg-ink-900 sm:mx-0 sm:mt-7 sm:rounded-2xl sm:border sm:border-ink-800">
+        {/* Con `controls`: el cliente puede querer pausar o volver a un paso. */}
         <video
           src={config.video.src}
           poster={config.video.poster}
@@ -55,109 +52,88 @@ export function InstallGuide({ config }: { config: InstallGuideConfig }) {
 
       {/* 2. Qué trae la caja */}
       <Section title={box.title}>
-        <ul className="divide-y divide-ink-800 overflow-hidden rounded-2xl border border-ink-800 bg-ink-900/60">
+        <ul className="grid grid-cols-3 gap-2 sm:gap-3">
           {box.items.map((item) => (
-            <li key={item.name} className="flex items-center gap-3 px-4 py-3.5">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent/15 font-display text-sm font-black italic text-accent">
-                {item.qty}×
+            <li
+              key={item.name}
+              className="flex flex-col items-center rounded-2xl border border-ink-800 bg-ink-900/60 px-2 py-4 text-center"
+            >
+              <span className="font-display text-3xl font-black italic leading-none text-accent">
+                {item.qty}
               </span>
-              <div className="min-w-0">
-                <p className="text-[15px] font-semibold leading-tight text-white">{item.name}</p>
-                {item.note && <p className="mt-0.5 text-[13px] text-ink-400">{item.note}</p>}
-              </div>
+              <span className="mt-2 text-[13px] font-semibold leading-tight text-white">{item.name}</span>
+              {item.note && <span className="mt-1 text-[11px] leading-tight text-ink-400">{item.note}</span>}
             </li>
           ))}
         </ul>
       </Section>
 
-      {/* 3. ¿Necesitás el aro? */}
+      {/* 3. Paso a paso */}
+      <Section title={steps.title}>
+        <Figure image={steps.image} />
+        <NumberedList items={steps.items} />
+      </Section>
+
+      {/* 4. El aro */}
       {ring && (
         <Section title={ring.title}>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {ring.cases.map((c) => (
-              <div
-                key={c.who}
-                className={`rounded-2xl border p-4 ${
-                  c.tone === 'ok' ? 'border-ink-800 bg-ink-900/60' : 'border-accent/40 bg-accent/[0.07]'
-                }`}
-              >
-                <p className="text-[13px] font-semibold uppercase tracking-wider text-ink-400">{c.who}</p>
-                <p className="mt-1.5 flex items-center gap-2 font-display text-lg font-black uppercase italic text-white">
-                  <Icon
-                    name={c.tone === 'ok' ? 'check' : 'alert'}
-                    className={`h-5 w-5 shrink-0 ${c.tone === 'ok' ? 'text-emerald-400' : 'text-accent'}`}
-                  />
-                  {c.verdict}
-                </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-300">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
+          <p className="-mt-1 mb-4 text-[15px] leading-snug text-ink-300">{ring.lead}</p>
+          <Figure image={ring.image} />
 
-      {/* 4. Pasos */}
-      <Section title={steps.title}>
-        <ol className="space-y-4">
-          {steps.items.map((s, i) => (
-            <li key={s.title} className="overflow-hidden rounded-2xl border border-ink-800 bg-ink-900/60">
-              {/* El aspect-ratio reserva el lugar antes de que monte el video. */}
-              <div className="relative aspect-video w-full overflow-hidden bg-ink-900">
-                {s.video ? (
-                  <LazyVideo src={s.video} className="h-full w-full object-cover" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(215,7,7,0.18),transparent_65%)]">
-                    {s.icon && <Icon name={s.icon} className="h-14 w-14 text-accent" />}
-                  </div>
-                )}
-              </div>
-              <div className="flex gap-3 p-4">
-                <span className="font-display text-2xl font-black italic leading-none text-accent">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="font-display text-base font-black uppercase italic tracking-wide text-white">
-                    {s.title}
-                  </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-ink-300">{s.desc}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-
-        {tip && (
-          <div className="mt-4 flex gap-3 rounded-2xl border-2 border-accent bg-accent/10 p-4">
-            <Icon name="rotate-left" className="mt-0.5 h-6 w-6 shrink-0 text-accent" />
+          <div className="mt-4 flex items-center gap-3 rounded-2xl border-2 border-accent bg-accent/10 p-4">
+            <Icon name="alert" className="h-7 w-7 shrink-0 text-accent" />
             <div>
-              <p className="font-display text-base font-black uppercase italic text-white">{tip.title}</p>
-              <p className="mt-0.5 text-sm leading-relaxed text-ink-200">{tip.desc}</p>
+              <p className="font-display text-base font-black uppercase italic leading-tight text-white">
+                {ring.rule.title}
+              </p>
+              <p className="mt-0.5 text-sm text-ink-200">{ring.rule.desc}</p>
             </div>
           </div>
-        )}
-      </Section>
+
+          <div className="mt-6">
+            <Figure image={ring.stepsImage} />
+            <NumberedList items={ring.steps} />
+          </div>
+
+          <ul className="mt-4 space-y-2">
+            {ring.notes.map((n) => (
+              <li key={n.text} className="flex gap-3 rounded-xl bg-ink-900/60 px-4 py-3">
+                <Icon name={n.icon} className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                <span className="text-sm leading-snug text-ink-200">{n.text}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       {/* 5. Si algo no funciona */}
       <Section title={troubleshooting.title}>
         <div className="divide-y divide-ink-800 overflow-hidden rounded-2xl border border-ink-800 bg-ink-900/60">
           {troubleshooting.items.map((item) => (
             <details key={item.q} className="group">
-              <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5 transition hover:bg-ink-900 [&::-webkit-details-marker]:hidden">
-                <span className="text-[15px] font-semibold leading-snug text-white">{item.q}</span>
+              <summary className="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3.5 transition hover:bg-ink-900 [&::-webkit-details-marker]:hidden">
+                <span className="text-base font-semibold leading-snug text-white">{item.q}</span>
                 <Icon
                   name="chevron-down"
                   className="h-5 w-5 shrink-0 text-accent transition-transform group-open:rotate-180"
                 />
               </summary>
-              <p className="px-4 pb-4 text-sm leading-relaxed text-ink-300">{item.a}</p>
+              <ul className="space-y-2 px-4 pb-4">
+                {item.a.map((line) => (
+                  <li key={line} className="flex gap-2.5 text-sm leading-relaxed text-ink-300">
+                    <span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    {line}
+                  </li>
+                ))}
+              </ul>
             </details>
           ))}
         </div>
       </Section>
 
-      {/* 6. Cierre: WhatsApp + Instagram */}
+      {/* 6. Cierre: WhatsApp + Instagram, y a la tienda */}
       <section className="mt-10 text-center md:mt-14">
-        <h2 className="heading-display text-xl sm:text-2xl md:text-3xl">{help.title}</h2>
+        <h2 className="heading-display text-2xl md:text-3xl">{help.title}</h2>
         <a
           href={whatsappUrl}
           target="_blank"
@@ -179,36 +155,16 @@ export function InstallGuide({ config }: { config: InstallGuideConfig }) {
             {INSTAGRAM.handle}
           </a>
         </p>
-      </section>
 
-      {/* 7. Venta cruzada, discreta */}
-      {crossSell && (
-        <Link
-          href={crossSell.href}
-          className="mt-10 flex items-center gap-3 rounded-2xl border border-dashed border-ink-700 bg-ink-900/40 p-3 transition hover:border-ink-500 md:mt-14"
+        <a
+          href={outro.href}
+          className="mt-8 flex h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full bg-accent px-4 text-sm font-black uppercase italic text-white shadow-[0_4px_14px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 sm:text-base sm:tracking-wide"
         >
-          {/* <img> plano: en Cloudflare `/_next/image` no optimiza. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={crossSell.image}
-            alt={crossSell.name}
-            width={160}
-            height={160}
-            loading="lazy"
-            decoding="async"
-            className="h-16 w-16 shrink-0 rounded-xl bg-ink-950 object-cover"
-          />
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-500">{crossSell.eyebrow}</p>
-            <p className="text-sm font-semibold text-white">{crossSell.name}</p>
-            <p className="text-[13px] leading-snug text-ink-400">{crossSell.pitch}</p>
-          </div>
-          <span className="flex shrink-0 items-center gap-1 text-xs font-bold uppercase tracking-wider text-ink-300">
-            {crossSell.cta}
-            <Icon name="arrow-right" className="h-3.5 w-3.5" />
-          </span>
-        </Link>
-      )}
+          <Icon name="store" className="hidden h-5 w-5 shrink-0 sm:block" />
+          {outro.label}
+          <Icon name="arrow-right" className="h-4 w-4 shrink-0" />
+        </a>
+      </section>
     </main>
   );
 }
@@ -216,9 +172,40 @@ export function InstallGuide({ config }: { config: InstallGuideConfig }) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-10 md:mt-14">
-      <h2 className="heading-display mb-4 text-xl sm:text-2xl md:text-3xl">{title}</h2>
+      <h2 className="heading-display mb-4 text-2xl md:text-3xl">{title}</h2>
       {children}
     </section>
+  );
+}
+
+/** Imagen entera, a todo el ancho de la columna. */
+function Figure({ image }: { image: InstallImage }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- en Cloudflare `/_next/image` no optimiza
+    <img
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      loading="lazy"
+      decoding="async"
+      className="h-auto w-full rounded-2xl bg-ink-900 object-contain"
+    />
+  );
+}
+
+function NumberedList({ items }: { items: readonly string[] }) {
+  return (
+    <ol className="mt-3 space-y-2">
+      {items.map((text, i) => (
+        <li key={text} className="flex items-center gap-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent font-display text-sm font-black italic text-white">
+            {i + 1}
+          </span>
+          <span className="text-[15px] leading-snug text-ink-200">{text}</span>
+        </li>
+      ))}
+    </ol>
   );
 }
 

@@ -50,9 +50,14 @@ presencia web del producto.
   lado de Shopify (canal de ventas de Meta), NO en este repo.
 
 ## Datos de producto (¡importante para el copy!)
-- El kit incluye **1 (una) chapita metálica adhesiva por unidad** — NO tres.
-- Compatible con MagSafe nativo; si el celular no tiene MagSafe, se usa la
-  chapita metálica adhesiva incluida.
+- El kit nuevo trae **2 aros metálicos adhesivos** (uno de repuesto) y 2
+  toallitas (1 húmeda + 1 seca); ya no trae el adhesivo que muestra
+  `what-includes/QueIncluye.webp`. Así lo dice la guía de instalación
+  (`lib/landings/instalacion/soporte.ts`); el copy de venta de `/` todavía
+  no se revisó contra esto.
+- Compatible con MagSafe nativo; si el celular o la funda no son MagSafe, se
+  pega el aro del lado de afuera de la funda, centrado (nunca entre la funda
+  y el celular).
 
 ## Archivos clave
 - `lib/config.ts` — ~90% del copy editable: textos, precios fallback,
