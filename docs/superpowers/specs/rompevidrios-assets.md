@@ -46,6 +46,17 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-15 | `packs/pack-6x.webp` | Packs | Foto de producto | 1:1 | 6 llaveros en abanico. | 1600×1600 |
 | RV-16 | `cierre/llave-en-mano.webp` | Cierre | Foto | 16:9 | Plano tranquilo: llaves con el llavero sobre el tablero, de noche, con luz de ciudad. | 1600×900 |
 
+**Maqueta local (para ver cómo queda antes de filmar):** guardá cualquier
+video o foto de referencia en `public/mock/` con el ID del slot como nombre:
+`RV-04.mp4`, `RV-02.jpg`, etc. Los videos van en `.mp4`; las fotos pueden
+ser `.webp`, `.jpg`, `.jpeg` o `.png`. En `npm run dev` se dibujan encima del
+placeholder (recargá la página); si un slot no tiene archivo, sigue el
+placeholder. La carpeta está en `.gitignore` y el código sólo la mira en
+dev, así que **nunca llega al repo, a las previews ni a producción**: ahí
+puede ir material que no es nuestro. No reemplaza al asset final: eso sigue
+siendo subir `slot.src` y pasar `pending` a `false`. (En la consola de dev
+van a aparecer 404 de `/mock/...` por los slots sin archivo; es esperable.)
+
 **Card de `/tienda`:** mientras no llegue RV-13 usa
 `tienda/proximamente.webp`, un placeholder propio (llave roja + nombre). La
 card "Próximamente" sí se ve en producción, y con la ruta de RV-13 se vería

@@ -42,7 +42,9 @@ presencia web del producto.
   con `pending: true` se ve un placeholder que dice qué va (ID `RV-xx`,
   brief, spec, ruta); subido el archivo, se pasa a `false`. `check:assets`
   lee los slots pendientes de la config y falla si un `pending: false` no
-  tiene archivo o si un `pending: true` ya lo tiene. **No hay pack de 1**:
+  tiene archivo o si un `pending: true` ya lo tiene. En `npm run dev`, un
+  archivo en `public/mock/<ID>.*` (gitignored, nunca se deploya) se dibuja
+  encima del placeholder, para maquetar con referencias. **No hay pack de 1**:
   los ids `single`/`double`/`triple` son 2, 4 y 6 unidades. Checklist en
   `docs/superpowers/specs/rompevidrios-assets.md`.
 - **`comingSoon` y las previews:** una landing con `comingSoon` da 404 en

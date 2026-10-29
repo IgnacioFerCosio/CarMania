@@ -30,6 +30,41 @@ const KIND: Record<Slot['kind'], { icon: IconName; label: string }> = {
   gif: { icon: 'play', label: 'GIF (MP4)' },
 };
 
+/**
+ * Maqueta local, SÓLO en `npm run dev`: si en `public/mock/<id>.*` hay un
+ * archivo (p. ej. `public/mock/RV-04.mp4`), se dibuja encima del placeholder
+ * para ver cómo queda la página. La carpeta está en .gitignore: nunca llega al
+ * repo, a las previews ni a producción. Lo que vaya ahí es referencia, no el
+ * asset final (ese sigue siendo `slot.src` con `pending: false`).
+ *
+ * Sin JS ni `fs`: si el archivo no existe, el `<video>` queda transparente y
+ * el fondo no pinta nada, así que se sigue viendo el placeholder de abajo.
+ */
+function LocalMock({ slot }: { slot: Slot }) {
+  const base = `/mock/${slot.id}`;
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: ['webp', 'jpg', 'jpeg', 'png'].map((e) => `url(${base}.${e})`).join(', '),
+        }}
+      />
+      {slot.kind !== 'image' && (
+        <video
+          src={`${base}.mp4`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+    </>
+  );
+}
+
 export function MediaSlot({
   slot,
   tone = 'dark',
@@ -79,6 +114,7 @@ export function MediaSlot({
           <br />
           <code className="break-all">{slot.src}</code>
         </p>
+        {process.env.NODE_ENV === 'development' && <LocalMock slot={slot} />}
       </div>
     );
   }

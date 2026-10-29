@@ -13,6 +13,7 @@
     "/instalacion/*",
     "/instagram/*",
     "/medidas/*",
+    "/mock/*",
     "/payments/*",
     "/surfaces/*",
     "/use-cases/*",

@@ -16,3 +16,7 @@ tsconfig.tsbuildinfo
 .claude/settings.local.json
 
 .vercel
+
+# Maquetas locales de /rompevidrios (MediaSlot, sólo `npm run dev`).
+# Material de referencia: NO va al repo ni a Cloudflare.
+public/mock/
