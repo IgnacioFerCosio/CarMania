@@ -261,6 +261,102 @@ export type LandingConfig = {
 };
 
 /**
+ * Un lugar de la página donde va una foto, un "GIF" o un video. Mientras el
+ * archivo no exista (`pending: true`), `MediaSlot` dibuja una caja que dice
+ * qué va ahí; cuando lo subís con ese nombre y pasás `pending` a false,
+ * aparece solo.
+ *
+ * `check:assets` lee los slots con `pending: true` directo de la config y no
+ * los marca como faltantes. Uno con `pending: false` sin archivo, sí. Para
+ * que el script los encuentre, cada slot va como objeto literal sin llaves
+ * adentro.
+ */
+export type MediaSlot = {
+  /** ID corto para hablar del asset: 'RV-01', 'RV-02'… */
+  id: string;
+  /** Los "GIF" se entregan como MP4 cortos, nunca como .gif. */
+  kind: 'image' | 'video' | 'gif';
+  /** Ruta final en /public, aunque el archivo todavía no exista. */
+  src: string;
+  /** Poster para videos (primer frame). */
+  poster?: string;
+  /** Proporción para reservar el espacio. */
+  aspect: '1:1' | '4:5' | '9:16' | '16:9' | '3:2';
+  alt: string;
+  /** Qué tiene que mostrar, en una frase. Se ve en el placeholder. */
+  brief: string;
+  /** Formato y especificación técnica. Se ve en el placeholder. */
+  spec: string;
+  /** true = el archivo todavía no existe → se muestra el placeholder. */
+  pending: boolean;
+  /**
+   * Video con sonido (el del bombero): va con controles y sin autoplay,
+   * porque un autoplay con audio el navegador lo bloquea.
+   */
+  withAudio?: boolean;
+};
+
+/**
+ * Landing tipo advertorial (`/rompevidrios`): una nota larga que cuenta una
+ * historia, demuestra que funciona y recién al final vende. Reusa Pricing,
+ * FAQ y Reviews, así que es un `LandingConfig` completo más este bloque con
+ * el copy y los slots de cada sección. Los campos de `LandingConfig` que la
+ * página no renderiza (useCases, steps, benefits…) van vacíos.
+ */
+export type AdvertorialData = {
+  /** Texto de la barra de arriba. */
+  promoBar: string;
+  /** El botón que se repite en la página: siempre baja a los packs. */
+  cta: { label: string; href: string };
+  hero: {
+    /** "[cifra] conductores ya lo llevan": se oculta si `brand.socialProofCount` está vacío. */
+    socialProofSuffix: string;
+    title: string;
+    sub: string;
+    bullets: readonly string[];
+    /** Línea chica debajo del botón. */
+    note: string;
+    media: MediaSlot;
+  };
+  story: {
+    title: string;
+    paragraphs: readonly string[];
+    /** Después de cuántos párrafos va la media. */
+    mediaAfter: number;
+    media: MediaSlot;
+    /** Cierre del bloque, en negrita. */
+    closing: string;
+  };
+  myth: { title: string; paragraphs: readonly string[]; media: MediaSlot };
+  proof: { title: string; body: string; media: MediaSlot; secondary: MediaSlot };
+  steps: {
+    title: string;
+    items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
+    exploded: { title: string; media: MediaSlot };
+  };
+  comparison: {
+    title: string;
+    /** La primera columna es la nuestra. */
+    columns: readonly string[];
+    /** true = ✓, false = ✗, string = texto tal cual ("depende del auto"). */
+    rows: readonly { label: string; values: readonly (boolean | string)[] }[];
+    media: MediaSlot;
+  };
+  expert: { title: string; caption: string; media: MediaSlot };
+  box: { title: string; items: readonly string[]; media: MediaSlot };
+  reviews: { title: string; placeholder: string };
+  packs: { sub: string; footnote: string; images: Record<Bundle['id'], MediaSlot> };
+  guarantee: { title: string; body: string };
+  closing: {
+    title: string;
+    columns: readonly { tone: 'without' | 'with'; text: string }[];
+    media: MediaSlot;
+  };
+};
+
+export type AdvertorialConfig = LandingConfig & { advertorial: AdvertorialData };
+
+/**
  * Guía de instalación post-compra (`/<producto>/instalacion`), la página a la
  * que lleva el QR de la caja. La arma `InstallGuide` con un objeto de estos
  * por producto, en `lib/landings/instalacion/<producto>.ts`.

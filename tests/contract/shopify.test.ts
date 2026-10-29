@@ -25,6 +25,7 @@ import { readFileSync } from 'node:fs';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
+import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
 import type { LandingConfig, UpsellTier } from '@/lib/landings/types';
 
@@ -94,6 +95,7 @@ const LANDINGS: [string, LandingConfig][] = [
   ['/', SOPORTE],
   ['/parasol', PARASOL],
   ['/soplador', SOPLADOR],
+  ['/rompevidrios', ROMPEVIDRIOS],
 ];
 
 /** Sólo los tiers ya cargados: '' significa "no existe todavía", y eso es legítimo. */

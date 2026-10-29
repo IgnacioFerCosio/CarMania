@@ -34,6 +34,23 @@ presencia web del producto.
   `/public/instalacion/<producto>/` (una sola carpeta excluida en
   `_routes.json`, sin chocar con ninguna página). `/soporte` no tiene página:
   301 a `/` desde `redirects()` de `next.config.js`.
+- **`/rompevidrios` es un advertorial**, no una landing de producto: una nota
+  larga (historia → mito → prueba → cómo funciona → comparativa) que termina
+  en los packs, con secciones negras y blancas alternadas. Componentes en
+  `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
+  (`lib/landings/rompevidrios.ts`). Cada foto/video es un **`MediaSlot`**:
+  con `pending: true` se ve un placeholder que dice qué va (ID `RV-xx`,
+  brief, spec, ruta); subido el archivo, se pasa a `false`. `check:assets`
+  lee los slots pendientes de la config y falla si un `pending: false` no
+  tiene archivo o si un `pending: true` ya lo tiene. **No hay pack de 1**:
+  los ids `single`/`double`/`triple` son 2, 4 y 6 unidades. Checklist en
+  `docs/superpowers/specs/rompevidrios-assets.md`.
+- **`comingSoon` y las previews:** una landing con `comingSoon` da 404 en
+  producción, pero se ve en `npm run dev` y en las previews de Cloudflare
+  (cualquier rama que no sea `main`: `next.config.js` arma
+  `CARMANIA_PREVIEW` con `CF_PAGES_BRANCH`). `showsDrafts()` en
+  `lib/config.ts` es esa misma regla, para secciones que esperan material
+  real (bombero y reseñas de `/rompevidrios`).
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el
@@ -154,7 +171,7 @@ Buildea en `.next-verify`, así que **no le rompe el cache al `next dev`** que
 tengas levantado.
 
 **El gate de prerender** es el que más vale. Compara el HTML prerenderizado de
-las 5 rutas contra un baseline en `tests/baseline/`. Existe porque acá casi
+las 6 rutas contra un baseline en `tests/baseline/`. Existe porque acá casi
 todo es compartido: tocar el Navbar, `lib/config.ts` o el `CartProvider` mueve
 las cuatro páginas a la vez, y `/` es la que factura.
 
@@ -206,7 +223,7 @@ y su config a `LANDINGS` en los dos tests. Una guía de instalación va sólo a
   como estáticos. Si agregás una carpeta a /public, sumala a `exclude`
   (`check:routes` falla si no). **No excluyas** las páginas ni
   `/_next/image`: esas las resuelve la Function. Ojo con `/parasol`,
-  `/tienda` y `/soplador`, que son página y carpeta a la vez: se excluyen
+  `/tienda`, `/soplador` y `/rompevidrios`, que son página y carpeta a la vez: se excluyen
   sus subcarpetas, nunca `/parasol/*`. `check:routes` busca páginas en todo
   `app/` (anidadas incluidas, como `/soporte/instalacion`) y también protege
   los `redirects()` de `next.config.js`.

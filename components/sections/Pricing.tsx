@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
 import { PAYMENTS, RETURNS } from '@/lib/config';
 import { SOPORTE } from '@/lib/landings/soporte';
-import type { LandingConfig } from '@/lib/landings/types';
+import type { Bundle, LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 import { BuyButton } from '@/components/commerce/BuyButton';
@@ -11,14 +11,33 @@ type Props = {
   productId: string;
   bundlesData: Record<string, BundleData>; // keyed by productId
   config?: LandingConfig;
+  /** Ancla de la sección. `/rompevidrios` la llama `packs`. */
+  id?: string;
+  /** Bajada debajo del título. */
+  sub?: string;
+  /** Línea chica debajo de la grilla. */
+  footnote?: string;
+  /**
+   * Reemplaza la foto de cada card (por id de bundle). Lo usa
+   * `/rompevidrios` para mostrar placeholders mientras no hay fotos.
+   */
+  bundleMedia?: Partial<Record<Bundle['id'], React.ReactNode>>;
 };
 
-export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
+export function Pricing({
+  productId,
+  bundlesData,
+  config = SOPORTE,
+  id = 'pricing',
+  sub,
+  footnote,
+  bundleMedia,
+}: Props) {
   const { brand, bundles, sectionCopy } = config;
 
   return (
     <section
-      id="pricing"
+      id={id}
       className="relative overflow-hidden bg-ink-950 py-14 sm:py-20 md:py-28"
     >
       {/* Línea acento superior */}
@@ -30,17 +49,23 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         {/* ── Header — rating + título + sub pills ───────────────────── */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-2">
-            <Stars rating={brand.averageRating} size={18} />
-            <span className="text-sm font-semibold text-accent">
-              {brand.averageRating}/5 · {brand.socialProofCount} {brand.socialProofLabel}
-            </span>
-          </div>
+          {/* Sin cifra real de clientes (producto nuevo) no se muestra. */}
+          {brand.socialProofCount && (
+            <div className="inline-flex items-center gap-2">
+              <Stars rating={brand.averageRating} size={18} />
+              <span className="text-sm font-semibold text-accent">
+                {brand.averageRating}/5 · {brand.socialProofCount} {brand.socialProofLabel}
+              </span>
+            </div>
+          )}
 
           <h2 className="heading-display mt-3 text-2xl leading-tight sm:mt-4 sm:text-3xl md:text-5xl lg:text-6xl">
             {`${sectionCopy.pricingTitle} `}
             <span className="text-accent">{sectionCopy.pricingTitleAccent}</span>
           </h2>
+          {sub && (
+            <p className="mx-auto mt-3 max-w-xl text-[15px] text-ink-300 sm:text-base">{sub}</p>
+          )}
 
           <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-300 sm:mt-6 sm:gap-x-6 sm:text-xs md:text-sm">
             <li className="inline-flex items-center gap-1.5">
@@ -134,7 +159,11 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                 </div>
 
                 {/* Foto del producto */}
-                <BundleImage src={b.image} alt={b.label} accent={b.recommended} />
+                {bundleMedia?.[b.id] ? (
+                  <div className="my-5">{bundleMedia[b.id]}</div>
+                ) : (
+                  <BundleImage src={b.image} alt={b.label} accent={b.recommended} />
+                )}
 
                 {/* Precios */}
                 <div className="mt-2 text-center">
@@ -206,6 +235,12 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
             );
           })}
         </ul>
+
+        {footnote && (
+          <p className="mt-8 text-center text-xs font-semibold uppercase tracking-wider text-ink-300 sm:text-sm">
+            {footnote}
+          </p>
+        )}
 
         {/* ── Métodos de pago ────────────────────────────────────────── */}
         <div className="mt-10 flex flex-col items-center gap-3 sm:mt-12">

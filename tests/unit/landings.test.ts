@@ -9,7 +9,9 @@ import { describe, it, expect } from 'vitest';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
+import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
+import { buildTiers, nextTierOf } from '@/lib/tiers';
 import { STORE_PRODUCTS, STORE_PRICE_PERKS } from '@/lib/config';
 import type { LandingConfig } from '@/lib/landings/types';
 
@@ -17,6 +19,12 @@ const LANDINGS: Record<string, LandingConfig> = {
   '/': SOPORTE,
   '/parasol': PARASOL,
   '/soplador': SOPLADOR,
+  '/rompevidrios': ROMPEVIDRIOS,
+};
+
+/** Unidades de cada pack. El rompevidrios no tiene pack de 1. */
+const UNIDADES: Record<string, number[]> = {
+  '/rompevidrios': [2, 4, 6],
 };
 
 const GID_PRODUCT = /^gid:\/\/shopify\/Product\/\d+$/;
@@ -29,17 +37,18 @@ const GID_VARIANT = /^gid:\/\/shopify\/ProductVariant\/\d+$/;
  */
 const REDONDEO = 10;
 
-describe.each(Object.entries(LANDINGS))('landing %s', (_ruta, cfg) => {
+describe.each(Object.entries(LANDINGS))('landing %s', (ruta, cfg) => {
   const { bundles, upsellChain, fallbackPricing } = cfg;
   const single = bundles.find((b) => b.id === 'single')!;
   const double = bundles.find((b) => b.id === 'double')!;
   const triple = bundles.find((b) => b.id === 'triple')!;
 
-  it('tiene los 3 bundles con 1, 2 y 3 unidades', () => {
-    expect(bundles.map((b) => [b.id, b.quantity])).toEqual([
-      ['single', 1],
-      ['double', 2],
-      ['triple', 3],
+  it('tiene los 3 bundles con sus unidades (1, 2 y 3 salvo excepción)', () => {
+    const [a, b, c] = UNIDADES[ruta] ?? [1, 2, 3];
+    expect(bundles.map((x) => [x.id, x.quantity])).toEqual([
+      ['single', a],
+      ['double', b],
+      ['triple', c],
     ]);
   });
 
@@ -65,7 +74,7 @@ describe.each(Object.entries(LANDINGS))('landing %s', (_ruta, cfg) => {
     expect(porUnidad[2]).toBeLessThan(porUnidad[1]);
   });
 
-  it('fallbackPricing es espejo del bundle x1', () => {
+  it('fallbackPricing es espejo del primer pack', () => {
     expect(fallbackPricing.price).toBe(single.fallbackPrice);
     expect(fallbackPricing.compareAtPrice).toBe(single.fallbackCompare);
   });
@@ -105,6 +114,19 @@ describe('ALL_UPSELL_CHAINS', () => {
     const variantes = ALL_UPSELL_CHAINS.map((t) => t.fallbackVariantId).filter(Boolean);
     expect(new Set(productos).size).toBe(productos.length);
     expect(new Set(variantes).size).toBe(variantes.length);
+  });
+
+  it('el último pack de cada producto no ofrece como upsell el primero del siguiente', () => {
+    // Como si todos los productos ya existieran en Shopify: hoy el soplador y
+    // el rompevidrios tienen GIDs vacíos y `buildTiers` los saltearía.
+    const chain = ALL_UPSELL_CHAINS.map((t, i) => ({ ...t, fallbackVariantId: `v${i}` }));
+    const tiers = buildTiers({}, undefined, chain);
+    expect(tiers).toHaveLength(chain.length);
+    for (const cfg of Object.values(LANDINGS)) {
+      const ultimo = cfg.upsellChain[cfg.upsellChain.length - 1];
+      const i = ALL_UPSELL_CHAINS.indexOf(ultimo);
+      expect(nextTierOf(tiers, `v${i}`), cfg.brand.tagline).toBeNull();
+    }
   });
 });
 

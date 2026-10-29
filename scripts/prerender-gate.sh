@@ -44,7 +44,7 @@ DIST="${NEXT_BUILD_DIR:-.next-verify}"
 # Las rutas prerenderizadas. Si agregás una landing, sumala acá. Las anidadas
 # van con su ruta (`soporte/instalacion`); su baseline se aplana con guiones
 # (`soporte-instalacion.html`), ver `plano`.
-ROUTES=(index tienda parasol soplador soporte/instalacion)
+ROUTES=(index tienda parasol soplador rompevidrios soporte/instalacion)
 mode="${1:-check}"
 
 # Todas las páginas, antes de tocar nada. Sin esto, `norm … > baseline` trunca

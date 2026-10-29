@@ -32,7 +32,10 @@ export type IconName =
   | 'arrow-right'
   | 'plus'
   | 'trash'
-  | 'alert';
+  | 'alert'
+  | 'camera'
+  | 'video'
+  | 'play';
 
 type Props = { name: IconName } & SVGProps<SVGSVGElement>;
 
@@ -238,6 +241,24 @@ const PATHS: Record<IconName, JSX.Element> = {
     <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 3 2 21h20L12 3Z" />
       <path d="M12 10v5M12 18h.01" />
+    </g>
+  ),
+  camera: (
+    <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinejoin="round">
+      <path d="M3 8h4l2-3h6l2 3h4v11H3V8Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </g>
+  ),
+  video: (
+    <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinejoin="round">
+      <rect x="3" y="6" width="13" height="12" rx="2" />
+      <path d="m16 10 5-3v10l-5-3" />
+    </g>
+  ),
+  play: (
+    <g stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M10 8.5v7l5.5-3.5L10 8.5Z" />
     </g>
   ),
 };

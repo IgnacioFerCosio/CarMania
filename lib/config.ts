@@ -280,13 +280,22 @@ export type StoreProduct = {
 };
 
 /**
- * Las cards que sí se pueden abrir. En `npm run dev` todo cuenta como
- * publicado, para poder armar y navegar una landing con `comingSoon`
- * (card, nav de /tienda y la ruta). El build de producción corre con
- * NODE_ENV=production, así que ahí el flag manda.
+ * true en `npm run dev` y en las previews de Cloudflare (ramas que no son
+ * `main`, ver `env` en next.config.js): ahí se ve lo que todavía no se
+ * publica — landings con `comingSoon` y secciones que esperan material real.
+ * En el build de producción es false.
+ */
+export function showsDrafts(): boolean {
+  return process.env.NODE_ENV === 'development' || process.env.CARMANIA_PREVIEW === '1';
+}
+
+/**
+ * Las cards que sí se pueden abrir. En dev y en las previews todo cuenta como
+ * publicado, para poder armar y navegar una landing con `comingSoon` (card,
+ * nav de /tienda y la ruta). En producción el flag manda.
  */
 export function isPublished(product: StoreProduct): boolean {
-  return !product.comingSoon || process.env.NODE_ENV === 'development';
+  return !product.comingSoon || showsDrafts();
 }
 
 export const STORE_PRODUCTS: readonly StoreProduct[] = [
@@ -335,6 +344,23 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     badge: 'NUEVO',
     comingSoon: true,
   },
+  {
+    // ⚠️ Igual que el soplador: el producto no existe en Shopify y faltan
+    // todas las fotos y videos (ver docs/superpowers/specs/rompevidrios-assets.md).
+    // La foto es un placeholder propio hasta que llegue RV-13
+    // (`/rompevidrios/packs/pack-2x.webp`): la card "Próximamente" SÍ se ve
+    // en producción, y apuntarla a un archivo que no existe la mostraría rota.
+    handle: 'llavero-rescate-pro',
+    title: 'Llavero Rescate PRO™',
+    blurb:
+      'Rompevidrios a resorte y corta cinturón en el llavero. Lo apoyás, apretás y salís. Con vidrio de prueba incluido.',
+    image: '/rompevidrios/tienda/proximamente.webp',
+    href: '/rompevidrios',
+    fallbackPrice: 29990, // espejo de ROMPEVIDRIOS.fallbackPricing.price (pack 2x)
+    specTag: 'ROMPEVIDRIOS + CORTA CINTURÓN',
+    badge: 'NUEVO',
+    comingSoon: true,
+  },
 ] as const;
 
 /**
@@ -354,12 +380,11 @@ export const STORE_PRICE_PERKS = [
 
 /**
  * Slots vacíos de la grilla — completan las 4 columnas mientras el catálogo
- * tenga 2 productos. No son links: no hay a dónde ir todavía.
+ * tenga menos de 4 productos. No son links: no hay a dónde ir todavía.
  * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
+ * Vacío desde que entró el rompevidrios (4º producto).
  */
-export const STORE_COMING_SOON = [
-  { id: 'slot-4', specTag: 'EN CAMINO', badge: '2026' },
-] as const;
+export const STORE_COMING_SOON: readonly { id: string; specTag: string; badge: string }[] = [];
 
 /** Copy del encabezado de /tienda. */
 export const STORE_HEADLINES = {

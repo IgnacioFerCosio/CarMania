@@ -78,6 +78,35 @@ const PENDIENTES = new Set([
   '/steps/03-colocar.jpg',
 ]);
 
+/**
+ * Los `MediaSlot` con `pending: true` (lib/landings/types.ts) también son
+ * deuda conocida, pero no se listan a mano: se leen de la config. Cada slot
+ * es un objeto literal sin llaves adentro; de los que dicen `pending: true`
+ * se toman `src` y `poster`. Un slot con `pending: false` no entra acá, así
+ * que si su archivo no existe el check falla como cualquier otro.
+ *
+ * Ver docs/superpowers/specs/rompevidrios-assets.md
+ */
+const SLOTS_PENDIENTES = new Map(); // ruta -> id del slot
+for (const archivo of walkTs(join(ROOT, 'lib', 'landings'))) {
+  const texto = sinComentarios(readFileSync(archivo, 'utf8'));
+  for (const [obj] of texto.matchAll(/\{[^{}]*\bpending:\s*true\b[^{}]*\}/g)) {
+    const id = obj.match(/\bid:\s*'([^']+)'/)?.[1] ?? '?';
+    for (const m of obj.matchAll(/\b(?:src|poster):\s*'([^']+)'/g)) {
+      SLOTS_PENDIENTES.set(posix.normalize(m[1]), id);
+    }
+  }
+}
+
+function walkTs(dir, out = []) {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkTs(p, out);
+    else if (e.name.endsWith('.ts')) out.push(p);
+  }
+  return out;
+}
+
 function walk(dir, out = []) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {
     if (e.name === 'node_modules' || e.name.startsWith('.')) continue;
@@ -135,6 +164,7 @@ for (const [ruta, usadaEn] of referencias) {
     pendientesVistos.add(ruta);
     continue;
   }
+  if (SLOTS_PENDIENTES.has(ruta)) continue;
   faltan.push({ ruta, usadaEn });
 }
 
@@ -143,10 +173,16 @@ for (const [ruta, usadaEn] of referencias) {
 const yaNoHaceFalta = [...PENDIENTES].filter(
   (r) => !pendientesVistos.has(r) && existeConMayusculasExactas(r),
 );
+// Lo mismo con los slots: si el archivo ya está, el slot tiene que pasar a
+// `pending: false` (si no, la página sigue mostrando el placeholder).
+const slotsYaSubidos = [...SLOTS_PENDIENTES].filter(([r]) => existeConMayusculasExactas(r));
 
 console.log(`assets referenciados: ${referencias.size}`);
 if (pendientesVistos.size) {
   console.log(`pendientes conocidos: ${pendientesVistos.size} (ver los specs)`);
+}
+if (SLOTS_PENDIENTES.size) {
+  console.log(`slots pendientes:     ${SLOTS_PENDIENTES.size} (MediaSlot con pending: true)`);
 }
 
 let rc = 0;
@@ -165,6 +201,11 @@ if (yaNoHaceFalta.length) {
   rc = 1;
   console.error(`\nEstos ya existen y siguen en PENDIENTES — sacalos de la lista:`);
   for (const r of yaNoHaceFalta) console.error(`  ${r}`);
+}
+if (slotsYaSubidos.length) {
+  rc = 1;
+  console.error(`\nEstos slots ya tienen su archivo — pasalos a \`pending: false\`:`);
+  for (const [r, id] of slotsYaSubidos) console.error(`  ${id}  ${r}`);
 }
 if (!rc) console.log('OK    todos los assets existen');
 process.exit(rc);

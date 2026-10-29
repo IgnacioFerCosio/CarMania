@@ -14,6 +14,16 @@ const nextConfig = {
   // No exponemos en los headers que el sitio corre sobre Next.js.
   poweredByHeader: false,
 
+  // Las landings con `comingSoon` se ven en las previews de Cloudflare (toda
+  // rama que no sea `main`) y no en producción. Cloudflare define
+  // `CF_PAGES_BRANCH` en el build; `env` lo inlinea en el server Y en el
+  // cliente, así la card de /tienda (que hidrata) y la página dicen lo mismo.
+  // En local no existe: ahí el que manda es `NODE_ENV` (ver `isPublished`).
+  env: {
+    CARMANIA_PREVIEW:
+      process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== 'main' ? '1' : '',
+  },
+
   images: {
     remotePatterns: [
       {
