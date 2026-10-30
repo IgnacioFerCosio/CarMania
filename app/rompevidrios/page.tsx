@@ -50,6 +50,7 @@ import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
 import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
+import { ROMPEVIDRIOS_MOCK_REVIEWS } from '@/lib/landings/rompevidrios.mock-reviews';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
 
@@ -125,7 +126,13 @@ export default async function RompevidriosPage() {
       <main>
         {/* 1. Hero — el mismo de las otras landings, con el slot RV-01 */}
         <Hero
-          config={ROMPEVIDRIOS}
+          config={
+            // Carrusel de maqueta SÓLO en `npm run dev` (ver el archivo de
+            // mock-reviews). En preview y producción, sin reseñas reales no hay carrusel.
+            process.env.NODE_ENV === 'development'
+              ? { ...ROMPEVIDRIOS, reviews: ROMPEVIDRIOS_MOCK_REVIEWS }
+              : ROMPEVIDRIOS
+          }
           media={<MediaSlot slot={ADV.hero.media} fill eager sizes="(min-width: 768px) 50vw, 100vw" />}
         />
 

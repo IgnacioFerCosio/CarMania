@@ -117,8 +117,8 @@ export const ROMPEVIDRIOS = {
   // copy vive acá. De lo demás hasta `whatsappPrefilled`, lo que la página no
   // renderiza (useCases, steps, benefits…) va vacío: lo pide `LandingConfig`.
   headlines: {
-    heroLine1: 'Lo llevás colgado de la llave.',
-    heroLine2: 'Lo usás en 3 segundos.',
+    heroLine1: 'Tu herramienta de escape definitiva,',
+    heroLine2: 'siempre en el bolsillo',
     heroSub:
       'Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Y lo podés probar en casa antes de necesitarlo.',
     finalCta: 'Dos mañanas posibles.',
@@ -134,7 +134,7 @@ export const ROMPEVIDRIOS = {
     poster: '/rompevidrios/hero/hero-poster.webp',
     width: 1080,
     height: 1350,
-    badgeLine1: 'LISTO EN',
+    badgeLine1: 'ESCAPE EN',
     badgeLine2: '3 SEGUNDOS',
   },
   heroSubHighlights: ['el vidrio estalla', 'probar en casa'],
