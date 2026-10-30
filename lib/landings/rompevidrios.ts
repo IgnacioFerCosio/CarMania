@@ -122,7 +122,7 @@ export const ROMPEVIDRIOS = {
     heroSub:
       // Corta a propósito: en el celular entra en 3 renglones. El vidrio de
       // prueba lo cuentan el bloque del test y los packs.
-      'Pequeño pero poderoso. Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón.',
+      'Pequeño pero poderoso. Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Sin fuerza. Sin puntería.',
     finalCta: 'Dos mañanas posibles.',
     howItWorksLabel: '',
     howItWorksTitle: '',
