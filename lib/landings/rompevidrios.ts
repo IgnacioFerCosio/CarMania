@@ -120,7 +120,9 @@ export const ROMPEVIDRIOS = {
     heroLine1: 'Tu herramienta de escape definitiva',
     heroLine2: 'siempre en el bolsillo',
     heroSub:
-      'Chiquito pero poderoso. Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Y lo probás en casa con el vidrio de prueba que viene incluido.',
+      // Corta a propósito: en el celular entra en 3 renglones. El vidrio de
+      // prueba lo cuentan el bloque del test y los packs.
+      'Pequeño pero poderoso. Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón.',
     finalCta: 'Dos mañanas posibles.',
     howItWorksLabel: '',
     howItWorksTitle: '',
@@ -137,7 +139,7 @@ export const ROMPEVIDRIOS = {
     badgeLine1: 'ESCAPE EN',
     badgeLine2: '3 SEGUNDOS',
   },
-  heroSubHighlights: ['Chiquito pero poderoso.', 'el vidrio estalla', 'vidrio de prueba'],
+  heroSubHighlights: ['poderoso', 'el vidrio estalla', 'de un tirón'],
   sectionCopy: {
     pricingTitle: 'Elegí tu',
     pricingTitleAccent: 'pack',
