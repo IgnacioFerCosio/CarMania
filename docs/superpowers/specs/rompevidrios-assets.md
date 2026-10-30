@@ -46,6 +46,13 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-15 | `packs/pack-6x.webp` | Packs | Foto de producto | 1:1 | 6 llaveros en abanico. | 1600×1600 |
 | RV-16 | `cierre/llave-en-mano.webp` | Cierre | Foto | 16:9 | Plano tranquilo: llaves con el llavero sobre el tablero, de noche, con luz de ciudad. | 1600×900 |
 
+**Cómo optimizar el hero (RV-01), igual que `/` y `/parasol`:** 720 px de
+ancho como máximo (la caja del hero nunca pasa de ~600 px), H.264 sin audio,
+CRF 28–31, `faststart`. Así queda en ~0,7 Mbps. El poster
+(`hero/hero-poster.webp`) es **el primer cuadro del video ya encodeado**,
+para que no salte cuando arranca; es el LCP y la página lo precarga sola
+apenas el slot pasa a `pending: false`.
+
 **Maqueta local (para ver cómo queda antes de filmar):** guardá cualquier
 video o foto de referencia en `public/mock/` con el ID del slot como nombre:
 `RV-04.mp4`, `RV-02.jpg`, etc. Los videos van en `.mp4`; las fotos pueden

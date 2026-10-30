@@ -23,6 +23,7 @@
  */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import ReactDOM from 'react-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
@@ -82,6 +83,15 @@ const METADATA: Metadata = {
 export default async function RompevidriosPage() {
   if (!isPublished(STORE)) notFound();
   const drafts = showsDrafts();
+
+  // La portada del video del hero es el LCP, como en / y /parasol:
+  // `ReactDOM.preload()` la hoistea al principio de <head>. Apunta al mismo
+  // archivo que el `poster` del <video>, sin doble fetch. Mientras RV-01 sea
+  // placeholder no hay archivo que precargar.
+  const heroSlot = ADV.hero.media;
+  if (!heroSlot.pending && heroSlot.poster) {
+    ReactDOM.preload(heroSlot.poster, { as: 'image', fetchPriority: 'high', type: 'image/webp' });
+  }
 
   let productId = '';
   let bundlesData: Record<string, BundleData> = {};

@@ -58,6 +58,9 @@ function LocalMock({ slot }: { slot: Slot }) {
       {slot.kind !== 'image' && (
         <video
           src={`${base}.mp4`}
+          // Si hay un `<id>.webp` en la carpeta, hace de portada (como el
+          // poster de los heroes reales); si no, el navegador lo ignora.
+          poster={`${base}.webp`}
           autoPlay
           muted
           loop
@@ -153,6 +156,9 @@ export function MediaSlot({
           muted
           loop
           playsInline
+          // Igual que el <video> del Hero: la portada es el LCP (la página
+          // la precarga) y el video baja sólo la metadata hasta arrancar.
+          preload="metadata"
           className="h-full w-full object-cover"
         />
       ) : (
