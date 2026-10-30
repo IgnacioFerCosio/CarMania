@@ -117,10 +117,10 @@ export const ROMPEVIDRIOS = {
   // copy vive acá. De lo demás hasta `whatsappPrefilled`, lo que la página no
   // renderiza (useCases, steps, benefits…) va vacío: lo pide `LandingConfig`.
   headlines: {
-    heroLine1: 'Tu herramienta de escape definitiva,',
+    heroLine1: 'Tu herramienta de escape definitiva',
     heroLine2: 'siempre en el bolsillo',
     heroSub:
-      'Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Y lo podés probar en casa antes de necesitarlo.',
+      'Chiquito pero poderoso. Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Y lo probás en casa con el vidrio de prueba que viene incluido.',
     finalCta: 'Dos mañanas posibles.',
     howItWorksLabel: '',
     howItWorksTitle: '',
@@ -137,7 +137,7 @@ export const ROMPEVIDRIOS = {
     badgeLine1: 'ESCAPE EN',
     badgeLine2: '3 SEGUNDOS',
   },
-  heroSubHighlights: ['el vidrio estalla', 'probar en casa'],
+  heroSubHighlights: ['Chiquito pero poderoso.', 'el vidrio estalla', 'vidrio de prueba'],
   sectionCopy: {
     pricingTitle: 'Elegí tu',
     pricingTitleAccent: 'pack',
