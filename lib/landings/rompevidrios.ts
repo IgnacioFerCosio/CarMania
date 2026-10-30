@@ -321,23 +321,23 @@ export const ROMPEVIDRIOS = {
       items: [
         {
           n: 1,
-          title: 'Apoyalo',
-          desc: 'Contra la ventanilla lateral, en una esquina.',
+          title: 'Colocalo',
+          desc: 'En su soporte del auto o colgado de la llave: siempre a mano para cuando lo necesites.',
           media: {
             id: 'RV-06',
             kind: 'gif',
-            src: '/rompevidrios/pasos/01-apoyalo.mp4',
+            src: '/rompevidrios/pasos/01-colocalo.mp4',
             aspect: '1:1',
-            alt: 'El llavero apoyado en la esquina de la ventanilla lateral',
-            brief: 'Primer plano: el llavero apoyado en la esquina de la ventanilla lateral.',
-            spec: 'MP4 H.264 sin audio, loop 3 s, < 2 MB',
+            alt: 'El llavero encastrado en su soporte del auto y colgado de la llave',
+            brief: 'Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave.',
+            spec: 'MP4 H.264 sin audio, loop 4–6 s, < 2 MB',
             pending: true,
           },
         },
         {
           n: 2,
           title: 'Apretá',
-          desc: 'El resorte dispara la punta de tungsteno. El vidrio estalla. Sin fuerza.',
+          desc: 'Apoyalo en una esquina de la ventanilla y apretá: el resorte dispara la punta de tungsteno y el vidrio estalla. Sin fuerza.',
           media: {
             id: 'RV-07',
             kind: 'gif',

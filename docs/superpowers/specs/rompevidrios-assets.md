@@ -34,7 +34,7 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-03 | `historia/apoyacabezas.mp4` | El mito | GIF (MP4) | 4:5 | Alguien intenta sacar el apoyacabezas de un auto nuevo y no sale. | 4–5 s |
 | RV-04 | `test/test-vidrio-lento.mp4` + `test/test-vidrio-lento-poster.webp` | El test | Video en loop | 1:1 | **El activo central.** El vidrio de prueba estallando en cámara lenta al apretar el llavero. | 5–6 s, cámara lenta, 1080×1080 |
 | RV-05 | `test/vidrio-de-prueba.webp` | El test | Foto | 4:5 | El vidrio de prueba sano junto al llavero, como viene en la caja. | 1200×1500 |
-| RV-06 | `pasos/01-apoyalo.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: el llavero apoyado en la esquina de la ventanilla lateral. | 3 s |
+| RV-06 | `pasos/01-colocalo.mp4` | Cómo funciona (paso 1 "Colocalo") | GIF (MP4) | 1:1 | Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave. | 4–6 s |
 | RV-07 | `pasos/02-apreta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: aprieta y el vidrio estalla. | 3 s, cámara lenta |
 | RV-08 | `pasos/03-corta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | El llavero cortando un cinturón tenso de un tirón. | 3 s |
 | RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno, cuchilla protegida, argolla. | 1600×900, fondo negro |
