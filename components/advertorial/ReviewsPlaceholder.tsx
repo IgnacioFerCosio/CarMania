@@ -1,18 +1,27 @@
 /**
- * Reseñas mientras no haya ninguna real: una caja que lo dice. La página la
- * muestra sólo en dev y en las previews; en producción la sección no sale.
- * Con reseñas cargadas se usa `Reviews`, como en las otras landings.
+ * Reseñas mientras no haya ninguna real: el título de `Reviews` y una caja
+ * que lo dice. La página la muestra sólo en dev y en las previews; en
+ * producción la sección no sale. Con reseñas cargadas se usa `Reviews`, como
+ * en las otras landings.
  */
-import type { AdvertorialData } from '@/lib/landings/types';
+import type { AdvertorialData, LandingConfig } from '@/lib/landings/types';
+import { BG, SECTION_Y } from './SectionHeading';
 
-export function ReviewsPlaceholder({ reviews }: { reviews: AdvertorialData['reviews'] }) {
+export function ReviewsPlaceholder({
+  reviews,
+  sectionCopy,
+}: {
+  reviews: AdvertorialData['reviews'];
+  sectionCopy: LandingConfig['sectionCopy'];
+}) {
   return (
-    <section id="reviews" className="bg-white py-12 text-ink-900 sm:py-16">
-      <div className="mx-auto max-w-3xl px-4">
-        <h2 className="font-display text-[26px] font-extrabold leading-tight tracking-tight text-ink-950 sm:text-3xl">
-          {reviews.title}
+    <section id="reviews" className={`${BG.gray} ${SECTION_Y}`}>
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <h2 className="text-center font-display text-xl font-black italic uppercase tracking-wider text-white sm:text-2xl md:text-3xl">
+          {sectionCopy.reviewsTitle + ' '}
+          <span className="text-accent">{sectionCopy.reviewsTitleAccent}</span>
         </h2>
-        <div className="mt-6 rounded-2xl border-2 border-dashed border-ink-300 bg-[#F2F2F0] px-4 py-10 text-center text-sm font-bold uppercase tracking-wider text-accent">
+        <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-ink-800 bg-ink-900/50 px-4 py-10 text-center font-display text-xs font-black uppercase italic tracking-widest text-accent sm:mt-10 sm:text-sm">
           {reviews.placeholder}
         </div>
       </div>

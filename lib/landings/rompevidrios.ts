@@ -94,7 +94,7 @@ const ROMPEVIDRIOS_UPSELL_CHAIN: readonly UpsellTier[] = ROMPEVIDRIOS_BUNDLES.ma
   }),
 );
 
-const CTA_LABEL = 'Quiero el mío + vidrio de prueba →';
+const CTA_LABEL = 'Quiero el mío + vidrio de prueba';
 
 export const ROMPEVIDRIOS = {
   brand: {
@@ -113,8 +113,9 @@ export const ROMPEVIDRIOS = {
     compareAtPrice: PRECIO_LISTA * 2,
     currency: 'ARS',
   },
-  // Lo que sigue hasta `whatsappPrefilled` lo pide `LandingConfig` pero la
-  // página advertorial no lo renderiza (el copy real está en `advertorial`).
+  // El hero es el mismo componente `Hero` de las otras landings, así que su
+  // copy vive acá. De lo demás hasta `whatsappPrefilled`, lo que la página no
+  // renderiza (useCases, steps, benefits…) va vacío: lo pide `LandingConfig`.
   headlines: {
     heroLine1: 'Lo llevás colgado de la llave.',
     heroLine2: 'Lo usás en 3 segundos.',
@@ -133,13 +134,13 @@ export const ROMPEVIDRIOS = {
     poster: '/rompevidrios/hero/hero-poster.webp',
     width: 1080,
     height: 1350,
-    badgeLine1: '',
-    badgeLine2: '',
+    badgeLine1: 'LISTO EN',
+    badgeLine2: '3 SEGUNDOS',
   },
-  heroSubHighlights: [],
+  heroSubHighlights: ['el vidrio estalla', 'probar en casa'],
   sectionCopy: {
-    pricingTitle: 'Elegí tu pack',
-    pricingTitleAccent: '',
+    pricingTitle: 'Elegí tu',
+    pricingTitleAccent: 'pack',
     reviewsTitle: 'Lo que dicen los que',
     reviewsTitleAccent: 'ya lo tienen',
     reviewsFooter: 'conductores que ya lo llevan.',
@@ -221,20 +222,9 @@ export const ROMPEVIDRIOS = {
   },
 
   advertorial: {
-    promoBar:
-      'Envío gratis · 3 cuotas sin interés · Si no rompe el vidrio de prueba, te devolvemos la plata',
-    cta: { label: CTA_LABEL, href: '#packs' },
+    cta: { label: CTA_LABEL, href: '#pricing' },
 
     hero: {
-      socialProofSuffix: 'conductores ya lo llevan',
-      title: 'Lo llevás colgado de la llave. Lo usás en 3 segundos.',
-      sub: 'Lo apoyás, apretás y el vidrio estalla. Cortás el cinturón de un tirón. Y lo podés probar en casa antes de necesitarlo.',
-      bullets: [
-        'Funciona con las manos temblando: el resorte hace la fuerza',
-        'Corta el cinturón aunque esté trabado',
-        'Viene con un vidrio para que lo pruebes vos mismo',
-      ],
-      note: 'Envío gratis · 3 cuotas · Garantía de devolución',
       media: {
         id: 'RV-01',
         kind: 'video',
@@ -249,7 +239,9 @@ export const ROMPEVIDRIOS = {
     },
 
     story: {
-      title: 'Imaginate. Es jueves, llueve fuerte y volvés por la General Paz.',
+      eyebrow: 'Imaginate',
+      title: 'Es jueves, llueve fuerte y volvés por la General Paz.',
+      accent: 'llueve fuerte',
       paragraphs: [
         'Hacés el mismo camino de todos los días. En diez minutos, la calle se convierte en un río.',
         'El agua llega a las puertas. Intentás abrir: no se mueven. La presión del agua las traba.',
@@ -272,7 +264,9 @@ export const ROMPEVIDRIOS = {
     },
 
     myth: {
+      eyebrow: 'El mito',
       title: '"Yo rompo el vidrio con el apoyacabezas." ¿Seguro?',
+      accent: '¿Seguro?',
       paragraphs: [
         'En muchos autos nuevos el apoyacabezas no sale, o tiene varillas que no sirven para romper nada.',
         'El martillo de emergencia queda en la guantera o atrás del asiento: lejos, justo cuando estás atrapado.',
@@ -291,7 +285,9 @@ export const ROMPEVIDRIOS = {
     },
 
     proof: {
+      eyebrow: 'El test de 3 segundos',
       title: 'Sabés que funciona antes de necesitarlo.',
+      accent: 'antes de necesitarlo.',
       body: 'Por eso cada llavero viene con un vidrio de prueba. Lo apoyás, apretás y se rompe. Lo ves con tus propios ojos, en tu casa, el día que llega.',
       media: {
         id: 'RV-04',
@@ -317,7 +313,9 @@ export const ROMPEVIDRIOS = {
     },
 
     steps: {
-      title: 'Cómo funciona',
+      eyebrow: 'Listo en 3 pasos',
+      title: '¿Cómo funciona?',
+      accent: '',
       items: [
         {
           n: 1,
@@ -382,6 +380,7 @@ export const ROMPEVIDRIOS = {
 
     comparison: {
       title: 'Llavero, martillo o apoyacabezas: qué te saca del auto.',
+      accent: 'qué te saca del auto.',
       columns: ['Llavero Rescate PRO', 'Martillo de guantera', 'Apoyacabezas'],
       rows: [
         { label: 'Lo tenés a mano si estás atrapado', values: [true, false, 'depende del auto'] },
@@ -404,6 +403,7 @@ export const ROMPEVIDRIOS = {
 
     expert: {
       title: 'Lo que un bombero quiere que sepas antes de salir a la ruta.',
+      accent: 'antes de salir a la ruta.',
       // TODO: nombre y cuartel reales. Sin video real, la sección no sale en producción.
       caption: '[Nombre], bombero voluntario de [cuartel]',
       media: {
@@ -422,6 +422,7 @@ export const ROMPEVIDRIOS = {
 
     box: {
       title: 'Qué viene en la caja',
+      accent: 'en la caja',
       // TODO: confirmar con Spring.
       items: [
         '1 llavero Rescate PRO por unidad',
@@ -441,7 +442,6 @@ export const ROMPEVIDRIOS = {
     },
 
     reviews: {
-      title: 'Lo que dicen los que ya lo tienen',
       placeholder: 'PENDIENTE · reseñas reales con foto, apenas haya ventas',
     },
 
@@ -484,12 +484,14 @@ export const ROMPEVIDRIOS = {
 
     guarantee: {
       title: 'Vos no arriesgás nada.',
+      accent: 'nada.',
       // TODO: confirmar plazo.
       body: 'Si el llavero no rompe el vidrio de prueba, te devolvemos la plata. Sin vueltas. [Confirmar plazo: 30 días].',
     },
 
     closing: {
       title: 'Dos mañanas posibles.',
+      accent: 'posibles.',
       columns: [
         {
           tone: 'without',

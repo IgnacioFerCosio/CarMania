@@ -4,8 +4,9 @@
  * No es una landing de producto como /parasol: es una nota larga que cuenta
  * una historia (inundación, puertas trabadas), desarma el mito del
  * apoyacabezas, demuestra que funciona con el vidrio de prueba y recién al
- * final vende. Fondos alternados: negro para hero, prueba y oferta; blanco
- * para las partes "nota", que se leen como un artículo.
+ * final vende. La estética es la de las otras landings de la marca: mismo
+ * CountdownBanner, PromoBar, Navbar y Hero, fondos negro y negro-gris
+ * alternados, títulos `heading-display` y botones píldora.
  *
  * Todo el copy y los assets salen de `ROMPEVIDRIOS.advertorial`
  * (lib/landings/rompevidrios.ts). Cada foto/video es un `MediaSlot`: mientras
@@ -22,8 +23,10 @@
  */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Navbar, type NavLink } from '@/components/layout/Navbar';
+import { Navbar } from '@/components/layout/Navbar';
+import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
+import { Hero } from '@/components/sections/Hero';
 import { Footer } from '@/components/layout/Footer';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -35,7 +38,6 @@ import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
 import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { MediaSlot } from '@/components/advertorial/MediaSlot';
-import { AdvertorialHero } from '@/components/advertorial/AdvertorialHero';
 import { StoryBlock } from '@/components/advertorial/StoryBlock';
 import { ProofBlock } from '@/components/advertorial/ProofBlock';
 import { StepsGrid } from '@/components/advertorial/StepsGrid';
@@ -54,15 +56,6 @@ import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
 const STORE = STORE_PRODUCTS.find((p) => p.href === '/rompevidrios')!;
 const ADV = ROMPEVIDRIOS.advertorial;
 export const revalidate = 300;
-
-// Las secciones de la nota no son las de las otras landings: el nav apunta a
-// las que existen acá.
-const LINKS: NavLink[] = [
-  { href: '#how', label: 'Cómo funciona' },
-  { href: '#packs', label: 'Packs', highlight: true },
-  { href: '#garantia', label: 'Garantía' },
-  { href: '#faq', label: 'FAQ' },
-];
 
 // `generateMetadata` y no `metadata`, por lo mismo que en /soplador: sin esto
 // el título del producto quedaba en el payload de la página 404.
@@ -123,81 +116,76 @@ export default async function RompevidriosPage() {
       upsellChain={ALL_UPSELL_CHAINS}
       productName={ROMPEVIDRIOS.brand.tagline}
     >
-      {/* Sin CountdownBanner: en esta landing no hay contadores de urgencia. */}
-      <PromoBar messages={[ADV.promoBar]} />
-      <Navbar links={LINKS} ctaHref={ADV.cta.href} ctaLabel="Ver packs" />
+      <CountdownBanner />
+      <PromoBar />
+      {/* Mismos links que las otras landings (default del Navbar): esta
+          también tiene #how, #pricing, #reviews, #trust y #faq. */}
+      <Navbar />
 
       <main>
-        {/* 3. Hero */}
-        <AdvertorialHero
-          hero={ADV.hero}
-          cta={ADV.cta}
-          socialProofCount={ROMPEVIDRIOS.brand.socialProofCount}
-          rating={ROMPEVIDRIOS.brand.averageRating}
+        {/* 1. Hero — el mismo de las otras landings, con el slot RV-01 */}
+        <Hero
+          config={ROMPEVIDRIOS}
+          media={<MediaSlot slot={ADV.hero.media} fill eager sizes="(min-width: 768px) 50vw, 100vw" />}
         />
 
-        {/* 4. Escenario */}
+        {/* 2. Escenario */}
         <StoryBlock
-          title={ADV.story.title}
+          heading={ADV.story}
           paragraphs={ADV.story.paragraphs}
           media={ADV.story.media}
           mediaAfter={ADV.story.mediaAfter}
           closing={ADV.story.closing}
+          bg="gray"
         />
 
-        {/* 5. El mito */}
-        <StoryBlock
-          title={ADV.myth.title}
-          paragraphs={ADV.myth.paragraphs}
-          media={ADV.myth.media}
-          narrowMedia
-        />
+        {/* 3. El mito */}
+        <StoryBlock heading={ADV.myth} paragraphs={ADV.myth.paragraphs} media={ADV.myth.media} narrowMedia />
 
-        {/* 6. El test de 3 segundos */}
-        <ProofBlock proof={ADV.proof} cta={ADV.cta} />
+        {/* 4. El test de 3 segundos */}
+        <ProofBlock proof={ADV.proof} cta={ADV.cta} bg="gray" />
 
-        {/* 7. Cómo funciona */}
+        {/* 5. Cómo funciona (#how) */}
         <StepsGrid steps={ADV.steps} />
 
-        {/* 8. Comparativa */}
-        <ComparisonTable comparison={ADV.comparison} />
+        {/* 6. Comparativa */}
+        <ComparisonTable comparison={ADV.comparison} bg="gray" />
 
-        {/* 9. Bombero voluntario */}
+        {/* 7. Bombero voluntario */}
         {showExpert && <ExpertVideo expert={ADV.expert} />}
 
-        {/* 10. Qué viene en la caja */}
-        <BoxContents box={ADV.box} />
+        {/* 8. Qué viene en la caja */}
+        <BoxContents box={ADV.box} bg={showExpert ? 'gray' : 'black'} />
 
-        {/* 11. Reseñas: sólo reales. Sin ninguna, placeholder en dev/preview
-            y nada en producción. */}
+        {/* 9. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+            dev/preview y nada en producción. */}
         {hasReviews ? (
           <Reviews config={ROMPEVIDRIOS} />
         ) : (
-          drafts && <ReviewsPlaceholder reviews={ADV.reviews} />
+          drafts && <ReviewsPlaceholder reviews={ADV.reviews} sectionCopy={ROMPEVIDRIOS.sectionCopy} />
         )}
 
-        {/* 12. Elegí tu pack — los únicos botones que agregan al carrito */}
+        {/* 10. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing
-          id="packs"
           productId={productId}
           bundlesData={bundlesData}
           config={ROMPEVIDRIOS}
           sub={ADV.packs.sub}
           footnote={ADV.packs.footnote}
           bundleMedia={{
-            single: <MediaSlot slot={ADV.packs.images.single} sizes="(min-width: 768px) 33vw, 100vw" />,
-            double: <MediaSlot slot={ADV.packs.images.double} sizes="(min-width: 768px) 33vw, 100vw" />,
-            triple: <MediaSlot slot={ADV.packs.images.triple} sizes="(min-width: 768px) 33vw, 100vw" />,
+            single: <MediaSlot slot={ADV.packs.images.single} fill />,
+            double: <MediaSlot slot={ADV.packs.images.double} fill />,
+            triple: <MediaSlot slot={ADV.packs.images.triple} fill />,
           }}
         />
 
-        {/* 13. Preguntas frecuentes */}
-        <FAQ config={ROMPEVIDRIOS} tone="light" />
-
-        {/* 14. Garantía */}
+        {/* 11. Garantía (#trust) */}
         <GuaranteeBlock guarantee={ADV.guarantee} />
 
-        {/* 15. Cierre */}
+        {/* 12. FAQ */}
+        <FAQ config={ROMPEVIDRIOS} />
+
+        {/* 13. Cierre */}
         <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
       </main>
 

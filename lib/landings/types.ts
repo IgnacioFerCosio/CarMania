@@ -303,23 +303,18 @@ export type MediaSlot = {
  * el copy y los slots de cada sección. Los campos de `LandingConfig` que la
  * página no renderiza (useCases, steps, benefits…) van vacíos.
  */
+/**
+ * Título de sección con el estilo de las otras landings (`heading-display`):
+ * `accent` es la subcadena de `title` que se pinta en rojo.
+ */
+export type SectionTitle = { eyebrow?: string; title: string; accent: string };
+
 export type AdvertorialData = {
-  /** Texto de la barra de arriba. */
-  promoBar: string;
-  /** El botón que se repite en la página: siempre baja a los packs. */
+  /** El botón que se repite en la página: siempre baja a #pricing. */
   cta: { label: string; href: string };
-  hero: {
-    /** "[cifra] conductores ya lo llevan": se oculta si `brand.socialProofCount` está vacío. */
-    socialProofSuffix: string;
-    title: string;
-    sub: string;
-    bullets: readonly string[];
-    /** Línea chica debajo del botón. */
-    note: string;
-    media: MediaSlot;
-  };
-  story: {
-    title: string;
+  /** El copy del hero sale de `headlines`, como en las otras landings. */
+  hero: { media: MediaSlot };
+  story: SectionTitle & {
     paragraphs: readonly string[];
     /** Después de cuántos párrafos va la media. */
     mediaAfter: number;
@@ -327,28 +322,25 @@ export type AdvertorialData = {
     /** Cierre del bloque, en negrita. */
     closing: string;
   };
-  myth: { title: string; paragraphs: readonly string[]; media: MediaSlot };
-  proof: { title: string; body: string; media: MediaSlot; secondary: MediaSlot };
-  steps: {
-    title: string;
+  myth: SectionTitle & { paragraphs: readonly string[]; media: MediaSlot };
+  proof: SectionTitle & { body: string; media: MediaSlot; secondary: MediaSlot };
+  steps: SectionTitle & {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
     exploded: { title: string; media: MediaSlot };
   };
-  comparison: {
-    title: string;
+  comparison: SectionTitle & {
     /** La primera columna es la nuestra. */
     columns: readonly string[];
     /** true = ✓, false = ✗, string = texto tal cual ("depende del auto"). */
     rows: readonly { label: string; values: readonly (boolean | string)[] }[];
     media: MediaSlot;
   };
-  expert: { title: string; caption: string; media: MediaSlot };
-  box: { title: string; items: readonly string[]; media: MediaSlot };
-  reviews: { title: string; placeholder: string };
+  expert: SectionTitle & { caption: string; media: MediaSlot };
+  box: SectionTitle & { items: readonly string[]; media: MediaSlot };
+  reviews: { placeholder: string };
   packs: { sub: string; footnote: string; images: Record<Bundle['id'], MediaSlot> };
-  guarantee: { title: string; body: string };
-  closing: {
-    title: string;
+  guarantee: SectionTitle & { body: string };
+  closing: SectionTitle & {
     columns: readonly { tone: 'without' | 'with'; text: string }[];
     media: MediaSlot;
   };

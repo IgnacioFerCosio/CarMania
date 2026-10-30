@@ -132,8 +132,14 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
 
 - Reseñas inventadas: la lista va vacía hasta que haya reales con foto. En
   dev/preview se ve la caja "PENDIENTE"; en producción la sección no sale.
-- Cifras de ventas, sellos, "recomendado por bomberos", ADAC, contadores de
-  urgencia ("termina hoy", "quedan X").
+- Cifras de ventas, sellos, "recomendado por bomberos", ADAC, "quedan X".
+- **Ojo con el `CountdownBanner`:** desde 2026-10-30 la página usa el mismo
+  header que las otras landings, con la "Oferta relámpago" de 8 horas. Ese
+  contador se reinicia solo cada 8 horas, así que la oferta no vence nunca.
+  Es una urgencia que no existe, y la ley de defensa del consumidor puede
+  verlo como publicidad engañosa (le pasa igual a `/`, `/parasol` y
+  `/soplador`). El plan original lo descartaba; quedó por decisión de
+  estética de marca. Revisarlo antes de publicar.
 - Que rompe "cualquier vidrio": no rompe el parabrisas ni vidrios laminados
   (lo dicen las dos primeras preguntas del FAQ).
 - Seguro de envío o ítems tildados por defecto.

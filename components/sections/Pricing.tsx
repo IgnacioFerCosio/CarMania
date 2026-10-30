@@ -159,11 +159,9 @@ export function Pricing({
                 </div>
 
                 {/* Foto del producto */}
-                {bundleMedia?.[b.id] ? (
-                  <div className="my-5">{bundleMedia[b.id]}</div>
-                ) : (
-                  <BundleImage src={b.image} alt={b.label} accent={b.recommended} />
-                )}
+                <BundleImage src={b.image} alt={b.label} accent={b.recommended}>
+                  {bundleMedia?.[b.id]}
+                </BundleImage>
 
                 {/* Precios */}
                 <div className="mt-2 text-center">
@@ -281,23 +279,28 @@ function BundleImage({
   src,
   alt,
   accent,
+  children,
 }: {
   src: string;
   alt: string;
   accent: boolean;
+  /** Reemplaza la foto dentro del mismo marco (ver `bundleMedia`). */
+  children?: React.ReactNode;
 }) {
   return (
     <div
       className={`relative my-5 aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ${accent ? 'ring-1 ring-inset ring-accent/30' : 'ring-1 ring-inset ring-ink-800'
         }`}
     >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover"
-        sizes="(min-width: 768px) 33vw, 100vw"
-      />
+      {children ?? (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="(min-width: 768px) 33vw, 100vw"
+        />
+      )}
     </div>
   );
 }

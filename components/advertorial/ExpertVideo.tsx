@@ -1,18 +1,25 @@
 /** El video del bombero voluntario. La página lo oculta en producción mientras sea placeholder. */
 import type { AdvertorialData } from '@/lib/landings/types';
 import { MediaSlot } from './MediaSlot';
+import { BG, SECTION_Y, SectionHeading, type Bg } from './SectionHeading';
 
-export function ExpertVideo({ expert }: { expert: AdvertorialData['expert'] }) {
+export function ExpertVideo({
+  expert,
+  bg = 'black',
+}: {
+  expert: AdvertorialData['expert'];
+  bg?: Bg;
+}) {
   return (
-    <section className="bg-[#111214] py-14 sm:py-20">
-      <div className="mx-auto max-w-[680px] px-4 text-center">
-        <h2 className="font-display text-[26px] font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
-          {expert.title}
-        </h2>
-        <div className="mx-auto mt-8 max-w-[320px]">
+    <section className={`${BG[bg]} ${SECTION_Y}`}>
+      <div className="mx-auto max-w-3xl px-4 md:px-6">
+        <SectionHeading heading={expert} />
+        <div className="mx-auto mt-8 max-w-[320px] sm:mt-12">
           <MediaSlot slot={expert.media} sizes="320px" />
         </div>
-        <p className="mt-3 text-sm text-ink-400">{expert.caption}</p>
+        <p className="mt-4 text-center text-[11px] font-semibold uppercase tracking-widest text-ink-400">
+          {expert.caption}
+        </p>
       </div>
     </section>
   );

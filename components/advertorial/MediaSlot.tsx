@@ -2,14 +2,18 @@
  * Un lugar de la página para una foto, un "GIF" o un video (ver `MediaSlot`
  * en lib/landings/types.ts).
  *
- * Con `pending: true` dibuja una caja punteada que dice qué va ahí: ID,
- * qué tiene que mostrar, especificación y ruta. Se ve igual en producción a
- * propósito: la landing está oculta con `comingSoon`, y así nunca se publica
- * con un hueco invisible.
+ * Con `pending: true` dibuja una caja con el mismo marco que las fotos del
+ * resto del sitio y adentro qué va ahí: ID, qué tiene que mostrar,
+ * especificación y ruta. Se ve igual en producción a propósito: la landing
+ * está oculta con `comingSoon`, y así nunca se publica con un hueco invisible.
  *
  * Con el archivo ya subido: `next/image` para fotos, `LazyVideo` (muted,
  * loop) para videos y "GIF", y un `<video controls>` para el que tiene audio.
  * `eager` es sólo para el hero (RV-01): carga sin esperar al scroll.
+ *
+ * `fill`: ocupa el contenedor del padre (que define la proporción) en vez de
+ * reservar la suya. Lo usan el hero y las cards de pasos, que copian el marco
+ * de las otras landings.
  */
 import Image from 'next/image';
 import type { MediaSlot as Slot } from '@/lib/landings/types';
@@ -67,49 +71,38 @@ function LocalMock({ slot }: { slot: Slot }) {
 
 export function MediaSlot({
   slot,
-  tone = 'dark',
   eager = false,
+  fill = false,
   sizes = '(min-width: 768px) 50vw, 100vw',
   className = '',
 }: {
   slot: Slot;
-  /** Fondo de la sección: define los colores del placeholder. */
-  tone?: 'dark' | 'light';
   eager?: boolean;
+  fill?: boolean;
   sizes?: string;
   className?: string;
 }) {
-  const box = `relative w-full overflow-hidden rounded-2xl ${ASPECT[slot.aspect]} ${className}`;
+  // Mismo marco que las fotos de las otras landings (BeforeAfter, HeroMedia).
+  const box = fill
+    ? `absolute inset-0 overflow-hidden ${className}`
+    : `relative w-full overflow-hidden rounded-2xl bg-ink-900 ring-1 ring-inset ring-white/5 ${ASPECT[slot.aspect]} ${className}`;
 
   if (slot.pending) {
     const kind = KIND[slot.kind];
-    const dark = tone === 'dark';
     return (
       <div
         role="img"
         aria-label={`Pendiente ${slot.id}: ${slot.brief}`}
-        className={`${box} flex flex-col items-center justify-center gap-2 border-2 border-dashed p-4 text-center sm:gap-3 sm:p-6 ${
-          dark
-            ? 'border-ink-600 bg-[#1A1B1F] text-ink-200'
-            : 'border-ink-300 bg-[#F2F2F0] text-ink-700'
-        }`}
+        className={`${box} flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,#31343A,#191B1F_78%)] p-4 text-center sm:gap-3 sm:p-6`}
       >
-        <span
-          className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest sm:text-[11px] ${
-            dark ? 'text-accent-400' : 'text-accent'
-          }`}
-        >
+        <span className="inline-flex items-center gap-1.5 font-display text-[10px] font-black uppercase italic tracking-widest text-accent sm:text-[11px]">
           <Icon name={kind.icon} className="h-4 w-4" />
-          PENDIENTE · {slot.id} · {kind.label}
+          Pendiente · {slot.id} · {kind.label}
         </span>
-        <p
-          className={`max-w-md text-sm font-semibold leading-snug sm:text-base md:text-lg ${
-            dark ? 'text-white' : 'text-ink-900'
-          }`}
-        >
+        <p className="max-w-md text-sm font-semibold leading-snug text-white sm:text-base">
           {slot.brief}
         </p>
-        <p className={`max-w-md text-[10px] leading-snug sm:text-xs ${dark ? 'text-ink-400' : 'text-ink-500'}`}>
+        <p className="max-w-md text-[10px] leading-snug text-ink-400 sm:text-xs">
           {slot.spec}
           <br />
           <code className="break-all">{slot.src}</code>

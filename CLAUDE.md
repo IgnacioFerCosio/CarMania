@@ -36,8 +36,9 @@ presencia web del producto.
   301 a `/` desde `redirects()` de `next.config.js`.
 - **`/rompevidrios` es un advertorial**, no una landing de producto: una nota
   larga (historia → mito → prueba → cómo funciona → comparativa) que termina
-  en los packs, con secciones negras y blancas alternadas. Componentes en
-  `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
+  en los packs, con la estética de las otras landings (mismo Countdown,
+  PromoBar, Navbar y `Hero`; fondos negro y `#24262A` alternados; títulos
+  `heading-display`). Componentes en `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
   (`lib/landings/rompevidrios.ts`). Cada foto/video es un **`MediaSlot`**:
   con `pending: true` se ve un placeholder que dice qué va (ID `RV-xx`,
   brief, spec, ruta); subido el archivo, se pasa a `false`. `check:assets`

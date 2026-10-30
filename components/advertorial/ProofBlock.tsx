@@ -2,32 +2,33 @@
 import type { AdvertorialData } from '@/lib/landings/types';
 import { MediaSlot } from './MediaSlot';
 import { CtaLink } from './CtaLink';
+import { BG, SECTION_Y, SectionHeading, type Bg } from './SectionHeading';
 
 export function ProofBlock({
   proof,
   cta,
+  bg = 'gray',
 }: {
   proof: AdvertorialData['proof'];
   cta: AdvertorialData['cta'];
+  bg?: Bg;
 }) {
   return (
-    <section className="bg-[#111214] py-14 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 md:px-6">
-        <div className="mx-auto max-w-[680px] text-center">
-          <h2 className="font-display text-[26px] font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
-            {proof.title}
-          </h2>
-          <p className="mt-4 text-[17px] leading-[1.6] text-ink-300 sm:text-lg">{proof.body}</p>
-        </div>
+    <section className={`${BG[bg]} ${SECTION_Y}`}>
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <SectionHeading heading={proof} />
+        <p className="mx-auto mt-4 max-w-2xl text-center text-[15px] leading-relaxed text-ink-300 sm:mt-5 sm:text-base md:text-lg">
+          {proof.body}
+        </p>
 
-        <div className="mt-8 grid items-end gap-4 sm:mt-10 md:grid-cols-[2fr_1fr] md:gap-6">
-          <MediaSlot slot={proof.media} sizes="(min-width: 768px) 640px, 100vw" />
-          <div className="mx-auto w-full max-w-[240px] md:max-w-none">
-            <MediaSlot slot={proof.secondary} sizes="(min-width: 768px) 320px, 240px" />
+        <div className="mt-8 grid items-end gap-4 sm:mt-12 md:grid-cols-[2fr_1fr] md:gap-6">
+          <MediaSlot slot={proof.media} sizes="(min-width: 768px) 720px, 100vw" />
+          <div className="mx-auto w-full max-w-[260px] md:max-w-none">
+            <MediaSlot slot={proof.secondary} sizes="(min-width: 768px) 360px, 260px" />
           </div>
         </div>
 
-        <div className="mt-8 text-center sm:mt-10">
+        <div className="mt-8 text-center sm:mt-12">
           <CtaLink label={cta.label} href={cta.href} className="w-full sm:w-auto" />
         </div>
       </div>

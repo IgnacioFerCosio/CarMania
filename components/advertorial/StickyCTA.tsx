@@ -40,7 +40,7 @@ export function StickyCTA({ label, href }: { label: string; href: string }) {
   return (
     <div
       aria-hidden={!show}
-      className={`fixed inset-x-0 bottom-0 z-30 border-t border-ink-800 bg-[#111214]/95 px-3 pt-2.5 backdrop-blur transition-all duration-300 md:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-30 border-t border-ink-800 bg-ink-950/95 px-3 pt-2.5 backdrop-blur transition-all duration-300 md:hidden ${
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
       style={{ paddingBottom: 'calc(0.625rem + env(safe-area-inset-bottom))' }}

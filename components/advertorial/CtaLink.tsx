@@ -1,8 +1,10 @@
 /**
- * El botón de la nota: "Quiero el mío + vidrio de prueba →". Es un link que
- * baja a los packs, no un botón de compra; los únicos que agregan al carrito
- * son los de `Pricing`. Es el único rojo lleno de la página.
+ * El botón de la nota: "Quiero el mío + vidrio de prueba". Es un link que
+ * baja a #pricing, no un botón de compra; los únicos que agregan al carrito
+ * son los de `Pricing`. Mismo botón píldora que el hero y BackToPricingCTA.
  */
+import { Icon } from '@/components/ui/Icon';
+
 export function CtaLink({
   label,
   href,
@@ -15,9 +17,13 @@ export function CtaLink({
   return (
     <a
       href={href}
-      className={`inline-flex min-h-[52px] items-center justify-center rounded-xl bg-accent px-6 text-center font-display text-base font-bold text-white shadow-[0_8px_24px_rgba(215,7,7,0.35)] transition hover:bg-accent-600 active:scale-[0.98] sm:text-lg ${className}`}
+      className={`group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent px-6 text-center font-display text-sm font-black uppercase italic tracking-wider text-white shadow-[0_8px_24px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)] sm:px-8 sm:text-base md:text-lg ${className}`}
     >
       {label}
+      <Icon
+        name="arrow-right"
+        className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1"
+      />
     </a>
   );
 }
