@@ -139,6 +139,13 @@ export const CYBER = {
   startsAt: '2026-11-02T00:00:00-03:00',
   endsAt: '2026-11-04T23:59:59-03:00',
   extensionEndsAt: '2026-11-08T23:59:59-03:00',
+  /**
+   * Beneficios que viajan DENTRO del banner (en el Cyber se saca la barra
+   * negra de abajo, `PromoBar`, y su contenido pasa acá).
+   */
+  benefits: ['3 cuotas sin interés', 'Envío gratis', 'Muchos más descuentos y promociones'],
+  /** Card propia para el pack x6 debajo de los 3 packs (experimento del evento). */
+  pack6Card: true,
 } as const;
 
 /**

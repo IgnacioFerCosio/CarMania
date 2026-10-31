@@ -17,6 +17,15 @@ type Props = {
 export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
   const { brand, bundles, sectionCopy } = config;
 
+  // Pack x6 (experimento del Cyber): no es una de las cards de `bundles`, es el
+  // último escalón de la escalera de upsell, con su propia card debajo.
+  const x6 = CYBER.enabled && CYBER.pack6Card ? config.upsellChain.find((t) => t.id === 'x6') : undefined;
+  const x6Data = x6 ? bundlesData[x6.productId] : undefined;
+  const x6Total = x6Data?.price ?? x6?.fallbackPrice ?? 0;
+  const x6Compare = x6Data?.compareAtPrice ?? 0;
+  const x6Pct = x6Compare > x6Total ? Math.round(((x6Compare - x6Total) / x6Compare) * 100) : 0;
+  const x6Each = x6 ? Math.round(x6Total / x6.quantity) : 0;
+
   return (
     <section
       id="pricing"
@@ -237,6 +246,103 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
             );
           })}
         </ul>
+
+        {/* ── Pack x6: card propia, ancha ────────────────────────────── */}
+        {x6 && (
+          <div className="relative mt-10 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] sm:mt-12">
+            <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
+              <CyberLogo size="sm" className="h-14 sm:h-16" />
+            </div>
+
+            <div className="grid items-center gap-5 p-5 sm:p-6 md:grid-cols-2 md:gap-10 md:p-8">
+              <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-cyber-500/30 md:max-w-md md:justify-self-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/bundles/BundleX6.webp"
+                  alt="Pack x6 - Soporte Magnético PRO™"
+                  width={900}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="text-center md:text-left">
+                <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-lg">
+                  <Icon name="star" className="h-3 w-3" />
+                  El pack más completo
+                </span>
+                <h3 className="mt-3 font-display text-2xl font-black italic uppercase tracking-wider text-white sm:text-3xl">
+                  Llevá 6
+                </h3>
+                <p className="mt-1 text-[11px] uppercase tracking-wider text-accent sm:text-xs md:text-sm">
+                  Uno para cada auto. O para regalar.
+                </p>
+
+                <div className="mt-4">
+                  {x6Pct > 0 && (
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
+                      Cyber −{x6Pct}%
+                    </span>
+                  )}
+                  {x6Compare > x6Total && (
+                    <div className="text-[11px] uppercase tracking-wider text-ink-400 sm:text-xs">
+                      Precio normal: <span className="line-through">{formatARS(x6Compare)}</span>
+                    </div>
+                  )}
+                  <div className="mt-1 font-display text-4xl font-extrabold text-white sm:text-5xl">
+                    {formatARS(x6Total)}
+                  </div>
+                  <div className="mt-1 text-[12px] font-bold text-cyber-300 sm:text-sm">
+                    Sólo {formatARS(x6Each)} cada uno
+                  </div>
+                  {x6Compare > x6Total && (
+                    <div className="mt-0.5 text-[11px] font-bold text-accent sm:text-xs">
+                      Te ahorrás {formatARS(x6Compare - x6Total)}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 inline-block rounded-xl bg-ink-950 px-4 py-2.5 text-center ring-1 ring-inset ring-ink-800">
+                  <div className="font-display text-[15px] font-bold text-white sm:text-base">
+                    {PAYMENTS.installments} cuotas de {formatARS(Math.round(x6Total / PAYMENTS.installments))}
+                  </div>
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
+                    sin interés
+                  </div>
+                </div>
+
+                <ul className="mx-auto mt-4 max-w-xs space-y-2 text-left text-[13px] sm:text-sm md:mx-0">
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span className="font-semibold text-white">{x6.unitsLabel}</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>+ {x6.quantity} chapitas MagSafe</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>Envío gratis incluido</span>
+                  </li>
+                </ul>
+
+                <div className="mt-5">
+                  <BuyButton
+                    variantId={x6Data?.variantId ?? x6.fallbackVariantId}
+                    price={x6Total}
+                    totalOverride={x6Total}
+                    label="Quiero el x6"
+                    size="lg"
+                    className="w-full md:w-auto"
+                    hideHelper
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Métodos de pago ────────────────────────────────────────── */}
         <div className="mt-10 flex flex-col items-center gap-3 sm:mt-12">
