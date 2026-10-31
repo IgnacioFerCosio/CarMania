@@ -102,9 +102,11 @@ export function CyberBanner() {
     <>
       {/* Mismo alto que el banner original (h-10): el resto del header no se
           entera del cambio. */}
-      <div
-        aria-label={extension ? CYBER.extensionName : CYBER.name}
-        className="fixed inset-x-0 top-0 z-50 flex h-10 items-center justify-center gap-2 overflow-hidden border-b border-cyber-400/40 bg-gradient-to-r from-cyber-800 via-cyber-600 to-cyber-800 px-3 shadow-[0_0_18px_rgba(124,58,237,0.55)] sm:gap-3 sm:px-4"
+      {/* Todo el banner es un link a las promos (en mobile no hay botón). */}
+      <a
+        href="#pricing"
+        aria-label={`${extension ? CYBER.extensionName : CYBER.name}: ver las ofertas`}
+        className="group fixed inset-x-0 top-0 z-50 flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden border-b border-cyber-400/40 bg-gradient-to-r from-cyber-800 via-cyber-600 to-cyber-800 px-3 shadow-[0_0_18px_rgba(124,58,237,0.55)] sm:gap-3 sm:px-4"
       >
         {/* Destello cíclico: una franja de luz inclinada que cruza la barra. */}
         <span
@@ -167,13 +169,10 @@ export function CyberBanner() {
           ))}
         </ul>
 
-        <a
-          href="#pricing"
-          className="relative hidden shrink-0 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-cyber-700 transition hover:bg-cyber-300 md:inline-block"
-        >
+        <span className="relative hidden shrink-0 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-cyber-700 transition group-hover:bg-cyber-300 md:inline-block">
           Ver oferta
-        </a>
-      </div>
+        </span>
+      </a>
 
       {/* Spacer en flujo normal — empuja el contenido de la página hacia abajo */}
       <div aria-hidden="true" className="h-10 w-full" />

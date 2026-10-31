@@ -114,7 +114,7 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
             const mobileOrder =
               b.id === 'double' ? 'order-1' :
                 b.id === 'triple' ? 'order-2' :
-                  'order-3';
+                  'order-4'; // x6 va antes (order-3)
 
             return (
               <li
@@ -245,11 +245,11 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
               </li>
             );
           })}
-        </ul>
 
-        {/* ── Pack x6: card propia, ancha ────────────────────────────── */}
+        {/* Pack x6: card propia, ancha. Va DENTRO del <ul> para poder ordenarla: en mobile
+            queda antes de la unidad suelta (order-3 vs order-4), en desktop ocupa toda la fila de abajo. */}
         {x6 && (
-          <div className="relative mt-10 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] sm:mt-12">
+          <li className="relative order-3 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] md:order-1 md:col-span-3 md:mt-4">
             <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
               <CyberLogo size="sm" className="h-14 sm:h-16" />
             </div>
@@ -341,8 +341,9 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                 </div>
               </div>
             </div>
-          </div>
+          </li>
         )}
+        </ul>
 
         {/* ── Métodos de pago ────────────────────────────────────────── */}
         <div className="mt-10 flex flex-col items-center gap-3 sm:mt-12">
