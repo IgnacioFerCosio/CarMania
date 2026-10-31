@@ -37,6 +37,8 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
   // (50) y del drawer del carrito (60/61).
   // En el Cyber el neón pasa a morado (ver CYBER en config).
   const cyber = CYBER.enabled;
+  // Con el banner Cyber fijo arriba (40 px) hay que pegarse debajo de él.
+  const stickyTop = cyber ? 'top-10' : 'top-0';
   const shell = cyber
     ? `relative z-30 block border-y border-cyber-500/70 bg-[#0A0512] py-2.5 ${GLOW_CYBER}`
     : `relative z-30 block border-y border-accent/70 bg-[#0B0405] py-2.5 ${GLOW}`;
@@ -54,11 +56,11 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
   );
 
   if (!href) {
-    return <div className={`${shell} sticky top-0`}>{inner}</div>;
+    return <div className={`${shell} sticky ${stickyTop}`}>{inner}</div>;
   }
 
   return (
-    <a href={href} className={`${shell} sticky top-0`}>
+    <a href={href} className={`${shell} sticky ${stickyTop}`}>
       {inner}
     </a>
   );

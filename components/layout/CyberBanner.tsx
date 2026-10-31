@@ -72,7 +72,7 @@ function Box({ value, unit }: { value: string; unit: string }) {
 const HOLD_COUNTDOWN_MS = 4200;
 const HOLD_BENEFIT_MS = 2400;
 
-export function CyberBanner() {
+export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
   const { phase, now } = useCyberPhase(true);
 
   // Abajo de xl no entran la cuenta y los beneficios a la vez: el banner
@@ -104,7 +104,7 @@ export function CyberBanner() {
           entera del cambio. */}
       {/* Todo el banner es un link a las promos (en mobile no hay botón). */}
       <a
-        href="#pricing"
+        href={href}
         aria-label={`${extension ? CYBER.extensionName : CYBER.name}: ver las ofertas`}
         className="group fixed inset-x-0 top-0 z-50 flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden border-b border-cyber-400/40 bg-gradient-to-r from-cyber-800 via-cyber-600 to-cyber-800 px-3 shadow-[0_0_18px_rgba(124,58,237,0.55)] sm:gap-3 sm:px-4"
       >

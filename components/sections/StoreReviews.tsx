@@ -5,10 +5,54 @@
  * después la cita y la firma con ciudad. Es distinto del bloque `Reviews` de
  * las landings, que muestra estrellas, fecha y badge de verificado por reseña.
  *
- * El contenido sale de `STORE_REVIEWS` en config.
+ * Carrusel que mezcla las reseñas del soporte (reales, con foto) con fotos de
+ * clientes del parasol, intercaladas.
+ *
+ * ⚠️ Del parasol van SÓLO las fotos, sin cita ni nombre: los textos de
+ * `PARASOL_REVIEWS` son placeholders inventados (ver el aviso en
+ * lib/landings/parasol.ts) y acá no se republican. Cuando haya textos reales,
+ * sumalos como `kind: 'review'` en `items`.
  */
-import { BRAND, STORE_REVIEWS, STORE_SECTIONS } from '@/lib/config';
+import { BRAND, STORE_SECTIONS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import { PARASOL } from '@/lib/landings/parasol';
 import { Stars } from '@/components/ui/Stars';
+import { StoreReviewCarousel, type StoreReviewItem } from './StoreReviewCarousel';
+
+const SOPORTE_NAME = 'Soporte Magnético PRO™';
+const PARASOL_NAME = 'Parasol PRO™';
+
+/** Una del soporte, una del parasol, y así hasta agotar las dos listas. */
+function buildItems(): StoreReviewItem[] {
+  const soporte: StoreReviewItem[] = SOPORTE.reviews
+    .filter((r) => r.image)
+    .map((r) => ({
+      kind: 'review',
+      product: SOPORTE_NAME,
+      image: r.image!,
+      name: r.name,
+      location: r.location,
+      stars: r.stars,
+      text: r.text,
+      date: r.date,
+    }));
+  const parasol: StoreReviewItem[] = PARASOL.reviews
+    .filter((r) => r.image)
+    .slice(0, 6)
+    .map((r) => ({
+      kind: 'photo',
+      product: PARASOL_NAME,
+      image: r.image!,
+      alt: 'El Parasol PRO™ puesto en el auto de un cliente',
+    }));
+
+  const out: StoreReviewItem[] = [];
+  for (let i = 0; i < Math.max(soporte.length, parasol.length); i++) {
+    if (soporte[i]) out.push(soporte[i]);
+    if (parasol[i]) out.push(parasol[i]);
+  }
+  return out;
+}
 
 export function StoreReviews() {
   return (
@@ -29,24 +73,7 @@ export function StoreReviews() {
           </div>
         </div>
 
-        <ul className="mt-10 grid gap-3.5 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {STORE_REVIEWS.map((r) => (
-            <li
-              key={r.title}
-              className="flex flex-col rounded-2xl border border-ink-800 bg-ink-950 p-5 transition hover:border-ink-700 sm:p-6"
-            >
-              <h3 className="font-display text-sm font-black italic uppercase tracking-wide text-white sm:text-base">
-                {r.title}
-              </h3>
-              <p className="mt-3 flex-1 text-[13px] leading-relaxed text-ink-300 sm:text-sm">
-                “{r.text}”
-              </p>
-              <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
-                — <span className="text-accent">{r.name}</span>, {r.location} 🇦🇷
-              </p>
-            </li>
-          ))}
-        </ul>
+        <StoreReviewCarousel items={buildItems()} />
       </div>
     </section>
   );

@@ -12,25 +12,24 @@
 import { ProductCard, ComingSoonCard } from '@/components/commerce/ProductCard';
 import {
   CYBER,
-  isPublished,
   PAYMENT_LOGOS,
   STORE_COMING_SOON,
   STORE_HEADLINES,
-  STORE_PRICE_PERKS,
   STORE_SECTIONS,
   type StoreProduct,
 } from '@/lib/config';
-import { Icon } from '@/components/ui/Icon';
 
 export function ProductGrid({
   products,
 }: {
   // El precio llega igual (lo resuelve la página) pero la card ya no lo
   // muestra; se deja en el tipo para no tocar el fetch de /tienda.
-  products: { product: StoreProduct; price: number }[];
+  products: { product: StoreProduct; price: number; cyberPct?: number }[];
 }) {
   const cyberTrim = CYBER.enabled;
-  const visible = cyberTrim ? products.filter(({ product }) => isPublished(product)) : products;
+  // En el Cyber la grilla muestra sólo lo que se vende: lo que tiene
+  // `comingSoon` queda afuera también en dev (donde `isPublished` lo abre).
+  const visible = cyberTrim ? products.filter(({ product }) => !product.comingSoon) : products;
   const slots = cyberTrim ? [] : STORE_COMING_SOON;
 
   return (
@@ -46,19 +45,6 @@ export function ProductGrid({
           </h2>
         </div>
 
-        {/* Beneficios de precio — todo verificable, ver STORE_PRICE_PERKS */}
-        <ul className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-          {STORE_PRICE_PERKS.map((perk) => (
-            <li
-              key={perk.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-ink-700 bg-ink-950/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-ink-200 sm:px-3.5 sm:text-[11px]"
-            >
-              <Icon name={perk.icon as never} className="h-3.5 w-3.5 text-accent" />
-              {perk.label}
-            </li>
-          ))}
-        </ul>
-
         {/* Durante el Cyber se esconden las cards "Próximamente" (producto sin
             publicar y slot vacío): en un evento de compra son espacio muerto.
             Con menos de 4 cards la grilla se angosta y queda centrada. */}
@@ -69,8 +55,8 @@ export function ProductGrid({
               : 'lg:grid-cols-4'
           }`}
         >
-          {visible.map(({ product }) => (
-            <ProductCard key={product.handle} product={product} />
+          {visible.map(({ product, cyberPct }) => (
+            <ProductCard key={product.handle} product={product} cyberPct={cyberPct} />
           ))}
           {slots.map((slot) => (
             <ComingSoonCard
