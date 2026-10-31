@@ -12,7 +12,7 @@
  */
 import Image from 'next/image';
 import Link from 'next/link';
-import { BRAND, STORE_PRODUCTS, isPublished } from '@/lib/config';
+import { BRAND, CYBER, STORE_PRODUCTS, isPublished } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { CartButton } from '@/components/commerce/CartButton';
 import { NavMobileMenu } from './NavMobileMenu';
@@ -63,6 +63,7 @@ export function Navbar({
   ctaLabel = 'Aprovechá',
   storeHref = '/tienda',
   storeLabel = 'Tienda',
+  cyber = true,
 }: {
   links?: NavLink[];
   /** A dónde lleva el logo. Por defecto la tienda, también en las landings. */
@@ -72,6 +73,8 @@ export function Navbar({
   /** `null` para ocultarlo — lo usa `/tienda`, que ya es el destino. */
   storeHref?: string | null;
   storeLabel?: string;
+  /** Chip "Cyber" junto al CTA durante el evento. La guía de instalación lo apaga: es post-compra. */
+  cyber?: boolean;
 } = {}) {
   return (
     <header
@@ -139,6 +142,11 @@ export function Navbar({
 
         {/* CTA (solo desktop) + carrito */}
         <div className="col-start-3 flex items-center justify-end gap-2 sm:gap-3">
+          {CYBER.enabled && cyber && (
+            <span className="hidden animate-pulse items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 text-[10px] font-black italic uppercase tracking-widest text-white shadow-[0_0_14px_rgba(124,58,237,0.65)] md:inline-flex">
+              Cyber
+            </span>
+          )}
           <a
             href={ctaHref}
             className="hidden h-10 items-center justify-center gap-1.5 rounded-full bg-accent px-5 text-xs font-black uppercase italic tracking-wider text-white shadow-[0_4px_14px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 md:inline-flex"

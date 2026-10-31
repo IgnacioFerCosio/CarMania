@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
-import { PAYMENTS, RETURNS } from '@/lib/config';
+import { CYBER, PAYMENTS, RETURNS } from '@/lib/config';
+import { CyberTag } from '@/components/ui/CyberTag';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -30,6 +31,11 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         {/* ── Header — rating + título + sub pills ───────────────────── */}
         <div className="text-center">
+          {CYBER.enabled && (
+            <div className="mb-4 sm:mb-5">
+              <CyberTag />
+            </div>
+          )}
           <div className="inline-flex items-center gap-2">
             <Stars rating={brand.averageRating} size={18} />
             <span className="text-sm font-semibold text-accent">
@@ -101,7 +107,9 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
               <li
                 key={b.id}
                 className={`${mobileOrder} relative flex flex-col rounded-2xl border bg-ink-900 p-5 sm:rounded-3xl sm:p-6 md:order-none md:p-7 ${b.recommended
-                    ? 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
+                    ? CYBER.enabled
+                      ? 'border-cyber-500 shadow-[0_30px_80px_-20px_rgba(124,58,237,0.55)] ring-2 ring-cyber-500/30 md:scale-[1.03]'
+                      : 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
                     : 'border-ink-800'
                   }`}
               >
@@ -110,7 +118,9 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span
                       className={`inline-flex items-center gap-1 rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
-                          ? 'bg-accent text-white'
+                          ? CYBER.enabled
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            : 'bg-accent text-white'
                           : 'bg-white text-ink-950'
                         }`}
                     >

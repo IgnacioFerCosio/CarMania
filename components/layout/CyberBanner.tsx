@@ -43,19 +43,23 @@ function parts(ms: number) {
   };
 }
 
-/** Rayo dentro de un chip: el "loguito" del evento (propio, no el de la CACE). */
+/**
+ * Logo del evento (propio, no el de la CACE). `<img>` plano y no next/image:
+ * en Cloudflare `/_next/image` no optimiza y `/cyber` se sirve como estático.
+ * 160 px de ancho alcanzan para `h-9` a 2x; el de 720 es para el resto de las
+ * piezas del Cyber.
+ */
 function CyberMark() {
   return (
-    <span className="flex items-center gap-1.5">
-      <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white text-cyber-700 shadow-[0_0_10px_rgba(196,181,253,0.9)]">
-        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5" fill="currentColor">
-          <path d="M13.5 2 5 13.2h5.6L9.4 22 19 10.2h-5.7L13.5 2Z" />
-        </svg>
-      </span>
-      <span className="font-display text-[11px] font-black italic uppercase leading-none tracking-widest text-white [text-shadow:0_0_10px_rgba(196,181,253,0.9)] sm:text-xs">
-        {CYBER.name}
-      </span>
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/cyber/cyber-week-logo-sm.webp"
+      alt={CYBER.name}
+      width={160}
+      height={118}
+      decoding="async"
+      className="h-9 w-auto shrink-0 drop-shadow-[0_0_8px_rgba(196,181,253,0.55)]"
+    />
   );
 }
 
