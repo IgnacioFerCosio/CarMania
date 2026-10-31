@@ -31,11 +31,6 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         {/* ── Header — rating + título + sub pills ───────────────────── */}
         <div className="text-center">
-          {CYBER.enabled && (
-            <div className="mb-3 flex justify-center sm:mb-4">
-              <CyberLogo size="md" className="h-20 sm:h-24" />
-            </div>
-          )}
           <div className="inline-flex items-center gap-2">
             <Stars rating={brand.averageRating} size={18} />
             <span className="text-sm font-semibold text-accent">

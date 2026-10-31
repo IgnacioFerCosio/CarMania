@@ -53,19 +53,22 @@ export function CrossSellCard({ offer, busy, cyber = false, onAdd }: Props) {
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <span
-            className={`absolute left-1 top-1 rounded-md px-1 py-0.5 font-display text-[10px] font-black leading-none text-white ${
-              cyber ? 'bg-cyber-600' : 'bg-accent'
-            }`}
-          >
-            {cyber ? 'CYBER ' : ''}−{pct}%
-          </span>
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <h3 className="text-[13px] font-semibold leading-tight text-white sm:text-sm">
-            {offer.name}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-[13px] font-semibold leading-tight text-white sm:text-sm">
+              {offer.name}
+            </h3>
+            {/* Fuera de la foto: sobre la imagen tapaba el producto. */}
+            <span
+              className={`shrink-0 whitespace-nowrap rounded-md px-1.5 py-0.5 font-display text-[10px] font-black leading-none text-white ${
+                cyber ? 'bg-cyber-600' : 'bg-accent'
+              }`}
+            >
+              {cyber ? 'CYBER ' : ''}−{pct}%
+            </span>
+          </div>
           <p className="mt-0.5 text-[12px] leading-snug text-ink-400">{offer.pitch}</p>
 
           <div className="mt-auto flex items-end justify-between gap-2 pt-2">

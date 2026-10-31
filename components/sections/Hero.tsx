@@ -47,8 +47,8 @@ export function Hero({ config = SOPORTE }: { config?: LandingConfig } = {}) {
       <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:pb-16 sm:pt-10 md:px-6 md:pb-24 md:pt-16">
         {/* Cyber: logo sobre el título (se esconde solo pasado el evento) */}
         {CYBER.enabled && (
-          <div className="mb-3 flex justify-center sm:mb-4">
-            <CyberLogo size="md" className="h-20 sm:h-24 md:h-28" priority />
+          <div className="mb-2 flex justify-center">
+            <CyberLogo size="md" className="h-12 sm:h-14 md:h-16" priority />
           </div>
         )}
 
