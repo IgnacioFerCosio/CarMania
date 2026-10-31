@@ -65,9 +65,11 @@ const config: Config = {
           '0%': { transform: 'translateX(-150%) skewX(-12deg)' },
           '28%, 100%': { transform: 'translateX(520%) skewX(-12deg)' },
         },
+        // Sólo `transform`: corre en el compositor, sin repintar (animar
+        // `filter` en una barra fija gasta batería en mobile).
         'cyber-glow': {
-          '0%, 100%': { filter: 'drop-shadow(0 0 4px rgba(196,181,253,0.35))' },
-          '50%': { filter: 'drop-shadow(0 0 12px rgba(196,181,253,0.95))' },
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.08)' },
         },
         'spin-slow': {
           from: { transform: 'rotate(0deg)' },

@@ -154,7 +154,7 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                     pasado el evento). */}
                 {CYBER.enabled && (
                   <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
-                    <CyberLogo size="sm" className="h-14 sm:h-16" />
+                    <CyberLogo className="h-14 sm:h-16" />
                   </div>
                 )}
 
@@ -251,7 +251,7 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
         {x6 && (
           <li className="relative order-3 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] md:order-1 md:col-span-3 md:mt-4">
             <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
-              <CyberLogo size="sm" className="h-14 sm:h-16" />
+              <CyberLogo className="h-14 sm:h-16" />
             </div>
 
             <div className="grid items-center gap-5 p-5 sm:p-6 md:grid-cols-2 md:gap-10 md:p-8">

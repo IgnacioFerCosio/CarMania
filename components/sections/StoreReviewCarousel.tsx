@@ -4,9 +4,7 @@
  * dedo en mobile) y flechas en desktop. Sin librerías: el movimiento lo hace el
  * navegador, las flechas sólo llaman a `scrollBy`.
  *
- * Las cards son de dos tipos:
- *  - `review`: reseña con foto, estrellas, texto, nombre y ciudad.
- *  - `photo`: sólo la foto del cliente con el producto, sin cita ni nombre.
+ * Cada card es una reseña con foto, estrellas, texto, nombre y ciudad.
  *
  * Las fotos van como `<img>` plano (no next/image): en Cloudflare
  * `/_next/image` no optimiza y las carpetas de reseñas se sirven estáticas.
@@ -15,18 +13,16 @@ import { useRef } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 
-export type StoreReviewItem =
-  | {
-      kind: 'review';
-      product: string;
-      image: string;
-      name: string;
-      location: string;
-      stars: number;
-      text: string;
-      date: string;
-    }
-  | { kind: 'photo'; product: string; image: string; alt: string };
+export type StoreReviewItem = {
+  kind: 'review';
+  product: string;
+  image: string;
+  name: string;
+  location: string;
+  stars: number;
+  text: string;
+  date: string;
+};
 
 export function StoreReviewCarousel({ items }: { items: StoreReviewItem[] }) {
   const track = useRef<HTMLUListElement>(null);
@@ -55,7 +51,7 @@ export function StoreReviewCarousel({ items }: { items: StoreReviewItem[] }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={it.image}
-                alt={it.kind === 'photo' ? it.alt : `Foto de ${it.name} con su ${it.product}`}
+                alt={`Foto de ${it.name} con su ${it.product}`}
                 width={640}
                 height={480}
                 loading="lazy"
@@ -67,21 +63,15 @@ export function StoreReviewCarousel({ items }: { items: StoreReviewItem[] }) {
               </span>
             </div>
 
-            {it.kind === 'review' ? (
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
-                <Stars rating={it.stars} size={13} />
-                <p className="mt-3 flex-1 text-[13px] leading-relaxed text-ink-200 line-clamp-5 sm:text-sm">
-                  “{it.text}”
-                </p>
-                <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
-                  — <span className="text-accent">{it.name}</span>, {it.location} 🇦🇷
-                </p>
-              </div>
-            ) : (
-              <p className="p-4 text-[11px] font-bold uppercase tracking-wider text-ink-500 sm:p-5">
-                Foto de un cliente · <span className="text-accent">{it.product}</span>
+            <div className="flex flex-1 flex-col p-4 sm:p-5">
+              <Stars rating={it.stars} size={13} />
+              <p className="mt-3 flex-1 text-[13px] leading-relaxed text-ink-200 line-clamp-5 sm:text-sm">
+                “{it.text}”
               </p>
-            )}
+              <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
+                — <span className="text-accent">{it.name}</span>, {it.location} 🇦🇷
+              </p>
+            </div>
           </li>
         ))}
       </ul>

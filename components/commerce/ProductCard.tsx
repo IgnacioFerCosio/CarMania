@@ -101,7 +101,7 @@ export function ProductCard({
             pasada la extensión). */}
         {cyber && (
           <div className="pointer-events-none absolute bottom-1.5 right-1.5 rotate-6">
-            <CyberLogo size="sm" className="h-12 sm:h-14" />
+            <CyberLogo className="h-12 sm:h-14" />
           </div>
         )}
       </div>

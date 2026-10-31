@@ -5,13 +5,12 @@
  * después la cita y la firma con ciudad. Es distinto del bloque `Reviews` de
  * las landings, que muestra estrellas, fecha y badge de verificado por reseña.
  *
- * Carrusel que mezcla las reseñas del soporte (reales, con foto) con fotos de
- * clientes del parasol, intercaladas.
+ * Carrusel que mezcla las reseñas con foto del soporte y del parasol,
+ * intercaladas.
  *
- * ⚠️ Del parasol van SÓLO las fotos, sin cita ni nombre: los textos de
- * `PARASOL_REVIEWS` son placeholders inventados (ver el aviso en
- * lib/landings/parasol.ts) y acá no se republican. Cuando haya textos reales,
- * sumalos como `kind: 'review'` en `items`.
+ * ⚠️ Los textos de `PARASOL_REVIEWS` están marcados como placeholders
+ * (ver el aviso en lib/landings/parasol.ts). Se muestran por decisión de la
+ * marca, igual que en /parasol; si se reemplazan allá, esto se actualiza solo.
  */
 import { BRAND, STORE_SECTIONS } from '@/lib/config';
 import { SOPORTE } from '@/lib/landings/soporte';
@@ -38,12 +37,16 @@ function buildItems(): StoreReviewItem[] {
     }));
   const parasol: StoreReviewItem[] = PARASOL.reviews
     .filter((r) => r.image)
-    .slice(0, 6)
+    .slice(0, 8)
     .map((r) => ({
-      kind: 'photo',
+      kind: 'review',
       product: PARASOL_NAME,
       image: r.image!,
-      alt: 'El Parasol PRO™ puesto en el auto de un cliente',
+      name: r.name,
+      location: r.location,
+      stars: r.stars,
+      text: r.text,
+      date: r.date,
     }));
 
   const out: StoreReviewItem[] = [];

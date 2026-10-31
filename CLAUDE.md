@@ -49,6 +49,19 @@ presencia web del producto.
   **`Purchase` ocurre en el checkout de Shopify** y debe configurarse del
   lado de Shopify (canal de ventas de Meta), NO en este repo.
 
+- **Cyber Week (temporal, noviembre 2026):** todo cuelga del bloque `CYBER`
+  de `lib/config.ts`. `enabled: true` pinta el banner morado fijo (`CyberBanner`,
+  reemplaza al contador de 8 h; en `/tienda` lleva a `#productos`), los logos,
+  "Cyber −X%" en packs y cards, la card propia del pack x6 (`pack6Card`), el
+  carrito en morado ("Combo Cyber") y saca la barra negra de las landings. Las
+  fases pasan solas por la hora del visitante (`lib/cyber.ts`): "Empieza en" →
+  "Termina en" → "Extensión Cyber Week" → todo lo vivo se esconde. Lo que NO se
+  apaga solo (está en el HTML del build): textos de las barras, colores morados de
+  botones/packs, la barra de neón de `/tienda` y el chip del navbar. **Pasada la
+  extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra negra y el
+  contador de 8 h). Ningún texto lleva fecha; las fechas viven sólo en `CYBER`
+  y `tests/unit/cyber.test.ts` las vigila. Logo en `public/cyber/`.
+
 ## Datos de producto (¡importante para el copy!)
 - El kit nuevo trae **2 aros metálicos adhesivos** (uno de repuesto) y 2
   toallitas (1 húmeda + 1 seca); ya no trae el adhesivo que muestra

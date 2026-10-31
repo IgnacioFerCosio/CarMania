@@ -54,7 +54,7 @@ function CyberMark() {
       width={160}
       height={118}
       decoding="async"
-      className="h-9 w-auto shrink-0 animate-cyber-glow motion-reduce:animate-none"
+      className="h-9 w-auto shrink-0 animate-cyber-glow drop-shadow-[0_0_8px_rgba(196,181,253,0.7)] motion-reduce:animate-none"
     />
   );
 }
@@ -122,7 +122,7 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
             (grid de una celda: ambos ocupan el mismo sitio y el ancho lo
             define el más grande, así nada se corre al alternar). */}
         <span
-          className={`relative grid place-items-center transition-opacity ${phase === null ? 'opacity-0' : 'opacity-100'}`}
+          className={`relative grid place-items-center transition-opacity ${phase === null || now === null ? 'opacity-0' : 'opacity-100'}`}
         >
           <span
             className={`col-start-1 row-start-1 flex items-center gap-1.5 transition-opacity duration-300 xl:opacity-100 ${

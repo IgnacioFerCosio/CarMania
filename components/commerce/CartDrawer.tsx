@@ -158,7 +158,7 @@ export function CartDrawer({
           }`}
         >
           <h2 className="flex items-center gap-2 font-display text-lg font-black italic uppercase tracking-wider text-white">
-            {CYBER.enabled && <CyberLogo size="sm" className="-my-2 h-11" />}
+            {CYBER.enabled && <CyberLogo className="-my-2 h-11" />}
             <span>Tu carrito</span>
             {cart && cart.totalQuantity > 0 && (
               <span className="ml-2 text-sm font-bold not-italic text-ink-400">
