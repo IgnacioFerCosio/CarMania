@@ -18,6 +18,17 @@ const config: Config = {
           600: '#B00606',
           700: '#7E0404',
         },
+        // Morado del CyberMonday. Sólo lo usan las piezas temporales del
+        // evento (ver CYBER en lib/config.ts).
+        cyber: {
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#8B5CF6',
+          600: '#7C3AED',
+          700: '#6D28D9',
+          800: '#5B21B6',
+          950: '#1E0A3C',
+        },
         ink: {
           950: '#0A0A0A',
           900: '#111111',

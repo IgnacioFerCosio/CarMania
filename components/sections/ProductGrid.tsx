@@ -11,6 +11,8 @@
  */
 import { ProductCard, ComingSoonCard } from '@/components/commerce/ProductCard';
 import {
+  CYBER,
+  isPublished,
   PAYMENT_LOGOS,
   STORE_COMING_SOON,
   STORE_HEADLINES,
@@ -27,6 +29,10 @@ export function ProductGrid({
   // muestra; se deja en el tipo para no tocar el fetch de /tienda.
   products: { product: StoreProduct; price: number }[];
 }) {
+  const cyberTrim = CYBER.enabled;
+  const visible = cyberTrim ? products.filter(({ product }) => isPublished(product)) : products;
+  const slots = cyberTrim ? [] : STORE_COMING_SOON;
+
   return (
     <section id="productos" className="bg-[#24262A] py-14 sm:py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
@@ -53,11 +59,20 @@ export function ProductGrid({
           ))}
         </ul>
 
-        <div className="mt-9 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-4">
-          {products.map(({ product }) => (
+        {/* Durante el Cyber se esconden las cards "Próximamente" (producto sin
+            publicar y slot vacío): en un evento de compra son espacio muerto.
+            Con menos de 4 cards la grilla se angosta y queda centrada. */}
+        <div
+          className={`mt-9 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 ${
+            cyberTrim && visible.length < 4
+              ? 'mx-auto max-w-3xl'
+              : 'lg:grid-cols-4'
+          }`}
+        >
+          {visible.map(({ product }) => (
             <ProductCard key={product.handle} product={product} />
           ))}
-          {STORE_COMING_SOON.map((slot) => (
+          {slots.map((slot) => (
             <ComingSoonCard
               key={slot.id}
               specTag={slot.specTag}

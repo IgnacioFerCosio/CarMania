@@ -20,11 +20,14 @@
  *
  * Sin estado hover a propósito.
  */
-import { PROMO_BARS } from '@/lib/config';
+import { CYBER, PROMO_BARS } from '@/lib/config';
 
 /** Halo hacia afuera + un toque de luz interna pegada a los bordes. */
 const GLOW =
   'shadow-[0_0_14px_rgba(215,7,7,0.55),0_0_34px_rgba(215,7,7,0.4),0_0_70px_rgba(215,7,7,0.28),inset_0_1px_0_rgba(215,7,7,0.55),inset_0_-1px_0_rgba(215,7,7,0.55)]';
+
+const GLOW_CYBER =
+  'shadow-[0_0_14px_rgba(139,92,246,0.55),0_0_34px_rgba(139,92,246,0.4),0_0_70px_rgba(139,92,246,0.28),inset_0_1px_0_rgba(139,92,246,0.55),inset_0_-1px_0_rgba(139,92,246,0.55)]';
 
 export function SubPromoBar({ href }: { href?: string } = {}) {
   if (!PROMO_BARS.sub.enabled) return null;
@@ -32,10 +35,20 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
   // z-30: sobre el contenido de la página — si no, la sección siguiente tapa
   // el derrame de luz de abajo. Por debajo del navbar (40), del banner fijo
   // (50) y del drawer del carrito (60/61).
-  const shell = `relative z-30 block border-y border-accent/70 bg-[#0B0405] py-2.5 ${GLOW}`;
+  // En el Cyber el neón pasa a morado (ver CYBER en config).
+  const cyber = CYBER.enabled;
+  const shell = cyber
+    ? `relative z-30 block border-y border-cyber-500/70 bg-[#0A0512] py-2.5 ${GLOW_CYBER}`
+    : `relative z-30 block border-y border-accent/70 bg-[#0B0405] py-2.5 ${GLOW}`;
 
   const inner = (
-    <span className="neon-pulse block text-center text-[12px] font-black uppercase italic tracking-[0.18em] text-accent [text-shadow:0_0_10px_rgba(215,7,7,0.85)] md:text-sm">
+    <span
+      className={`neon-pulse block text-center text-[12px] font-black uppercase italic tracking-[0.18em] md:text-sm ${
+        cyber
+          ? 'text-cyber-400 [text-shadow:0_0_10px_rgba(139,92,246,0.9)]'
+          : 'text-accent [text-shadow:0_0_10px_rgba(215,7,7,0.85)]'
+      }`}
+    >
       {PROMO_BARS.sub.text}
     </span>
   );

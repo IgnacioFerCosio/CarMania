@@ -106,17 +106,47 @@ export const TRACKING = {
 } as const;
 
 /**
+ * ─────────────────────────────────────────────────────────────────────────
+ * CYBER — ambientación temporal del CyberMonday 2026 (lunes 2 al miércoles 4
+ * de noviembre). Es un solo interruptor:
+ *
+ *  - `enabled: true`  → `CountdownBanner` pinta el banner morado con la
+ *    cuenta REAL hasta `endsAt` (en vez del de 8 h que se reinicia), las
+ *    barras de promo hablan del Cyber y /tienda esconde las cards
+ *    "Próximamente".
+ *  - Antes de `startsAt` el banner dice "Empieza en"; pasado `endsAt` se
+ *    esconde solo (no vuelve el contador viejo).
+ *  - `enabled: false` → todo vuelve a como era, sin tocar componentes.
+ *
+ * Las fechas llevan el offset de Argentina (-03:00) para que el conteo no
+ * dependa de la zona del visitante. Confirmarlas en cybermonday.com.ar.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export const CYBER = {
+  enabled: true,
+  name: 'CYBER WEEK',
+  startsAt: '2026-11-02T00:00:00-03:00',
+  endsAt: '2026-11-04T23:59:59-03:00',
+  /** Cómo se escribe el cierre en las barras de texto. */
+  untilLabel: 'hasta el 4/11',
+} as const;
+
+/**
  * Banner superior tipo "promo strip".
  * Lo dejamos en config para que lo puedas apagar/cambiar sin tocar el componente.
  */
 export const PROMO_BARS = {
   top: {
     enabled: true,
-    text: 'Envío gratis a todo el país · 3 cuotas sin interés',
+    text: CYBER.enabled
+      ? `${CYBER.name} · Envío gratis a todo el país · 3 cuotas sin interés`
+      : 'Envío gratis a todo el país · 3 cuotas sin interés',
   },
   sub: {
     enabled: true,
-    text: '« OFERTA POR TIEMPO LIMITADO »',
+    text: CYBER.enabled
+      ? `« ${CYBER.name} CARMANIA · ${CYBER.untilLabel.toUpperCase()} »`
+      : '« OFERTA POR TIEMPO LIMITADO »',
   },
 } as const;
 
@@ -378,11 +408,12 @@ export const STORE_HEADLINES = {
  * Mensajes de la barra de anuncios de /tienda. Rotan en un marquee, como los
  * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
  */
-export const STORE_PROMO_MESSAGES = [
+export const STORE_PROMO_MESSAGES: readonly string[] = [
+  ...(CYBER.enabled ? [`${CYBER.name} · ${CYBER.untilLabel}`] : []),
   'Envío gratis a todo el país',
   'Garantía de 30 días',
   '3 cuotas sin interés',
-] as const;
+];
 
 /**
  * Franja de 4 garantías, justo debajo del hero. Cada item se parte en dos
