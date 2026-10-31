@@ -60,12 +60,25 @@ const config: Config = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        // Barrido de 0 a 1,4 s y descanso el resto del ciclo.
+        'cyber-shine': {
+          '0%': { transform: 'translateX(-150%) skewX(-12deg)' },
+          '28%, 100%': { transform: 'translateX(520%) skewX(-12deg)' },
+        },
+        'cyber-glow': {
+          '0%, 100%': { filter: 'drop-shadow(0 0 4px rgba(196,181,253,0.35))' },
+          '50%': { filter: 'drop-shadow(0 0 12px rgba(196,181,253,0.95))' },
+        },
         'spin-slow': {
           from: { transform: 'rotate(0deg)' },
           to: { transform: 'rotate(360deg)' },
         },
       },
       animation: {
+        // Banner del Cyber: destello que cruza la barra cada ~5 s y un brillo
+        // que respira en el logo. Ver CyberBanner.
+        'cyber-shine': 'cyber-shine 5s ease-in-out infinite',
+        'cyber-glow': 'cyber-glow 2.4s ease-in-out infinite',
         'pulse-dot': 'pulse-dot 1.2s ease-in-out infinite',
         'fade-up': 'fade-up 0.5s ease-out both',
         'marquee': 'marquee 30s linear infinite',

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
 import { CYBER, PAYMENTS, RETURNS } from '@/lib/config';
-import { CyberTag } from '@/components/ui/CyberTag';
+import { CyberLogo } from '@/components/ui/CyberLogo';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -32,8 +32,8 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
         {/* ── Header — rating + título + sub pills ───────────────────── */}
         <div className="text-center">
           {CYBER.enabled && (
-            <div className="mb-4 sm:mb-5">
-              <CyberTag />
+            <div className="mb-3 flex justify-center sm:mb-4">
+              <CyberLogo size="md" className="h-20 sm:h-24" />
             </div>
           )}
           <div className="inline-flex items-center gap-2">
@@ -94,6 +94,12 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
             // carrito usable en vez de dejar el botón muerto.
             const variantIdForCart = shopifyData?.variantId ?? b.fallbackVariantId;
             const savings = bundleCompare - bundleTotal;
+            // "CYBER −X%": el descuento del precio tachado, calculado con los
+            // mismos números que se ven en la card (Shopify en el build).
+            const cyberPct =
+              bundleCompare > bundleTotal
+                ? Math.round((savings / bundleCompare) * 100)
+                : 0;
             const installment = Math.round(bundleTotal / PAYMENTS.installments);
 
             // Orden en mobile: MÁS ELEGIDO (double) → MEJOR PRECIO (triple) → 1 UNIDAD (single).
@@ -133,6 +139,14 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                   </div>
                 )}
 
+                {/* Logo del Cyber colgando de la esquina (se esconde solo
+                    pasado el evento). */}
+                {CYBER.enabled && (
+                  <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
+                    <CyberLogo size="sm" className="h-14 sm:h-16" />
+                  </div>
+                )}
+
                 {/* Título + subtitle */}
                 <div className="text-center">
                   <h3 className="font-display text-lg font-black italic uppercase tracking-wider text-white sm:text-xl md:text-2xl">
@@ -148,6 +162,11 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
 
                 {/* Precios */}
                 <div className="mt-2 text-center">
+                  {CYBER.enabled && cyberPct > 0 && (
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
+                      Cyber −{cyberPct}%
+                    </span>
+                  )}
                   <div className="text-[11px] uppercase tracking-wider text-ink-400 sm:text-xs">
                     Precio normal:{' '}
                     <span className="line-through">{formatARS(bundleCompare)}</span>

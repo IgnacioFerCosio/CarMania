@@ -107,28 +107,38 @@ export const TRACKING = {
 
 /**
  * ─────────────────────────────────────────────────────────────────────────
- * CYBER — ambientación temporal del CyberMonday 2026 (lunes 2 al miércoles 4
- * de noviembre). Es un solo interruptor:
+ * CYBER — ambientación temporal del CyberMonday 2026. Es un solo interruptor:
  *
- *  - `enabled: true`  → `CountdownBanner` pinta el banner morado con la
- *    cuenta REAL hasta `endsAt` (en vez del de 8 h que se reinicia), las
- *    barras de promo hablan del Cyber y /tienda esconde las cards
- *    "Próximamente".
- *  - Antes de `startsAt` el banner dice "Empieza en"; pasado `endsAt` se
- *    esconde solo (no vuelve el contador viejo).
+ *  - `enabled: true`  → `CountdownBanner` pinta el banner morado con una
+ *    cuenta REAL (en vez del de 8 h que se reinicia), el logo del evento,
+ *    los packs con "CYBER −X%", el carrito en morado, las barras de promo
+ *    hablan del Cyber y /tienda esconde las cards "Próximamente".
+ *  - Las fases pasan SOLAS según la hora del visitante (ver `lib/cyber.ts`):
+ *      antes de `startsAt`           → "Empieza en"
+ *      hasta `endsAt`                → "Termina en"
+ *      hasta `extensionEndsAt`       → "Extensión Cyber Week" + nueva cuenta
+ *      después                       → el banner, el logo y las píldoras se
+ *                                      esconden (no vuelve el contador viejo)
+ *  - Ningún texto lleva la fecha: sólo la cuenta regresiva. Así la extensión
+ *    no obliga a reescribir nada.
  *  - `enabled: false` → todo vuelve a como era, sin tocar componentes.
+ *
+ * Lo que NO se apaga solo: los textos de las barras de promo y los colores
+ * morados de botones/packs están en el HTML del build. Pasada la extensión,
+ * poné `enabled: false` y redeployá.
  *
  * Las fechas llevan el offset de Argentina (-03:00) para que el conteo no
  * dependa de la zona del visitante. Confirmarlas en cybermonday.com.ar.
+ * `extensionEndsAt` es decisión de la marca, no del evento.
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const CYBER = {
   enabled: true,
   name: 'CYBER WEEK',
+  extensionName: 'EXTENSIÓN CYBER WEEK',
   startsAt: '2026-11-02T00:00:00-03:00',
   endsAt: '2026-11-04T23:59:59-03:00',
-  /** Cómo se escribe el cierre en las barras de texto. */
-  untilLabel: 'hasta el 4/11',
+  extensionEndsAt: '2026-11-08T23:59:59-03:00',
 } as const;
 
 /**
@@ -145,7 +155,7 @@ export const PROMO_BARS = {
   sub: {
     enabled: true,
     text: CYBER.enabled
-      ? `« ${CYBER.name} CARMANIA · ${CYBER.untilLabel.toUpperCase()} »`
+      ? `« ${CYBER.name} CARMANIA »`
       : '« OFERTA POR TIEMPO LIMITADO »',
   },
 } as const;
@@ -409,7 +419,7 @@ export const STORE_HEADLINES = {
  * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
  */
 export const STORE_PROMO_MESSAGES: readonly string[] = [
-  ...(CYBER.enabled ? [`${CYBER.name} · ${CYBER.untilLabel}`] : []),
+  ...(CYBER.enabled ? [`${CYBER.name} · ofertas por tiempo limitado`] : []),
   'Envío gratis a todo el país',
   'Garantía de 30 días',
   '3 cuotas sin interés',
