@@ -91,6 +91,9 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
             const savings = bundleCompare - bundleTotal;
             // "CYBER −X%": el descuento del precio tachado, calculado con los
             // mismos números que se ven en la card (Shopify en el build).
+            // El x3 es el pack con más fuerza del Cyber (no pasa al x2, que sigue
+            // siendo el recomendado): badge y borde morados.
+            const cyberHero = CYBER.enabled && b.id === 'triple';
             const cyberPct =
               bundleCompare > bundleTotal
                 ? Math.round((savings / bundleCompare) * 100)
@@ -111,25 +114,29 @@ export function Pricing({ productId, bundlesData, config = SOPORTE }: Props) {
                     ? CYBER.enabled
                       ? 'border-cyber-500 shadow-[0_30px_80px_-20px_rgba(124,58,237,0.55)] ring-2 ring-cyber-500/30 md:scale-[1.03]'
                       : 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
-                    : 'border-ink-800'
+                    : cyberHero
+                      ? 'border-cyber-500/60 shadow-[0_24px_60px_-24px_rgba(124,58,237,0.5)]'
+                      : 'border-ink-800'
                   }`}
               >
                 {/* Badge superior */}
                 {b.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
+                      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
                           ? CYBER.enabled
                             ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
                             : 'bg-accent text-white'
-                          : 'bg-white text-ink-950'
+                          : cyberHero
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            : 'bg-white text-ink-950'
                         }`}
                     >
                       <Icon
                         name={b.recommended ? 'fire' : 'star'}
                         className="h-3 w-3"
                       />
-                      {b.badge}
+                      {cyberHero ? 'El mejor precio del año' : b.badge}
                     </span>
                   </div>
                 )}
