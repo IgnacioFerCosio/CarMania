@@ -223,6 +223,8 @@ y su config a `LANDINGS` en los dos tests. Una guía de instalación va sólo a
   sus subcarpetas, nunca `/parasol/*`. `check:routes` busca páginas en todo
   `app/` (anidadas incluidas, como `/soporte/instalacion`) y también protege
   los `redirects()` de `next.config.js`.
+  Ignora `public/mock/` (referencias de maquetado, nunca se deploya) mientras
+  git no la trackee; si alguien la commitea, vuelve a fallar.
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
   `revalidate = 300` y `lib/shopify.ts` pasa `next: { revalidate: 300 }`,
   pero **el ISR no corre en Cloudflare Pages**: las rutas con `revalidate` se
