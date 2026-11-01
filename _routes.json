@@ -3,6 +3,9 @@
   "include": ["/*"],
   "exclude": [
     "/favicon.png",
+    "/favicon.svg",
+    "/favicon-32.png",
+    "/apple-touch-icon.png",
     "/logo.png",
     "/logo.webp",
     "/Reviews/*",

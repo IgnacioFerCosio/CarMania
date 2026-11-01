@@ -32,10 +32,17 @@ export const metadata: Metadata = {
     siteName: 'CARMANIA',
   },
   robots: { index: true, follow: true },
+  // Monograma CM. El SVG es el que usan los navegadores modernos; los PNG de
+  // 32 y 192 (múltiplo de 48, lo que pide Google) son el respaldo, y el
+  // apple-touch es cuadrado y sin esquinas porque iOS las redondea solo.
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '192x192', type: 'image/png' },
+    ],
     shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    apple: '/apple-touch-icon.png',
   },
 };
 
