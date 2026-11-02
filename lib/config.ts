@@ -116,7 +116,9 @@ export const TRACKING = {
  *  - Las fases pasan SOLAS según la hora del visitante (ver `lib/cyber.ts`):
  *      antes de `startsAt`           → "Empieza en"
  *      hasta `endsAt`                → "Termina en"
- *      hasta `extensionEndsAt`       → "Extensión Cyber Week" + nueva cuenta
+ *      hasta `extensionEndsAt`       → "Extensión Cyber Week"
+ *    La cuenta del banner es siempre de hasta 24 h: vence a la medianoche de
+ *    Argentina y se reinicia sola cada día (ver `cyberTargetOf`).
  *      después                       → el banner, el logo y las píldoras se
  *                                      esconden (no vuelve el contador viejo)
  *  - Ningún texto lleva la fecha: sólo la cuenta regresiva. Así la extensión

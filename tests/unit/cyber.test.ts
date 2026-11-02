@@ -10,6 +10,7 @@ import {
   CYBER_EXTENSION_ENDS,
   cyberPhaseAt,
   cyberTargetOf,
+  nextMidnightART,
 } from '@/lib/cyber';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
@@ -40,10 +41,31 @@ describe('CYBER — fechas y fases', () => {
     expect(cyberPhaseAt(ART('2026-11-09T00:00:00'))).toBe('ended');
   });
 
-  it('la cuenta de cada fase apunta a su cierre', () => {
-    expect(cyberTargetOf('pre')).toBe(CYBER_STARTS);
-    expect(cyberTargetOf('live')).toBe(CYBER_ENDS);
-    expect(cyberTargetOf('extension')).toBe(CYBER_EXTENSION_ENDS);
+  it('antes del evento la cuenta apunta al inicio', () => {
+    const now = ART('2026-11-01T20:00:00');
+    expect(cyberTargetOf('pre', now)).toBe(CYBER_STARTS);
+  });
+
+  it('en marcha y en la extensión la cuenta es de hasta 24 h: vence a la medianoche argentina', () => {
+    const now = ART('2026-11-03T14:30:00');
+    expect(cyberTargetOf('live', now)).toBe(ART('2026-11-04T00:00:00'));
+    expect(cyberTargetOf('extension', ART('2026-11-06T09:00:00'))).toBe(ART('2026-11-07T00:00:00'));
+  });
+
+  it('nextMidnightART: un segundo antes de las 00 vence en 1 s, y a las 00 en punto reinicia en 24 h', () => {
+    expect(nextMidnightART(ART('2026-11-03T23:59:59'))).toBe(ART('2026-11-04T00:00:00'));
+    expect(nextMidnightART(ART('2026-11-04T00:00:00'))).toBe(ART('2026-11-05T00:00:00'));
+    expect(nextMidnightART(ART('2026-11-04T00:00:01'))).toBe(ART('2026-11-05T00:00:00'));
+  });
+
+  it('la cuenta nunca pasa de 24 h ni es negativa', () => {
+    const DAY = 24 * 60 * 60 * 1000;
+    for (const iso of ['2026-11-02T00:00:00', '2026-11-02T12:34:56', '2026-11-04T23:59:59', '2026-11-08T23:59:58']) {
+      const now = ART(iso);
+      const left = cyberTargetOf('live', now) - now;
+      expect(left).toBeGreaterThan(0);
+      expect(left).toBeLessThanOrEqual(DAY);
+    }
   });
 });
 

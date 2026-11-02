@@ -9,7 +9,9 @@
  *
  *  - antes de `startsAt`        → "Empieza en"
  *  - hasta `endsAt`             → "Termina en"
- *  - hasta `extensionEndsAt`    → "Extensión Cyber Week", con cuenta nueva
+ *  - hasta `extensionEndsAt`    → "Extensión Cyber Week"
+ *  En las dos la cuenta es de hasta 24 h: vence a la medianoche de Argentina y
+ *  se reinicia sola cada día (ver `cyberTargetOf`).
  *  - pasado todo                → no se pinta nada (ni el spacer)
  *
  * Los cambios de fase ocurren solos, en vivo, sin redeploy.
@@ -93,7 +95,7 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
   const t =
     phase === null || now === null
       ? { d: 0, h: 0, m: 0, s: 0 }
-      : parts(cyberTargetOf(phase) - now);
+      : parts(cyberTargetOf(phase, now) - now);
 
   const extension = phase === 'extension';
   const label = phase === 'pre' ? 'Empieza en' : extension ? 'Extensión' : 'Termina en';
@@ -137,7 +139,8 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
               {label}
             </span>
             <span className="flex items-center gap-1 font-display text-xs font-extrabold tabular-nums text-white sm:text-sm">
-              <Box value={pad(t.d)} unit="d" />
+              {/* Los días sólo se muestran si quedan (la cuenta diaria nunca los tiene). */}
+              {t.d > 0 && <Box value={pad(t.d)} unit="d" />}
               <Box value={pad(t.h)} unit="h" />
               <Box value={pad(t.m)} unit="m" />
               <Box value={pad(t.s)} unit="s" />

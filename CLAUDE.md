@@ -55,7 +55,9 @@ presencia web del producto.
   "Cyber −X%" en packs y cards, la card propia del pack x6 (`pack6Card`), el
   carrito en morado ("Combo Cyber") y saca la barra negra de las landings. Las
   fases pasan solas por la hora del visitante (`lib/cyber.ts`): "Empieza en" →
-  "Termina en" → "Extensión Cyber Week" → todo lo vivo se esconde. Lo que NO se
+  "Termina en" → "Extensión Cyber Week" → todo lo vivo se esconde. Desde que
+  arranca, la cuenta del banner es siempre de hasta 24 h: vence a la medianoche
+  argentina y se reinicia sola cada día. Lo que NO se
   apaga solo (está en el HTML del build): textos de las barras, colores morados de
   botones/packs, la barra de neón de `/tienda` y el chip del navbar. **Pasada la
   extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra negra y el
