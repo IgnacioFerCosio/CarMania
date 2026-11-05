@@ -507,17 +507,20 @@ export const ROMPEVIDRIOS = {
     comparison: {
       title: 'Llavero, martillo o apoyacabezas: qué te saca del auto.',
       accent: 'qué te saca del auto.',
-      columns: ['Llavero Rescate PRO', 'Martillo de guantera'],
+      // Recortes sin fondo en public/rompevidrios/comparativa/. El martillo y el
+      // apoyacabezas salen de fotos de internet: confirmar la licencia o
+      // reemplazarlas por fotos propias antes de publicar.
+      columns: [
+        { name: 'Llavero Rescate PRO™', image: '/rompevidrios/comparativa/llavero-diagonal.webp', width: 291, height: 420 },
+        { name: 'Martillo de guantera', image: '/rompevidrios/comparativa/martillo-diagonal.webp', width: 376, height: 420 },
+        { name: 'Apoyacabezas', image: '/rompevidrios/comparativa/apoyacabezas.webp', width: 420, height: 389 },
+      ],
       rows: [
-        { label: 'Lo tenés a mano si estás atrapado', values: [true, false] },
-        { label: 'Funciona sin fuerza ni puntería', values: [true, false] },
-        { label: 'Corta el cinturón', values: [true, 'algunos'] },
-        { label: 'Lo podés probar antes', values: [true, false] },
-        { label: 'Entra en el bolsillo', values: [true, false] },
-        // A propósito una fila donde perdemos: una comparación donde ganás en todo
-        // parece armada. TODO confirmar que sea cierto (que un martillo de
-        // emergencia cueste menos que el llavero); si no, sacar la fila.
-        { label: 'Precio más bajo', values: [false, true] },
+        { label: 'A mano si estás atrapado', values: [true, false, 'depende del auto'] },
+        { label: 'Sin fuerza ni puntería', values: [true, false, false] },
+        { label: 'Corta el cinturón', values: [true, 'pocos', false] },
+        { label: 'Lo podés probar antes', values: [true, false, false] },
+        { label: 'Entra en el bolsillo', values: [true, false, false] },
       ],
       map: {
         distanceLabel: 'LEJOS',

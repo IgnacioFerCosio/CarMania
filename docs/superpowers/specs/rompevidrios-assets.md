@@ -98,6 +98,18 @@ puede ir material que no es nuestro. No reemplaza al asset final: eso sigue
 siendo subir `slot.src` y pasar `pending` a `false`. (En la consola de dev
 van a aparecer 404 de `/mock/...` por los slots sin archivo; es esperable.)
 
+**Comparativa (no son slots):** la tabla de "Llavero, martillo o apoyacabezas"
+usa tres recortes sin fondo (webp con transparencia) en
+`public/rompevidrios/comparativa/`: `llavero-diagonal.webp` (el llavero con el
+logo, recortado de la foto de IA), `martillo-diagonal.webp` y
+`apoyacabezas.webp`. **El martillo y el apoyacabezas salen de fotos de
+internet** que pasó Ignacio: antes de publicar, confirmar la licencia o
+reemplazarlas por fotos propias o generadas. Para cambiar uno, exportá un
+webp con transparencia (máx. ~420 px de lado) con un nombre NUEVO (el
+optimizador de imágenes de Next cachea por URL y no se entera de que el
+archivo cambió) y actualizá `comparison.columns` en la config. La carpeta ya
+está en `_routes.json`.
+
 **Card de `/tienda`:** mientras no llegue RV-13 usa
 `tienda/proximamente.webp`, un placeholder propio (llave roja + nombre). La
 card "Próximamente" sí se ve en producción, y con la ruta de RV-13 se vería

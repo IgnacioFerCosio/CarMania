@@ -209,7 +209,7 @@ export default async function RompevidriosPage() {
         <StepsGrid steps={ADV.steps} bg="gray" />
 
         {/* 6. Comparativa */}
-        <ComparisonTable comparison={ADV.comparison} cta={ADV.cta} bg="black" />
+        <ComparisonTable comparison={ADV.comparison} bg="black" />
 
         {/* 7. Bombero voluntario */}
         {showExpert && <ExpertVideo expert={ADV.expert} bg="gray" />}

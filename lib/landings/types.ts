@@ -313,6 +313,8 @@ export type MediaSlot = {
  */
 export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 
+export type ComparisonColumn = { name: string; image: string; width: number; height: number };
+
 export type AdvertorialData = {
   /** El botón que se repite en la página: siempre baja a #pricing. */
   cta: { label: string; href: string };
@@ -345,12 +347,15 @@ export type AdvertorialData = {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
   };
   comparison: SectionTitle & {
-    /** [la nuestra, la del martillo]: son DOS columnas. */
-    columns: readonly [string, string];
-    /** true = ✓, false = ✗, string = texto tal cual ("algunos"). Mismo orden que `columns`. */
+    /**
+     * Las tres columnas: [la nuestra, el martillo, el apoyacabezas]. `image` es
+     * el recorte sin fondo (webp con transparencia) que se para sobre la tabla.
+     */
+    columns: readonly [ComparisonColumn, ComparisonColumn, ComparisonColumn];
+    /** true = ✓, false = ✗, string = texto tal cual ("pocos"). Mismo orden que `columns`. */
     rows: readonly {
       label: string;
-      values: readonly [boolean | string, boolean | string];
+      values: readonly [boolean | string, boolean | string, boolean | string];
     }[];
     /**
      * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre
