@@ -37,7 +37,6 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-06 | `pasos/01-colocalo.mp4` | Cómo funciona (paso 1 "Colocalo") | GIF (MP4) | 1:1 | Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave. | 4–6 s |
 | RV-07 | `pasos/02-apreta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: aprieta y el vidrio estalla. | 3 s, cámara lenta |
 | RV-08 | `pasos/03-corta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | El llavero cortando un cinturón tenso de un tirón. | 3 s |
-| RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno y cuchilla protegida. | 1600×900, fondo negro |
 | RV-10 | `comparativa/comparativa.webp` | Comparativa | Foto | 3:2 | Los tres juntos sobre una mesa: llavero, martillo de emergencia y un apoyacabezas. | 1500×1000 |
 | RV-11 | `experto/bombero.mp4` + `experto/bombero-poster.webp` | Bombero | Video con audio y subtítulos | 9:16 | Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave. | Subtítulos quemados; **este sí con audio** (va con controles, sin autoplay) |
 | RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 1: la que se ve al cargar) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. **Cargada (2026-11-05):** imagen de IA con el logo de Carmania compuesto encima (2 llaveros, 2 vidrios, 2 soportes sobre pasto). Cuando haya muestra física, reemplazar por foto real. | 1200×1200 |

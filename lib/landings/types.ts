@@ -343,7 +343,6 @@ export type AdvertorialData = {
   includes: WhatsInBoxCopy & { slides: readonly MediaSlot[] };
   steps: SectionTitle & {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
-    exploded: { title: string; media: MediaSlot };
   };
   comparison: SectionTitle & {
     /** La primera columna es la nuestra. */

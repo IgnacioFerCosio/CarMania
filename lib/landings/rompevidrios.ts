@@ -502,19 +502,6 @@ export const ROMPEVIDRIOS = {
           },
         },
       ],
-      exploded: {
-        title: 'Por dentro: resorte, punta de tungsteno y cuchilla protegida',
-        media: {
-          id: 'RV-09',
-          kind: 'image',
-          src: '/rompevidrios/pasos/despiece.webp',
-          aspect: '16:9',
-          alt: 'Despiece del llavero: resorte, punta de tungsteno y cuchilla protegida',
-          brief: 'Despiece con flechas: resorte, punta de tungsteno y cuchilla protegida.',
-          spec: 'WEBP 1600×900, fondo negro',
-          pending: true,
-        },
-      },
     },
 
     comparison: {

@@ -1,6 +1,6 @@
 /**
  * "Cómo funciona": las mismas 3 cards que `HowItWorks` (media arriba,
- * "01. TÍTULO" + descripción abajo) y, debajo, el despiece. No reusa
+ * "01. TÍTULO" + descripción abajo). No reusa
  * `HowItWorks` porque ese recibe rutas de video sueltas y no slots con
  * placeholder.
  */
@@ -41,13 +41,6 @@ export function StepsGrid({
             </li>
           ))}
         </ol>
-
-        <div className="mx-auto mt-12 max-w-4xl sm:mt-16">
-          <h3 className="mb-5 text-center font-display text-base font-black italic uppercase tracking-wider text-white sm:text-lg">
-            {steps.exploded.title}
-          </h3>
-          <MediaSlot slot={steps.exploded.media} sizes="(min-width: 896px) 896px, 100vw" />
-        </div>
       </div>
     </section>
   );
