@@ -95,7 +95,7 @@ const ROMPEVIDRIOS_UPSELL_CHAIN: readonly UpsellTier[] = ROMPEVIDRIOS_BUNDLES.ma
   }),
 );
 
-const CTA_LABEL = 'Quiero el mío + vidrio de prueba';
+const CTA_LABEL = 'Comprar ahora';
 
 export const ROMPEVIDRIOS = {
   brand: {
