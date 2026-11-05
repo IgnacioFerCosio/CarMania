@@ -39,12 +39,13 @@ import { WhatsAppFloat } from '@/components/overlays/WhatsAppFloat';
 import { PixelViewContent } from '@/components/analytics/MetaPixel';
 import { KlaviyoViewedProduct } from '@/components/analytics/KlaviyoEvents';
 import { MediaSlot } from '@/components/advertorial/MediaSlot';
-import { StoryBlock } from '@/components/advertorial/StoryBlock';
-import { ProofBlock } from '@/components/advertorial/ProofBlock';
+// Escenario y mito desactivados por ahora (no borrar): el copy sigue en
+// ROMPEVIDRIOS.advertorial.story / .myth.
+// import { StoryBlock } from '@/components/advertorial/StoryBlock';
+import { IncludesShowcase } from '@/components/advertorial/IncludesShowcase';
 import { StepsGrid } from '@/components/advertorial/StepsGrid';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
 import { ExpertVideo } from '@/components/advertorial/ExpertVideo';
-import { BoxContents } from '@/components/advertorial/BoxContents';
 import { ReviewsPlaceholder } from '@/components/advertorial/ReviewsPlaceholder';
 import { GuaranteeBlock } from '@/components/advertorial/GuaranteeBlock';
 import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
@@ -146,7 +147,8 @@ export default async function RompevidriosPage() {
           media={<MediaSlot slot={ADV.hero.media} fill eager sizes="(min-width: 768px) 50vw, 100vw" />}
         />
 
-        {/* 2. Escenario */}
+        {/* Escenario ("Imaginate…") y mito ("Yo rompo el vidrio con el
+            apoyacabezas") — desactivados por ahora, no borrar.
         <StoryBlock
           heading={ADV.story}
           paragraphs={ADV.story.paragraphs}
@@ -155,26 +157,22 @@ export default async function RompevidriosPage() {
           closing={ADV.story.closing}
           bg="gray"
         />
-
-        {/* 3. El mito */}
         <StoryBlock heading={ADV.myth} paragraphs={ADV.myth.paragraphs} media={ADV.myth.media} narrowMedia />
+        */}
 
-        {/* 4. El test de 3 segundos */}
-        <ProofBlock proof={ADV.proof} cta={ADV.cta} bg="gray" />
+        {/* 2. La prueba y qué incluye */}
+        <IncludesShowcase includes={ADV.includes} cta={ADV.cta} bg="gray" />
 
-        {/* 5. Cómo funciona (#how) */}
+        {/* 3. Cómo funciona (#how) */}
         <StepsGrid steps={ADV.steps} />
 
-        {/* 6. Comparativa */}
+        {/* 4. Comparativa */}
         <ComparisonTable comparison={ADV.comparison} bg="gray" />
 
-        {/* 7. Bombero voluntario */}
+        {/* 5. Bombero voluntario */}
         {showExpert && <ExpertVideo expert={ADV.expert} />}
 
-        {/* 8. Qué viene en la caja */}
-        <BoxContents box={ADV.box} bg={showExpert ? 'gray' : 'black'} />
-
-        {/* 9. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+        {/* 6. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
             dev/preview y nada en producción. */}
         {hasReviews ? (
           <Reviews config={ROMPEVIDRIOS} />
@@ -182,7 +180,7 @@ export default async function RompevidriosPage() {
           drafts && <ReviewsPlaceholder reviews={ADV.reviews} sectionCopy={ROMPEVIDRIOS.sectionCopy} />
         )}
 
-        {/* 10. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
+        {/* 7. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing
           productId={productId}
           bundlesData={bundlesData}
@@ -196,13 +194,13 @@ export default async function RompevidriosPage() {
           }}
         />
 
-        {/* 11. Garantía (#trust) */}
+        {/* 8. Garantía (#trust) */}
         <GuaranteeBlock guarantee={ADV.guarantee} />
 
-        {/* 12. FAQ */}
+        {/* 9. FAQ */}
         <FAQ config={ROMPEVIDRIOS} />
 
-        {/* 13. Cierre */}
+        {/* 10. Cierre */}
         <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
       </main>
 

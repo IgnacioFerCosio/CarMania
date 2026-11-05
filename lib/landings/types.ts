@@ -323,7 +323,18 @@ export type AdvertorialData = {
     closing: string;
   };
   myth: SectionTitle & { paragraphs: readonly string[]; media: MediaSlot };
-  proof: SectionTitle & { body: string; media: MediaSlot; secondary: MediaSlot };
+  /**
+   * "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?" (componente
+   * IncludesShowcase). Reemplaza a las secciones sueltas de la prueba y de la
+   * caja: un visor con una pieza a la vez (`pieces`, en orden) y la lista de
+   * lo que incluye (`items`), donde cada ítem lleva a su pieza.
+   */
+  includes: SectionTitle & {
+    body: string;
+    listTitle: string;
+    items: readonly { label: string; /** `id` de la pieza que muestra al tocarlo. */ piece: string }[];
+    pieces: readonly { id: string; title: string; desc: string; media: MediaSlot }[];
+  };
   steps: SectionTitle & {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
     exploded: { title: string; media: MediaSlot };
@@ -336,7 +347,6 @@ export type AdvertorialData = {
     media: MediaSlot;
   };
   expert: SectionTitle & { caption: string; media: MediaSlot };
-  box: SectionTitle & { items: readonly string[]; media: MediaSlot };
   reviews: { placeholder: string };
   packs: { sub: string; footnote: string; images: Record<Bundle['id'], MediaSlot> };
   guarantee: SectionTitle & { body: string };
