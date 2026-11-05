@@ -61,6 +61,11 @@ abajo (la última palabra, en rojo). Las 6 situaciones, sus etiquetas y su
 texto están en `SITUACIONES` (`lib/landings/rompevidrios.ts`). Son lugares
 donde sirve el llavero; no prometen un resultado. Cuidado con las fotos de
 accidentes: sólo propias o con licencia, y sin personas reconocibles.
+Desde 2026-11-05 las 6 están cargadas (`pending: false`): son imágenes
+generadas con IA, con los originales en `Martillo/Imágenes Landing`, exportadas
+a 1000×1500 en `public/rompevidrios/situaciones/`. Antes de publicar: que no
+se reconozca el modelo del auto ni la patente, y poner la etiqueta de
+"contenido generado con IA" que pida Meta en los anuncios.
 
 **La sección "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?"** es
 la misma que `WhatsInBox` del soporte: el mismo `ProductCarousel` (ventana
