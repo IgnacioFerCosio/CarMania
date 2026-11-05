@@ -32,22 +32,22 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-01 | `hero/hero.mp4` + `hero/hero-poster.webp` | Hero | Video en loop | 4:5 | Mano sacando la llave del auto con el llavero colgado; lo apoya en la ventanilla, aprieta, el vidrio estalla. Auto real de fondo. | 6–8 s, 1080×1350. Es el único asset que carga sin esperar al scroll |
 | RV-02 | `historia/inundacion.webp` | Escenario | Foto | 16:9 | Calle o autopista inundada con autos con el agua por las puertas. Propia o con licencia; nunca de un caso real sin permiso. | 1600×900 |
 | RV-03 | `historia/apoyacabezas.mp4` | El mito | GIF (MP4) | 4:5 | Alguien intenta sacar el apoyacabezas de un auto nuevo y no sale. | 4–5 s |
-| RV-04 | `test/test-vidrio-lento.mp4` + `test/test-vidrio-lento-poster.webp` | "¿Qué incluye?" (carrusel, slide 1: la que se ve al cargar) | Video en loop | 1:1 | **El activo central.** El vidrio de prueba estallando en cámara lenta al apretar el llavero. | 5–6 s, cámara lenta, 1080×1080 |
-| RV-05 | `test/vidrio-de-prueba.webp` | "¿Qué incluye?" (carrusel, slide 5) | Foto | 1:1 | El vidrio de prueba sano junto al llavero, como viene en la caja. | 1600×1600 |
+| RV-04 | `test/test-vidrio-lento.mp4` + `test/test-vidrio-lento-poster.webp` | Sin usar: sacado del carrusel el 2026-11-05 (queda para otra sección) | Video en loop | 1:1 | **El activo central.** El vidrio de prueba estallando en cámara lenta al apretar el llavero. | 5–6 s, cámara lenta, 1080×1080 |
+| RV-05 | `test/vidrio-de-prueba.webp` | "¿Qué incluye?" (carrusel, slide 4) | Foto | 1:1 | El vidrio de prueba sano junto al llavero, como viene en la caja. | 1600×1600 |
 | RV-06 | `pasos/01-colocalo.mp4` | Cómo funciona (paso 1 "Colocalo") | GIF (MP4) | 1:1 | Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave. | 4–6 s |
 | RV-07 | `pasos/02-apreta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: aprieta y el vidrio estalla. | 3 s, cámara lenta |
 | RV-08 | `pasos/03-corta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | El llavero cortando un cinturón tenso de un tirón. | 3 s |
 | RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno y cuchilla protegida. | 1600×900, fondo negro |
 | RV-10 | `comparativa/comparativa.webp` | Comparativa | Foto | 3:2 | Los tres juntos sobre una mesa: llavero, martillo de emergencia y un apoyacabezas. | 1500×1000 |
 | RV-11 | `experto/bombero.mp4` + `experto/bombero-poster.webp` | Bombero | Video con audio y subtítulos | 9:16 | Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave. | Subtítulos quemados; **este sí con audio** (va con controles, sin autoplay) |
-| RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. **Cargada (2026-11-05):** imagen de IA con el logo de Carmania compuesto encima (2 llaveros, 2 vidrios, 2 soportes sobre pasto). Cuando haya muestra física, reemplazar por foto real. | 1200×1200 |
+| RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 1: la que se ve al cargar) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. **Cargada (2026-11-05):** imagen de IA con el logo de Carmania compuesto encima (2 llaveros, 2 vidrios, 2 soportes sobre pasto). Cuando haya muestra física, reemplazar por foto real. | 1200×1200 |
 | RV-13 | `packs/pack-2x.webp` | Packs | Foto de producto | 1:1 | 2 llaveros sobre fondo negro, con 2 vidrios de prueba. También es la foto de la card en `/tienda`. | 1600×1600 |
 | RV-14 | `packs/pack-4x.webp` | Packs | Foto de producto | 1:1 | 4 llaveros, cada uno en una llave de auto distinta. | 1600×1600 |
 | RV-15 | `packs/pack-6x.webp` | Packs | Foto de producto | 1:1 | 6 llaveros en abanico. | 1600×1600 |
 | RV-16 | `cierre/llave-en-mano.webp` | Cierre | Foto | 16:9 | Plano tranquilo: llaves con el llavero sobre el tablero, de noche, con luz de ciudad. | 1600×900 |
-| RV-17 | `incluye/punta-tungsteno.webp` | "¿Qué incluye?" (carrusel, slide 3) | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
-| RV-18 | `incluye/cuchilla-cinturon.webp` | "¿Qué incluye?" (carrusel, slide 4) | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
-| RV-19 | `incluye/soporte-adhesivo.webp` | "¿Qué incluye?" (carrusel, slide 6) | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
+| RV-17 | `incluye/punta-tungsteno.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
+| RV-18 | `incluye/cuchilla-cinturon.webp` | "¿Qué incluye?" (carrusel, slide 3) | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
+| RV-19 | `incluye/soporte-adhesivo.webp` | "¿Qué incluye?" (carrusel, slide 5) | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
 | RV-20 | `situaciones/auto-inundado.webp` | "Cuando cada segundo cuenta" (tarjeta 1) | Foto vertical | 2:3 | Auto en una calle inundada, con el agua a la altura de las puertas. | 1000×1500 |
 | RV-21 | `situaciones/puerta-trabada.webp` | "Cuando cada segundo cuenta" (tarjeta 2) | Foto vertical | 2:3 | Una mano tirando de la manija de una puerta que no abre. | 1000×1500 |
 | RV-22 | `situaciones/cinturon-trabado.webp` | "Cuando cada segundo cuenta" (tarjeta 3) | Foto vertical | 2:3 | Primer plano de la mano en el botón del cinturón, que no se suelta. | 1000×1500 |

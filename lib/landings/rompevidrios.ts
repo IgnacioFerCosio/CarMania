@@ -369,8 +369,8 @@ export const ROMPEVIDRIOS = {
 
     // "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?": la misma
     // sección que WhatsInBox del soporte. `slides` = el carrusel, en orden; la
-    // primera es la que se ve al cargar: el video de la prueba, que es el
-    // centro del mensaje. Los slides no llevan texto propio.
+    // primera es la que se ve al cargar: la foto de todo lo que trae, con el
+    // logo. Los slides no llevan texto propio.
     // TODO confirmar con Spring que la caja traiga el soporte adhesivo.
     includes: {
       headline: 'Sabés que funciona antes de necesitarlo.',
@@ -384,17 +384,20 @@ export const ROMPEVIDRIOS = {
         'Soporte adhesivo para dejarlo colocado',
       ],
       slides: [
-        {
-          id: 'RV-04',
-          kind: 'video',
-          src: '/rompevidrios/test/test-vidrio-lento.mp4',
-          poster: '/rompevidrios/test/test-vidrio-lento-poster.webp',
-          aspect: '1:1',
-          alt: 'El vidrio de prueba estalla en cámara lenta al apretar el llavero',
-          brief: 'EL ACTIVO CENTRAL: el vidrio de prueba estallando en cámara lenta al apretar el llavero.',
-          spec: 'MP4 H.264 sin audio, loop 5–6 s en cámara lenta, 1080×1080, < 2 MB + poster webp',
-          pending: true,
-        },
+        // RV-04 (video del vidrio de prueba estallando) sacado del carrusel el
+        // 2026-11-05: la primera es la foto con el logo. No borrar: queda para
+        // otra sección. (Comentado, así check:assets no lo cuenta.)
+        // {
+        //   id: 'RV-04',
+        //   kind: 'video',
+        //   src: '/rompevidrios/test/test-vidrio-lento.mp4',
+        //   poster: '/rompevidrios/test/test-vidrio-lento-poster.webp',
+        //   aspect: '1:1',
+        //   alt: 'El vidrio de prueba estalla en cámara lenta al apretar el llavero',
+        //   brief: 'EL ACTIVO CENTRAL: el vidrio de prueba estallando en cámara lenta al apretar el llavero.',
+        //   spec: 'MP4 H.264 sin audio, loop 5–6 s en cámara lenta, 1080×1080, < 2 MB + poster webp',
+        //   pending: true,
+        // },
         {
           id: 'RV-12',
           kind: 'image',
