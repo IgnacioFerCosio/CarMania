@@ -24,7 +24,19 @@ const AXIS_LOCK_PX = 8;
 /** Cuánto se frena el arrastre cuando ya no hay slide hacia ese lado. */
 const EDGE_RESISTANCE = 3;
 
-export function ProductCarousel({ slides }: { slides: readonly Slide[] }) {
+export function ProductCarousel({
+  slides = [],
+  nodes,
+}: {
+  slides?: readonly Slide[];
+  /**
+   * Slides armados por quien lo usa, en lugar de `slides` (que son sólo
+   * imágenes). Es lo que usa /rompevidrios para meter videos y placeholders
+   * en este mismo carrusel: misma ventana 1:1, mismas flechas, puntos y
+   * arrastre.
+   */
+  nodes?: readonly React.ReactNode[];
+}) {
   const [index, setIndex] = useState(0);
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -34,7 +46,7 @@ export function ProductCarousel({ slides }: { slides: readonly Slide[] }) {
   const widthRef = useRef(0);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  const total = slides.length;
+  const total = nodes ? nodes.length : slides.length;
 
   /** Las flechas y los puntos sí dan la vuelta. */
   const go = useCallback(
@@ -125,27 +137,40 @@ export function ProductCarousel({ slides }: { slides: readonly Slide[] }) {
             transition: dragging ? 'none' : 'transform 400ms cubic-bezier(0.22,1,0.36,1)',
           }}
         >
-          {slides.map((s, i) => (
-            <div
-              key={s.src}
-              className="relative h-full w-full shrink-0"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${i + 1} de ${total}`}
-            >
-              <Image
-                src={s.src}
-                alt={s.alt}
-                fill
-                sizes="(min-width: 768px) 512px, 100vw"
-                className="pointer-events-none object-contain"
-                draggable={false}
-                // La primera es la que se ve al llegar a la sección; el resto
-                // puede esperar a que el usuario navegue.
-                loading={i === 0 ? undefined : 'lazy'}
-              />
-            </div>
-          ))}
+          {nodes
+            ? nodes.map((n, i) => (
+                <div
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  className="pointer-events-none relative h-full w-full shrink-0"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} de ${total}`}
+                >
+                  {n}
+                </div>
+              ))
+            : slides.map((s, i) => (
+                <div
+                  key={s.src}
+                  className="relative h-full w-full shrink-0"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} de ${total}`}
+                >
+                  <Image
+                    src={s.src}
+                    alt={s.alt}
+                    fill
+                    sizes="(min-width: 768px) 512px, 100vw"
+                    className="pointer-events-none object-contain"
+                    draggable={false}
+                    // La primera es la que se ve al llegar a la sección; el resto
+                    // puede esperar a que el usuario navegue.
+                    loading={i === 0 ? undefined : 'lazy'}
+                  />
+                </div>
+              ))}
         </div>
       </div>
 
@@ -171,9 +196,9 @@ export function ProductCarousel({ slides }: { slides: readonly Slide[] }) {
 
           {/* Puntos */}
           <div className="mt-4 flex items-center justify-center gap-1">
-            {slides.map((s, i) => (
+            {Array.from({ length: total }, (_, i) => (
               <button
-                key={s.src}
+                key={i}
                 type="button"
                 onClick={() => go(i)}
                 aria-label={`Ver imagen ${i + 1} de ${total}`}

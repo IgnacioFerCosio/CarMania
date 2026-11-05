@@ -32,31 +32,37 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-01 | `hero/hero.mp4` + `hero/hero-poster.webp` | Hero | Video en loop | 4:5 | Mano sacando la llave del auto con el llavero colgado; lo apoya en la ventanilla, aprieta, el vidrio estalla. Auto real de fondo. | 6–8 s, 1080×1350. Es el único asset que carga sin esperar al scroll |
 | RV-02 | `historia/inundacion.webp` | Escenario | Foto | 16:9 | Calle o autopista inundada con autos con el agua por las puertas. Propia o con licencia; nunca de un caso real sin permiso. | 1600×900 |
 | RV-03 | `historia/apoyacabezas.mp4` | El mito | GIF (MP4) | 4:5 | Alguien intenta sacar el apoyacabezas de un auto nuevo y no sale. | 4–5 s |
-| RV-04 | `test/test-vidrio-lento.mp4` + `test/test-vidrio-lento-poster.webp` | Prueba y qué incluye (pieza 1, la que se ve al cargar) | Video en loop | 1:1 | **El activo central.** El vidrio de prueba estallando en cámara lenta al apretar el llavero. | 5–6 s, cámara lenta, 1080×1080 |
-| RV-05 | `test/vidrio-de-prueba.webp` | Prueba y qué incluye (pieza "Vidrio de prueba") | Foto | 1:1 | El vidrio de prueba sano junto al llavero, como viene en la caja. | 1600×1600 |
+| RV-04 | `test/test-vidrio-lento.mp4` + `test/test-vidrio-lento-poster.webp` | "¿Qué incluye?" (carrusel, slide 1: la que se ve al cargar) | Video en loop | 1:1 | **El activo central.** El vidrio de prueba estallando en cámara lenta al apretar el llavero. | 5–6 s, cámara lenta, 1080×1080 |
+| RV-05 | `test/vidrio-de-prueba.webp` | "¿Qué incluye?" (carrusel, slide 5) | Foto | 1:1 | El vidrio de prueba sano junto al llavero, como viene en la caja. | 1600×1600 |
 | RV-06 | `pasos/01-colocalo.mp4` | Cómo funciona (paso 1 "Colocalo") | GIF (MP4) | 1:1 | Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave. | 4–6 s |
 | RV-07 | `pasos/02-apreta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: aprieta y el vidrio estalla. | 3 s, cámara lenta |
 | RV-08 | `pasos/03-corta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | El llavero cortando un cinturón tenso de un tirón. | 3 s |
-| RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno, cuchilla protegida, argolla. | 1600×900, fondo negro |
+| RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno y cuchilla protegida. | 1600×900, fondo negro |
 | RV-10 | `comparativa/comparativa.webp` | Comparativa | Foto | 3:2 | Los tres juntos sobre una mesa: llavero, martillo de emergencia y un apoyacabezas. | 1500×1000 |
 | RV-11 | `experto/bombero.mp4` + `experto/bombero-poster.webp` | Bombero | Video con audio y subtítulos | 9:16 | Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave. | Subtítulos quemados; **este sí con audio** (va con controles, sin autoplay) |
-| RV-12 | `caja/que-incluye.webp` | Prueba y qué incluye (pieza "Todo lo que trae") | Foto | 1:1 | Unboxing: todos los elementos juntos: llavero, vidrio de prueba, soporte adhesivo y argolla. | 1600×1600 |
+| RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. | 1600×1600 |
 | RV-13 | `packs/pack-2x.webp` | Packs | Foto de producto | 1:1 | 2 llaveros sobre fondo negro, con 2 vidrios de prueba. También es la foto de la card en `/tienda`. | 1600×1600 |
 | RV-14 | `packs/pack-4x.webp` | Packs | Foto de producto | 1:1 | 4 llaveros, cada uno en una llave de auto distinta. | 1600×1600 |
 | RV-15 | `packs/pack-6x.webp` | Packs | Foto de producto | 1:1 | 6 llaveros en abanico. | 1600×1600 |
 | RV-16 | `cierre/llave-en-mano.webp` | Cierre | Foto | 16:9 | Plano tranquilo: llaves con el llavero sobre el tablero, de noche, con luz de ciudad. | 1600×900 |
-| RV-17 | `incluye/punta-tungsteno.webp` | Prueba y qué incluye (pieza "Punta de tungsteno") | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
-| RV-18 | `incluye/cuchilla-cinturon.webp` | Prueba y qué incluye (pieza "Cuchilla corta cinturón") | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
-| RV-19 | `incluye/soporte-adhesivo.webp` | Prueba y qué incluye (pieza "Soporte adhesivo") | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
+| RV-17 | `incluye/punta-tungsteno.webp` | "¿Qué incluye?" (carrusel, slide 3) | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
+| RV-18 | `incluye/cuchilla-cinturon.webp` | "¿Qué incluye?" (carrusel, slide 4) | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
+| RV-19 | `incluye/soporte-adhesivo.webp` | "¿Qué incluye?" (carrusel, slide 6) | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
 
-**La sección "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?"**
-(`IncludesShowcase`) es un visor con una pieza a la vez: flechas, puntos y la
-lista de "¿Qué incluye?" navegan lo mismo. Las piezas, su orden y su texto
-están en `ROMPEVIDRIOS.advertorial.includes`; todas son 1:1 porque comparten
-el mismo marco cuadrado. Reemplazó a las secciones sueltas "El test de 3
-segundos" y "Qué viene en la caja". Las secciones "Imaginate…" (RV-02) y "El
-mito" (RV-03) están desactivadas en `app/rompevidrios/page.tsx`: sus slots y
-su copy siguen en la config.
+**La sección "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?"** es
+la misma que `WhatsInBox` del soporte: el mismo `ProductCarousel` (ventana
+1:1, flechas, puntos y arrastre), la lista "¿Qué incluye?", el botón
+"Comprar ahora" y una opinión abajo. Los slides del carrusel son los de
+`ROMPEVIDRIOS.advertorial.includes.slides` y **no llevan texto propio**: si
+querés que una foto diga qué es (por ejemplo "Punta de tungsteno"), escribilo
+dentro de la imagen, como las infografías del soporte. Todas son 1:1.
+La opinión de abajo es de maqueta y sólo se ve en `npm run dev`
+(`rompevidrios.mock-reviews.ts`): hasta que haya una reseña real, en
+producción y en las previews la sección sale sin opinión.
+También se reusa el banner de marcas de autos de `/` ("Lo llevás en
+cualquier auto"), justo debajo del hero. Las secciones "Imaginate…" (RV-02) y
+"El mito" (RV-03) están desactivadas en `app/rompevidrios/page.tsx`: sus slots
+y su copy siguen en la config.
 
 **Cómo optimizar el hero (RV-01), igual que `/` y `/parasol`:** 720 px de
 ancho como máximo (la caja del hero nunca pasa de ~600 px), H.264 sin audio,
@@ -139,7 +145,7 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
 - [ ] Garantía: **[Confirmar plazo: 30 días]**. Ojo: `Pricing` muestra
       "Devolución 30 días" y "Garantía 1 año" en todas las landings;
       confirmar que valgan para este producto.
-- [ ] "¿Qué incluye?": confirmar con Spring que la caja traiga soporte adhesivo y argolla (hoy figuran como incluidos).
+- [ ] "¿Qué incluye?": confirmar con Spring que la caja traiga el soporte adhesivo (hoy figura como incluido). La argolla no se menciona en ningún lado: no se sabe si viene.
 - [ ] Bombero: nombre y cuartel reales ("[Nombre], bombero voluntario de
       [cuartel]"). Sin video real, la sección no sale en producción.
 - [ ] "Descuento por transferencia" (debajo de los packs): confirmar que

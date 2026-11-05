@@ -5,17 +5,19 @@
  * en las otras landings.
  */
 import type { AdvertorialData, LandingConfig } from '@/lib/landings/types';
-import { BG, SECTION_Y } from './SectionHeading';
+import { BG, SECTION_Y, type Bg } from './SectionHeading';
 
 export function ReviewsPlaceholder({
   reviews,
   sectionCopy,
+  bg = 'gray',
 }: {
   reviews: AdvertorialData['reviews'];
   sectionCopy: LandingConfig['sectionCopy'];
+  bg?: Bg;
 }) {
   return (
-    <section id="reviews" className={`${BG.gray} ${SECTION_Y}`}>
+    <section id="reviews" className={`${BG[bg]} ${SECTION_Y}`}>
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <h2 className="text-center font-display text-xl font-black italic uppercase tracking-wider text-white sm:text-2xl md:text-3xl">
           {sectionCopy.reviewsTitle + ' '}

@@ -37,4 +37,14 @@ export const ROMPEVIDRIOS_MOCK_REVIEWS: readonly Review[] = [
     date: '',
     verified: true,
   },
+  // La 4ª no sale en el carrusel del hero (muestra las primeras 3): es la
+  // opinión de la sección "¿Qué incluye?", como la del soporte.
+  {
+    name: 'Sergio A.',
+    location: 'Mendoza',
+    stars: 5,
+    text: 'Lo probé con el vidrio de prueba el día que llegó. Ahora uno va en mi llave y el otro en el auto de mi señora.',
+    date: '',
+    verified: true,
+  },
 ];

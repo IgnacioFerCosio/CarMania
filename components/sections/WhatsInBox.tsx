@@ -8,7 +8,7 @@
  * usa `/` desde antes de que hubiera otras landings.
  */
 import { HEADLINES, WHATS_IN_BOX, WHATS_IN_BOX_GALLERY, REVIEWS } from '@/lib/config';
-import type { WhatsInBoxData } from '@/lib/landings/types';
+import type { Review, WhatsInBoxCopy, WhatsInBoxData } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { Stars } from '@/components/ui/Stars';
 import { ProductCarousel } from '@/components/ui/ProductCarousel';
@@ -25,7 +25,18 @@ const SOPORTE_DATA: WhatsInBoxData = {
   testimonial: REVIEWS[2], // segunda muestra de social proof, distinto de la del hero
 };
 
-export function WhatsInBox({ data = SOPORTE_DATA }: { data?: WhatsInBoxData }) {
+export function WhatsInBox({
+  data = SOPORTE_DATA,
+  media,
+}: {
+  /** Sin `gallery` ni `testimonial` la sección sale sin carrusel de imágenes / sin opinión. */
+  data?: WhatsInBoxCopy & { gallery?: WhatsInBoxData['gallery']; testimonial?: Review };
+  /**
+   * Reemplaza al carrusel de `data.gallery`. Lo usa /rompevidrios para
+   * pasarle un `ProductCarousel` con videos y placeholders.
+   */
+  media?: React.ReactNode;
+}) {
   const { testimonial } = data;
   return (
     <section className="relative bg-ink-950 py-14 sm:py-20 md:py-28">
@@ -33,7 +44,7 @@ export function WhatsInBox({ data = SOPORTE_DATA }: { data?: WhatsInBoxData }) {
         <div className="grid items-center gap-8 sm:gap-10 md:grid-cols-2 md:gap-16">
           {/* Carrusel — primero en mobile, izquierda en desktop */}
           <div className="order-1 md:order-1">
-            <ProductCarousel slides={data.gallery} />
+            {media ?? (data.gallery && <ProductCarousel slides={data.gallery} />)}
           </div>
 
           {/* Texto */}
@@ -86,6 +97,7 @@ export function WhatsInBox({ data = SOPORTE_DATA }: { data?: WhatsInBoxData }) {
             </a>
 
             {/* Testimonio chico */}
+            {testimonial && (
             <div className="mt-7 flex max-w-md items-start gap-3 border-t border-ink-800 pt-5">
               <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-ink-700 to-ink-900 ring-1 ring-inset ring-ink-700">
                 <div className="flex h-full w-full items-center justify-center text-sm font-black italic text-white">
@@ -103,6 +115,7 @@ export function WhatsInBox({ data = SOPORTE_DATA }: { data?: WhatsInBoxData }) {
                 </p>
               </div>
             </div>
+            )}
           </div>
         </div>
       </div>

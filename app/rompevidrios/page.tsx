@@ -28,6 +28,9 @@ import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
+import { CarBrands } from '@/components/sections/CarBrands';
+import { WhatsInBox } from '@/components/sections/WhatsInBox';
+import { ProductCarousel } from '@/components/ui/ProductCarousel';
 import { Footer } from '@/components/layout/Footer';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -42,7 +45,6 @@ import { MediaSlot } from '@/components/advertorial/MediaSlot';
 // Escenario y mito desactivados por ahora (no borrar): el copy sigue en
 // ROMPEVIDRIOS.advertorial.story / .myth.
 // import { StoryBlock } from '@/components/advertorial/StoryBlock';
-import { IncludesShowcase } from '@/components/advertorial/IncludesShowcase';
 import { StepsGrid } from '@/components/advertorial/StepsGrid';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
 import { ExpertVideo } from '@/components/advertorial/ExpertVideo';
@@ -160,27 +162,57 @@ export default async function RompevidriosPage() {
         <StoryBlock heading={ADV.myth} paragraphs={ADV.myth.paragraphs} media={ADV.myth.media} narrowMedia />
         */}
 
-        {/* 2. La prueba y qué incluye */}
-        <IncludesShowcase includes={ADV.includes} cta={ADV.cta} bg="gray" />
+        {/* 2. Banner de marcas — el mismo de / y /soplador */}
+        <CarBrands config={ROMPEVIDRIOS} />
 
-        {/* 3. Cómo funciona (#how) */}
-        <StepsGrid steps={ADV.steps} />
+        {/* 3. "Sabés que funciona antes de necesitarlo" + ¿Qué incluye? — la
+            misma sección que el soporte (WhatsInBox), con su carrusel y una
+            opinión abajo. Los slides no llevan texto propio. */}
+        <WhatsInBox
+          data={{
+            headline: ADV.includes.headline,
+            lead: ADV.includes.lead,
+            body: ADV.includes.body,
+            note: ADV.includes.note,
+            items: ADV.includes.items,
+            // Opinión de MAQUETA sólo en dev (ver el archivo de mock-reviews):
+            // sin reseñas reales no se muestra ninguna.
+            testimonial:
+              process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3] : undefined,
+          }}
+          media={
+            <ProductCarousel
+              nodes={ADV.includes.slides.map((slot) => (
+                <MediaSlot key={slot.id} slot={slot} fill sizes="(min-width: 768px) 512px, 100vw" />
+              ))}
+            />
+          }
+        />
 
-        {/* 4. Comparativa */}
-        <ComparisonTable comparison={ADV.comparison} bg="gray" />
+        {/* 4. Cómo funciona (#how) */}
+        <StepsGrid steps={ADV.steps} bg="gray" />
 
-        {/* 5. Bombero voluntario */}
-        {showExpert && <ExpertVideo expert={ADV.expert} />}
+        {/* 5. Comparativa */}
+        <ComparisonTable comparison={ADV.comparison} bg="black" />
 
-        {/* 6. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+        {/* 6. Bombero voluntario */}
+        {showExpert && <ExpertVideo expert={ADV.expert} bg="gray" />}
+
+        {/* 7. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
             dev/preview y nada en producción. */}
         {hasReviews ? (
           <Reviews config={ROMPEVIDRIOS} />
         ) : (
-          drafts && <ReviewsPlaceholder reviews={ADV.reviews} sectionCopy={ROMPEVIDRIOS.sectionCopy} />
+          drafts && (
+            <ReviewsPlaceholder
+              reviews={ADV.reviews}
+              sectionCopy={ROMPEVIDRIOS.sectionCopy}
+              bg={showExpert ? 'black' : 'gray'}
+            />
+          )
         )}
 
-        {/* 7. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
+        {/* 8. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing
           productId={productId}
           bundlesData={bundlesData}
@@ -194,13 +226,13 @@ export default async function RompevidriosPage() {
           }}
         />
 
-        {/* 8. Garantía (#trust) */}
+        {/* 9. Garantía (#trust) */}
         <GuaranteeBlock guarantee={ADV.guarantee} />
 
-        {/* 9. FAQ */}
+        {/* 10. FAQ */}
         <FAQ config={ROMPEVIDRIOS} />
 
-        {/* 10. Cierre */}
+        {/* 11. Cierre */}
         <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
       </main>
 

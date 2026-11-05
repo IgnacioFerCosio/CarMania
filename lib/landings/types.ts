@@ -107,7 +107,13 @@ export type PitchBlockData = {
  * Sección "qué incluye" (componente WhatsInBox): carrusel a la izquierda,
  * copy + lista de la caja + CTA + una reseña a la derecha.
  */
-export type WhatsInBoxData = {
+export type WhatsInBoxData = WhatsInBoxCopy & {
+  gallery: readonly { src: string; alt: string }[];
+  testimonial: Review;
+};
+
+/** El texto de la sección "qué incluye", sin el carrusel ni la opinión. */
+export type WhatsInBoxCopy = {
   /** La última palabra se pinta en accent. */
   headline: string;
   /** Arranque del párrafo, en negrita itálica accent. */
@@ -117,8 +123,6 @@ export type WhatsInBoxData = {
   /** Línea chica debajo del párrafo. */
   note: string;
   items: readonly string[];
-  gallery: readonly { src: string; alt: string }[];
-  testimonial: Review;
 };
 
 /** Comparador before/after con divisor deslizable (componente BeforeAfter). */
@@ -324,17 +328,13 @@ export type AdvertorialData = {
   };
   myth: SectionTitle & { paragraphs: readonly string[]; media: MediaSlot };
   /**
-   * "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?" (componente
-   * IncludesShowcase). Reemplaza a las secciones sueltas de la prueba y de la
-   * caja: un visor con una pieza a la vez (`pieces`, en orden) y la lista de
-   * lo que incluye (`items`), donde cada ítem lleva a su pieza.
+   * "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?": la misma
+   * sección que `WhatsInBox` del soporte (carrusel a la izquierda, texto y
+   * lista a la derecha). `slides` son las imágenes y videos del carrusel, en
+   * orden; no llevan texto propio (si hace falta, va escrito en la imagen,
+   * como las infografías del soporte).
    */
-  includes: SectionTitle & {
-    body: string;
-    listTitle: string;
-    items: readonly { label: string; /** `id` de la pieza que muestra al tocarlo. */ piece: string }[];
-    pieces: readonly { id: string; title: string; desc: string; media: MediaSlot }[];
-  };
+  includes: WhatsInBoxCopy & { slides: readonly MediaSlot[] };
   steps: SectionTitle & {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
     exploded: { title: string; media: MediaSlot };
