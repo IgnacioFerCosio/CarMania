@@ -507,23 +507,40 @@ export const ROMPEVIDRIOS = {
     comparison: {
       title: 'Llavero, martillo o apoyacabezas: qué te saca del auto.',
       accent: 'qué te saca del auto.',
-      columns: ['Llavero Rescate PRO', 'Martillo de guantera', 'Apoyacabezas'],
+      columns: ['Llavero Rescate PRO', 'Martillo de guantera'],
       rows: [
-        { label: 'Lo tenés a mano si estás atrapado', values: [true, false, 'depende del auto'] },
-        { label: 'Funciona sin fuerza ni puntería', values: [true, false, false] },
-        { label: 'Corta el cinturón', values: [true, 'algunos', false] },
-        { label: 'Lo podés probar antes', values: [true, false, false] },
-        { label: 'Entra en el bolsillo', values: [true, false, '—'] },
+        { label: 'Lo tenés a mano si estás atrapado', values: [true, false] },
+        { label: 'Funciona sin fuerza ni puntería', values: [true, false] },
+        { label: 'Corta el cinturón', values: [true, 'algunos'] },
+        { label: 'Lo podés probar antes', values: [true, false] },
+        { label: 'Entra en el bolsillo', values: [true, false] },
+        // A propósito una fila donde perdemos: una comparación donde ganás en todo
+        // parece armada. TODO confirmar que sea cierto (que un martillo de
+        // emergencia cueste menos que el llavero); si no, sacar la fila.
+        { label: 'Precio más bajo', values: [false, true] },
       ],
-      media: {
-        id: 'RV-10',
-        kind: 'image',
-        src: '/rompevidrios/comparativa/comparativa.webp',
-        aspect: '3:2',
-        alt: 'El llavero, un martillo de emergencia y un apoyacabezas sobre una mesa',
-        brief: 'Los tres juntos sobre una mesa: llavero, martillo de emergencia y un apoyacabezas.',
-        spec: 'WEBP 1500×1000',
-        pending: true,
+      map: {
+        distanceLabel: 'LEJOS',
+        items: [
+          {
+            n: 1,
+            tone: 'ours',
+            title: 'Llavero Rescate PRO™',
+            desc: 'En tu mano o colgado de la llave: lo tenés encima, aunque tengas el cinturón puesto y la puerta trabada.',
+          },
+          {
+            n: 2,
+            tone: 'other',
+            title: 'Martillo de guantera',
+            desc: 'En la guantera o en el baúl, del otro lado del auto. Con el cinturón puesto cuesta alcanzarlo.',
+          },
+          {
+            n: 3,
+            tone: 'other',
+            title: 'Apoyacabezas',
+            desc: 'En muchos autos nuevos no sale, o tiene varillas que no sirven para romper nada.',
+          },
+        ],
       },
     },
 

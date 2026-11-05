@@ -345,11 +345,22 @@ export type AdvertorialData = {
     items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
   };
   comparison: SectionTitle & {
-    /** La primera columna es la nuestra. */
-    columns: readonly string[];
-    /** true = ✓, false = ✗, string = texto tal cual ("depende del auto"). */
-    rows: readonly { label: string; values: readonly (boolean | string)[] }[];
-    media: MediaSlot;
+    /** [la nuestra, la del martillo]: son DOS columnas. */
+    columns: readonly [string, string];
+    /** true = ✓, false = ✗, string = texto tal cual ("algunos"). Mismo orden que `columns`. */
+    rows: readonly {
+      label: string;
+      values: readonly [boolean | string, boolean | string];
+    }[];
+    /**
+     * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre
+     * la mano y la guantera; `items` son los tres puntos numerados (1 llavero,
+     * 2 martillo, 3 apoyacabezas).
+     */
+    map: {
+      distanceLabel: string;
+      items: readonly { n: number; tone: 'ours' | 'other'; title: string; desc: string }[];
+    };
   };
   expert: SectionTitle & { caption: string; media: MediaSlot };
   reviews: { placeholder: string };
