@@ -40,7 +40,7 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-09 | `pasos/despiece.webp` | Cómo funciona | Infografía | 16:9 | Despiece del llavero con flechas: resorte, punta de tungsteno y cuchilla protegida. | 1600×900, fondo negro |
 | RV-10 | `comparativa/comparativa.webp` | Comparativa | Foto | 3:2 | Los tres juntos sobre una mesa: llavero, martillo de emergencia y un apoyacabezas. | 1500×1000 |
 | RV-11 | `experto/bombero.mp4` + `experto/bombero-poster.webp` | Bombero | Video con audio y subtítulos | 9:16 | Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave. | Subtítulos quemados; **este sí con audio** (va con controles, sin autoplay) |
-| RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. | 1600×1600 |
+| RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. **Cargada (2026-11-05):** imagen de IA con el logo de Carmania compuesto encima (2 llaveros, 2 vidrios, 2 soportes sobre pasto). Cuando haya muestra física, reemplazar por foto real. | 1200×1200 |
 | RV-13 | `packs/pack-2x.webp` | Packs | Foto de producto | 1:1 | 2 llaveros sobre fondo negro, con 2 vidrios de prueba. También es la foto de la card en `/tienda`. | 1600×1600 |
 | RV-14 | `packs/pack-4x.webp` | Packs | Foto de producto | 1:1 | 4 llaveros, cada uno en una llave de auto distinta. | 1600×1600 |
 | RV-15 | `packs/pack-6x.webp` | Packs | Foto de producto | 1:1 | 6 llaveros en abanico. | 1600×1600 |
