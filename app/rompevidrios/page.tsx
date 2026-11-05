@@ -28,6 +28,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
+import { UseCases } from '@/components/sections/UseCases';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { ProductCarousel } from '@/components/ui/ProductCarousel';
@@ -162,10 +163,25 @@ export default async function RompevidriosPage() {
         <StoryBlock heading={ADV.myth} paragraphs={ADV.myth.paragraphs} media={ADV.myth.media} narrowMedia />
         */}
 
-        {/* 2. Banner de marcas — el mismo de / y /soplador */}
+        {/* 2. Situaciones — la misma grilla de 6 tarjetas que usa / entre el
+            hero y el banner de marcas */}
+        <UseCases
+          config={ROMPEVIDRIOS}
+          media={ADV.situations.map((s) => (
+            <MediaSlot
+              key={s.id}
+              slot={s}
+              fill
+              compact
+              sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 50vw"
+            />
+          ))}
+        />
+
+        {/* 3. Banner de marcas — el mismo de / y /soplador */}
         <CarBrands config={ROMPEVIDRIOS} />
 
-        {/* 3. "Sabés que funciona antes de necesitarlo" + ¿Qué incluye? — la
+        {/* 4. "Sabés que funciona antes de necesitarlo" + ¿Qué incluye? — la
             misma sección que el soporte (WhatsInBox), con su carrusel y una
             opinión abajo. Los slides no llevan texto propio. */}
         <WhatsInBox
@@ -189,16 +205,16 @@ export default async function RompevidriosPage() {
           }
         />
 
-        {/* 4. Cómo funciona (#how) */}
+        {/* 5. Cómo funciona (#how) */}
         <StepsGrid steps={ADV.steps} bg="gray" />
 
-        {/* 5. Comparativa */}
+        {/* 6. Comparativa */}
         <ComparisonTable comparison={ADV.comparison} bg="black" />
 
-        {/* 6. Bombero voluntario */}
+        {/* 7. Bombero voluntario */}
         {showExpert && <ExpertVideo expert={ADV.expert} bg="gray" />}
 
-        {/* 7. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+        {/* 8. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
             dev/preview y nada en producción. */}
         {hasReviews ? (
           <Reviews config={ROMPEVIDRIOS} />
@@ -212,7 +228,7 @@ export default async function RompevidriosPage() {
           )
         )}
 
-        {/* 8. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
+        {/* 9. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing
           productId={productId}
           bundlesData={bundlesData}
@@ -226,13 +242,13 @@ export default async function RompevidriosPage() {
           }}
         />
 
-        {/* 9. Garantía (#trust) */}
+        {/* 10. Garantía (#trust) */}
         <GuaranteeBlock guarantee={ADV.guarantee} />
 
-        {/* 10. FAQ */}
+        {/* 11. FAQ */}
         <FAQ config={ROMPEVIDRIOS} />
 
-        {/* 11. Cierre */}
+        {/* 12. Cierre */}
         <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
       </main>
 

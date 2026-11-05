@@ -23,6 +23,7 @@ import { LazyVideo } from '@/components/ui/LazyVideo';
 const ASPECT: Record<Slot['aspect'], string> = {
   '1:1': 'aspect-square',
   '4:5': 'aspect-[4/5]',
+  '2:3': 'aspect-[2/3]',
   '9:16': 'aspect-[9/16]',
   '16:9': 'aspect-video',
   '3:2': 'aspect-[3/2]',
@@ -76,12 +77,15 @@ export function MediaSlot({
   slot,
   eager = false,
   fill = false,
+  compact = false,
   sizes = '(min-width: 768px) 50vw, 100vw',
   className = '',
 }: {
   slot: Slot;
   eager?: boolean;
   fill?: boolean;
+  /** Placeholder para tarjetas chicas (la grilla de situaciones): sin spec ni ruta. */
+  compact?: boolean;
   sizes?: string;
   className?: string;
 }) {
@@ -96,20 +100,29 @@ export function MediaSlot({
       <div
         role="img"
         aria-label={`Pendiente ${slot.id}: ${slot.brief}`}
-        className={`${box} flex flex-col items-center justify-center gap-2 bg-[radial-gradient(circle_at_50%_38%,#31343A,#191B1F_78%)] p-4 text-center sm:gap-3 sm:p-6`}
+        className={`${box} flex flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_38%,#31343A,#191B1F_78%)] text-center ${
+          compact ? 'gap-1 p-2 pb-12' : 'gap-2 p-4 sm:gap-3 sm:p-6'
+        }`}
       >
         <span className="inline-flex items-center gap-1.5 font-display text-[10px] font-black uppercase italic tracking-widest text-accent sm:text-[11px]">
-          <Icon name={kind.icon} className="h-4 w-4" />
-          Pendiente · {slot.id} · {kind.label}
+          {!compact && <Icon name={kind.icon} className="h-4 w-4" />}
+          Pendiente · {slot.id}
+          {compact ? '' : ` · ${kind.label}`}
         </span>
-        <p className="max-w-md text-sm font-semibold leading-snug text-white sm:text-base">
+        <p
+          className={`max-w-md font-semibold leading-snug text-white ${
+            compact ? 'text-[10px] sm:text-xs' : 'text-sm sm:text-base'
+          }`}
+        >
           {slot.brief}
         </p>
-        <p className="max-w-md text-[10px] leading-snug text-ink-400 sm:text-xs">
-          {slot.spec}
-          <br />
-          <code className="break-all">{slot.src}</code>
-        </p>
+        {!compact && (
+          <p className="max-w-md text-[10px] leading-snug text-ink-400 sm:text-xs">
+            {slot.spec}
+            <br />
+            <code className="break-all">{slot.src}</code>
+          </p>
+        )}
         {process.env.NODE_ENV === 'development' && <LocalMock slot={slot} />}
       </div>
     );

@@ -19,7 +19,7 @@
  * hasta que haya reales. Y siempre aclarar que no rompe el parabrisas ni los
  * vidrios laminados (FAQ).
  */
-import type { AdvertorialConfig, Bundle, UpsellTier } from './types';
+import type { AdvertorialConfig, Bundle, MediaSlot, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
 
 /**
@@ -97,6 +97,80 @@ const ROMPEVIDRIOS_UPSELL_CHAIN: readonly UpsellTier[] = ROMPEVIDRIOS_BUNDLES.ma
 
 const CTA_LABEL = 'Comprar ahora';
 
+/**
+ * Las 6 situaciones de la grilla "Cuando cada segundo cuenta" (UseCases).
+ * Fotos verticales 2:3; el `label` es el de la tarjeta, con la última palabra
+ * en rojo. Son lugares donde sirve, sin prometer un resultado.
+ */
+const SITUACIONES = [
+  {
+    id: 'RV-20',
+    label: 'AUTO INUNDADO',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/auto-inundado.webp',
+    aspect: '2:3',
+    alt: 'Auto con el agua a la altura de las puertas',
+    brief: 'Auto en una calle inundada, con el agua a la altura de las puertas.',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+  {
+    id: 'RV-21',
+    label: 'PUERTA TRABADA',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/puerta-trabada.webp',
+    aspect: '2:3',
+    alt: 'Una mano tirando de la manija de una puerta que no abre',
+    brief: 'Una mano tirando de la manija de una puerta que no abre.',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+  {
+    id: 'RV-22',
+    label: 'CINTURÓN TRABADO',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/cinturon-trabado.webp',
+    aspect: '2:3',
+    alt: 'Mano en el botón del cinturón de seguridad que no se suelta',
+    brief: 'Primer plano de la mano en el botón del cinturón, que no se suelta.',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+  {
+    id: 'RV-23',
+    label: 'CHOQUE EN RUTA',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/choque-en-ruta.webp',
+    aspect: '2:3',
+    alt: 'Auto accidentado al costado de la ruta',
+    brief: 'Auto accidentado al costado de la ruta (propia o con licencia, sin personas reconocibles).',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+  {
+    id: 'RV-24',
+    label: 'AUTO VOLCADO',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/auto-volcado.webp',
+    aspect: '2:3',
+    alt: 'Auto dado vuelta sobre el techo',
+    brief: 'Auto dado vuelta sobre el techo (propia o con licencia).',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+  {
+    id: 'RV-25',
+    label: 'SIN AYUDA CERCA',
+    kind: 'image',
+    src: '/rompevidrios/situaciones/sin-ayuda-cerca.webp',
+    aspect: '2:3',
+    alt: 'Ruta desierta de noche con un auto parado',
+    brief: 'Ruta desierta de noche, con un auto parado y las balizas prendidas.',
+    spec: 'WEBP vertical 2:3, 1000×1500',
+    pending: true,
+  },
+] as const satisfies readonly (MediaSlot & { label: string })[];
+
 export const ROMPEVIDRIOS = {
   brand: {
     tagline: 'Llavero Rescate PRO™',
@@ -153,10 +227,11 @@ export const ROMPEVIDRIOS = {
     // "Compatible con": el llavero va en cualquier auto, pero no rompe laminados.
     carBrandsTitle: 'Lo llevás en',
     carBrandsTitleAccent: 'cualquier auto',
-    useCasesTitle: '',
+    useCasesTitle: 'Cuando cada segundo cuenta.',
+    // Sin prefijo: la última palabra de cada etiqueta va en rojo (como en /parasol).
     useCasesPrefix: '',
   },
-  useCases: [],
+  useCases: SITUACIONES.map((s) => ({ label: s.label, image: s.src, alt: s.alt })),
   // El banner de marcas es el del soporte (como en /soplador).
   carBrands: SOPORTE.carBrands,
   steps: [],
@@ -229,6 +304,8 @@ export const ROMPEVIDRIOS = {
 
   advertorial: {
     cta: { label: CTA_LABEL, href: '#pricing' },
+
+    situations: SITUACIONES,
 
     hero: {
       media: {

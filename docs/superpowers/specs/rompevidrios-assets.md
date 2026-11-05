@@ -48,6 +48,19 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-17 | `incluye/punta-tungsteno.webp` | "¿Qué incluye?" (carrusel, slide 3) | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
 | RV-18 | `incluye/cuchilla-cinturon.webp` | "¿Qué incluye?" (carrusel, slide 4) | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
 | RV-19 | `incluye/soporte-adhesivo.webp` | "¿Qué incluye?" (carrusel, slide 6) | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
+| RV-20 | `situaciones/auto-inundado.webp` | "Cuando cada segundo cuenta" (tarjeta 1) | Foto vertical | 2:3 | Auto en una calle inundada, con el agua a la altura de las puertas. | 1000×1500 |
+| RV-21 | `situaciones/puerta-trabada.webp` | "Cuando cada segundo cuenta" (tarjeta 2) | Foto vertical | 2:3 | Una mano tirando de la manija de una puerta que no abre. | 1000×1500 |
+| RV-22 | `situaciones/cinturon-trabado.webp` | "Cuando cada segundo cuenta" (tarjeta 3) | Foto vertical | 2:3 | Primer plano de la mano en el botón del cinturón, que no se suelta. | 1000×1500 |
+| RV-23 | `situaciones/choque-en-ruta.webp` | "Cuando cada segundo cuenta" (tarjeta 4) | Foto vertical | 2:3 | Auto accidentado al costado de la ruta (propia o con licencia, sin personas reconocibles). | 1000×1500 |
+| RV-24 | `situaciones/auto-volcado.webp` | "Cuando cada segundo cuenta" (tarjeta 5) | Foto vertical | 2:3 | Auto dado vuelta sobre el techo (propia o con licencia). | 1000×1500 |
+| RV-25 | `situaciones/sin-ayuda-cerca.webp` | "Cuando cada segundo cuenta" (tarjeta 6) | Foto vertical | 2:3 | Ruta desierta de noche, con un auto parado y las balizas prendidas. | 1000×1500 |
+
+**La grilla "Cuando cada segundo cuenta"** es la misma `UseCases` que usa `/`
+entre el hero y el banner de marcas: 6 tarjetas verticales con la etiqueta
+abajo (la última palabra, en rojo). Las 6 situaciones, sus etiquetas y su
+texto están en `SITUACIONES` (`lib/landings/rompevidrios.ts`). Son lugares
+donde sirve el llavero; no prometen un resultado. Cuidado con las fotos de
+accidentes: sólo propias o con licencia, y sin personas reconocibles.
 
 **La sección "Sabés que funciona antes de necesitarlo" + "¿Qué incluye?"** es
 la misma que `WhatsInBox` del soporte: el mismo `ProductCarousel` (ventana
@@ -89,7 +102,7 @@ rota. Cuando subas RV-13, apuntá `image` de la entrada en `STORE_PRODUCTS` a
 `/rompevidrios/packs/pack-2x.webp` y borrá el placeholder.
 
 **Carpetas nuevas:** cada subcarpeta de `public/rompevidrios/` tiene que
-estar en `exclude` de `_routes.json` (ya están las once de esta tabla). Si
+estar en `exclude` de `_routes.json` (ya están las doce de esta tabla). Si
 sumás otra, agregala; `check:routes` falla si falta.
 
 ---

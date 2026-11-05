@@ -28,7 +28,17 @@ function accentLastWord(text: string) {
   );
 }
 
-export function UseCases({ config = SOPORTE }: { config?: LandingConfig } = {}) {
+export function UseCases({
+  config = SOPORTE,
+  media,
+}: {
+  config?: LandingConfig;
+  /**
+   * Reemplaza la foto de cada tarjeta (en el orden de `config.useCases`). Lo
+   * usa /rompevidrios para mostrar placeholders y maquetas locales.
+   */
+  media?: readonly React.ReactNode[];
+} = {}) {
   const { useCases } = config;
   const { useCasesTitle, useCasesPrefix } = config.sectionCopy;
   // 'Para ' en el soporte, '' en el parasol — un solo text node, sin marcador.
@@ -44,12 +54,12 @@ export function UseCases({ config = SOPORTE }: { config?: LandingConfig } = {}) 
 
       {/* Full-bleed grid — sin max-w ni padding lateral */}
       <ul className="mt-8 grid grid-cols-3 gap-2 px-4 md:mt-10 md:px-6 lg:grid-cols-6">
-        {useCases.map((c) => (
+        {useCases.map((c, i) => (
           <li
             key={c.label}
             className="group relative aspect-[2/3] overflow-hidden rounded-xl bg-ink-900"
           >
-            <UseCaseImage src={c.image} label={c.label} alt={c.alt} />
+            {media ? media[i] : <UseCaseImage src={c.image} label={c.label} alt={c.alt} />}
 
             <div
               aria-hidden="true"

@@ -285,7 +285,7 @@ export type MediaSlot = {
   /** Poster para videos (primer frame). */
   poster?: string;
   /** Proporción para reservar el espacio. */
-  aspect: '1:1' | '4:5' | '9:16' | '16:9' | '3:2';
+  aspect: '1:1' | '4:5' | '2:3' | '9:16' | '16:9' | '3:2';
   alt: string;
   /** Qué tiene que mostrar, en una frase. Se ve en el placeholder. */
   brief: string;
@@ -318,6 +318,12 @@ export type AdvertorialData = {
   cta: { label: string; href: string };
   /** El copy del hero sale de `headlines`, como en las otras landings. */
   hero: { media: MediaSlot };
+  /**
+   * Grilla de situaciones ("Cuando cada segundo cuenta"): las 6 tarjetas de
+   * `UseCases`. El título y el prefijo salen de `sectionCopy`; `label` es el
+   * texto de la tarjeta (la última palabra va en rojo).
+   */
+  situations: readonly (MediaSlot & { label: string })[];
   story: SectionTitle & {
     paragraphs: readonly string[];
     /** Después de cuántos párrafos va la media. */
