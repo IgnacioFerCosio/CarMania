@@ -44,6 +44,7 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-17 | `incluye/punta-tungsteno.webp` | "¿Qué incluye?" (carrusel, slide 2) | Foto macro | 1:1 | Macro de la punta de tungsteno, bien de cerca y con foco nítido. | 1600×1600 |
 | RV-18 | `incluye/cuchilla-cinturon.webp` | "¿Qué incluye?" (carrusel, slide 3) | Foto macro | 1:1 | Macro de la ranura de la cuchilla, con un cinturón entrando. | 1600×1600 |
 | RV-19 | `incluye/soporte-adhesivo.webp` | "¿Qué incluye?" (carrusel, slide 5) | Foto | 1:1 | El soporte adhesivo pegado en el tablero, con el llavero encastrado. | 1600×1600 |
+| RV-26 | `medidas/medidas-llavero.webp` | "Medidas y especificaciones" | Render o foto técnica | 1:1 | Llavero de pie sobre fondo oscuro, con las cotas (largo, diámetro) dibujadas con líneas guía. | WEBP 1600×1600; las medidas tienen que ser las reales |
 | RV-20 | `situaciones/auto-inundado.webp` | "Cuando cada segundo cuenta" (tarjeta 1) | Foto vertical | 2:3 | Auto en una calle inundada, con el agua a la altura de las puertas. | 1000×1500 |
 | RV-21 | `situaciones/puerta-trabada.webp` | "Cuando cada segundo cuenta" (tarjeta 2) | Foto vertical | 2:3 | Una mano tirando de la manija de una puerta que no abre. | 1000×1500 |
 | RV-22 | `situaciones/cinturon-trabado.webp` | "Cuando cada segundo cuenta" (tarjeta 3) | Foto vertical | 2:3 | Primer plano de la mano en el botón del cinturón, que no se suelta. | 1000×1500 |
@@ -166,6 +167,7 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
 - [ ] `brand.socialProofCount`: la cifra real de clientes. Vacía, la línea
       "[cifra] conductores ya lo llevan" del hero y la del header de packs
       no se muestran.
+- [ ] Medidas y especificaciones (sección entre packs y reseñas): **8 cm de largo, 2 cm de diámetro, 35 g, aluminio con punta de tungsteno** son los datos de la ficha de un producto igual (SafePro X), no de nuestra unidad. Medir y pesar el llavero real y confirmar el material con el proveedor.
 - [ ] Garantía (cards "Calidad garantizada"): **30 días de devolución y 1 año de garantía**. Ojo: `Pricing` muestra
       "Devolución 30 días" y "Garantía 1 año" en todas las landings;
       confirmar que valgan para este producto.

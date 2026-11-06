@@ -573,6 +573,34 @@ export const ROMPEVIDRIOS = {
       },
     },
 
+    // Medidas y especificaciones (entre los packs y las reseñas).
+    // TODO confirmar con el proveedor: largo, diámetro, peso y material. Los
+    // valores son los de la ficha del mismo tipo de producto (SafePro X: 8 × 2 cm,
+    // 35 g) y NO están medidos en nuestra unidad.
+    specs: {
+      eyebrow: 'MEDIDAS Y ESPECIFICACIONES',
+      title: 'Pequeño pero poderoso.',
+      accent: 'poderoso.',
+      description:
+        'Cabe en la palma de la mano y en el llavero. Cuerpo de aluminio, punta de tungsteno y una cuchilla escondida dentro de una ranura: solo entra un cinturón.',
+      dimensions: [
+        { label: 'Largo', value: '8 cm', sub: '3.15 in' },
+        { label: 'Diámetro', value: '2 cm', sub: '0.79 in' },
+        { label: 'Peso', value: '35 g', sub: '1.23 oz' },
+        { label: 'Material', value: 'Aluminio', sub: 'punta de tungsteno' },
+      ],
+      media: {
+        id: 'RV-26',
+        kind: 'image',
+        src: '/rompevidrios/medidas/medidas-llavero.webp',
+        aspect: '1:1',
+        alt: 'Medidas del Llavero Rescate PRO™: 8 cm de largo, 2 cm de diámetro y 35 g de peso.',
+        brief: 'Render o foto técnica del llavero sobre fondo oscuro, de pie, con las cotas (largo, diámetro) dibujadas con líneas guía.',
+        spec: 'WEBP 1600×1600, fondo oscuro',
+        pending: true,
+      },
+    },
+
     reviews: {
       placeholder: 'PENDIENTE · reseñas reales con foto, apenas haya ventas',
     },

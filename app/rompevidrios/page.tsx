@@ -50,6 +50,7 @@ import { MediaSlot } from '@/components/advertorial/MediaSlot';
 import { StepsGrid } from '@/components/advertorial/StepsGrid';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
 import { ReviewsPlaceholder } from '@/components/advertorial/ReviewsPlaceholder';
+import { SpecsBlock } from '@/components/advertorial/SpecsBlock';
 import { TrustBlock } from '@/components/sections/TrustBlock';
 import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
 import { StickyCTA } from '@/components/advertorial/StickyCTA';
@@ -68,6 +69,17 @@ const STORE = STORE_PRODUCTS.find((p) => p.href === '/rompevidrios')!;
 const ADV = ROMPEVIDRIOS.advertorial;
 // Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
 const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;
+// Estrellas, promedio y clientes de arriba de los packs: son los de la marca
+// (los mismos del soporte); el producto todavía no tiene los suyos.
+const PRICING_CONFIG = {
+  ...ROMPEVIDRIOS,
+  brand: {
+    ...ROMPEVIDRIOS.brand,
+    averageRating: SOPORTE.brand.averageRating,
+    socialProofCount: SOPORTE.brand.socialProofCount,
+    socialProofLabel: SOPORTE.brand.socialProofLabel,
+  },
+};
 export const revalidate = 300;
 
 // `generateMetadata` y no `metadata`, por lo mismo que en /soplador: sin esto
@@ -222,7 +234,7 @@ export default async function RompevidriosPage() {
         <Pricing
           productId={productId}
           bundlesData={bundlesData}
-          config={ROMPEVIDRIOS}
+          config={PRICING_CONFIG}
           bundleMedia={{
             single: <MediaSlot slot={ADV.packs.images.single} fill />,
             double: <MediaSlot slot={ADV.packs.images.double} fill />,
@@ -230,7 +242,10 @@ export default async function RompevidriosPage() {
           }}
         />
 
-        {/* 8. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+        {/* 8. Medidas y especificaciones: como TechSpecs del soporte */}
+        <SpecsBlock specs={ADV.specs} />
+
+        {/* 9. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
             dev/preview y nada en producción. Debajo de los packs, como en el soporte. */}
         {hasReviews ? (
           <Reviews
@@ -260,15 +275,15 @@ export default async function RompevidriosPage() {
           )
         )}
 
-        {/* 9. Calidad garantizada (#trust) — las 3 cards del soporte */}
+        {/* 10. Calidad garantizada (#trust) — las 3 cards del soporte */}
         <div id="trust">
           <TrustBlock config={ROMPEVIDRIOS} />
         </div>
 
-        {/* 10. FAQ */}
+        {/* 11. FAQ */}
         <FAQ config={ROMPEVIDRIOS} />
 
-        {/* 11. Cierre ("Dos mañanas posibles"), donde el soporte tiene el BackToPricingCTA */}
+        {/* 12. Cierre ("Dos mañanas posibles"), donde el soporte tiene el BackToPricingCTA */}
         <ClosingBlock closing={ADV.closing} />
 
         {/* 12. "¿Listo para tener tu CARMANIA?" — el botón final del soporte */}

@@ -373,6 +373,16 @@ export type AdvertorialData = {
       items: readonly { n: number; tone: 'ours' | 'other'; title: string; desc: string }[];
     };
   };
+  /**
+   * "Medidas y especificaciones": la misma idea que `TechSpecs` del soporte
+   * (foto técnica con las cotas + chips con las medidas). Va entre los packs y
+   * las reseñas.
+   */
+  specs: SectionTitle & {
+    description: string;
+    media: MediaSlot;
+    dimensions: readonly { label: string; value: string; sub?: string }[];
+  };
   reviews: { placeholder: string };
   packs: { images: Record<Bundle['id'], MediaSlot> };
   closing: SectionTitle & {
