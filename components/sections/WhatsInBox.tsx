@@ -7,6 +7,7 @@
  * arma la del soporte con sus constantes de `lib/config.ts`, que es como la
  * usa `/` desde antes de que hubiera otras landings.
  */
+import Image from 'next/image';
 import { HEADLINES, WHATS_IN_BOX, WHATS_IN_BOX_GALLERY, REVIEWS } from '@/lib/config';
 import type { Review, WhatsInBoxCopy, WhatsInBoxData } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -30,7 +31,12 @@ export function WhatsInBox({
   media,
 }: {
   /** Sin `gallery` ni `testimonial` la sección sale sin carrusel de imágenes / sin opinión. */
-  data?: WhatsInBoxCopy & { gallery?: WhatsInBoxData['gallery']; testimonial?: Review };
+  data?: WhatsInBoxCopy & {
+    gallery?: WhatsInBoxData['gallery'];
+    testimonial?: Review;
+    /** Foto del cliente en el círculo de la opinión (/rompevidrios). Sin esto, la inicial. */
+    testimonialPhoto?: string;
+  };
   /**
    * Reemplaza al carrusel de `data.gallery`. Lo usa /rompevidrios para
    * pasarle un `ProductCarousel` con videos y placeholders.
@@ -99,11 +105,23 @@ export function WhatsInBox({
             {/* Testimonio chico */}
             {testimonial && (
             <div className="mt-7 flex max-w-md items-start gap-3 border-t border-ink-800 pt-5">
-              <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-ink-700 to-ink-900 ring-1 ring-inset ring-ink-700">
-                <div className="flex h-full w-full items-center justify-center text-sm font-black italic text-white">
-                  {testimonial.name[0]}
+              {data.testimonialPhoto ? (
+                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-ink-800 ring-1 ring-inset ring-ink-700">
+                  <Image
+                    src={data.testimonialPhoto}
+                    alt={testimonial.name}
+                    fill
+                    className="object-cover"
+                    sizes="40px"
+                  />
                 </div>
-              </div>
+              ) : (
+                <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full bg-gradient-to-br from-ink-700 to-ink-900 ring-1 ring-inset ring-ink-700">
+                  <div className="flex h-full w-full items-center justify-center text-sm font-black italic text-white">
+                    {testimonial.name[0]}
+                  </div>
+                </div>
+              )}
               <div className="flex-1 text-sm">
                 <Stars rating={testimonial.stars} size={13} />
                 <p className="mt-1 italic leading-snug text-ink-200">

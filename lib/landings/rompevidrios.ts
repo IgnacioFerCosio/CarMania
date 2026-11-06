@@ -235,7 +235,7 @@ export const ROMPEVIDRIOS = {
     pricingTitleAccent: 'pack',
     reviewsTitle: 'Lo que dicen los que',
     reviewsTitleAccent: 'ya lo tienen',
-    reviewsFooter: 'conductores que ya lo llevan.',
+    reviewsFooter: 'clientes que ya manejan tranquilos con CARMANIA.',
     faqEyebrow: 'Preguntas frecuentes',
     faqTitle: 'Lo que más nos preguntan',
     // Mismo banner que /: el marquee de marcas. Dice "Lo llevás en" y no

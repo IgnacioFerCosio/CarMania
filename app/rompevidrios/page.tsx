@@ -55,6 +55,7 @@ import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
 import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
+import { SOPORTE } from '@/lib/landings/soporte';
 import {
   ROMPEVIDRIOS_MOCK_REVIEWS,
   ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
@@ -65,6 +66,8 @@ import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
 
 const STORE = STORE_PRODUCTS.find((p) => p.href === '/rompevidrios')!;
 const ADV = ROMPEVIDRIOS.advertorial;
+// Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
+const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;
 export const revalidate = 300;
 
 // `generateMetadata` y no `metadata`, por lo mismo que en /soplador: sin esto
@@ -197,6 +200,8 @@ export default async function RompevidriosPage() {
             // sin reseñas reales no se muestra ninguna.
             testimonial:
               process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3] : undefined,
+            testimonialPhoto:
+              process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3].image : undefined,
           }}
           media={
             <ProductCarousel
@@ -228,7 +233,12 @@ export default async function RompevidriosPage() {
         {/* 8. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
             dev/preview y nada en producción. Debajo de los packs, como en el soporte. */}
         {hasReviews ? (
-          <Reviews config={ROMPEVIDRIOS} />
+          <Reviews
+            config={{
+              ...ROMPEVIDRIOS,
+              brand: { ...ROMPEVIDRIOS.brand, socialProofCount: REVIEWS_PROOF_COUNT },
+            }}
+          />
         ) : process.env.NODE_ENV === 'development' ? (
           // Grilla de MAQUETA (8 reseñas con foto) sólo en `npm run dev`; ver el
           // archivo de mock-reviews. En preview y producción, nada inventado.
@@ -237,7 +247,7 @@ export default async function RompevidriosPage() {
               ...ROMPEVIDRIOS,
               reviews: ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
               ratingBreakdown: ROMPEVIDRIOS_MOCK_BREAKDOWN,
-              brand: { ...ROMPEVIDRIOS.brand, socialProofCount: '8' },
+              brand: { ...ROMPEVIDRIOS.brand, socialProofCount: REVIEWS_PROOF_COUNT },
             }}
           />
         ) : (
