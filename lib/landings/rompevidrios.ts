@@ -280,8 +280,7 @@ export const ROMPEVIDRIOS = {
     },
     {
       q: '¿Es peligroso con chicos?',
-      // TODO: confirmar con el proveedor si la cuchilla tiene traba.
-      a: 'La cuchilla está escondida dentro de una ranura: solo entra un cinturón. [Confirmar si tiene traba].',
+      a: 'La cuchilla está escondida dentro de una ranura: solo entra un cinturón.',
     },
     {
       q: '¿Es legal llevarlo?',
@@ -290,15 +289,6 @@ export const ROMPEVIDRIOS = {
     {
       q: '¿Y si nunca lo uso?',
       a: 'Ojalá. Es como el seguro del auto: lo tenés para el día que hace falta.',
-    },
-    {
-      q: '¿Cuánto tarda en llegar?',
-      // TODO: plazo real de Andreani.
-      a: '[X] días hábiles por Andreani, con seguimiento por WhatsApp.',
-    },
-    {
-      q: '¿Por qué no se vende de a uno?',
-      a: 'Porque el envío es gratis, y porque casi todos terminan comprando uno para cada auto de la familia.',
     },
   ],
   // Las 3 cards de "Calidad garantizada" (TrustBlock), como en el soporte.

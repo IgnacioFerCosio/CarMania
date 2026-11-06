@@ -166,8 +166,6 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
 - [ ] `brand.socialProofCount`: la cifra real de clientes. Vacía, la línea
       "[cifra] conductores ya lo llevan" del hero y la del header de packs
       no se muestran.
-- [ ] FAQ "¿Es peligroso con chicos?": **[Confirmar si tiene traba]**.
-- [ ] FAQ "¿Cuánto tarda en llegar?": **[X] días hábiles** por Andreani.
 - [ ] Garantía (cards "Calidad garantizada"): **30 días de devolución y 1 año de garantía**. Ojo: `Pricing` muestra
       "Devolución 30 días" y "Garantía 1 año" en todas las landings;
       confirmar que valgan para este producto.
