@@ -24,8 +24,10 @@ export function BackToPricingCTA({ config = SOPORTE }: { config?: LandingConfig 
             para devolverlo si no te convence.
           </p>
         ) : (
-          // Producto nuevo, sin cifra real de clientes: no se inventa una.
+          // Producto nuevo (sin cifra propia): la cifra es la de la marca, no la
+          // del producto, y por eso dice "eligieron CARMANIA".
           <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
+            {SOPORTE.brand.socialProofCount} {SOPORTE.brand.socialProofLabel} ya eligieron CARMANIA.
             Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
             para devolverlo si no te convence.
           </p>
@@ -43,7 +45,7 @@ export function BackToPricingCTA({ config = SOPORTE }: { config?: LandingConfig 
         </a>
 
         <p className="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ink-400 sm:mt-5">
-          {brand.socialProofCount ? 'Stock limitado · Envío a todo el país' : 'Envío a todo el país'}
+          Stock limitado · Envío a todo el país
         </p>
       </div>
     </section>
