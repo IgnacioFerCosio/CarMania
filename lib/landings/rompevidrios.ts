@@ -505,8 +505,8 @@ export const ROMPEVIDRIOS = {
     },
 
     comparison: {
-      title: 'Llavero, martillo o apoyacabezas: qué te saca del auto.',
-      accent: 'qué te saca del auto.',
+      title: 'Tres opciones para salir de un auto. Una sola siempre a mano.',
+      accent: 'Una sola siempre a mano.',
       // Recortes sin fondo en public/rompevidrios/comparativa/. El martillo y el
       // apoyacabezas salen de fotos de internet: confirmar la licencia o
       // reemplazarlas por fotos propias antes de publicar.
