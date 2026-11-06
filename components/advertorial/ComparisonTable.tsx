@@ -5,8 +5,10 @@
  *
  * La tabla es sólo lo que tiene cada ítem: la tarjeta oscura arranca debajo de
  * los productos. Cada producto es una figura recortada, independiente, que se
- * para encima del borde de la tarjeta y lo pisa un poco (`FIG_H` y `OVERLAP`),
- * así sobresale de la tabla en vez de quedar adentro.
+ * para encima del borde de la tarjeta y lo pisa un poco (`--fig-h` y `OVERLAP`),
+ * así sobresale de la tabla en vez de quedar adentro. En el celular cada figura
+ * queda dentro de su columna, para que no se pisen entre ellas; desde `sm`, con
+ * columnas más anchas, pueden pasarse un poco.
  *
  * La columna nuestra va elevada con un panel más claro, borde fino con una
  * línea roja arriba y sombra negra; sin brillos de color. El panel y la
@@ -24,8 +26,6 @@ import { BG, SECTION_Y, SectionHeading, type Bg } from './SectionHeading';
 
 type Comparison = AdvertorialData['comparison'];
 
-/** Alto de la fila de figuras, en px. */
-const FIG_H = 140;
 /** Cuánto pisa cada figura el borde de la tarjeta, en px. */
 const OVERLAP = 36;
 /** Cuánto sobresale el panel de la columna nuestra por arriba y por abajo, en px. */
@@ -64,7 +64,7 @@ export function ComparisonTable({
   const { columns, rows } = comparison;
   // fila 1: figuras · fila 2: nombres · filas 3…: ítems
   const lastRow = rows.length + 2;
-  const cardTop = FIG_H - OVERLAP;
+  const cardTop = `calc(var(--fig-h) - ${OVERLAP}px)`;
 
   return (
     <section className={`${BG[bg]} ${SECTION_Y}`}>
@@ -80,10 +80,10 @@ export function ComparisonTable({
             <div
               role="table"
               aria-label={columns.map((c) => c.name).join(', ')}
-              className="relative grid"
+              className="relative grid [--fig-h:112px] sm:[--fig-h:140px]"
               style={{
-                gridTemplateColumns: 'minmax(0,1.5fr) repeat(3, minmax(0,1fr))',
-                gridTemplateRows: `${FIG_H}px repeat(${lastRow - 1}, auto)`,
+                gridTemplateColumns: 'minmax(0,1.25fr) repeat(3, minmax(0,1fr))',
+                gridTemplateRows: `var(--fig-h) repeat(${lastRow - 1}, auto)`,
               }}
             >
               {/* Tarjeta de la tabla: arranca debajo de las figuras */}
@@ -102,7 +102,7 @@ export function ComparisonTable({
                 style={{
                   gridColumn: 2,
                   gridRow: `1 / ${lastRow + 1}`,
-                  marginTop: cardTop - LIFT,
+                  marginTop: `calc(var(--fig-h) - ${OVERLAP + LIFT}px)`,
                   marginBottom: -LIFT,
                 }}
               />
@@ -121,7 +121,7 @@ export function ComparisonTable({
                     width={c.width}
                     height={c.height}
                     sizes="120px"
-                    className="max-h-full w-auto max-w-[138%] object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)]"
+                    className="max-h-full w-auto max-w-full object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)] sm:max-w-[138%]"
                   />
                 </div>
               ))}
@@ -135,7 +135,7 @@ export function ComparisonTable({
                   <div
                     key={c.name}
                     role="columnheader"
-                    className={`relative z-10 flex items-start justify-center px-1 pb-3 pt-3 text-center font-display text-[10px] font-black italic uppercase leading-tight tracking-wide sm:text-xs ${
+                    className={`relative z-10 flex min-w-0 items-start justify-center px-0.5 pb-3 pt-3 text-center font-display text-[10px] font-black italic uppercase leading-tight hyphens-manual sm:px-1 sm:text-xs sm:tracking-wide ${
                       i === 0 ? 'text-white' : 'text-ink-400'
                     }`}
                     style={{ gridColumn: i + 2, gridRow: 2 }}

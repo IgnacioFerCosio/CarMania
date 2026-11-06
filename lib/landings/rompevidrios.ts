@@ -456,7 +456,7 @@ export const ROMPEVIDRIOS = {
       columns: [
         { name: 'Llavero Rescate PRO™', image: '/rompevidrios/comparativa/llavero-diagonal.webp', width: 222, height: 320 },
         { name: 'Martillo de guantera', image: '/rompevidrios/comparativa/martillo-diagonal.webp', width: 286, height: 319 },
-        { name: 'Apoyacabezas', image: '/rompevidrios/comparativa/apoyacabezas.webp', width: 320, height: 296 },
+        { name: 'Apoya\u00ADcabezas', image: '/rompevidrios/comparativa/apoyacabezas.webp', width: 320, height: 296 },
       ],
       rows: [
         { label: 'A mano si estás atrapado', values: [true, false, 'depende del auto'] },
