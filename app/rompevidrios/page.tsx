@@ -31,7 +31,6 @@ import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
-import { ProductCarousel } from '@/components/ui/ProductCarousel';
 import { BackToPricingCTA } from '@/components/sections/BackToPricingCTA';
 import { Footer } from '@/components/layout/Footer';
 import { Pricing } from '@/components/sections/Pricing';
@@ -199,8 +198,8 @@ export default async function RompevidriosPage() {
         <CarBrands config={ROMPEVIDRIOS} />
 
         {/* 4. "Sabés que funciona antes de necesitarlo" + ¿Qué incluye? — la
-            misma sección que el soporte (WhatsInBox), con su carrusel y una
-            opinión abajo. Los slides no llevan texto propio. */}
+            misma sección que el soporte (WhatsInBox), sin carrusel por ahora
+            (sólo la foto del pasto) y con una opinión abajo. */}
         <WhatsInBox
           data={{
             headline: ADV.includes.headline,
@@ -215,12 +214,19 @@ export default async function RompevidriosPage() {
             testimonialPhoto:
               process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3].image : undefined,
           }}
+          // Por ahora, sólo la foto del pasto con los productos (RV-12), en la
+          // misma ventana 1:1 del carrusel. El carrusel vuelve cuando haya más
+          // imágenes: `ADV.includes.slides` ya las tiene en orden.
           media={
-            <ProductCarousel
-              nodes={ADV.includes.slides.map((slot) => (
-                <MediaSlot key={slot.id} slot={slot} fill sizes="(min-width: 768px) 512px, 100vw" />
-              ))}
-            />
+            <div className="relative mx-auto w-full max-w-lg">
+              <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-ink-950 ring-1 ring-inset ring-ink-800">
+                <MediaSlot
+                  slot={ADV.includes.slides[0]}
+                  fill
+                  sizes="(min-width: 768px) 512px, 100vw"
+                />
+              </div>
+            </div>
           }
         />
 
