@@ -31,8 +31,11 @@ import { ReviewCard } from './ReviewCard';
 export function Reviews({
   config = SOPORTE,
   children,
+  sampleNotice,
 }: {
   config?: LandingConfig;
+  /** Reemplaza "Basado en N reseñas verificadas" cuando las reseñas son de ejemplo. */
+  sampleNotice?: string;
   /** Reemplaza la grilla por defecto. Ver `ReviewsExpandable`. */
   children?: React.ReactNode;
 } = {}) {
@@ -57,9 +60,13 @@ export function Reviews({
               <h2 className="font-display text-xl font-black italic uppercase tracking-wider text-white sm:text-2xl md:text-3xl">
                 {sectionCopy.reviewsTitle + ' '}<span className="text-accent">{sectionCopy.reviewsTitleAccent}</span>
               </h2>
-              <p className="mt-1 text-xs text-ink-400 sm:text-sm">
-                Basado en {total} reseñas verificadas
-              </p>
+              {sampleNotice ? (
+                <p className="mt-1 text-xs text-ink-400 sm:text-sm">{sampleNotice}</p>
+              ) : (
+                <p className="mt-1 text-xs text-ink-400 sm:text-sm">
+                  Basado en {total} reseñas verificadas
+                </p>
+              )}
             </div>
           </div>
 

@@ -260,7 +260,7 @@ export const ROMPEVIDRIOS = {
         alt: 'Mano que apoya el llavero en la ventanilla, aprieta y el vidrio estalla',
         brief: 'Mano sacando la llave con el llavero; lo apoya en la ventanilla, aprieta y el vidrio estalla.',
         spec: 'MP4 H.264 sin audio, loop 6–8 s, 1080×1350, < 2 MB + poster webp',
-        pending: true,
+        pending: false,
       },
     },
 
@@ -411,7 +411,7 @@ export const ROMPEVIDRIOS = {
             alt: 'El llavero encastrado en su soporte del auto y colgado de la llave',
             brief: 'Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave.',
             spec: 'MP4 H.264 sin audio, loop 4–6 s, < 2 MB',
-            pending: true,
+            pending: false,
           },
         },
         {
@@ -426,7 +426,7 @@ export const ROMPEVIDRIOS = {
             alt: 'Aprieta el llavero y el vidrio estalla',
             brief: 'Primer plano: aprieta y el vidrio estalla.',
             spec: 'MP4 H.264 sin audio, loop 3 s en cámara lenta, < 2 MB',
-            pending: true,
+            pending: false,
           },
         },
         {
@@ -441,7 +441,7 @@ export const ROMPEVIDRIOS = {
             alt: 'El llavero corta un cinturón de seguridad tenso de un tirón',
             brief: 'El llavero cortando un cinturón tenso de un tirón.',
             spec: 'MP4 H.264 sin audio, loop 3 s, < 2 MB',
-            pending: true,
+            pending: false,
           },
         },
       ],

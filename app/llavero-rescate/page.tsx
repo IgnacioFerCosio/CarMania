@@ -18,8 +18,8 @@
  * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta se puede abrir
  * sólo con la URL, para probarla: no está en el sitemap, /tienda la muestra como
  * "Próximamente" sin link y lleva `noindex`. A diferencia de /soplador, no da
- * 404. Publicarla es sacar ese flag. Las reseñas, que esperan material real,
- * sólo se ven en dev y en las previews (ver `showsDrafts`).
+ * 404. Publicarla es sacar ese flag. Mientras tanto muestra reseñas de ejemplo,
+ * avisadas como tales (ver el archivo de mock-reviews).
  */
 import type { Metadata } from 'next';
 import ReactDOM from 'react-dom';
@@ -65,6 +65,8 @@ import { STORE_PRODUCTS, showsDrafts } from '@/lib/config';
 
 const STORE = STORE_PRODUCTS.find((p) => p.href === '/llavero-rescate')!;
 const ADV = ROMPEVIDRIOS.advertorial;
+// Las reseñas de ejemplo existen sólo mientras la página no esté publicada.
+const SAMPLE_REVIEWS = Boolean(STORE.comingSoon);
 // Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
 const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;
 // Las cards de los packs: tres columnas en desktop, una en el celular.
@@ -151,14 +153,19 @@ export default async function RompevidriosPage() {
       {/* Mismos links que las otras landings (default del Navbar): esta
           también tiene #how, #pricing, #reviews, #trust y #faq. */}
       <Navbar />
+      {SAMPLE_REVIEWS && (
+        <p className="bg-ink-900 px-4 py-1.5 text-center text-[11px] text-ink-300">
+          Página en prueba · Las reseñas son de ejemplo
+        </p>
+      )}
 
       <main>
         {/* 1. Hero — el mismo de las otras landings, con el slot RV-01 */}
         <Hero
           config={
-            // Carrusel de maqueta SÓLO en `npm run dev` (ver el archivo de
-            // mock-reviews). En preview y producción, sin reseñas reales no hay carrusel.
-            process.env.NODE_ENV === 'development'
+            // Reseñas de ejemplo mientras la página esté en prueba (ver el archivo
+            // de mock-reviews). Publicada, sin reseñas reales no hay carrusel.
+            SAMPLE_REVIEWS
               ? { ...ROMPEVIDRIOS, reviews: ROMPEVIDRIOS_MOCK_REVIEWS }
               : ROMPEVIDRIOS
           }
@@ -206,12 +213,10 @@ export default async function RompevidriosPage() {
             body: ADV.includes.body,
             note: ADV.includes.note,
             items: ADV.includes.items,
-            // Opinión de MAQUETA sólo en dev (ver el archivo de mock-reviews):
-            // sin reseñas reales no se muestra ninguna.
-            testimonial:
-              process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3] : undefined,
-            testimonialPhoto:
-              process.env.NODE_ENV === 'development' ? ROMPEVIDRIOS_MOCK_REVIEWS[3].image : undefined,
+            // Opinión de ejemplo mientras la página esté en prueba: publicada, sin
+            // reseñas reales no se muestra ninguna.
+            testimonial: SAMPLE_REVIEWS ? ROMPEVIDRIOS_MOCK_REVIEWS[3] : undefined,
+            testimonialPhoto: SAMPLE_REVIEWS ? ROMPEVIDRIOS_MOCK_REVIEWS[3].image : undefined,
           }}
           // Por ahora, sólo la foto del pasto con los productos (RV-12), en la
           // misma ventana 1:1 del carrusel. El carrusel vuelve cuando haya más
@@ -259,10 +264,10 @@ export default async function RompevidriosPage() {
               brand: { ...ROMPEVIDRIOS.brand, socialProofCount: REVIEWS_PROOF_COUNT },
             }}
           />
-        ) : process.env.NODE_ENV === 'development' ? (
-          // Grilla de MAQUETA (8 reseñas con foto) sólo en `npm run dev`; ver el
-          // archivo de mock-reviews. En preview y producción, nada inventado.
+        ) : SAMPLE_REVIEWS ? (
+          // 8 reseñas de ejemplo con foto, avisado, mientras la página esté en prueba.
           <Reviews
+            sampleNotice="Reseñas de ejemplo: esta página todavía está en prueba."
             config={{
               ...ROMPEVIDRIOS,
               reviews: ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
