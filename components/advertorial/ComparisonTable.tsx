@@ -74,7 +74,9 @@ export function ComparisonTable({
         <div className="mt-10 grid items-center gap-12 sm:mt-14 lg:grid-cols-2 lg:gap-14">
           <CarMap map={comparison.map} />
 
-          <div className="mx-auto w-full max-w-xl">
+          {/* Apilados (celular y tablet), la tabla va antes que el mapa; en
+              desktop, el mapa a la izquierda y la tabla a la derecha. */}
+          <div className="order-first mx-auto w-full max-w-xl lg:order-none">
             <div
               role="table"
               aria-label={columns.map((c) => c.name).join(', ')}
