@@ -4,6 +4,7 @@ import { PAYMENTS, RETURNS } from '@/lib/config';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { Bundle, LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
+import { ProductGlyph } from '@/components/ui/ProductGlyph';
 import { Stars } from '@/components/ui/Stars';
 import { BuyButton } from '@/components/commerce/BuyButton';
 
@@ -13,9 +14,9 @@ type Props = {
   config?: LandingConfig;
   /** Ancla de la sección. `/rompevidrios` la llama `packs`. */
   id?: string;
-  /** Bajada debajo del título. */
+  /** Bajada debajo del título (hoy ninguna landing la usa). */
   sub?: string;
-  /** Línea chica debajo de la grilla. */
+  /** Línea chica debajo de la grilla (hoy ninguna landing la usa). */
   footnote?: string;
   /**
    * Reemplaza la foto de cada card (por id de bundle). Lo usa
@@ -192,23 +193,39 @@ export function Pricing({
                   </div>
                 </div>
 
-                {/* Bonus + qty visible */}
-                <ul className="mt-4 space-y-2 text-[13px] sm:mt-5 sm:text-sm">
-                  <li className="flex items-start gap-2 text-ink-200">
-                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                    <span className="font-semibold text-white">{b.unitsLabel}</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-ink-200">
-                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                    <span>{b.bonus}</span>
-                  </li>
+                {/* Bonus + qty visible. Con `b.includes` (/rompevidrios) una línea por
+                    pieza con su ícono; sin eso, el bloque de siempre. */}
+                {b.includes ? (
+                  <ul className="mt-4 space-y-2 text-[13px] sm:mt-5 sm:text-sm">
+                    {b.includes.map((it, n) => (
+                      <li key={it.text} className="flex items-center gap-2.5 text-ink-200">
+                        <ProductGlyph name={it.icon} className="h-7 w-7 shrink-0" />
+                        <span className={n === 0 ? 'font-semibold text-white' : undefined}>{it.text}</span>
+                      </li>
+                    ))}
+                    <li className="flex items-center gap-2.5 text-ink-200">
+                      <Icon name="truck" className="h-7 w-7 shrink-0 p-1 text-accent" />
+                      <span>Envío gratis incluido</span>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="mt-4 space-y-2 text-[13px] sm:mt-5 sm:text-sm">
+                    <li className="flex items-start gap-2 text-ink-200">
+                      <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                      <span className="font-semibold text-white">{b.unitsLabel}</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-ink-200">
+                      <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                      <span>{b.bonus}</span>
+                    </li>
 
-                  <li className="flex items-start gap-2 text-ink-200">
-                    <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                    <span>Envío gratis incluido</span>
-                  </li>
+                    <li className="flex items-start gap-2 text-ink-200">
+                      <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                      <span>Envío gratis incluido</span>
+                    </li>
 
-                </ul>
+                  </ul>
+                )}
 
                 {/* CTA */}
                 <div className="mt-5 sm:mt-6">

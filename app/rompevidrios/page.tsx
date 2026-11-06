@@ -32,6 +32,7 @@ import { UseCases } from '@/components/sections/UseCases';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { ProductCarousel } from '@/components/ui/ProductCarousel';
+import { BackToPricingCTA } from '@/components/sections/BackToPricingCTA';
 import { Footer } from '@/components/layout/Footer';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -213,8 +214,6 @@ export default async function RompevidriosPage() {
           productId={productId}
           bundlesData={bundlesData}
           config={ROMPEVIDRIOS}
-          sub={ADV.packs.sub}
-          footnote={ADV.packs.footnote}
           bundleMedia={{
             single: <MediaSlot slot={ADV.packs.images.single} fill />,
             double: <MediaSlot slot={ADV.packs.images.double} fill />,
@@ -245,7 +244,10 @@ export default async function RompevidriosPage() {
         <FAQ config={ROMPEVIDRIOS} />
 
         {/* 11. Cierre ("Dos mañanas posibles"), donde el soporte tiene el BackToPricingCTA */}
-        <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
+        <ClosingBlock closing={ADV.closing} />
+
+        {/* 12. "¿Listo para tener tu CARMANIA?" — el botón final del soporte */}
+        <BackToPricingCTA config={ROMPEVIDRIOS} />
       </main>
 
       <Footer />

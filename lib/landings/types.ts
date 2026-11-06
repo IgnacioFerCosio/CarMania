@@ -26,6 +26,12 @@ export type Bundle = {
   unitsLabel: string;
   badge: string | null;
   bonus: string;
+  /**
+   * Lo que trae el pack, una línea por pieza con su ícono (`ProductGlyph`).
+   * Si está, `Pricing` lo muestra en lugar de `unitsLabel` + `bonus`
+   * (`/rompevidrios`); sin esto, las cards son las de siempre.
+   */
+  includes?: readonly { icon: 'keychain' | 'glass' | 'mount'; text: string }[];
   freeShipping: boolean;
   recommended: boolean;
   fallbackPrice: number;
@@ -368,7 +374,7 @@ export type AdvertorialData = {
     };
   };
   reviews: { placeholder: string };
-  packs: { sub: string; footnote: string; images: Record<Bundle['id'], MediaSlot> };
+  packs: { images: Record<Bundle['id'], MediaSlot> };
   closing: SectionTitle & {
     columns: readonly { tone: 'without' | 'with'; text: string }[];
     media: MediaSlot;

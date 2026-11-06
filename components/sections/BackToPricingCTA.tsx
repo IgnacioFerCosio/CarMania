@@ -17,11 +17,19 @@ export function BackToPricingCTA({ config = SOPORTE }: { config?: LandingConfig 
         <h2 className="heading-display text-2xl leading-tight sm:text-3xl md:text-4xl">
           ¿Listo para tener tu <span className="text-accent">CARMANIA</span>?
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
-          {brand.socialProofCount} {brand.socialProofLabel} ya lo eligieron.
-          Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
-          para devolverlo si no te convence.
-        </p>
+        {brand.socialProofCount ? (
+          <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
+            {brand.socialProofCount} {brand.socialProofLabel} ya lo eligieron.
+            Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
+            para devolverlo si no te convence.
+          </p>
+        ) : (
+          // Producto nuevo, sin cifra real de clientes: no se inventa una.
+          <p className="mx-auto mt-3 max-w-xl text-[14px] text-ink-300 sm:mt-4 sm:text-sm md:text-base">
+            Sumate con {PAYMENTS.installments} cuotas sin interés y {RETURNS.days} días
+            para devolverlo si no te convence.
+          </p>
+        )}
 
         <a
           href="#pricing"
@@ -35,7 +43,7 @@ export function BackToPricingCTA({ config = SOPORTE }: { config?: LandingConfig 
         </a>
 
         <p className="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ink-400 sm:mt-5">
-          Stock limitado · Envío a todo el país
+          {brand.socialProofCount ? 'Stock limitado · Envío a todo el país' : 'Envío a todo el país'}
         </p>
       </div>
     </section>

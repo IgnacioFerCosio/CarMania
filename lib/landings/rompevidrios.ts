@@ -44,6 +44,11 @@ const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     unitsLabel: '2 llaveros',
     badge: null,
     bonus: 'Vidrio de prueba incluido',
+    includes: [
+      { icon: 'keychain', text: '2 llaveros' },
+      { icon: 'glass', text: '2 vidrios de prueba (uno por llavero)' },
+      { icon: 'mount', text: '2 soportes adhesivos' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 29990,
@@ -60,6 +65,11 @@ const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     unitsLabel: '4 llaveros',
     badge: 'EL MÁS ELEGIDO',
     bonus: 'Vidrio de prueba incluido',
+    includes: [
+      { icon: 'keychain', text: '4 llaveros' },
+      { icon: 'glass', text: '4 vidrios de prueba (uno por llavero)' },
+      { icon: 'mount', text: '4 soportes adhesivos' },
+    ],
     freeShipping: true,
     recommended: true,
     fallbackPrice: 44990,
@@ -76,6 +86,11 @@ const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     unitsLabel: '6 llaveros',
     badge: 'MEJOR PRECIO',
     bonus: 'Vidrio de prueba incluido',
+    includes: [
+      { icon: 'keychain', text: '6 llaveros' },
+      { icon: 'glass', text: '6 vidrios de prueba (uno por llavero)' },
+      { icon: 'mount', text: '6 soportes adhesivos' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 54990,
@@ -573,8 +588,6 @@ export const ROMPEVIDRIOS = {
     },
 
     packs: {
-      sub: 'Uno para cada auto de la familia: el tuyo, el de tu pareja, el de tus viejos, el de tus hijos. Envío gratis en todos.',
-      footnote: '3 cuotas sin interés · Descuento por transferencia · Envío gratis por Andreani',
       images: {
         single: {
           id: 'RV-13',

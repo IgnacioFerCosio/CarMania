@@ -1,21 +1,13 @@
 /**
- * Cierre "Dos mañanas posibles": las dos columnas, la foto tranquila y el
- * último botón. Hace de `BackToPricingCTA` de esta landing (mismo fondo,
- * mismo botón).
+ * Cierre "Dos mañanas posibles": las dos columnas y la foto tranquila. El
+ * botón final es el `BackToPricingCTA` del soporte, que va justo debajo.
  */
 import type { AdvertorialData } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { MediaSlot } from './MediaSlot';
-import { CtaLink } from './CtaLink';
 import { BG, SECTION_Y, SectionHeading } from './SectionHeading';
 
-export function ClosingBlock({
-  closing,
-  cta,
-}: {
-  closing: AdvertorialData['closing'];
-  cta: AdvertorialData['cta'];
-}) {
+export function ClosingBlock({ closing }: { closing: AdvertorialData['closing'] }) {
   return (
     <section className={`relative overflow-hidden ${BG.black} ${SECTION_Y}`}>
       {/* El mismo glow rojo del hero */}
@@ -56,13 +48,6 @@ export function ClosingBlock({
 
         <div className="mt-8 sm:mt-12">
           <MediaSlot slot={closing.media} sizes="(min-width: 1024px) 1024px, 100vw" />
-        </div>
-
-        <div className="mt-8 text-center sm:mt-12">
-          <CtaLink label={cta.label} href={cta.href} className="w-full sm:w-auto" />
-          <p className="mt-4 text-[11px] font-semibold uppercase tracking-widest text-ink-400 sm:mt-5">
-            Envío gratis a todo el país · 3 cuotas sin interés
-          </p>
         </div>
       </div>
     </section>
