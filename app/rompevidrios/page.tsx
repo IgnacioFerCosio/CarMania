@@ -55,7 +55,11 @@ import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
 import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
-import { ROMPEVIDRIOS_MOCK_REVIEWS } from '@/lib/landings/rompevidrios.mock-reviews';
+import {
+  ROMPEVIDRIOS_MOCK_REVIEWS,
+  ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
+  ROMPEVIDRIOS_MOCK_BREAKDOWN,
+} from '@/lib/landings/rompevidrios.mock-reviews';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
 
@@ -225,6 +229,17 @@ export default async function RompevidriosPage() {
             dev/preview y nada en producción. Debajo de los packs, como en el soporte. */}
         {hasReviews ? (
           <Reviews config={ROMPEVIDRIOS} />
+        ) : process.env.NODE_ENV === 'development' ? (
+          // Grilla de MAQUETA (8 reseñas con foto) sólo en `npm run dev`; ver el
+          // archivo de mock-reviews. En preview y producción, nada inventado.
+          <Reviews
+            config={{
+              ...ROMPEVIDRIOS,
+              reviews: ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
+              ratingBreakdown: ROMPEVIDRIOS_MOCK_BREAKDOWN,
+              brand: { ...ROMPEVIDRIOS.brand, socialProofCount: '8' },
+            }}
+          />
         ) : (
           drafts && (
             <ReviewsPlaceholder
