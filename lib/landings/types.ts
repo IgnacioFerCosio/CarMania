@@ -376,7 +376,16 @@ export type AdvertorialData = {
   reviews: { placeholder: string };
   packs: { images: Record<Bundle['id'], MediaSlot> };
   closing: SectionTitle & {
-    columns: readonly { tone: 'without' | 'with'; text: string }[];
+    /**
+     * Las dos columnas: `big` es el dato gigante ("?" / "3 s"), `steps` los
+     * tres pasos de la línea de tiempo.
+     */
+    columns: readonly {
+      tone: 'without' | 'with';
+      big: string;
+      text: string;
+      steps: readonly [string, string, string];
+    }[];
     media: MediaSlot;
   };
 };

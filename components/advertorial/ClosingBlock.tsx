@@ -1,11 +1,54 @@
 /**
- * Cierre "Dos mañanas posibles": las dos columnas y la foto tranquila. El
- * botón final es el `BackToPricingCTA` del soporte, que va justo debajo.
+ * Cierre "Dos mañanas posibles": dos columnas con un dato gigante cada una
+ * ("?" contra "3 s"), su texto y una línea de tiempo de tres pasos (apagada
+ * y sin llegar a ningún lado, contra una roja que se completa), y la foto
+ * tranquila abajo. El botón final es el `BackToPricingCTA` del soporte, que
+ * va justo debajo.
  */
 import type { AdvertorialData } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { MediaSlot } from './MediaSlot';
 import { BG, SECTION_Y, SectionHeading } from './SectionHeading';
+
+type Column = AdvertorialData['closing']['columns'][number];
+
+/** Los tres pasos: círculos unidos por una línea (continua y roja, o punteada y gris). */
+function Timeline({ steps, con }: { steps: Column['steps']; con: boolean }) {
+  return (
+    <ol className="relative mt-6 grid grid-cols-3 gap-2 sm:mt-8">
+      {/* línea que une los círculos (del centro del primero al del último) */}
+      <span
+        aria-hidden="true"
+        className={`absolute left-[16.66%] right-[16.66%] top-[18px] border-t-2 ${
+          con ? 'border-accent shadow-[0_0_12px_rgba(215,7,7,0.6)]' : 'border-dashed border-ink-700'
+        }`}
+      />
+      {steps.map((label, i) => {
+        const last = i === steps.length - 1;
+        return (
+          <li key={label} className="relative flex flex-col items-center text-center">
+            <span
+              className={`flex h-9 w-9 items-center justify-center rounded-full font-display text-sm font-black ${
+                con
+                  ? 'bg-accent text-white shadow-[0_0_18px_rgba(215,7,7,0.55)]'
+                  : 'border-2 border-ink-700 bg-ink-900 text-ink-500'
+              }`}
+            >
+              {con && last ? <Icon name="check" className="h-5 w-5" /> : con ? i + 1 : last ? '?' : i + 1}
+            </span>
+            <span
+              className={`mt-2.5 text-[12px] font-semibold leading-tight sm:text-sm ${
+                con ? 'text-white' : 'text-ink-400'
+              }`}
+            >
+              {label}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 export function ClosingBlock({ closing }: { closing: AdvertorialData['closing'] }) {
   return (
@@ -25,22 +68,35 @@ export function ClosingBlock({ closing }: { closing: AdvertorialData['closing'] 
             return (
               <div
                 key={c.text}
-                className={`rounded-2xl border p-5 sm:p-7 ${
+                className={`relative overflow-hidden rounded-2xl border p-5 text-center sm:p-8 ${
                   con
                     ? 'border-accent bg-ink-900 shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30'
                     : 'border-ink-800 bg-ink-900/50'
                 }`}
               >
-                <span
-                  className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                    con ? 'bg-accent text-white' : 'bg-ink-800 text-ink-400'
+                {con && (
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-16 left-1/2 h-48 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl"
+                  />
+                )}
+                <p
+                  className={`relative font-display text-7xl font-black italic leading-none sm:text-8xl ${
+                    con ? 'text-accent' : 'text-ink-700'
                   }`}
                 >
-                  <Icon name={con ? 'check' : 'x'} className="h-5 w-5" />
-                </span>
-                <p className={`mt-4 text-[15px] leading-relaxed sm:text-base md:text-lg ${con ? 'text-white' : 'text-ink-400'}`}>
+                  {c.big}
+                </p>
+                <p
+                  className={`relative mx-auto mt-4 max-w-sm text-[15px] leading-relaxed sm:text-base ${
+                    con ? 'text-white' : 'text-ink-400'
+                  }`}
+                >
                   {c.text}
                 </p>
+                <div className="relative">
+                  <Timeline steps={c.steps} con={con} />
+                </div>
               </div>
             );
           })}

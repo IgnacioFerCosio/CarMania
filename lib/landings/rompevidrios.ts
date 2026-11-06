@@ -618,10 +618,14 @@ export const ROMPEVIDRIOS = {
       columns: [
         {
           tone: 'without',
+          big: '?',
+          steps: ['La puerta no abre', 'El cinturón no suelta', 'Esperás ayuda'],
           text: 'Seguís sin nada en la llave. Probablemente nunca pase nada. Y si pasa, vas a depender de la suerte.',
         },
         {
           tone: 'with',
+          big: '3 s',
+          steps: ['Lo apoyás', 'Apretás', 'Salís'],
           text: 'Lo tenés colgado de la llave. Probablemente nunca pase nada. Y si pasa, tenés 3 segundos y una salida.',
         },
       ],
