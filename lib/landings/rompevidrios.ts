@@ -573,7 +573,7 @@ export const ROMPEVIDRIOS = {
     },
 
     packs: {
-      sub: 'Uno para tu auto y otro para el de tus viejos. Envío gratis en todos.',
+      sub: 'Uno para cada auto de la familia: el tuyo, el de tu pareja, el de tus viejos, el de tus hijos. Envío gratis en todos.',
       footnote: '3 cuotas sin interés · Descuento por transferencia · Envío gratis por Andreani',
       images: {
         single: {
