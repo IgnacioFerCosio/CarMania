@@ -13,11 +13,9 @@ type Props = {
   productId: string;
   bundlesData: Record<string, BundleData>; // keyed by productId
   config?: LandingConfig;
-  /** Ancla de la sección. `/rompevidrios` la llama `packs`. */
-  id?: string;
   /**
    * Reemplaza la foto de cada card (por id de bundle). Lo usa
-   * `/rompevidrios` para mostrar placeholders mientras no hay fotos.
+   * `/rompevidrios` para mostrar sus `MediaSlot`.
    */
   bundleMedia?: Partial<Record<Bundle['id'], React.ReactNode>>;
 };
@@ -26,7 +24,6 @@ export function Pricing({
   productId,
   bundlesData,
   config = SOPORTE,
-  id = 'pricing',
   bundleMedia,
 }: Props) {
   const { brand, bundles, sectionCopy } = config;
@@ -42,7 +39,7 @@ export function Pricing({
 
   return (
     <section
-      id={id}
+      id="pricing"
       className="relative overflow-hidden bg-ink-950 py-14 sm:py-20 md:py-28"
     >
       {/* Línea acento superior */}

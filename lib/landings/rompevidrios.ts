@@ -6,12 +6,16 @@
  * copy y todas las rutas de assets viven acá, nada en los componentes.
  *
  * REGLA: este archivo NO importa del config raíz (ver types.ts).
+ * Y sólo lo importan la página y los tests: el carrito usa
+ * `./rompevidrios.bundles`, para que este copy no llegue al JS de las otras
+ * páginas.
  *
  * ⚠️ PENDIENTES antes de que /rompevidrios reciba tráfico:
  *   - Shopify: los 3 packs no existen; `productId`/`fallbackVariantId` en
  *     `''` → los botones de compra quedan deshabilitados.
- *   - Media: NINGÚN slot existe todavía (todos `pending: true`). Ver el
- *     checklist en docs/superpowers/specs/rompevidrios-assets.md.
+ *   - Media: faltan el hero (RV-01) y los 3 pasos (RV-06 a RV-08), hoy con
+ *     `pending: true`. Ver el checklist en
+ *     docs/superpowers/specs/rompevidrios-assets.md.
  *   - Lo que está entre corchetes en el copy ([CIFRA REAL], [X] días…).
  *
  * COPY LEGAL — no negociable: nada de cifras, sellos ni respaldos inventados
@@ -19,96 +23,9 @@
  * hasta que haya reales. Y siempre aclarar que no rompe el parabrisas ni los
  * vidrios laminados (FAQ).
  */
-import type { AdvertorialConfig, Bundle, MediaSlot, UpsellTier } from './types';
+import type { AdvertorialConfig, MediaSlot } from './types';
 import { SOPORTE } from './soporte';
-
-/**
- * No hay pack de 1: los ids `single`/`double`/`triple` son los de 2, 4 y 6
- * unidades (el tipo `Bundle` y `Pricing` trabajan con esos tres ids). La
- * escalera del carrito sube de a 2, así que nunca ofrece "llevá 1 más".
- *
- * El tachado es el precio de lista de 1 unidad ($19.990) × cantidad.
- * TODO: confirmar precio de lista real — el tachado tiene que haber existido
- * de verdad (ley de defensa del consumidor).
- */
-const PRECIO_LISTA = 19990;
-
-const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
-  {
-    id: 'single',
-    productId: '', // TODO SHOPIFY — el pack x2 no existe todavía
-    fallbackVariantId: '',
-    label: 'LLEVÁ 2',
-    subtitle: 'Para vos y tu pareja',
-    quantity: 2,
-    unitsLabel: '2 llaveros',
-    badge: null,
-    bonus: 'Vidrio de prueba incluido',
-    includes: [
-      { icon: 'keychain', text: '2 llaveros' },
-      { icon: 'glass', text: '2 vidrios de prueba (uno por llavero)' },
-      { icon: 'mount', text: '2 soportes adhesivos' },
-    ],
-    freeShipping: true,
-    recommended: false,
-    fallbackPrice: 29990,
-    fallbackCompare: PRECIO_LISTA * 2,
-    image: '/rompevidrios/packs/pack-2x.webp',
-  },
-  {
-    id: 'double',
-    productId: '', // TODO SHOPIFY — el pack x4 no existe todavía
-    fallbackVariantId: '',
-    label: 'LLEVÁ 4',
-    subtitle: 'Uno para cada auto de la familia',
-    quantity: 4,
-    unitsLabel: '4 llaveros',
-    badge: 'EL MÁS ELEGIDO',
-    bonus: 'Vidrio de prueba incluido',
-    includes: [
-      { icon: 'keychain', text: '4 llaveros' },
-      { icon: 'glass', text: '4 vidrios de prueba (uno por llavero)' },
-      { icon: 'mount', text: '4 soportes adhesivos' },
-    ],
-    freeShipping: true,
-    recommended: true,
-    fallbackPrice: 44990,
-    fallbackCompare: PRECIO_LISTA * 4,
-    image: '/rompevidrios/packs/pack-4x.webp',
-  },
-  {
-    id: 'triple',
-    productId: '', // TODO SHOPIFY — el pack x6 no existe todavía
-    fallbackVariantId: '',
-    label: 'LLEVÁ 6',
-    subtitle: 'Para toda la familia',
-    quantity: 6,
-    unitsLabel: '6 llaveros',
-    badge: 'MEJOR PRECIO',
-    bonus: 'Vidrio de prueba incluido',
-    includes: [
-      { icon: 'keychain', text: '6 llaveros' },
-      { icon: 'glass', text: '6 vidrios de prueba (uno por llavero)' },
-      { icon: 'mount', text: '6 soportes adhesivos' },
-    ],
-    freeShipping: true,
-    recommended: false,
-    fallbackPrice: 54990,
-    fallbackCompare: PRECIO_LISTA * 6,
-    image: '/rompevidrios/packs/pack-6x.webp',
-  },
-];
-
-const ROMPEVIDRIOS_UPSELL_CHAIN: readonly UpsellTier[] = ROMPEVIDRIOS_BUNDLES.map(
-  (b): UpsellTier => ({
-    id: b.id,
-    productId: b.productId,
-    fallbackVariantId: b.fallbackVariantId,
-    quantity: b.quantity,
-    unitsLabel: b.unitsLabel,
-    fallbackPrice: b.fallbackPrice,
-  }),
-);
+import { PRECIO_LISTA, ROMPEVIDRIOS_BUNDLES, ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 
 const CTA_LABEL = 'Comprar ahora';
 
@@ -537,9 +454,9 @@ export const ROMPEVIDRIOS = {
       // apoyacabezas salen de fotos de internet: confirmar la licencia o
       // reemplazarlas por fotos propias antes de publicar.
       columns: [
-        { name: 'Llavero Rescate PRO™', image: '/rompevidrios/comparativa/llavero-diagonal.webp', width: 291, height: 420 },
-        { name: 'Martillo de guantera', image: '/rompevidrios/comparativa/martillo-diagonal.webp', width: 376, height: 420 },
-        { name: 'Apoyacabezas', image: '/rompevidrios/comparativa/apoyacabezas.webp', width: 420, height: 389 },
+        { name: 'Llavero Rescate PRO™', image: '/rompevidrios/comparativa/llavero-diagonal.webp', width: 222, height: 320 },
+        { name: 'Martillo de guantera', image: '/rompevidrios/comparativa/martillo-diagonal.webp', width: 286, height: 319 },
+        { name: 'Apoyacabezas', image: '/rompevidrios/comparativa/apoyacabezas.webp', width: 320, height: 296 },
       ],
       rows: [
         { label: 'A mano si estás atrapado', values: [true, false, 'depende del auto'] },

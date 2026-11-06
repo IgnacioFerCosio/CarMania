@@ -7,8 +7,8 @@
  * especificación y ruta. Se ve igual en producción a propósito: la landing
  * está oculta con `comingSoon`, y así nunca se publica con un hueco invisible.
  *
- * Con el archivo ya subido: `next/image` para fotos, `LazyVideo` (muted,
- * loop) para videos y "GIF", y un `<video controls>` para el que tiene audio.
+ * Con el archivo ya subido: `next/image` para fotos y `LazyVideo` (muted, loop)
+ * para videos y "GIF".
  * `eager` es sólo para el hero (RV-01): carga sin esperar al scroll.
  *
  * `fill`: ocupa el contenedor del padre (que define la proporción) en vez de
@@ -138,22 +138,6 @@ export function MediaSlot({
           sizes={sizes}
           priority={eager}
           className="object-cover"
-        />
-      </div>
-    );
-  }
-
-  if (slot.withAudio) {
-    return (
-      <div className={`${box} bg-black`}>
-        <video
-          src={slot.src}
-          poster={slot.poster}
-          controls
-          playsInline
-          preload="none"
-          aria-label={slot.alt}
-          className="h-full w-full object-cover"
         />
       </div>
     );

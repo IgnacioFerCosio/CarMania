@@ -35,8 +35,9 @@ presencia web del producto.
   `_routes.json`, sin chocar con ninguna página). `/soporte` no tiene página:
   301 a `/` desde `redirects()` de `next.config.js`.
 - **`/rompevidrios` es un advertorial**, no una landing de producto: una nota
-  larga (historia → mito → prueba → cómo funciona → comparativa) que termina
-  en los packs, con la estética de las otras landings (mismo Countdown,
+  larga (situaciones → qué incluye → cómo funciona → comparativa → packs →
+  medidas → reseñas → garantía → FAQ → cierre; historia y mito están
+  comentados en la página), con la estética de las otras landings (mismo Countdown,
   PromoBar, Navbar y `Hero`; fondos negro y `#24262A` alternados; títulos
   `heading-display`). Componentes en `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
   (`lib/landings/rompevidrios.ts`). Cada foto/video es un **`MediaSlot`**:
@@ -47,7 +48,11 @@ presencia web del producto.
   archivo en `public/mock/<ID>.*` (gitignored, nunca se deploya) se dibuja
   encima del placeholder, para maquetar con referencias. **No hay pack de 1**:
   los ids `single`/`double`/`triple` son 2, 4 y 6 unidades. Checklist en
-  `docs/superpowers/specs/rompevidrios-assets.md`.
+  `docs/superpowers/specs/rompevidrios-assets.md`. El carrito importa sólo
+  `lib/landings/rompevidrios.bundles.ts`: la config completa
+  (`rompevidrios.ts`) la importan la página y los tests, para que el copy del
+  advertorial no cargue en el JS de las otras páginas. Las imágenes se exportan
+  al tamaño en que se ven: en Cloudflare `/_next/image` devuelve el original.
 - **`comingSoon` y las previews:** una landing con `comingSoon` da 404 en
   producción, pero se ve en `npm run dev` y en las previews de Cloudflare
   (cualquier rama que no sea `main`: `next.config.js` arma

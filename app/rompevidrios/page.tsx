@@ -1,10 +1,9 @@
 /**
  * Landing del Llavero Rescate PRO™ — tipo advertorial.
  *
- * No es una landing de producto como /parasol: es una nota larga que cuenta
- * una historia (inundación, puertas trabadas), desarma el mito del
- * apoyacabezas, demuestra que funciona con el vidrio de prueba y recién al
- * final vende. La estética es la de las otras landings de la marca: mismo
+ * Recorrido: hero, situaciones, qué incluye, cómo funciona, comparativa, packs,
+ * medidas, reseñas, garantía, FAQ y cierre. Las secciones de historia y mito
+ * están comentadas más abajo; su copy sigue en la config. La estética es la de las otras landings de la marca: mismo
  * CountdownBanner, PromoBar, Navbar y Hero, fondos negro y negro-gris
  * alternados, títulos `heading-display` y botones píldora.
  *
@@ -68,6 +67,8 @@ const STORE = STORE_PRODUCTS.find((p) => p.href === '/rompevidrios')!;
 const ADV = ROMPEVIDRIOS.advertorial;
 // Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
 const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;
+// Las cards de los packs: tres columnas en desktop, una en el celular.
+const PACK_SIZES = '(min-width: 768px) 33vw, 100vw';
 // Estrellas, promedio y clientes de arriba de los packs: son los de la marca
 // (los mismos del soporte); el producto todavía no tiene los suyos.
 const PRICING_CONFIG = {
@@ -242,9 +243,9 @@ export default async function RompevidriosPage() {
           bundlesData={bundlesData}
           config={PRICING_CONFIG}
           bundleMedia={{
-            single: <MediaSlot slot={ADV.packs.images.single} fill />,
-            double: <MediaSlot slot={ADV.packs.images.double} fill />,
-            triple: <MediaSlot slot={ADV.packs.images.triple} fill />,
+            single: <MediaSlot slot={ADV.packs.images.single} fill sizes={PACK_SIZES} />,
+            double: <MediaSlot slot={ADV.packs.images.double} fill sizes={PACK_SIZES} />,
+            triple: <MediaSlot slot={ADV.packs.images.triple} fill sizes={PACK_SIZES} />,
           }}
         />
 

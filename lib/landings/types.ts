@@ -299,11 +299,6 @@ export type MediaSlot = {
   spec: string;
   /** true = el archivo todavía no existe → se muestra el placeholder. */
   pending: boolean;
-  /**
-   * Video con sonido (el del bombero): va con controles y sin autoplay,
-   * porque un autoplay con audio el navegador lo bloquea.
-   */
-  withAudio?: boolean;
 };
 
 /**
