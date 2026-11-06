@@ -36,7 +36,7 @@ export function Hero({
   config?: LandingConfig;
   /**
    * Reemplaza el video/imagen de `heroMedia` adentro del mismo marco (con su
-   * badge). Lo usa /rompevidrios para mostrar su `MediaSlot`.
+   * badge). Lo usa /llavero-rescate para mostrar su `MediaSlot`.
    */
   media?: React.ReactNode;
 } = {}) {

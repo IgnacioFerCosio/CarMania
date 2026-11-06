@@ -35,7 +35,7 @@ export function UseCases({
   config?: LandingConfig;
   /**
    * Reemplaza la foto de cada tarjeta (en el orden de `config.useCases`). Lo
-   * usa /rompevidrios para mostrar placeholders y maquetas locales.
+   * usa /llavero-rescate para mostrar placeholders y maquetas locales.
    */
   media?: readonly React.ReactNode[];
 } = {}) {

@@ -63,7 +63,7 @@ import {
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
 
-const STORE = STORE_PRODUCTS.find((p) => p.href === '/rompevidrios')!;
+const STORE = STORE_PRODUCTS.find((p) => p.href === '/llavero-rescate')!;
 const ADV = ROMPEVIDRIOS.advertorial;
 // Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
 const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;

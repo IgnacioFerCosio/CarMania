@@ -34,12 +34,13 @@ presencia web del producto.
   `/public/instalacion/<producto>/` (una sola carpeta excluida en
   `_routes.json`, sin chocar con ninguna página). `/soporte` no tiene página:
   301 a `/` desde `redirects()` de `next.config.js`.
-- **`/rompevidrios` es un advertorial**, no una landing de producto: una nota
+- **`/llavero-rescate` es un advertorial**, no una landing de producto: una nota
   larga (situaciones → qué incluye → cómo funciona → comparativa → packs →
   medidas → reseñas → garantía → FAQ → cierre; historia y mito están
   comentados en la página), con la estética de las otras landings (mismo Countdown,
   PromoBar, Navbar y `Hero`; fondos negro y `#24262A` alternados; títulos
-  `heading-display`). Componentes en `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
+  `heading-display`). Sus assets siguen en `public/rompevidrios/` (excluida entera en
+  `_routes.json`) y el código interno conserva ese nombre. Componentes en `components/advertorial/`, todo el copy en `ROMPEVIDRIOS.advertorial`
   (`lib/landings/rompevidrios.ts`). Cada foto/video es un **`MediaSlot`**:
   con `pending: true` se ve un placeholder que dice qué va (ID `RV-xx`,
   brief, spec, ruta); subido el archivo, se pasa a `false`. `check:assets`
@@ -58,7 +59,7 @@ presencia web del producto.
   (cualquier rama que no sea `main`: `next.config.js` arma
   `CARMANIA_PREVIEW` con `CF_PAGES_BRANCH`). `showsDrafts()` en
   `lib/config.ts` es esa misma regla, para secciones que esperan material
-  real (las reseñas de `/rompevidrios`).
+  real (las reseñas de `/llavero-rescate`).
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el
@@ -246,7 +247,7 @@ y su config a `LANDINGS` en los dos tests. Una guía de instalación va sólo a
   como estáticos. Si agregás una carpeta a /public, sumala a `exclude`
   (`check:routes` falla si no). **No excluyas** las páginas ni
   `/_next/image`: esas las resuelve la Function. Ojo con `/parasol`,
-  `/tienda`, `/soplador` y `/rompevidrios`, que son página y carpeta a la vez: se excluyen
+  `/tienda` y `/soplador`, que son página y carpeta a la vez: se excluyen
   sus subcarpetas, nunca `/parasol/*`. `check:routes` busca páginas en todo
   `app/` (anidadas incluidas, como `/soporte/instalacion`) y también protege
   los `redirects()` de `next.config.js`.

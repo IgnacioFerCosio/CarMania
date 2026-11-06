@@ -15,7 +15,7 @@ type Props = {
   config?: LandingConfig;
   /**
    * Reemplaza la foto de cada card (por id de bundle). Lo usa
-   * `/rompevidrios` para mostrar sus `MediaSlot`.
+   * `/llavero-rescate` para mostrar sus `MediaSlot`.
    */
   bundleMedia?: Partial<Record<Bundle['id'], React.ReactNode>>;
 };
@@ -221,7 +221,7 @@ export function Pricing({
                   </div>
                 </div>
 
-                {/* Bonus + qty visible. Con `b.includes` (/rompevidrios) una línea por
+                {/* Bonus + qty visible. Con `b.includes` (/llavero-rescate) una línea por
                     pieza con su ícono; sin eso, el bloque de siempre. */}
                 {b.includes ? (
                   <ul className="mt-4 space-y-2 text-[13px] sm:mt-5 sm:text-sm">

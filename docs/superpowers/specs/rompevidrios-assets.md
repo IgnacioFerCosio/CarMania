@@ -1,8 +1,8 @@
-# Llavero Rescate PRO™ — checklist antes de publicar `/rompevidrios`
+# Llavero Rescate PRO™ — checklist antes de publicar `/llavero-rescate`
 
 La landing está armada pero **no está lista para recibir tráfico**, así que
 en producción está oculta: `comingSoon: true` en `STORE_PRODUCTS`
-(`lib/config.ts`) hace que `/rompevidrios` responda 404, que no vaya al
+(`lib/config.ts`) hace que `/llavero-rescate` responda 404, que no vaya al
 sitemap, y que la card de `/tienda` se vea como "Próximamente" sin link.
 **Publicarla es sacar ese flag.**
 

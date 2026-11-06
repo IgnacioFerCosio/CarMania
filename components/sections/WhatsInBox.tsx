@@ -34,11 +34,11 @@ export function WhatsInBox({
   data?: WhatsInBoxCopy & {
     gallery?: WhatsInBoxData['gallery'];
     testimonial?: Review;
-    /** Foto del cliente en el círculo de la opinión (/rompevidrios). Sin esto, la inicial. */
+    /** Foto del cliente en el círculo de la opinión (/llavero-rescate). Sin esto, la inicial. */
     testimonialPhoto?: string;
   };
   /**
-   * Reemplaza al carrusel de `data.gallery`. Lo usa /rompevidrios para
+   * Reemplaza al carrusel de `data.gallery`. Lo usa /llavero-rescate para
    * pasarle un `ProductCarousel` con videos y placeholders.
    */
   media?: React.ReactNode;

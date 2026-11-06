@@ -404,7 +404,7 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     blurb:
       'Rompevidrios a resorte y corta cinturón en el llavero. Lo apoyás, apretás y salís. Con vidrio de prueba incluido.',
     image: '/rompevidrios/tienda/proximamente.webp',
-    href: '/rompevidrios',
+    href: '/llavero-rescate',
     fallbackPrice: 29990, // espejo de ROMPEVIDRIOS.fallbackPricing.price (pack 2x)
     specTag: 'ROMPEVIDRIOS + CORTA CINTURÓN',
     badge: 'NUEVO',

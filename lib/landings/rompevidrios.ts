@@ -1,5 +1,5 @@
 /**
- * Config del Llavero Rescate PRO™ (landing `/rompevidrios`): llavero de
+ * Config del Llavero Rescate PRO™ (landing `/llavero-rescate`): llavero de
  * rescate con rompevidrios a resorte (punta de tungsteno) y corta cinturón.
  *
  * Es una landing tipo advertorial (ver `AdvertorialData` en ./types): todo el
@@ -10,7 +10,7 @@
  * `./rompevidrios.bundles`, para que este copy no llegue al JS de las otras
  * páginas.
  *
- * ⚠️ PENDIENTES antes de que /rompevidrios reciba tráfico:
+ * ⚠️ PENDIENTES antes de que /llavero-rescate reciba tráfico:
  *   - Shopify: los 3 packs no existen; `productId`/`fallbackVariantId` en
  *     `''` → los botones de compra quedan deshabilitados.
  *   - Media: faltan el hero (RV-01) y los 3 pasos (RV-06 a RV-08), hoy con
@@ -242,7 +242,7 @@ export const ROMPEVIDRIOS = {
     ogTitle: 'Llavero Rescate PRO™: rompevidrios y corta cinturón | CARMANIA',
     ogDescription:
       'Lo llevás en la llave y lo usás en 3 segundos. Rompe la ventanilla y corta el cinturón. Con vidrio de prueba incluido.',
-    canonical: '/rompevidrios',
+    canonical: '/llavero-rescate',
   },
 
   advertorial: {

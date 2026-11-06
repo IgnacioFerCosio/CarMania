@@ -29,7 +29,7 @@ export type Bundle = {
   /**
    * Lo que trae el pack, una línea por pieza con su ícono (`ProductGlyph`).
    * Si está, `Pricing` lo muestra en lugar de `unitsLabel` + `bonus`
-   * (`/rompevidrios`); sin esto, las cards son las de siempre.
+   * (`/llavero-rescate`); sin esto, las cards son las de siempre.
    */
   includes?: readonly { icon: 'keychain' | 'glass' | 'mount'; text: string }[];
   freeShipping: boolean;
@@ -302,7 +302,7 @@ export type MediaSlot = {
 };
 
 /**
- * Landing tipo advertorial (`/rompevidrios`): una nota larga que cuenta una
+ * Landing tipo advertorial (`/llavero-rescate`): una nota larga que cuenta una
  * historia, demuestra que funciona y recién al final vende. Reusa Pricing,
  * FAQ y Reviews, así que es un `LandingConfig` completo más este bloque con
  * el copy y los slots de cada sección. Los campos de `LandingConfig` que la

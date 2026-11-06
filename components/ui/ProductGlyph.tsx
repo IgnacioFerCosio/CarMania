@@ -1,5 +1,5 @@
 /**
- * Íconos de lo que trae cada pack de /rompevidrios, dibujados con la forma
+ * Íconos de lo que trae cada pack de /llavero-rescate, dibujados con la forma
  * real de cada pieza (los de la foto "todo lo que trae"):
  *  - `keychain`: el llavero, cilindro rojo con tapa moleteada y correa negra.
  *  - `glass`: el vidrio de prueba, un disco transparente.

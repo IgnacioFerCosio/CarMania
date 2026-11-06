@@ -95,7 +95,7 @@ const LANDINGS: [string, LandingConfig][] = [
   ['/', SOPORTE],
   ['/parasol', PARASOL],
   ['/soplador', SOPLADOR],
-  ['/rompevidrios', ROMPEVIDRIOS],
+  ['/llavero-rescate', ROMPEVIDRIOS],
 ];
 
 /** Sólo los tiers ya cargados: '' significa "no existe todavía", y eso es legítimo. */

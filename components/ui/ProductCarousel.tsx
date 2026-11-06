@@ -31,7 +31,7 @@ export function ProductCarousel({
   slides?: readonly Slide[];
   /**
    * Slides armados por quien lo usa, en lugar de `slides` (que son sólo
-   * imágenes). Es lo que usa /rompevidrios para meter videos y placeholders
+   * imágenes). Es lo que usa /llavero-rescate para meter videos y placeholders
    * en este mismo carrusel: misma ventana 1:1, mismas flechas, puntos y
    * arrastre.
    */

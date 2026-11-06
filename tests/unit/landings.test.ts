@@ -19,12 +19,12 @@ const LANDINGS: Record<string, LandingConfig> = {
   '/': SOPORTE,
   '/parasol': PARASOL,
   '/soplador': SOPLADOR,
-  '/rompevidrios': ROMPEVIDRIOS,
+  '/llavero-rescate': ROMPEVIDRIOS,
 };
 
 /** Unidades de cada pack. El rompevidrios no tiene pack de 1. */
 const UNIDADES: Record<string, number[]> = {
-  '/rompevidrios': [2, 4, 6],
+  '/llavero-rescate': [2, 4, 6],
 };
 
 const GID_PRODUCT = /^gid:\/\/shopify\/Product\/\d+$/;

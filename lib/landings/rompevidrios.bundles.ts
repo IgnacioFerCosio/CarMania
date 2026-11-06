@@ -1,13 +1,13 @@
 /**
  * Packs y escalera de upsell del Llavero Rescate PRO™.
  *
- * Están separados de `./rompevidrios` a propósito: `lib/landings/index.ts` arma
+ * Están separados de `./llavero-rescate` a propósito: `lib/landings/index.ts` arma
  * la escalera de todas las landings y el carrito la usa en el cliente. Si esa
  * unión importara la config entera, todo el copy del advertorial se cargaría
  * en el JS de TODAS las páginas, `/` incluida. Este archivo es lo único de la
- * landing que puede llegar al navegador fuera de `/rompevidrios`.
+ * landing que puede llegar al navegador fuera de `/llavero-rescate`.
  *
- * REGLA: este archivo NO importa de `./rompevidrios` ni del config raíz.
+ * REGLA: este archivo NO importa de `./llavero-rescate` ni del config raíz.
  */
 import type { Bundle, UpsellTier } from './types';
 

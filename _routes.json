@@ -29,18 +29,7 @@
     "/parasol/how-to-use/*",
     "/tienda/hero/*",
     "/soplador/hero/*",
-    "/rompevidrios/caja/*",
-    "/rompevidrios/comparativa/*",
-    "/rompevidrios/medidas/*",
-    "/rompevidrios/cierre/*",
-    "/rompevidrios/hero/*",
-    "/rompevidrios/incluye/*",
-    "/rompevidrios/historia/*",
-    "/rompevidrios/packs/*",
-    "/rompevidrios/pasos/*",
-    "/rompevidrios/situaciones/*",
-    "/rompevidrios/test/*",
-    "/rompevidrios/tienda/*",
+    "/rompevidrios/*",
     "/cyber/*"
   ]
 }
