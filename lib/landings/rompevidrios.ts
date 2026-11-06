@@ -615,7 +615,7 @@ export const ROMPEVIDRIOS = {
           alt: 'Pack de 2 llaveros Rescate PRO con 2 vidrios de prueba',
           brief: '2 llaveros sobre fondo negro, con 2 vidrios de prueba. También va en la card de /tienda.',
           spec: 'WEBP 1600×1600',
-          pending: true,
+          pending: false,
         },
         double: {
           id: 'RV-14',
@@ -625,7 +625,7 @@ export const ROMPEVIDRIOS = {
           alt: 'Pack de 4 llaveros Rescate PRO, cada uno en una llave de auto distinta',
           brief: '4 llaveros, cada uno en una llave de auto distinta.',
           spec: 'WEBP 1600×1600',
-          pending: true,
+          pending: false,
         },
         triple: {
           id: 'RV-15',
@@ -635,7 +635,7 @@ export const ROMPEVIDRIOS = {
           alt: 'Pack de 6 llaveros Rescate PRO en abanico',
           brief: '6 llaveros en abanico.',
           spec: 'WEBP 1600×1600',
-          pending: true,
+          pending: false,
         },
       },
     },
