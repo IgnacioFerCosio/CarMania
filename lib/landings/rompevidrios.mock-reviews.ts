@@ -54,25 +54,25 @@ export const ROMPEVIDRIOS_MOCK_REVIEWS: readonly Review[] = [
  * `Reviews` del soporte). Los textos son reseñas de Amazon.com de un producto
  * de la competencia (SafeProX), traducidas y adaptadas, con nombres de
  * fantasía: NO son opiniones de clientes del Llavero Rescate PRO™ y no pueden
- * publicarse como tales. Las fotos son recortes de nuestras propias imágenes
- * (`public/mock/rev-*.webp`, gitignored, nunca se deploya).
+ * publicarse como tales. Las fotos son de Unsplash (licencia gratuita), puestas
+ * de referencia (`public/mock/foto-*.webp`, gitignored, nunca se deploya).
  */
 export const ROMPEVIDRIOS_MOCK_GRID_REVIEWS: readonly Review[] = [
-  { name: 'Martín G.', location: 'La Plata', stars: 5, date: '', verified: true, image: '/mock/rev-1.webp',
+  { name: 'Martín G.', location: 'La Plata', stars: 5, date: '', verified: true, image: '/mock/foto-1.webp',
     text: 'Ojalá no tener que usarlo nunca, pero el vidrio de prueba que viene en la caja se hizo pedazos apenas lo tocó la punta.' },
-  { name: 'Laura P.', location: 'Rosario', stars: 5, date: '', verified: true, image: '/mock/rev-5.webp',
+  { name: 'Laura P.', location: 'Rosario', stars: 5, date: '', verified: true, image: '/mock/foto-2.webp',
     text: 'Rompió el vidrio en mil pedazos. Funciona de verdad. Probalo afuera, sobre un tacho, porque salen muchísimos pedacitos. Ya dejé uno en cada auto de casa.' },
-  { name: 'Diego R.', location: 'Córdoba', stars: 5, date: '', verified: true, image: '/mock/rev-3.webp',
+  { name: 'Diego R.', location: 'Córdoba', stars: 5, date: '', verified: true, image: '/mock/foto-3.webp',
     text: 'Compré el pack de 6 para regalarles uno a mis hijos grandes, "por las dudas". Vienen nuevos, bien armados y de a dos en cada caja. El vidrio de prueba lo guardé: ya vi en los videos que funciona.' },
-  { name: 'Sergio A.', location: 'Mendoza', stars: 5, date: '', verified: true, image: '/mock/rev-2.webp',
+  { name: 'Sergio A.', location: 'Mendoza', stars: 5, date: '', verified: true, image: '/mock/foto-4.webp',
     text: 'Uff, es poderoso. Lo probé y hace exactamente lo que dice.' },
-  { name: 'Carolina M.', location: 'Tucumán', stars: 4, date: '', verified: true, image: '/mock/rev-4.webp',
+  { name: 'Carolina M.', location: 'Tucumán', stars: 4, date: '', verified: true, image: '/mock/foto-5.webp',
     text: 'Trae el vidrio de prueba en el paquete. Funciona muy bien.' },
-  { name: 'Julieta S.', location: 'Salta', stars: 5, date: '', verified: true, image: '/mock/rev-6.webp',
+  { name: 'Julieta S.', location: 'Salta', stars: 5, date: '', verified: true, image: '/mock/foto-6.webp',
     text: 'Me da una sensación de seguridad.' },
-  { name: 'Pablo F.', location: 'Neuquén', stars: 5, date: '', verified: true,
+  { name: 'Pablo F.', location: 'Neuquén', stars: 5, date: '', verified: true, image: '/mock/foto-7.webp',
     text: 'Muy bueno.' },
-  { name: 'Nadia C.', location: 'Mar del Plata', stars: 5, date: '', verified: true,
+  { name: 'Nadia C.', location: 'Mar del Plata', stars: 5, date: '', verified: true, image: '/mock/foto-8.webp',
     text: 'Funciona.' },
 ];
 
