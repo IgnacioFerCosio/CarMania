@@ -228,7 +228,7 @@ export default async function RompevidriosPage() {
         <StepsGrid steps={ADV.steps} bg="gray" />
 
         {/* 6. Comparativa */}
-        <ComparisonTable comparison={ADV.comparison} bg="black" />
+        <ComparisonTable comparison={ADV.comparison} bg="ink" />
 
         {/* 7. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing

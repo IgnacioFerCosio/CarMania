@@ -5,10 +5,14 @@
  */
 import type { SectionTitle } from '@/lib/landings/types';
 
-/** Los dos fondos de las landings de marca: negro y el negro-gris. */
+/**
+ * Los fondos de las landings de marca: negro, el negro-gris y `ink` (el gris
+ * oscuro de las medidas y la garantía).
+ */
 export const BG = {
   black: 'bg-ink-950',
   gray: 'bg-[#24262A]',
+  ink: 'bg-ink-900',
 } as const;
 export type Bg = keyof typeof BG;
 

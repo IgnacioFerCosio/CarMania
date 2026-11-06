@@ -87,7 +87,9 @@ export function ComparisonTable({
               {/* Tarjeta de la tabla: arranca debajo de las figuras */}
               <div
                 aria-hidden="true"
-                className="rounded-3xl bg-ink-900 ring-1 ring-inset ring-white/[0.07]"
+                className={`rounded-3xl ring-1 ring-inset ring-white/[0.07] ${
+                  bg === 'ink' ? 'bg-ink-950' : 'bg-ink-900'
+                }`}
                 style={{ gridColumn: '1 / -1', gridRow: `1 / ${lastRow + 1}`, marginTop: cardTop }}
               />
 
