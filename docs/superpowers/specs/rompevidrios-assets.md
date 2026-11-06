@@ -167,7 +167,7 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
 - [ ] `brand.socialProofCount`: la cifra real de clientes. Vacía, la línea
       "[cifra] conductores ya lo llevan" del hero y la del header de packs
       no se muestran.
-- [ ] Medidas y especificaciones (sección entre packs y reseñas): **8 cm de largo, 2 cm de diámetro, 35 g, aluminio con punta de tungsteno** son los datos de la ficha de un producto igual (SafePro X), no de nuestra unidad. Medir y pesar el llavero real y confirmar el material con el proveedor.
+- [ ] Medidas y especificaciones (sección entre packs y reseñas): **8 cm de largo, 2 cm de diámetro, 35 g, aluminio con punta de tungsteno** son los datos de la ficha de un producto igual (SafePro X), no de nuestra unidad. Medir y pesar el llavero real y confirmar el material con el proveedor. Ojo: la imagen RV-26 (ya cargada) lleva **"80 mm" y "20 mm" escritos encima**; si las medidas reales son otras, hay que rehacer los textos de la imagen (la base generada está sin texto).
 - [ ] Garantía (cards "Calidad garantizada"): **30 días de devolución y 1 año de garantía**. Ojo: `Pricing` muestra
       "Devolución 30 días" y "Garantía 1 año" en todas las landings;
       confirmar que valgan para este producto.

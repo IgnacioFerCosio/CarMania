@@ -584,9 +584,9 @@ export const ROMPEVIDRIOS = {
       description:
         'Cabe en la palma de la mano y en el llavero. Cuerpo de aluminio, punta de tungsteno y una cuchilla escondida dentro de una ranura: solo entra un cinturón.',
       dimensions: [
-        { label: 'Largo', value: '8 cm', sub: '3.15 in' },
-        { label: 'Diámetro', value: '2 cm', sub: '0.79 in' },
-        { label: 'Peso', value: '35 g', sub: '1.23 oz' },
+        { label: 'Largo', value: '8 cm' },
+        { label: 'Diámetro', value: '2 cm' },
+        { label: 'Peso', value: '35 g' },
         { label: 'Material', value: 'Aluminio', sub: 'punta de tungsteno' },
       ],
       media: {
@@ -594,10 +594,10 @@ export const ROMPEVIDRIOS = {
         kind: 'image',
         src: '/rompevidrios/medidas/medidas-llavero.webp',
         aspect: '1:1',
-        alt: 'Medidas del Llavero Rescate PRO™: 8 cm de largo, 2 cm de diámetro y 35 g de peso.',
+        alt: 'Dos llaveros Rescate PRO™ sobre fondo oscuro: uno con tapas, de 20 mm de ancho, y otro sin tapas, de 80 mm de largo, con la punta de tungsteno y la ranura corta cinturón a la vista.',
         brief: 'Render o foto técnica del llavero sobre fondo oscuro, de pie, con las cotas (largo, diámetro) dibujadas con líneas guía.',
         spec: 'WEBP 1600×1600, fondo oscuro',
-        pending: true,
+        pending: false,
       },
     },
 
