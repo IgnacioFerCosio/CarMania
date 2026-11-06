@@ -23,6 +23,7 @@
  * Las páginas se buscan en todo `app/`, anidadas incluidas: `/soporte` no
  * tiene page.tsx pero `/soporte/instalacion` sí, y un `/soporte/*` la taparía.
  */
+import { execSync } from 'node:child_process';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join, relative, sep } from 'node:path';
@@ -46,7 +47,22 @@ const walk = (dir) =>
     return statSync(full).isDirectory() ? walk(full) : [full];
   });
 const publicDir = join(ROOT, 'public');
+
+// `public/mock/` es de desarrollo (referencias para maquetar, ver MediaSlot):
+// vive sólo en la máquina de quien la usa y nunca se deploya, así que no hay
+// request que excluir. Se ignora SOLO mientras git no la trackee: si alguien la
+// commitea por error, vuelve a contar como carpeta de /public (y a fallar).
+const trackedMock = (() => {
+  try {
+    return execSync('git ls-files -- public/mock', { cwd: ROOT, encoding: 'utf8' }).trim() !== '';
+  } catch {
+    return false; // sin git: no hay forma de saber, se asume que no está trackeada
+  }
+})();
+const mockDir = join(publicDir, 'mock');
+
 for (const file of walk(publicDir)) {
+  if (!trackedMock && file.startsWith(mockDir + sep)) continue;
   const url = '/' + relative(publicDir, file).split(sep).join('/');
   if (!excluded(url)) problemas.push(`  /public sin excluir: ${url}`);
 }

@@ -5,10 +5,57 @@
  * después la cita y la firma con ciudad. Es distinto del bloque `Reviews` de
  * las landings, que muestra estrellas, fecha y badge de verificado por reseña.
  *
- * El contenido sale de `STORE_REVIEWS` en config.
+ * Carrusel que mezcla las reseñas con foto del soporte y del parasol,
+ * intercaladas.
+ *
+ * ⚠️ Los textos de `PARASOL_REVIEWS` están marcados como placeholders
+ * (ver el aviso en lib/landings/parasol.ts). Se muestran por decisión de la
+ * marca, igual que en /parasol; si se reemplazan allá, esto se actualiza solo.
  */
-import { BRAND, STORE_REVIEWS, STORE_SECTIONS } from '@/lib/config';
+import { BRAND, STORE_SECTIONS } from '@/lib/config';
+import { SOPORTE } from '@/lib/landings/soporte';
+import { PARASOL } from '@/lib/landings/parasol';
 import { Stars } from '@/components/ui/Stars';
+import { StoreReviewCarousel, type StoreReviewItem } from './StoreReviewCarousel';
+
+const SOPORTE_NAME = 'Soporte Magnético PRO™';
+const PARASOL_NAME = 'Parasol PRO™';
+
+/** Una del soporte, una del parasol, y así hasta agotar las dos listas. */
+function buildItems(): StoreReviewItem[] {
+  const soporte: StoreReviewItem[] = SOPORTE.reviews
+    .filter((r) => r.image)
+    .map((r) => ({
+      kind: 'review',
+      product: SOPORTE_NAME,
+      image: r.image!,
+      name: r.name,
+      location: r.location,
+      stars: r.stars,
+      text: r.text,
+      date: r.date,
+    }));
+  const parasol: StoreReviewItem[] = PARASOL.reviews
+    .filter((r) => r.image)
+    .slice(0, 8)
+    .map((r) => ({
+      kind: 'review',
+      product: PARASOL_NAME,
+      image: r.image!,
+      name: r.name,
+      location: r.location,
+      stars: r.stars,
+      text: r.text,
+      date: r.date,
+    }));
+
+  const out: StoreReviewItem[] = [];
+  for (let i = 0; i < Math.max(soporte.length, parasol.length); i++) {
+    if (soporte[i]) out.push(soporte[i]);
+    if (parasol[i]) out.push(parasol[i]);
+  }
+  return out;
+}
 
 export function StoreReviews() {
   return (
@@ -29,24 +76,7 @@ export function StoreReviews() {
           </div>
         </div>
 
-        <ul className="mt-10 grid gap-3.5 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {STORE_REVIEWS.map((r) => (
-            <li
-              key={r.title}
-              className="flex flex-col rounded-2xl border border-ink-800 bg-ink-950 p-5 transition hover:border-ink-700 sm:p-6"
-            >
-              <h3 className="font-display text-sm font-black italic uppercase tracking-wide text-white sm:text-base">
-                {r.title}
-              </h3>
-              <p className="mt-3 flex-1 text-[13px] leading-relaxed text-ink-300 sm:text-sm">
-                “{r.text}”
-              </p>
-              <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
-                — <span className="text-accent">{r.name}</span>, {r.location} 🇦🇷
-              </p>
-            </li>
-          ))}
-        </ul>
+        <StoreReviewCarousel items={buildItems()} />
       </div>
     </section>
   );

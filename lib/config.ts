@@ -106,17 +106,66 @@ export const TRACKING = {
 } as const;
 
 /**
+ * ─────────────────────────────────────────────────────────────────────────
+ * CYBER — ambientación temporal del CyberMonday 2026. Es un solo interruptor:
+ *
+ *  - `enabled: true`  → `CountdownBanner` pinta el banner morado con una
+ *    cuenta REAL (en vez del de 8 h que se reinicia), el logo del evento,
+ *    los packs con "CYBER −X%", el carrito en morado, las barras de promo
+ *    hablan del Cyber y /tienda esconde las cards "Próximamente".
+ *  - Las fases pasan SOLAS según la hora del visitante (ver `lib/cyber.ts`):
+ *      antes de `startsAt`           → "Empieza en"
+ *      hasta `endsAt`                → "Termina en"
+ *      hasta `extensionEndsAt`       → "Extensión Cyber Week"
+ *    La cuenta del banner es siempre de hasta 24 h: vence a la medianoche de
+ *    Argentina y se reinicia sola cada día (ver `cyberTargetOf`).
+ *      después                       → el banner, el logo y las píldoras se
+ *                                      esconden (no vuelve el contador viejo)
+ *  - Ningún texto lleva la fecha: sólo la cuenta regresiva. Así la extensión
+ *    no obliga a reescribir nada.
+ *  - `enabled: false` → todo vuelve a como era, sin tocar componentes.
+ *
+ * Lo que NO se apaga solo: los textos de las barras de promo y los colores
+ * morados de botones/packs están en el HTML del build. Pasada la extensión,
+ * poné `enabled: false` y redeployá.
+ *
+ * Las fechas llevan el offset de Argentina (-03:00) para que el conteo no
+ * dependa de la zona del visitante. Confirmarlas en cybermonday.com.ar.
+ * `extensionEndsAt` es decisión de la marca, no del evento.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export const CYBER = {
+  enabled: true,
+  name: 'CYBER WEEK',
+  extensionName: 'EXTENSIÓN CYBER WEEK',
+  startsAt: '2026-11-02T00:00:00-03:00',
+  endsAt: '2026-11-04T23:59:59-03:00',
+  extensionEndsAt: '2026-11-08T23:59:59-03:00',
+  /**
+   * Beneficios que viajan DENTRO del banner (en el Cyber se saca la barra
+   * negra de abajo, `PromoBar`, y su contenido pasa acá).
+   */
+  benefits: ['3 cuotas sin interés', 'Envío gratis', 'Muchos más descuentos y promociones'],
+  /** Card propia para el pack x6 debajo de los 3 packs (experimento del evento). */
+  pack6Card: true,
+} as const;
+
+/**
  * Banner superior tipo "promo strip".
  * Lo dejamos en config para que lo puedas apagar/cambiar sin tocar el componente.
  */
 export const PROMO_BARS = {
   top: {
     enabled: true,
-    text: 'Envío gratis a todo el país · 3 cuotas sin interés',
+    text: CYBER.enabled
+      ? `${CYBER.name} · Envío gratis a todo el país · 3 cuotas sin interés`
+      : 'Envío gratis a todo el país · 3 cuotas sin interés',
   },
   sub: {
     enabled: true,
-    text: '« OFERTA POR TIEMPO LIMITADO »',
+    text: CYBER.enabled
+      ? `« ${CYBER.name} CARMANIA »`
+      : '« OFERTA POR TIEMPO LIMITADO »',
   },
 } as const;
 
@@ -403,11 +452,12 @@ export const STORE_HEADLINES = {
  * Mensajes de la barra de anuncios de /tienda. Rotan en un marquee, como los
  * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
  */
-export const STORE_PROMO_MESSAGES = [
+export const STORE_PROMO_MESSAGES: readonly string[] = [
+  ...(CYBER.enabled ? [`${CYBER.name} · ofertas por tiempo limitado`] : []),
   'Envío gratis a todo el país',
   'Garantía de 30 días',
   '3 cuotas sin interés',
-] as const;
+];
 
 /**
  * Franja de 4 garantías, justo debajo del hero. Cada item se parte en dos

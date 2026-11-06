@@ -14,6 +14,7 @@
 import { formatARS } from '@/lib/shopify';
 import { upsellDelta, upsellExtraUnits, type ResolvedTier } from '@/lib/tiers';
 import { Icon } from '@/components/ui/Icon';
+import { useCyberPhase } from '@/components/layout/useCyberPhase';
 
 type Props = {
   current: ResolvedTier;
@@ -25,6 +26,8 @@ type Props = {
 };
 
 export function UpsellBanner({ current, next, quantity, busy, onUpgrade }: Props) {
+  // Durante el Cyber el banner toma el morado del carrito.
+  const { on: cyber } = useCyberPhase();
   const unitDelta = upsellDelta(current, next);
   // Sin delta positivo el banner no tiene nada que ofrecer.
   if (unitDelta === null) return null;
@@ -41,13 +44,19 @@ export function UpsellBanner({ current, next, quantity, busy, onUpgrade }: Props
       type="button"
       onClick={onUpgrade}
       disabled={busy}
-      className="group mt-3 flex w-full items-center gap-3 rounded-xl border border-accent/60 bg-accent/10 p-3 text-left transition hover:border-accent hover:bg-accent/20 disabled:cursor-wait disabled:opacity-60"
+      className={`group mt-3 flex w-full items-center gap-3 rounded-xl border p-3 text-left transition disabled:cursor-wait disabled:opacity-60 ${
+        cyber
+          ? 'border-cyber-500/60 bg-cyber-600/10 hover:border-cyber-400 hover:bg-cyber-600/20'
+          : 'border-accent/60 bg-accent/10 hover:border-accent hover:bg-accent/20'
+      }`}
     >
       <span className="flex-1">
         <span className="block text-[13px] font-semibold leading-tight text-white">
           Sumá {extra === 1 ? 'una' : extra} {unitWord} más
         </span>
-        <span className="mt-0.5 block font-display text-[13px] font-black italic text-accent">
+        <span
+          className={`mt-0.5 block font-display text-[13px] font-black italic ${cyber ? 'text-cyber-300' : 'text-accent'}`}
+        >
           por solo {formatARS(delta)}
         </span>
         <span className="mt-1 block text-[11px] leading-tight text-ink-400">
@@ -58,7 +67,7 @@ export function UpsellBanner({ current, next, quantity, busy, onUpgrade }: Props
 
       <span
         aria-hidden="true"
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-white transition group-hover:scale-110"
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white transition group-hover:scale-110 ${cyber ? 'bg-cyber-600' : 'bg-accent'}`}
       >
         <Icon name="plus" className="h-4 w-4" />
       </span>

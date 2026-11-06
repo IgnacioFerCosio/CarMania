@@ -20,8 +20,9 @@
  */
 import Image from 'next/image';
 import Link from 'next/link';
-import { isPublished, type StoreProduct } from '@/lib/config';
+import { CYBER, isPublished, type StoreProduct } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
+import { CyberLogo } from '@/components/ui/CyberLogo';
 
 /** Píldora chica de tag. Compartida por las dos cards. */
 function Tag({
@@ -44,10 +45,19 @@ function Tag({
   );
 }
 
-export function ProductCard({ product }: { product: StoreProduct }) {
+export function ProductCard({
+  product,
+  cyberPct,
+}: {
+  product: StoreProduct;
+  /** Descuento "Cyber −X%" del pack de entrada (ver /tienda). Sólo en el Cyber. */
+  cyberPct?: number;
+}) {
   const published = isPublished(product);
-  const className =
-    'group flex flex-col overflow-hidden rounded-2xl border border-ink-800 bg-ink-950 transition duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.9)]';
+  const cyber = CYBER.enabled && published;
+  const className = `group flex flex-col overflow-hidden rounded-2xl border bg-ink-950 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.9)] ${
+    cyber ? 'border-cyber-500/50 hover:border-cyber-400' : 'border-ink-800 hover:border-accent/60'
+  }`;
 
   const inner = (
     <>
@@ -86,6 +96,14 @@ export function ProductCard({ product }: { product: StoreProduct }) {
             {published ? product.badge : 'Próximamente'}
           </Tag>
         </div>
+
+        {/* Cyber: el logo del evento en la esquina de la foto (se esconde solo
+            pasada la extensión). */}
+        {cyber && (
+          <div className="pointer-events-none absolute bottom-1.5 right-1.5 rotate-6">
+            <CyberLogo className="h-12 sm:h-14" />
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col border-t border-ink-800 p-4 sm:p-5">
@@ -95,6 +113,12 @@ export function ProductCard({ product }: { product: StoreProduct }) {
         <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-400">
           {product.blurb}
         </p>
+
+        {cyber && cyberPct ? (
+          <span className="mt-3 inline-flex w-fit items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[10px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.5)] sm:text-[11px]">
+            Cyber −{cyberPct}%
+          </span>
+        ) : null}
 
         {published ? (
           <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">

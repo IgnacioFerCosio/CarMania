@@ -18,6 +18,17 @@ const config: Config = {
           600: '#B00606',
           700: '#7E0404',
         },
+        // Morado del CyberMonday. Sólo lo usan las piezas temporales del
+        // evento (ver CYBER en lib/config.ts).
+        cyber: {
+          300: '#C4B5FD',
+          400: '#A78BFA',
+          500: '#8B5CF6',
+          600: '#7C3AED',
+          700: '#6D28D9',
+          800: '#5B21B6',
+          950: '#1E0A3C',
+        },
         ink: {
           950: '#0A0A0A',
           900: '#111111',
@@ -49,12 +60,27 @@ const config: Config = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        // Barrido de 0 a 1,4 s y descanso el resto del ciclo.
+        'cyber-shine': {
+          '0%': { transform: 'translateX(-150%) skewX(-12deg)' },
+          '28%, 100%': { transform: 'translateX(520%) skewX(-12deg)' },
+        },
+        // Sólo `transform`: corre en el compositor, sin repintar (animar
+        // `filter` en una barra fija gasta batería en mobile).
+        'cyber-glow': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.08)' },
+        },
         'spin-slow': {
           from: { transform: 'rotate(0deg)' },
           to: { transform: 'rotate(360deg)' },
         },
       },
       animation: {
+        // Banner del Cyber: destello que cruza la barra cada ~5 s y un brillo
+        // que respira en el logo. Ver CyberBanner.
+        'cyber-shine': 'cyber-shine 5s ease-in-out infinite',
+        'cyber-glow': 'cyber-glow 2.4s ease-in-out infinite',
         'pulse-dot': 'pulse-dot 1.2s ease-in-out infinite',
         'fade-up': 'fade-up 0.5s ease-out both',
         'marquee': 'marquee 30s linear infinite',

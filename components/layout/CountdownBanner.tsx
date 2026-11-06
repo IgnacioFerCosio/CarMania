@@ -6,6 +6,8 @@
  * El deadline persiste en localStorage (clave: carmania_offer_deadline).
  */
 import { useState, useEffect } from 'react';
+import { CYBER } from '@/lib/config';
+import { CyberBanner } from './CyberBanner';
 
 const STORAGE_KEY = 'carmania_offer_deadline';
 const DURATION_MS = 8 * 60 * 60 * 1000; // 8 horas en ms
@@ -43,7 +45,15 @@ function calcTimeLeft(ms: number): TimeLeft {
   };
 }
 
+/**
+ * Durante el CyberMonday (`CYBER.enabled`) la franja es el `CyberBanner`, con
+ * cuenta real. Apagando el flag en config vuelve esta, sin tocar las páginas.
+ */
 export function CountdownBanner() {
+  return CYBER.enabled ? <CyberBanner /> : <OfferBanner />;
+}
+
+function OfferBanner() {
   const [time, setTime] = useState<TimeLeft | null>(null);
 
   useEffect(() => {

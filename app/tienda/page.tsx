@@ -10,6 +10,7 @@
  */
 import type { Metadata } from 'next';
 import { PromoBar } from '@/components/layout/PromoBar';
+import { CyberBanner } from '@/components/layout/CyberBanner';
 import { SubPromoBar } from '@/components/layout/SubPromoBar';
 import { Navbar, storeLinks } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
@@ -24,8 +25,10 @@ import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
+import { CYBER, STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
+import { SOPORTE } from '@/lib/landings/soporte';
+import { PARASOL } from '@/lib/landings/parasol';
 
 export const metadata: Metadata = {
   title: 'Tienda — CARMANIA',
@@ -71,6 +74,20 @@ async function getProducts(): Promise<{ product: StoreProduct; price: number }[]
   );
 }
 
+/**
+ * "Cyber −X%" de la card: el descuento del pack de entrada de su landing
+ * (precio contra tachado, mismos números que ve quien entra a la landing).
+ */
+function cyberPctOf(product: StoreProduct, bundlesData: Record<string, BundleData>): number {
+  const landing = product.href === '/' ? SOPORTE : product.href === '/parasol' ? PARASOL : null;
+  const single = landing?.bundles[0];
+  if (!single) return 0;
+  const live = bundlesData[single.productId];
+  const price = live?.price ?? single.fallbackPrice;
+  const compare = live?.compareAtPrice ?? single.fallbackCompare;
+  return compare > price ? Math.round(((compare - price) / compare) * 100) : 0;
+}
+
 async function getBundles(): Promise<Record<string, BundleData>> {
   // El carrito se comparte con las landings (persiste entre páginas), así que
   // necesita los mismos precios y la misma chain. ALL_UPSELL_CHAINS, no
@@ -97,7 +114,12 @@ export default async function TiendaPage() {
 
   return (
     <CartProvider bundlesData={bundlesData} upsellChain={ALL_UPSELL_CHAINS}>
-      <PromoBar messages={STORE_PROMO_MESSAGES} />
+      {/* Cyber: el banner morado (lleva a los productos) en vez de la barra negra. */}
+      {CYBER.enabled ? (
+        <CyberBanner href="#productos" />
+      ) : (
+        <PromoBar messages={STORE_PROMO_MESSAGES} />
+      )}
       <Navbar
         links={storeLinks()}
         homeHref="/tienda"
@@ -113,7 +135,9 @@ export default async function TiendaPage() {
         <StoreHero />
 
         {/* 2. Grilla de productos */}
-        <ProductGrid products={products} />
+        <ProductGrid
+          products={products.map((p) => ({ ...p, cyberPct: cyberPctOf(p.product, bundlesData) }))}
+        />
 
         {/* 3. "Comprá por momento" — carrusel de casos de uso */}
         <ShopByActivity />

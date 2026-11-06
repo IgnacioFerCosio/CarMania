@@ -10,9 +10,11 @@
 import { useEffect, useRef } from 'react';
 import { formatARS } from '@/lib/shopify';
 import { nextTierOf, tierOf } from '@/lib/tiers';
-import { PAYMENTS, RETURNS, SHIPPING } from '@/lib/config';
+import { CYBER, PAYMENTS, RETURNS, SHIPPING } from '@/lib/config';
 import { CROSS_SELL_LABEL } from '@/lib/landings';
 import { Icon } from '@/components/ui/Icon';
+import { CyberLogo } from '@/components/ui/CyberLogo';
+import { useCyberPhase } from '@/components/layout/useCyberPhase';
 import { useCart } from './CartProvider';
 import { CartLineItem } from './CartLineItem';
 import { UpsellBanner } from './UpsellBanner';
@@ -43,6 +45,11 @@ export function CartDrawer({
     removeLine,
     checkout,
   } = useCart();
+
+  // Cyber: el carrito se viste de morado y el combo se llama "Combo Cyber".
+  // Pasada la extensión vuelve solo a como era.
+  const { on: cyber } = useCyberPhase();
+  const comboLabel = cyber ? 'Combo Cyber: Soporte + Parasol' : CROSS_SELL_LABEL;
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -138,14 +145,21 @@ export function CartDrawer({
         aria-modal="true"
         aria-label="Tu carrito"
         aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-[61] flex w-full max-w-md flex-col border-l border-ink-800 bg-ink-950 shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 right-0 z-[61] flex w-full max-w-md flex-col border-l ${cyber ? 'border-cyber-500/50' : 'border-ink-800'} bg-ink-950 shadow-2xl transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : 'pointer-events-none translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-ink-800 px-4 py-4 sm:px-5">
-          <h2 className="font-display text-lg font-black italic uppercase tracking-wider text-white">
-            Tu carrito
+        <div
+          className={`flex items-center justify-between border-b px-4 py-4 sm:px-5 ${
+            cyber
+              ? 'border-cyber-500/40 bg-gradient-to-r from-cyber-950 via-cyber-800/60 to-cyber-950'
+              : 'border-ink-800'
+          }`}
+        >
+          <h2 className="flex items-center gap-2 font-display text-lg font-black italic uppercase tracking-wider text-white">
+            {CYBER.enabled && <CyberLogo className="-my-2 h-11" />}
+            <span>Tu carrito</span>
             {cart && cart.totalQuantity > 0 && (
               <span className="ml-2 text-sm font-bold not-italic text-ink-400">
                 {cart.totalQuantity}
@@ -190,11 +204,24 @@ export function CartDrawer({
           ) : (
             <>
               {comboTotal > 0 && (
-                <p className="mb-3 flex items-center gap-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3 py-2.5">
-                  <Icon name="check" className="h-5 w-5 shrink-0 text-emerald-400" />
+                <p
+                  className={`mb-3 flex items-center gap-2.5 rounded-xl border px-3 py-2.5 ${
+                    cyber
+                      ? 'border-cyber-500/60 bg-cyber-600/15'
+                      : 'border-emerald-500/40 bg-emerald-500/10'
+                  }`}
+                >
+                  <Icon
+                    name="check"
+                    className={`h-5 w-5 shrink-0 ${cyber ? 'text-cyber-300' : 'text-emerald-400'}`}
+                  />
                   <span className="leading-tight">
-                    <span className="block font-display text-[13px] font-black uppercase italic tracking-wider text-emerald-400">
-                      {CROSS_SELL_LABEL}
+                    <span
+                      className={`block font-display text-[13px] font-black uppercase italic tracking-wider ${
+                        cyber ? 'text-cyber-300' : 'text-emerald-400'
+                      }`}
+                    >
+                      {comboLabel}
                     </span>
                     <span className="block text-[12px] text-ink-300">
                       Aplicado: −{formatARS(comboTotal)} en el total
@@ -236,6 +263,7 @@ export function CartDrawer({
                 <CrossSellCard
                   offer={crossSell}
                   busy={busy}
+                  cyber={cyber}
                   onAdd={() => addTier(crossSell.variantId)}
                 />
               )}
@@ -264,15 +292,21 @@ export function CartDrawer({
               )}
 
               {otherSavings > 0 && (
-                <div className="flex items-baseline justify-between font-semibold text-accent">
+                <div
+                  className={`flex items-baseline justify-between font-semibold ${cyber ? 'text-cyber-300' : 'text-accent'}`}
+                >
                   <dt>Descuentos</dt>
                   <dd className="tabular-nums">−{formatARS(otherSavings)}</dd>
                 </div>
               )}
 
               {comboTotal > 0 && (
-                <div className="flex items-baseline justify-between font-semibold text-emerald-400">
-                  <dt>{CROSS_SELL_LABEL}</dt>
+                <div
+                  className={`flex items-baseline justify-between font-semibold ${
+                    cyber ? 'text-cyber-300' : 'text-emerald-400'
+                  }`}
+                >
+                  <dt>{comboLabel}</dt>
                   <dd className="tabular-nums">−{formatARS(comboTotal)}</dd>
                 </div>
               )}
@@ -291,7 +325,11 @@ export function CartDrawer({
               type="button"
               onClick={checkout}
               disabled={busy}
-              className="mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-accent font-display text-base font-black uppercase italic tracking-wider text-white shadow-[0_8px_24px_rgba(215,7,7,0.35)] transition hover:bg-accent-600 disabled:cursor-wait disabled:opacity-70"
+              className={`mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl font-display text-base font-black uppercase italic tracking-wider text-white transition disabled:cursor-wait disabled:opacity-70 ${
+                cyber
+                  ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgba(124,58,237,0.5)] hover:from-cyber-600 hover:to-cyber-400'
+                  : 'bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.35)] hover:bg-accent-600'
+              }`}
             >
               <Icon name="lock" className="h-4 w-4" />
               Finalizar compra

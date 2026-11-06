@@ -12,7 +12,8 @@
  * (/public/hero/VideoPrincipal.mp4) con su poster webp. Es el elemento LCP
  * de la página — cualquier cambio acá se nota en Core Web Vitals.
  */
-import { PAYMENT_LOGOS } from '@/lib/config';
+import { CYBER, PAYMENT_LOGOS } from '@/lib/config';
+import { CyberEyebrow } from '@/components/ui/CyberEyebrow';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -54,6 +55,9 @@ export function Hero({
       />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-6 sm:pb-16 sm:pt-10 md:px-6 md:pb-24 md:pt-16">
+        {/* Cyber: "CYBER CARMANIA" sobre el título (se esconde solo pasado el evento) */}
+        {CYBER.enabled && <CyberEyebrow />}
+
         {/* Headline grande centrado arriba */}
         <h1 className="heading-display text-center text-[26px] leading-[1.05] sm:text-3xl sm:leading-[0.95] md:text-5xl lg:text-6xl">
           {headlines.heroLine1}{' '}
@@ -78,9 +82,13 @@ export function Hero({
             <div className="mt-6 sm:mt-7">
               <a
                 href="#pricing"
-                className="group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-accent px-6 font-display text-base font-black uppercase italic tracking-wider text-white shadow-[0_8px_24px_rgba(215,7,7,0.4)] transition hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)] sm:w-auto sm:px-8 md:text-lg"
+                className={`group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 font-display text-base font-black uppercase italic tracking-wider text-white transition sm:w-auto sm:px-8 md:text-lg ${
+                  CYBER.enabled
+                    ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgba(124,58,237,0.5)] hover:from-cyber-600 hover:to-cyber-400 hover:shadow-[0_10px_30px_rgba(124,58,237,0.65)]'
+                    : 'bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.4)] hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)]'
+                }`}
               >
-                Comprar ahora
+                {CYBER.enabled ? 'Aprovechá el Cyber' : 'Comprar ahora'}
                 <Icon
                   name="arrow-right"
                   className="h-5 w-5 transition-transform group-hover:translate-x-1"

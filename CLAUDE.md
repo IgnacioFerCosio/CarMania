@@ -69,6 +69,21 @@ presencia web del producto.
   **`Purchase` ocurre en el checkout de Shopify** y debe configurarse del
   lado de Shopify (canal de ventas de Meta), NO en este repo.
 
+- **Cyber Week (temporal, noviembre 2026):** todo cuelga del bloque `CYBER`
+  de `lib/config.ts`. `enabled: true` pinta el banner morado fijo (`CyberBanner`,
+  reemplaza al contador de 8 h; en `/tienda` lleva a `#productos`), los logos,
+  "Cyber −X%" en packs y cards, la card propia del pack x6 (`pack6Card`), el
+  carrito en morado ("Combo Cyber") y saca la barra negra de las landings. Las
+  fases pasan solas por la hora del visitante (`lib/cyber.ts`): "Empieza en" →
+  "Termina en" → "Extensión Cyber Week" → todo lo vivo se esconde. Desde que
+  arranca, la cuenta del banner es siempre de hasta 24 h: vence a la medianoche
+  argentina y se reinicia sola cada día. Lo que NO se
+  apaga solo (está en el HTML del build): textos de las barras, colores morados de
+  botones/packs, la barra de neón de `/tienda` y el chip del navbar. **Pasada la
+  extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra negra y el
+  contador de 8 h). Ningún texto lleva fecha; las fechas viven sólo en `CYBER`
+  y `tests/unit/cyber.test.ts` las vigila. Logo en `public/cyber/`.
+
 ## Datos de producto (¡importante para el copy!)
 - El kit nuevo trae **2 aros metálicos adhesivos** (uno de repuesto) y 2
   toallitas (1 húmeda + 1 seca); ya no trae el adhesivo que muestra
@@ -230,6 +245,8 @@ y su config a `LANDINGS` en los dos tests. Una guía de instalación va sólo a
   sus subcarpetas, nunca `/parasol/*`. `check:routes` busca páginas en todo
   `app/` (anidadas incluidas, como `/soporte/instalacion`) y también protege
   los `redirects()` de `next.config.js`.
+  Ignora `public/mock/` (referencias de maquetado, nunca se deploya) mientras
+  git no la trackee; si alguien la commitea, vuelve a fallar.
 - **Los precios de Shopify se congelan en el build.** `app/page.tsx` declara
   `revalidate = 300` y `lib/shopify.ts` pasa `next: { revalidate: 300 }`,
   pero **el ISR no corre en Cloudflare Pages**: las rutas con `revalidate` se

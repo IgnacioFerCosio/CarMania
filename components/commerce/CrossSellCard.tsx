@@ -20,19 +20,25 @@ import { Icon } from '@/components/ui/Icon';
 type Props = {
   offer: ResolvedCrossSell;
   busy: boolean;
+  /** Durante el Cyber la card se viste de morado y el combo se anuncia como tal. */
+  cyber?: boolean;
   onAdd: () => void;
 };
 
-export function CrossSellCard({ offer, busy, onAdd }: Props) {
+export function CrossSellCard({ offer, busy, cyber = false, onAdd }: Props) {
   const pct = Math.round((offer.discountAmount / offer.price) * 100);
 
   return (
     <section aria-label="Completá tu auto" className="mt-5">
       <p className="mb-2 font-display text-[12px] font-black uppercase italic tracking-wider text-ink-400">
-        Completá tu auto
+        Completá tu auto{cyber && <span className="text-cyber-300"> · Combo Cyber</span>}
       </p>
 
-      <div className="flex gap-3 rounded-2xl border border-dashed border-ink-700 bg-ink-900/60 p-3 sm:p-4">
+      <div
+        className={`flex gap-3 rounded-2xl border border-dashed p-3 sm:p-4 ${
+          cyber ? 'border-cyber-500/70 bg-cyber-600/10' : 'border-ink-700 bg-ink-900/60'
+        }`}
+      >
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-ink-950 ring-1 ring-inset ring-ink-800 sm:h-20 sm:w-20">
           {/* <img> plano por lo mismo que en CartLineItem: en Cloudflare
               `/_next/image` no optimiza. `lazy`: la card sólo existe con algo
@@ -47,22 +53,31 @@ export function CrossSellCard({ offer, busy, onAdd }: Props) {
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <span className="absolute left-1 top-1 rounded-md bg-accent px-1 py-0.5 font-display text-[10px] font-black leading-none text-white">
-            −{pct}%
-          </span>
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <h3 className="text-[13px] font-semibold leading-tight text-white sm:text-sm">
-            {offer.name}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-[13px] font-semibold leading-tight text-white sm:text-sm">
+              {offer.name}
+            </h3>
+            {/* Fuera de la foto: sobre la imagen tapaba el producto. */}
+            <span
+              className={`shrink-0 whitespace-nowrap rounded-md px-1.5 py-0.5 font-display text-[10px] font-black leading-none text-white ${
+                cyber ? 'bg-cyber-600' : 'bg-accent'
+              }`}
+            >
+              {cyber ? 'CYBER ' : ''}−{pct}%
+            </span>
+          </div>
           <p className="mt-0.5 text-[12px] leading-snug text-ink-400">{offer.pitch}</p>
 
           <div className="mt-auto flex items-end justify-between gap-2 pt-2">
             <div className="leading-tight">
               <span className="block text-[11px] text-ink-400">Sumalo por solo</span>
               <div className="flex items-baseline gap-2">
-                <span className="font-display text-lg font-black text-accent sm:text-xl">
+                <span
+                  className={`font-display text-lg font-black sm:text-xl ${cyber ? 'text-cyber-300' : 'text-accent'}`}
+                >
                   {formatARS(offer.offerPrice)}
                 </span>
                 <span className="text-xs text-ink-500 line-through">
@@ -79,7 +94,9 @@ export function CrossSellCard({ offer, busy, onAdd }: Props) {
               onClick={onAdd}
               disabled={busy}
               aria-label={`Agregar ${offer.name} por ${formatARS(offer.offerPrice)}`}
-              className="flex h-9 shrink-0 items-center gap-1 rounded-full bg-accent px-3 font-display text-[12px] font-black uppercase italic tracking-wider text-white transition hover:bg-accent-600 disabled:cursor-wait disabled:opacity-60"
+              className={`flex h-9 shrink-0 items-center gap-1 rounded-full px-3 font-display text-[12px] font-black uppercase italic tracking-wider text-white transition disabled:cursor-wait disabled:opacity-60 ${
+                cyber ? 'bg-cyber-600 hover:bg-cyber-500' : 'bg-accent hover:bg-accent-600'
+              }`}
             >
               <Icon name="plus" className="h-4 w-4" />
               Sumar

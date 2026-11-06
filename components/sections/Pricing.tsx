@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
-import { PAYMENTS, RETURNS } from '@/lib/config';
+import { CYBER, PAYMENTS, RETURNS } from '@/lib/config';
+import { CyberLogo } from '@/components/ui/CyberLogo';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { Bundle, LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
@@ -14,10 +15,6 @@ type Props = {
   config?: LandingConfig;
   /** Ancla de la sección. `/rompevidrios` la llama `packs`. */
   id?: string;
-  /** Bajada debajo del título (hoy ninguna landing la usa). */
-  sub?: string;
-  /** Línea chica debajo de la grilla (hoy ninguna landing la usa). */
-  footnote?: string;
   /**
    * Reemplaza la foto de cada card (por id de bundle). Lo usa
    * `/rompevidrios` para mostrar placeholders mientras no hay fotos.
@@ -30,11 +27,18 @@ export function Pricing({
   bundlesData,
   config = SOPORTE,
   id = 'pricing',
-  sub,
-  footnote,
   bundleMedia,
 }: Props) {
   const { brand, bundles, sectionCopy } = config;
+
+  // Pack x6 (experimento del Cyber): no es una de las cards de `bundles`, es el
+  // último escalón de la escalera de upsell, con su propia card debajo.
+  const x6 = CYBER.enabled && CYBER.pack6Card ? config.upsellChain.find((t) => t.id === 'x6') : undefined;
+  const x6Data = x6 ? bundlesData[x6.productId] : undefined;
+  const x6Total = x6Data?.price ?? x6?.fallbackPrice ?? 0;
+  const x6Compare = x6Data?.compareAtPrice ?? 0;
+  const x6Pct = x6Compare > x6Total ? Math.round(((x6Compare - x6Total) / x6Compare) * 100) : 0;
+  const x6Each = x6 ? Math.round(x6Total / x6.quantity) : 0;
 
   return (
     <section
@@ -64,9 +68,6 @@ export function Pricing({
             {`${sectionCopy.pricingTitle} `}
             <span className="text-accent">{sectionCopy.pricingTitleAccent}</span>
           </h2>
-          {sub && (
-            <p className="mx-auto mt-3 max-w-xl text-[15px] text-ink-300 sm:text-base">{sub}</p>
-          )}
 
           <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-300 sm:mt-6 sm:gap-x-6 sm:text-xs md:text-sm">
             <li className="inline-flex items-center gap-1.5">
@@ -114,6 +115,15 @@ export function Pricing({
             // carrito usable en vez de dejar el botón muerto.
             const variantIdForCart = shopifyData?.variantId ?? b.fallbackVariantId;
             const savings = bundleCompare - bundleTotal;
+            // "CYBER −X%": el descuento del precio tachado, calculado con los
+            // mismos números que se ven en la card (Shopify en el build).
+            // El x3 es el pack con más fuerza del Cyber (no pasa al x2, que sigue
+            // siendo el recomendado): badge y borde morados.
+            const cyberHero = CYBER.enabled && b.id === 'triple';
+            const cyberPct =
+              bundleCompare > bundleTotal
+                ? Math.round((savings / bundleCompare) * 100)
+                : 0;
             const installment = Math.round(bundleTotal / PAYMENTS.installments);
 
             // Orden en mobile: MÁS ELEGIDO (double) → MEJOR PRECIO (triple) → 1 UNIDAD (single).
@@ -121,31 +131,47 @@ export function Pricing({
             const mobileOrder =
               b.id === 'double' ? 'order-1' :
                 b.id === 'triple' ? 'order-2' :
-                  'order-3';
+                  'order-4'; // x6 va antes (order-3)
 
             return (
               <li
                 key={b.id}
                 className={`${mobileOrder} relative flex flex-col rounded-2xl border bg-ink-900 p-5 sm:rounded-3xl sm:p-6 md:order-none md:p-7 ${b.recommended
-                    ? 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
-                    : 'border-ink-800'
+                    ? CYBER.enabled
+                      ? 'border-cyber-500 shadow-[0_30px_80px_-20px_rgba(124,58,237,0.55)] ring-2 ring-cyber-500/30 md:scale-[1.03]'
+                      : 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
+                    : cyberHero
+                      ? 'border-cyber-500/60 shadow-[0_24px_60px_-24px_rgba(124,58,237,0.5)]'
+                      : 'border-ink-800'
                   }`}
               >
                 {/* Badge superior */}
                 {b.badge && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
-                          ? 'bg-accent text-white'
-                          : 'bg-white text-ink-950'
+                      className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
+                          ? CYBER.enabled
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            : 'bg-accent text-white'
+                          : cyberHero
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            : 'bg-white text-ink-950'
                         }`}
                     >
                       <Icon
                         name={b.recommended ? 'fire' : 'star'}
                         className="h-3 w-3"
                       />
-                      {b.badge}
+                      {cyberHero ? 'El mejor precio del año' : b.badge}
                     </span>
+                  </div>
+                )}
+
+                {/* Logo del Cyber colgando de la esquina (se esconde solo
+                    pasado el evento). */}
+                {CYBER.enabled && (
+                  <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
+                    <CyberLogo className="h-14 sm:h-16" />
                   </div>
                 )}
 
@@ -166,6 +192,11 @@ export function Pricing({
 
                 {/* Precios */}
                 <div className="mt-2 text-center">
+                  {CYBER.enabled && cyberPct > 0 && (
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
+                      Cyber −{cyberPct}%
+                    </span>
+                  )}
                   <div className="text-[11px] uppercase tracking-wider text-ink-400 sm:text-xs">
                     Precio normal:{' '}
                     <span className="line-through">{formatARS(bundleCompare)}</span>
@@ -249,13 +280,105 @@ export function Pricing({
               </li>
             );
           })}
-        </ul>
 
-        {footnote && (
-          <p className="mt-8 text-center text-xs font-semibold uppercase tracking-wider text-ink-300 sm:text-sm">
-            {footnote}
-          </p>
+        {/* Pack x6: card propia, ancha. Va DENTRO del <ul> para poder ordenarla: en mobile
+            queda antes de la unidad suelta (order-3 vs order-4), en desktop ocupa toda la fila de abajo. */}
+        {x6 && (
+          <li className="relative order-3 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] md:order-1 md:col-span-3 md:mt-4">
+            <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
+              <CyberLogo className="h-14 sm:h-16" />
+            </div>
+
+            <div className="grid items-center gap-5 p-5 sm:p-6 md:grid-cols-2 md:gap-10 md:p-8">
+              <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-ink-950 ring-1 ring-inset ring-cyber-500/30 md:max-w-md md:justify-self-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/bundles/BundleX6.webp"
+                  alt="Pack x6 - Soporte Magnético PRO™"
+                  width={900}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="text-center md:text-left">
+                <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-lg">
+                  <Icon name="star" className="h-3 w-3" />
+                  El pack más completo
+                </span>
+                <h3 className="mt-3 font-display text-2xl font-black italic uppercase tracking-wider text-white sm:text-3xl">
+                  Llevá 6
+                </h3>
+                <p className="mt-1 text-[11px] uppercase tracking-wider text-accent sm:text-xs md:text-sm">
+                  Uno para cada auto. O para regalar.
+                </p>
+
+                <div className="mt-4">
+                  {x6Pct > 0 && (
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
+                      Cyber −{x6Pct}%
+                    </span>
+                  )}
+                  {x6Compare > x6Total && (
+                    <div className="text-[11px] uppercase tracking-wider text-ink-400 sm:text-xs">
+                      Precio normal: <span className="line-through">{formatARS(x6Compare)}</span>
+                    </div>
+                  )}
+                  <div className="mt-1 font-display text-4xl font-extrabold text-white sm:text-5xl">
+                    {formatARS(x6Total)}
+                  </div>
+                  <div className="mt-1 text-[12px] font-bold text-cyber-300 sm:text-sm">
+                    Sólo {formatARS(x6Each)} cada uno
+                  </div>
+                  {x6Compare > x6Total && (
+                    <div className="mt-0.5 text-[11px] font-bold text-accent sm:text-xs">
+                      Te ahorrás {formatARS(x6Compare - x6Total)}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 inline-block rounded-xl bg-ink-950 px-4 py-2.5 text-center ring-1 ring-inset ring-ink-800">
+                  <div className="font-display text-[15px] font-bold text-white sm:text-base">
+                    {PAYMENTS.installments} cuotas de {formatARS(Math.round(x6Total / PAYMENTS.installments))}
+                  </div>
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
+                    sin interés
+                  </div>
+                </div>
+
+                <ul className="mx-auto mt-4 max-w-xs space-y-2 text-left text-[13px] sm:text-sm md:mx-0">
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span className="font-semibold text-white">{x6.unitsLabel}</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>+ {x6.quantity} chapitas MagSafe</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-ink-200">
+                    <Icon name="truck" className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>Envío gratis incluido</span>
+                  </li>
+                </ul>
+
+                <div className="mt-5">
+                  <BuyButton
+                    variantId={x6Data?.variantId ?? x6.fallbackVariantId}
+                    price={x6Total}
+                    totalOverride={x6Total}
+                    label="Quiero el x6"
+                    size="lg"
+                    className="w-full md:w-auto"
+                    hideHelper
+                  />
+                </div>
+              </div>
+            </div>
+          </li>
         )}
+        </ul>
 
         {/* ── Métodos de pago ────────────────────────────────────────── */}
         <div className="mt-10 flex flex-col items-center gap-3 sm:mt-12">

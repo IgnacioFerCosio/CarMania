@@ -34,6 +34,7 @@ export default function SoporteInstalacionPage() {
         links={storeLinks('/tienda#productos')}
         ctaHref="/tienda#productos"
         ctaLabel="Ver productos"
+        cyber={false}
       />
 
       <InstallGuide config={SOPORTE_INSTALACION} />

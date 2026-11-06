@@ -9,11 +9,16 @@
  *  - con `messages`: un beneficio a la vez, rotando en bucle. Lo delega en
  *    `PromoRotator`, que es el único pedazo que necesita estado.
  */
-import { PROMO_BARS } from '@/lib/config';
+import { CYBER, PROMO_BARS } from '@/lib/config';
 import { PromoRotator } from './PromoRotator';
 
 export function PromoBar({ messages }: { messages?: readonly string[] } = {}) {
   if (!PROMO_BARS.top.enabled) return null;
+
+  // Durante el Cyber las landings no llevan esta barra: sus beneficios van
+  // dentro del banner morado (ver CYBER.benefits). /tienda, que pasa
+  // `messages` y no monta el banner, la conserva.
+  if (!messages && CYBER.enabled) return null;
 
   if (!messages) {
     return (
