@@ -15,13 +15,13 @@
  * Sin pack de 1: los packs son 2x / 4x / 6x (ver el comentario de los
  * bundles en la config).
  *
- * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta responde 404
- * en producción. En `npm run dev` y en las previews de Cloudflare se ve
- * entera (ver `isPublished` / `showsDrafts`). Las reseñas, que esperan
- * material real, siguen la misma regla.
+ * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta se puede abrir
+ * sólo con la URL, para probarla: no está en el sitemap, /tienda la muestra como
+ * "Próximamente" sin link y lleva `noindex`. A diferencia de /soplador, no da
+ * 404. Publicarla es sacar ese flag. Las reseñas, que esperan material real,
+ * sólo se ven en dev y en las previews (ver `showsDrafts`).
  */
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import ReactDOM from 'react-dom';
 import { Navbar } from '@/components/layout/Navbar';
 import { CountdownBanner } from '@/components/layout/CountdownBanner';
@@ -61,7 +61,7 @@ import {
   ROMPEVIDRIOS_MOCK_BREAKDOWN,
 } from '@/lib/landings/rompevidrios.mock-reviews';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
-import { STORE_PRODUCTS, isPublished, showsDrafts } from '@/lib/config';
+import { STORE_PRODUCTS, showsDrafts } from '@/lib/config';
 
 const STORE = STORE_PRODUCTS.find((p) => p.href === '/llavero-rescate')!;
 const ADV = ROMPEVIDRIOS.advertorial;
@@ -82,10 +82,9 @@ const PRICING_CONFIG = {
 };
 export const revalidate = 300;
 
-// `generateMetadata` y no `metadata`, por lo mismo que en /soplador: sin esto
-// el título del producto quedaba en el payload de la página 404.
+// Con `comingSoon` se abre con la URL, pero los buscadores no la indexan.
 export function generateMetadata(): Metadata {
-  return isPublished(STORE) ? METADATA : {};
+  return STORE.comingSoon ? { ...METADATA, robots: { index: false, follow: false } } : METADATA;
 }
 
 const METADATA: Metadata = {
@@ -104,7 +103,6 @@ const METADATA: Metadata = {
 };
 
 export default async function RompevidriosPage() {
-  if (!isPublished(STORE)) notFound();
   const drafts = showsDrafts();
 
   // La portada del video del hero es el LCP, como en / y /parasol:

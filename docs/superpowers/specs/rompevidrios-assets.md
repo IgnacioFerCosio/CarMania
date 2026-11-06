@@ -2,7 +2,8 @@
 
 La landing está armada pero **no está lista para recibir tráfico**, así que
 en producción está oculta: `comingSoon: true` en `STORE_PRODUCTS`
-(`lib/config.ts`) hace que `/llavero-rescate` responda 404, que no vaya al
+(`lib/config.ts`) hace que `/llavero-rescate` se abra sólo con la URL, con
+`noindex`, que no vaya al
 sitemap, y que la card de `/tienda` se vea como "Próximamente" sin link.
 **Publicarla es sacar ese flag.**
 

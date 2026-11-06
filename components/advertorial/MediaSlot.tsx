@@ -4,8 +4,9 @@
  *
  * Con `pending: true` dibuja una caja con el mismo marco que las fotos del
  * resto del sitio y adentro qué va ahí: ID, qué tiene que mostrar,
- * especificación y ruta. Se ve igual en producción a propósito: la landing
- * está oculta con `comingSoon`, y así nunca se publica con un hueco invisible.
+ * especificación y ruta. Se ve igual en producción a propósito: la landing no
+ * está listada mientras tenga `comingSoon`, y así nunca se publica con un hueco
+ * invisible.
  *
  * Con el archivo ya subido: `next/image` para fotos y `LazyVideo` (muted, loop)
  * para videos y "GIF".

@@ -55,7 +55,8 @@ presencia web del producto.
   advertorial no cargue en el JS de las otras páginas. Las imágenes se exportan
   al tamaño en que se ven: en Cloudflare `/_next/image` devuelve el original.
 - **`comingSoon` y las previews:** una landing con `comingSoon` da 404 en
-  producción, pero se ve en `npm run dev` y en las previews de Cloudflare
+  producción (excepción: `/llavero-rescate`, que se abre sólo con la URL para
+  probarla, con `noindex`, fuera del sitemap y sin link desde `/tienda`), pero se ve en `npm run dev` y en las previews de Cloudflare
   (cualquier rama que no sea `main`: `next.config.js` arma
   `CARMANIA_PREVIEW` con `CF_PAGES_BRANCH`). `showsDrafts()` en
   `lib/config.ts` es esa misma regla, para secciones que esperan material
