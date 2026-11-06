@@ -4,7 +4,8 @@
  * tenés páginas legales propias, cambialos.
  */
 import Image from 'next/image';
-import { BRAND, WHATSAPP } from '@/lib/config';
+import { BRAND, CONTACT, INSTAGRAM, WHATSAPP } from '@/lib/config';
+import { Icon } from '@/components/ui/Icon';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -75,6 +76,26 @@ export function Footer() {
                 rel="noopener noreferrer"
               >
                 Soporte WhatsApp
+              </a>
+            </li>
+            <li>
+              <a
+                href={INSTAGRAM.url}
+                className="inline-flex items-center gap-1.5 hover:text-white"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name="instagram" className="h-4 w-4" />
+                {INSTAGRAM.handle}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`mailto:${CONTACT.email}`}
+                className="inline-flex items-center gap-1.5 hover:text-white"
+              >
+                <Icon name="mail" className="h-4 w-4" />
+                {CONTACT.email}
               </a>
             </li>
           </ul>

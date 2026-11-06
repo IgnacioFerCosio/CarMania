@@ -26,6 +26,7 @@ export type IconName =
   | 'store'
   | 'whatsapp'
   | 'instagram'
+  | 'mail'
   | 'cart'
   | 'lock'
   | 'fire'
@@ -188,6 +189,12 @@ const PATHS: Record<IconName, JSX.Element> = {
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+    </g>
+  ),
+  mail: (
+    <g stroke="currentColor" strokeWidth="1.7" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="3" />
+      <path d="m4 7.5 8 6 8-6" />
     </g>
   ),
   cart: (

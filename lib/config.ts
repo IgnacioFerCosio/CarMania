@@ -572,6 +572,14 @@ export const STORE_SECTIONS = {
  * glifo de Instagram, así que la grilla nunca se rompe.
  * ─────────────────────────────────────────────────────────────────────────
  */
+/**
+ * Email de contacto: es el de la tienda de Shopify (Ajustes → General). Va en
+ * el footer, que es compartido por todas las landings.
+ */
+export const CONTACT = {
+  email: 'carmania.ar@gmail.com',
+} as const;
+
 export const INSTAGRAM = {
   handle: '@carmania.ar',
   url: 'https://www.instagram.com/carmania.ar/',
