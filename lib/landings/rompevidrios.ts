@@ -286,7 +286,28 @@ export const ROMPEVIDRIOS = {
       a: 'Porque el envío es gratis, y porque casi todos terminan comprando uno para cada auto de la familia.',
     },
   ],
-  qualityBadges: [],
+  // Las 3 cards de "Calidad garantizada" (TrustBlock), como en el soporte.
+  // Devolución y garantía son las de la marca (RETURNS en lib/config.ts).
+  qualityBadges: [
+    {
+      badge: '30',
+      badgeSub: 'DÍAS',
+      title: 'DEVOLUCIÓN 30 DÍAS',
+      desc: 'Si por cualquier motivo decidís que el Llavero Rescate PRO™ no es para vos, te devolvemos cada peso dentro de los 30 días posteriores a la entrega.',
+    },
+    {
+      badge: '1',
+      badgeSub: 'AÑO',
+      title: 'GARANTÍA 1 AÑO',
+      desc: 'Si tu llavero CARMANIA no funciona como esperabas, te lo reemplazamos. Vos seguís manejando tranquilo.',
+    },
+    {
+      badge: '✓',
+      badgeSub: 'INCLUIDO',
+      title: 'VIDRIO DE PRUEBA',
+      desc: 'Viene con un vidrio de prueba para que lo pruebes vos mismo antes de necesitarlo. Sin vueltas.',
+    },
+  ],
   certifications: { enabled: false, title: '', desc: '', items: [] },
   trustPillars: [],
   bundles: ROMPEVIDRIOS_BUNDLES,
@@ -547,25 +568,6 @@ export const ROMPEVIDRIOS = {
       },
     },
 
-    expert: {
-      title: 'Lo que un bombero quiere que sepas antes de salir a la ruta.',
-      accent: 'antes de salir a la ruta.',
-      // TODO: nombre y cuartel reales. Sin video real, la sección no sale en producción.
-      caption: '[Nombre], bombero voluntario de [cuartel]',
-      media: {
-        id: 'RV-11',
-        kind: 'video',
-        src: '/rompevidrios/experto/bombero.mp4',
-        poster: '/rompevidrios/experto/bombero-poster.webp',
-        aspect: '9:16',
-        alt: 'Bombero voluntario explica cómo salir de un auto atrapado',
-        brief: 'Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave.',
-        spec: 'MP4 H.264 CON audio y subtítulos quemados, 30–60 s + poster webp',
-        pending: true,
-        withAudio: true,
-      },
-    },
-
     reviews: {
       placeholder: 'PENDIENTE · reseñas reales con foto, apenas haya ventas',
     },
@@ -605,13 +607,6 @@ export const ROMPEVIDRIOS = {
           pending: true,
         },
       },
-    },
-
-    guarantee: {
-      title: 'Vos no arriesgás nada.',
-      accent: 'nada.',
-      // TODO: confirmar plazo.
-      body: 'Si el llavero no rompe el vidrio de prueba, te devolvemos la plata. Sin vueltas. [Confirmar plazo: 30 días].',
     },
 
     closing: {

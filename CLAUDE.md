@@ -53,7 +53,7 @@ presencia web del producto.
   (cualquier rama que no sea `main`: `next.config.js` arma
   `CARMANIA_PREVIEW` con `CF_PAGES_BRANCH`). `showsDrafts()` en
   `lib/config.ts` es esa misma regla, para secciones que esperan material
-  real (bombero y reseñas de `/rompevidrios`).
+  real (las reseñas de `/rompevidrios`).
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el

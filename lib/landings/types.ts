@@ -367,10 +367,8 @@ export type AdvertorialData = {
       items: readonly { n: number; tone: 'ours' | 'other'; title: string; desc: string }[];
     };
   };
-  expert: SectionTitle & { caption: string; media: MediaSlot };
   reviews: { placeholder: string };
   packs: { sub: string; footnote: string; images: Record<Bundle['id'], MediaSlot> };
-  guarantee: SectionTitle & { body: string };
   closing: SectionTitle & {
     columns: readonly { tone: 'without' | 'with'; text: string }[];
     media: MediaSlot;

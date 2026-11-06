@@ -18,8 +18,8 @@
  *
  * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta responde 404
  * en producción. En `npm run dev` y en las previews de Cloudflare se ve
- * entera (ver `isPublished` / `showsDrafts`). Las secciones que esperan
- * material real (bombero, reseñas) siguen la misma regla.
+ * entera (ver `isPublished` / `showsDrafts`). Las reseñas, que esperan
+ * material real, siguen la misma regla.
  */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -48,9 +48,8 @@ import { MediaSlot } from '@/components/advertorial/MediaSlot';
 // import { StoryBlock } from '@/components/advertorial/StoryBlock';
 import { StepsGrid } from '@/components/advertorial/StepsGrid';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
-import { ExpertVideo } from '@/components/advertorial/ExpertVideo';
 import { ReviewsPlaceholder } from '@/components/advertorial/ReviewsPlaceholder';
-import { GuaranteeBlock } from '@/components/advertorial/GuaranteeBlock';
+import { TrustBlock } from '@/components/sections/TrustBlock';
 import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
 import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
@@ -122,8 +121,6 @@ export default async function RompevidriosPage() {
   }
 
   const hasReviews = ROMPEVIDRIOS.reviews.length > 0;
-  // El bombero sin video real no sale en producción (en dev/preview, con placeholder).
-  const showExpert = !ADV.expert.media.pending || drafts;
 
   return (
     <CartProvider
@@ -211,24 +208,7 @@ export default async function RompevidriosPage() {
         {/* 6. Comparativa */}
         <ComparisonTable comparison={ADV.comparison} bg="black" />
 
-        {/* 7. Bombero voluntario */}
-        {showExpert && <ExpertVideo expert={ADV.expert} bg="gray" />}
-
-        {/* 8. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
-            dev/preview y nada en producción. */}
-        {hasReviews ? (
-          <Reviews config={ROMPEVIDRIOS} />
-        ) : (
-          drafts && (
-            <ReviewsPlaceholder
-              reviews={ADV.reviews}
-              sectionCopy={ROMPEVIDRIOS.sectionCopy}
-              bg={showExpert ? 'black' : 'gray'}
-            />
-          )
-        )}
-
-        {/* 9. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
+        {/* 7. Elegí tu pack (#pricing) — los únicos botones que agregan al carrito */}
         <Pricing
           productId={productId}
           bundlesData={bundlesData}
@@ -242,13 +222,29 @@ export default async function RompevidriosPage() {
           }}
         />
 
-        {/* 10. Garantía (#trust) */}
-        <GuaranteeBlock guarantee={ADV.guarantee} />
+        {/* 8. Reseñas (#reviews): sólo reales. Sin ninguna, placeholder en
+            dev/preview y nada en producción. Debajo de los packs, como en el soporte. */}
+        {hasReviews ? (
+          <Reviews config={ROMPEVIDRIOS} />
+        ) : (
+          drafts && (
+            <ReviewsPlaceholder
+              reviews={ADV.reviews}
+              sectionCopy={ROMPEVIDRIOS.sectionCopy}
+              bg="gray"
+            />
+          )
+        )}
 
-        {/* 11. FAQ */}
+        {/* 9. Calidad garantizada (#trust) — las 3 cards del soporte */}
+        <div id="trust">
+          <TrustBlock config={ROMPEVIDRIOS} />
+        </div>
+
+        {/* 10. FAQ */}
         <FAQ config={ROMPEVIDRIOS} />
 
-        {/* 12. Cierre */}
+        {/* 11. Cierre ("Dos mañanas posibles"), donde el soporte tiene el BackToPricingCTA */}
         <ClosingBlock closing={ADV.closing} cta={ADV.cta} />
       </main>
 

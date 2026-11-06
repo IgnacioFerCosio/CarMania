@@ -7,8 +7,7 @@ sitemap, y que la card de `/tienda` se vea como "Próximamente" sin link.
 **Publicarla es sacar ese flag.**
 
 En `npm run dev` y en las previews de Cloudflare (toda rama que no sea
-`main`) se ve entera, con los placeholders. Ahí también aparecen la sección
-del bombero y la caja de reseñas, que en producción se ocultan mientras no
+`main`) se ve entera, con los placeholders. Ahí también aparece la caja de reseñas, que en producción se oculta mientras no
 haya material real.
 
 Es una landing tipo advertorial: todo el copy y todos los assets están en
@@ -37,7 +36,6 @@ Videos y "GIF": **MP4 H.264, sin audio, en loop, menos de 2 MB** (nada de
 | RV-06 | `pasos/01-colocalo.mp4` | Cómo funciona (paso 1 "Colocalo") | GIF (MP4) | 1:1 | Montaje: el llavero entra y sale de su soporte en el tablero o la consola, y colgado de la llave. | 4–6 s |
 | RV-07 | `pasos/02-apreta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | Primer plano: aprieta y el vidrio estalla. | 3 s, cámara lenta |
 | RV-08 | `pasos/03-corta.mp4` | Cómo funciona | GIF (MP4) | 1:1 | El llavero cortando un cinturón tenso de un tirón. | 3 s |
-| RV-11 | `experto/bombero.mp4` + `experto/bombero-poster.webp` | Bombero | Video con audio y subtítulos | 9:16 | Bombero voluntario real, a cámara, 30–60 s: cómo salir de un auto atrapado y por qué llevar un rompevidrios en la llave. | Subtítulos quemados; **este sí con audio** (va con controles, sin autoplay) |
 | RV-12 | `caja/que-incluye.webp` | "¿Qué incluye?" (carrusel, slide 1: la que se ve al cargar) | Foto | 1:1 | Todos los elementos juntos: llavero, vidrio de prueba y soporte adhesivo. **Cargada (2026-11-05):** imagen de IA con el logo de Carmania compuesto encima (2 llaveros, 2 vidrios, 2 soportes sobre pasto). Cuando haya muestra física, reemplazar por foto real. | 1200×1200 |
 | RV-13 | `packs/pack-2x.webp` | Packs | Foto de producto | 1:1 | 2 llaveros sobre fondo negro, con 2 vidrios de prueba. También es la foto de la card en `/tienda`. | 1600×1600 |
 | RV-14 | `packs/pack-4x.webp` | Packs | Foto de producto | 1:1 | 4 llaveros, cada uno en una llave de auto distinta. | 1600×1600 |
@@ -170,12 +168,10 @@ Todo esto aparece entre corchetes en la página o con `// TODO` en la config.
       no se muestran.
 - [ ] FAQ "¿Es peligroso con chicos?": **[Confirmar si tiene traba]**.
 - [ ] FAQ "¿Cuánto tarda en llegar?": **[X] días hábiles** por Andreani.
-- [ ] Garantía: **[Confirmar plazo: 30 días]**. Ojo: `Pricing` muestra
+- [ ] Garantía (cards "Calidad garantizada"): **30 días de devolución y 1 año de garantía**. Ojo: `Pricing` muestra
       "Devolución 30 días" y "Garantía 1 año" en todas las landings;
       confirmar que valgan para este producto.
 - [ ] "¿Qué incluye?": confirmar con Spring que la caja traiga el soporte adhesivo (hoy figura como incluido). La argolla no se menciona en ningún lado: no se sabe si viene.
-- [ ] Bombero: nombre y cuartel reales ("[Nombre], bombero voluntario de
-      [cuartel]"). Sin video real, la sección no sale en producción.
 - [ ] "Descuento por transferencia" (debajo de los packs): confirmar que
       exista en el checkout.
 - [ ] Badge "EL MÁS ELEGIDO" del pack 4x: sin ventas todavía es una promesa;
