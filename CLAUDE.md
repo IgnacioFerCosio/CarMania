@@ -75,6 +75,12 @@ presencia web del producto.
   `InitiateCheckout` se disparan desde el código de la landing. El evento
   **`Purchase` ocurre en el checkout de Shopify** y debe configurarse del
   lado de Shopify (canal de ventas de Meta), NO en este repo.
+- **Pixel de TikTok:** mismo esquema que Meta. `components/analytics/TikTokPixel.tsx`
+  carga el snippet (ID en `TRACKING.tiktokPixelId`) y `lib/tracking.ts` manda
+  `ViewContent` / `AddToCart` / `InitiateCheckout` a los dos pixels; TikTok los
+  recibe en un array `contents`. `Purchase` también se configura en Shopify, una
+  sola vez, para no contar la compra doble. El `Pageview` de las navegaciones
+  internas lo manda solo el pixel (mira el history); no hay que dispararlo a mano.
 
 - **Cyber Week (temporal, noviembre 2026):** todo cuelga del bloque `CYBER`
   de `lib/config.ts`. `enabled: true` pinta el banner morado fijo (`CyberBanner`,
@@ -150,7 +156,8 @@ con los precios fallback de `lib/config.ts` en vez de fallar.
   `/public`.** Apuntar un `<video>` a un CDN externo los rompe en
   producción.
 - La CSP permite explícitamente `connect.facebook.net` / `facebook.com`
-  (Meta Pixel) y `*.myshopify.com` (el `cartCreate` corre client-side).
+  (Meta Pixel), `analytics.tiktok.com` (TikTok Pixel) y `*.myshopify.com` (el
+  `cartCreate` corre client-side).
 - Los dos hosts raros de `connect-src` (`…ecs.us-east-2.on.aws` y
   `…us-central1.run.app`) son el **Conversions API Gateway** del pixel: la
   config del pixel (`connect.facebook.net/signals/config/<id>`, clave

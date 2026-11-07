@@ -1,12 +1,13 @@
 /**
- * Cliente de tracking — Meta Pixel + Klaviyo.
- * Las funciones son safe-by-default: si fbq / _learnq no existen
+ * Cliente de tracking — Meta Pixel + TikTok Pixel + Klaviyo.
+ * Las funciones son safe-by-default: si fbq / ttq / _learnq no existen
  * (ad-blocker, script bloqueado) no rompen nada.
  */
 
 declare global {
   interface Window {
     fbq?: (action: string, eventName: string, params?: Record<string, unknown>) => void;
+    ttq?: { track: (eventName: string, params?: Record<string, unknown>) => void };
     _learnq?: unknown[];
   }
 }
@@ -30,6 +31,31 @@ function fbqSafe(action: string, eventName: string, params?: Record<string, unkn
   }
 }
 
+/**
+ * TikTok pide los productos en un array `contents`, no en `content_ids` como
+ * Meta. `quantity` va sólo con un producto: con varios, `num_items` es el total
+ * del carrito y no la cantidad de cada uno.
+ */
+function ttqTrack(eventName: string, p: ProductEventParams) {
+  if (typeof window === 'undefined') return;
+  if (!window.ttq) return;
+  const ids = p.content_ids ?? [];
+  try {
+    window.ttq.track(eventName, {
+      contents: ids.map((content_id) => ({
+        content_id,
+        content_type: 'product',
+        content_name: p.content_name,
+        ...(ids.length === 1 && p.num_items ? { quantity: p.num_items } : {}),
+      })),
+      value: p.value,
+      currency: 'ARS',
+    });
+  } catch {
+    /* swallow */
+  }
+}
+
 function klaviyoPush(eventName: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return;
   try {
@@ -41,7 +67,8 @@ function klaviyoPush(eventName: string, params?: Record<string, unknown>) {
 }
 
 export const track = {
-  // ── Meta Pixel ───────────────────────────────────────────────────────────
+  // ── Meta Pixel + TikTok Pixel ────────────────────────────────────────────
+  // El PageView de TikTok sale del snippet (ver TikTokPixel.tsx).
 
   pageView() {
     fbqSafe('track', 'PageView');
@@ -49,14 +76,17 @@ export const track = {
 
   viewContent(p: ProductEventParams) {
     fbqSafe('track', 'ViewContent', { content_type: 'product', currency: 'ARS', ...p });
+    ttqTrack('ViewContent', p);
   },
 
   addToCart(p: ProductEventParams) {
     fbqSafe('track', 'AddToCart', { content_type: 'product', currency: 'ARS', ...p });
+    ttqTrack('AddToCart', p);
   },
 
   initiateCheckout(p: ProductEventParams) {
     fbqSafe('track', 'InitiateCheckout', { content_type: 'product', currency: 'ARS', ...p });
+    ttqTrack('InitiateCheckout', p);
   },
 
   // ── Klaviyo ──────────────────────────────────────────────────────────────

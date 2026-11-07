@@ -148,7 +148,7 @@ El evento `Purchase` lo dispara Shopify desde su lado del checkout — para cone
 ├── lib/
 │   ├── config.ts        # ⭐ Single source of truth del copy
 │   ├── shopify.ts       # Cliente de Storefront API + formatARS()
-│   └── tracking.ts      # Wrapper safe sobre fbq()
+│   └── tracking.ts      # Wrapper safe sobre fbq() y ttq
 ├── public/              # Acá va tu logo.png cuando lo subas
 ├── .env.example         # Plantilla de variables
 ├── vercel.json          # Headers de seguridad + región

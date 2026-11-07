@@ -4,6 +4,7 @@ import Script from 'next/script';
 // Removed Vercel-specific analytics packages (migrated to Cloudflare)
 import { TRACKING } from '@/lib/config';
 import { MetaPixel } from '@/components/analytics/MetaPixel';
+import { TikTokPixel } from '@/components/analytics/TikTokPixel';
 import './globals.css';
 
 // Cargamos Inter en su versión variable para tener todos los pesos (incluido 900)
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           google-analytics.com en las DOS CSP (_headers y next.config.js). */}
       <body className="font-sans">
         <MetaPixel pixelId={TRACKING.metaPixelId || process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+        <TikTokPixel pixelId={TRACKING.tiktokPixelId} />
         {children}
         {/* Cloudflare Web Analytics */}
         <Script
