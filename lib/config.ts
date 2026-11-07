@@ -400,13 +400,13 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     // La foto es un placeholder propio hasta que llegue RV-13
     // (`/rompevidrios/packs/pack-2x.webp`): la card "Próximamente" SÍ se ve
     // en producción, y apuntarla a un archivo que no existe la mostraría rota.
-    handle: 'llavero-rescate-pro',
+    handle: 'pack-x2-llavero-rescate-pro',
     title: 'Llavero Rescate PRO™',
     blurb:
       'Rompevidrios a resorte y corta cinturón en el llavero. Lo apoyás, apretás y salís. Con vidrio de prueba incluido.',
     image: '/rompevidrios/tienda/proximamente.webp',
     href: '/llavero-rescate',
-    fallbackPrice: 29990, // espejo de ROMPEVIDRIOS.fallbackPricing.price (pack 2x)
+    fallbackPrice: 49990, // espejo de ROMPEVIDRIOS.fallbackPricing.price (pack 2x)
     specTag: 'ROMPEVIDRIOS + CORTA CINTURÓN',
     badge: 'NUEVO',
     comingSoon: true,

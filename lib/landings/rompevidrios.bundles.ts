@@ -16,17 +16,18 @@ import type { Bundle, UpsellTier } from './types';
  * unidades (el tipo `Bundle` y `Pricing` trabajan con esos tres ids). La
  * escalera del carrito sube de a 2, así que nunca ofrece "llevá 1 más".
  *
- * El tachado es el precio de lista de 1 unidad ($19.990) × cantidad.
- * TODO: confirmar precio de lista real — el tachado tiene que haber existido
- * de verdad (ley de defensa del consumidor).
+ * El tachado es el precio de lista de 1 unidad ($35.000) × cantidad.
+ * Ojo: el tachado tiene que haber existido de verdad (ley de defensa del
+ * consumidor). La unidad suelta existe en Shopify sólo para componer los
+ * packs: no está publicada y su precio no se muestra en ningún lado.
  */
-export const PRECIO_LISTA = 19990;
+export const PRECIO_LISTA = 35000;
 
 export const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
   {
     id: 'single',
-    productId: '', // TODO SHOPIFY — el pack x2 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/10411376902259',
+    fallbackVariantId: 'gid://shopify/ProductVariant/67135147376755',
     label: 'LLEVÁ 2',
     subtitle: 'Para vos y tu pareja',
     quantity: 2,
@@ -40,14 +41,14 @@ export const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     ],
     freeShipping: true,
     recommended: false,
-    fallbackPrice: 29990,
+    fallbackPrice: 49990,
     fallbackCompare: PRECIO_LISTA * 2,
     image: '/rompevidrios/packs/pack-2x.webp',
   },
   {
     id: 'double',
-    productId: '', // TODO SHOPIFY — el pack x4 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/10411360288883',
+    fallbackVariantId: 'gid://shopify/ProductVariant/67135122473075',
     label: 'LLEVÁ 4',
     subtitle: 'Uno para cada auto de la familia',
     quantity: 4,
@@ -61,14 +62,14 @@ export const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     ],
     freeShipping: true,
     recommended: true,
-    fallbackPrice: 44990,
+    fallbackPrice: 74990,
     fallbackCompare: PRECIO_LISTA * 4,
     image: '/rompevidrios/packs/pack-4x.webp',
   },
   {
     id: 'triple',
-    productId: '', // TODO SHOPIFY — el pack x6 no existe todavía
-    fallbackVariantId: '',
+    productId: 'gid://shopify/Product/10411377459315',
+    fallbackVariantId: 'gid://shopify/ProductVariant/67135148294259',
     label: 'LLEVÁ 6',
     subtitle: 'Para toda la familia',
     quantity: 6,
@@ -82,7 +83,7 @@ export const ROMPEVIDRIOS_BUNDLES: readonly Bundle[] = [
     ],
     freeShipping: true,
     recommended: false,
-    fallbackPrice: 54990,
+    fallbackPrice: 99990,
     fallbackCompare: PRECIO_LISTA * 6,
     image: '/rompevidrios/packs/pack-6x.webp',
   },

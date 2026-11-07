@@ -132,9 +132,9 @@ sumás otra, agregala; `check:routes` falla si falta.
 - [ ] Cargar `productId` y `fallbackVariantId` de cada pack en
       `lib/landings/rompevidrios.ts`. Con `''` los botones quedan
       deshabilitados.
-- [ ] Confirmar el handle del pack 2x (`brand.productHandle`, hoy
-      `llavero-rescate-pro`) y el `handle` de la entrada en `STORE_PRODUCTS`.
-- [ ] Precios: 2x $29.990, 4x $44.990, 6x $54.990. **Tachado:** $19.990 por
+- [x] Handle del pack 2x (`brand.productHandle` y `handle` de la entrada en
+      `STORE_PRODUCTS`): `pack-x2-llavero-rescate-pro`.
+- [x] Precios: 2x $49.990, 4x $74.990, 6x $99.990. **Tachado:** $35.000 por
       unidad × cantidad. **Confirmar el precio de lista real**: el tachado
       tiene que haber existido de verdad.
 - [ ] Correr `npm run check:shopify`: verifica que cada pack sea visible y

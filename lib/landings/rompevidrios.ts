@@ -101,7 +101,7 @@ const SITUACIONES = [
 export const ROMPEVIDRIOS = {
   brand: {
     tagline: 'Llavero Rescate PRO™',
-    productHandle: 'llavero-rescate-pro', // TODO SHOPIFY — confirmar al crear el producto
+    productHandle: 'pack-x2-llavero-rescate-pro',
     socialProofCount: '',
     socialProofLabel: 'conductores ya lo llevan',
     averageRating: 0, 
@@ -109,7 +109,7 @@ export const ROMPEVIDRIOS = {
   },
   // Espejo del pack 2x: es el precio de entrada (no hay pack de 1).
   fallbackPricing: {
-    price: 29990,
+    price: 49990,
     compareAtPrice: PRECIO_LISTA * 2,
     currency: 'ARS',
   },
