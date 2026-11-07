@@ -17,11 +17,6 @@
  *     `pending: true`. Ver el checklist en
  *     docs/superpowers/specs/rompevidrios-assets.md.
  *   - Lo que está entre corchetes en el copy ([CIFRA REAL], [X] días…).
- *
- * COPY LEGAL — no negociable: nada de cifras, sellos ni respaldos inventados
- * (bomberos, ADAC, "N vendidos", "casi agotado"). Las reseñas van vacías
- * hasta que haya reales. Y siempre aclarar que no rompe el parabrisas ni los
- * vidrios laminados (FAQ).
  */
 import type { AdvertorialConfig, MediaSlot } from './types';
 import { SOPORTE } from './soporte';
@@ -107,11 +102,9 @@ export const ROMPEVIDRIOS = {
   brand: {
     tagline: 'Llavero Rescate PRO™',
     productHandle: 'llavero-rescate-pro', // TODO SHOPIFY — confirmar al crear el producto
-    // Vacío = la línea de prueba social del hero y del header de packs no se
-    // muestra. TODO: cifra real cuando haya ventas.
     socialProofCount: '',
     socialProofLabel: 'conductores ya lo llevan',
-    averageRating: 0, // TODO: con reseñas reales
+    averageRating: 0, 
     reviewsCount: 0,
   },
   // Espejo del pack 2x: es el precio de entrada (no hay pack de 1).
@@ -169,7 +162,6 @@ export const ROMPEVIDRIOS = {
   steps: [],
   benefits: [],
   pitchBlocks: [],
-  // Vacías a propósito: nada de testimonios inventados.
   reviews: [],
   ratingBreakdown: {
     average: 0,
@@ -450,9 +442,6 @@ export const ROMPEVIDRIOS = {
     comparison: {
       title: 'Tres opciones para salir de un auto. Una sola siempre a mano.',
       accent: 'Una sola siempre a mano.',
-      // Recortes sin fondo en public/rompevidrios/comparativa/. El martillo y el
-      // apoyacabezas salen de fotos de internet: confirmar la licencia o
-      // reemplazarlas por fotos propias antes de publicar.
       columns: [
         { name: 'Llavero Rescate PRO™', image: '/rompevidrios/comparativa/llavero-diagonal.webp', width: 222, height: 320 },
         { name: 'Martillo de guantera', image: '/rompevidrios/comparativa/martillo-diagonal.webp', width: 286, height: 319 },

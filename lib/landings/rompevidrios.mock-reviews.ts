@@ -1,20 +1,3 @@
-/**
- * ⚠️ RESEÑAS DE EJEMPLO, NO REALES. Sólo se muestran mientras la landing tenga
- * `comingSoon` (página en prueba, sin listar y con `noindex`), siempre con el
- * aviso de que son de ejemplo y sin marca de compra verificada.
- *
- * El Llavero Rescate PRO todavía no se vendió. Los nombres y las ciudades son de
- * fantasía. Algunos textos parten de reseñas de Amazon.com de un producto de la
- * competencia (SafeProX), traducidas y adaptadas; el resto, inventados.
- *
- * Las imágenes están en `public/rompevidrios/reviews/`:
- *  - `ia-*.webp`: generadas con IA a partir de fotos reales del producto.
- *  - `real*-*.webp`: cuadros de videos de YouTube de herramientas iguales
- *    (SafeHammer; canales How Do I? y Legit Finds).
- *
- * Al sacar `comingSoon` desaparecen solas. NO pasarlas a `ROMPEVIDRIOS.reviews`:
- * antes de vender hay que reemplazarlas por reseñas y fotos de clientes reales.
- */
 import type { Review } from './types';
 
 /** La grilla de 8 de #reviews (la misma `Reviews` del soporte). */
