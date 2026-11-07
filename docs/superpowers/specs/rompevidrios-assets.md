@@ -72,9 +72,8 @@ la misma que `WhatsInBox` del soporte: el mismo `ProductCarousel` (ventana
 `ROMPEVIDRIOS.advertorial.includes.slides` y **no llevan texto propio**: si
 querés que una foto diga qué es (por ejemplo "Punta de tungsteno"), escribilo
 dentro de la imagen, como las infografías del soporte. Todas son 1:1.
-La opinión de abajo es de maqueta y sólo se ve en `npm run dev`
-(`rompevidrios.mock-reviews.ts`): hasta que haya una reseña real, en
-producción y en las previews la sección sale sin opinión.
+La opinión de abajo es la 4ª de `ROMPEVIDRIOS.reviews`: hasta que haya 4 reseñas
+reales, la sección sale sin opinión.
 También se reusa el banner de marcas de autos de `/` ("Lo llevás en
 cualquier auto"), justo debajo del hero. Las secciones "Imaginate…" (RV-02) y
 "El mito" (RV-03) están desactivadas en `app/rompevidrios/page.tsx`: sus slots

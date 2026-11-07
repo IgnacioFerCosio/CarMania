@@ -18,7 +18,7 @@
  *     docs/superpowers/specs/rompevidrios-assets.md.
  *   - Lo que está entre corchetes en el copy ([CIFRA REAL], [X] días…).
  */
-import type { AdvertorialConfig, MediaSlot } from './types';
+import type { AdvertorialConfig, MediaSlot, Review } from './types';
 import { SOPORTE } from './soporte';
 import { PRECIO_LISTA, ROMPEVIDRIOS_BUNDLES, ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 
@@ -162,7 +162,20 @@ export const ROMPEVIDRIOS = {
   steps: [],
   benefits: [],
   pitchBlocks: [],
-  reviews: [],
+  // Sólo reseñas reales de compradores del llavero. Las primeras 3 van en el
+  // carrusel del hero, la 4ª abajo de "¿Qué incluye?" y todas en #reviews.
+  // Con `reviews` cargado, actualizá `ratingBreakdown` para que cierre.
+  // Fotos: public/rompevidrios/reviews/, 4:3, webp de 800×600.
+  //   {
+  //     name: 'Nombre A.',
+  //     location: 'Ciudad',
+  //     stars: 5,
+  //     text: 'Lo que escribió, con sus palabras.',
+  //     date: 'nov. 2026',
+  //     verified: true, // sólo si compró de verdad
+  //     image: '/rompevidrios/reviews/nombre-a.webp', // opcional
+  //   },
+  reviews: [] as readonly Review[],
   ratingBreakdown: {
     average: 0,
     total: 0,

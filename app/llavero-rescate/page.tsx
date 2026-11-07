@@ -54,18 +54,11 @@ import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { SOPORTE } from '@/lib/landings/soporte';
-import {
-  ROMPEVIDRIOS_MOCK_REVIEWS,
-  ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
-  ROMPEVIDRIOS_MOCK_BREAKDOWN,
-} from '@/lib/landings/rompevidrios.mock-reviews';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { STORE_PRODUCTS, showsDrafts } from '@/lib/config';
 
 const STORE = STORE_PRODUCTS.find((p) => p.href === '/llavero-rescate')!;
 const ADV = ROMPEVIDRIOS.advertorial;
-// Las reseñas de ejemplo existen sólo mientras la página no esté publicada.
-const SAMPLE_REVIEWS = Boolean(STORE.comingSoon);
 // Cifra de clientes de la marca (la misma del botón final), para el cierre de #reviews.
 const REVIEWS_PROOF_COUNT = SOPORTE.brand.socialProofCount;
 // Las cards de los packs: tres columnas en desktop, una en el celular.
@@ -156,11 +149,7 @@ export default async function RompevidriosPage() {
       <main>
         {/* 1. Hero — el mismo de las otras landings, con el slot RV-01 */}
         <Hero
-          config={
-            SAMPLE_REVIEWS
-              ? { ...ROMPEVIDRIOS, reviews: ROMPEVIDRIOS_MOCK_REVIEWS }
-              : ROMPEVIDRIOS
-          }
+          config={ROMPEVIDRIOS}
           media={<MediaSlot slot={ADV.hero.media} fill eager sizes="(min-width: 768px) 50vw, 100vw" />}
         />
 
@@ -197,7 +186,7 @@ export default async function RompevidriosPage() {
 
         {/* 4. "Sabés que funciona antes de necesitarlo" + ¿Qué incluye? — la
             misma sección que el soporte (WhatsInBox), sin carrusel por ahora
-            (sólo la foto del pasto) y con una opinión abajo. */}
+            (sólo la foto del pasto). La opinión de abajo aparece con 4 reseñas. */}
         <WhatsInBox
           data={{
             headline: ADV.includes.headline,
@@ -205,8 +194,9 @@ export default async function RompevidriosPage() {
             body: ADV.includes.body,
             note: ADV.includes.note,
             items: ADV.includes.items,
-            testimonial: SAMPLE_REVIEWS ? ROMPEVIDRIOS_MOCK_REVIEWS[3] : undefined,
-            testimonialPhoto: SAMPLE_REVIEWS ? ROMPEVIDRIOS_MOCK_REVIEWS[3].image : undefined,
+            // La 4ª reseña: las 3 primeras van en el carrusel del hero.
+            testimonial: ROMPEVIDRIOS.reviews[3],
+            testimonialPhoto: ROMPEVIDRIOS.reviews[3]?.image,
           }}
           // Por ahora, sólo la foto del pasto con los productos (RV-12), en la
           // misma ventana 1:1 del carrusel. El carrusel vuelve cuando haya más
@@ -251,15 +241,6 @@ export default async function RompevidriosPage() {
           <Reviews
             config={{
               ...ROMPEVIDRIOS,
-              brand: { ...ROMPEVIDRIOS.brand, socialProofCount: REVIEWS_PROOF_COUNT },
-            }}
-          />
-        ) : SAMPLE_REVIEWS ? (
-          <Reviews
-            config={{
-              ...ROMPEVIDRIOS,
-              reviews: ROMPEVIDRIOS_MOCK_GRID_REVIEWS,
-              ratingBreakdown: ROMPEVIDRIOS_MOCK_BREAKDOWN,
               brand: { ...ROMPEVIDRIOS.brand, socialProofCount: REVIEWS_PROOF_COUNT },
             }}
           />
