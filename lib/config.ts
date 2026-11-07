@@ -103,7 +103,7 @@ export const WHATSAPP = {
 
 export const TRACKING = {
   metaPixelId: '877870938398833',
-  tiktokPixelId: 'DBN6JGRC77UCJBQTGOSG',
+  tiktokPixelId: 'DBNHTT3C77UASCMH8E90',
 } as const;
 
 /**
