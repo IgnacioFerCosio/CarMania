@@ -82,7 +82,7 @@ presencia web del producto.
   sola vez, para no contar la compra doble. El `Pageview` de las navegaciones
   internas lo manda solo el pixel (mira el history); no hay que dispararlo a mano.
 
-- **Cyber Week (temporal, noviembre 2026):** todo cuelga del bloque `CYBER`
+- **Cyber Week (APAGADO el 2026-11-08, `CYBER.enabled = false`; el código queda por si vuelve un evento):** todo cuelga del bloque `CYBER`
   de `lib/config.ts`. `enabled: true` pinta el banner morado fijo (`CyberBanner`,
   reemplaza al contador de 8 h; en `/tienda` lleva a `#productos`), los logos,
   "Cyber −X%" en packs y cards, la card propia del pack x6 (`pack6Card`), el

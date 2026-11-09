@@ -82,11 +82,16 @@ export function ProductCard({
         {/* p-2 y no p-3: el inset de la foto dejó los tags 4px cortos y
             partían en dos líneas. */}
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-2">
-          {/* El tag de spec es largo y en la card de 2 columnas de mobile se
-              parte en tres líneas. Ahí queda sólo el de variante. */}
-          <span className="hidden sm:block">
-            <Tag>{product.specTag}</Tag>
-          </span>
+          {/* Arriba a la izquierda: el chip del Cyber (el tag de spec bajó al
+              texto, debajo del título). Sin Cyber queda el hueco, y el badge
+              se mantiene a la derecha. */}
+          {cyber && cyberPct ? (
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 font-display text-[9px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.5)] sm:text-[10px]">
+              Cyber −{cyberPct}%
+            </span>
+          ) : (
+            <span />
+          )}
           {/* "Próximamente" pisa al badge de config: es el dato que importa
               mientras no se pueda abrir. */}
           <Tag tone="accent">
@@ -106,29 +111,26 @@ export function ProductCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col border-t border-ink-800 p-4 sm:p-5">
+      {/* Sin descripción: la card sólo invita a entrar (título + chip + link);
+          el `blurb` de config queda para otros usos. El `mt-auto` de abajo
+          alinea los links si los títulos ocupan distinta cantidad de líneas. */}
+      <div className="flex flex-1 flex-col border-t border-ink-800 p-3 sm:p-5">
         <h3 className="font-display text-sm font-black italic uppercase tracking-wide text-white sm:text-base">
           {product.title}
         </h3>
-        <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-400">
-          {product.blurb}
+        <p className="mt-1.5 text-[10px] font-bold uppercase leading-snug tracking-wider text-ink-400 sm:text-[11px]">
+          {product.specTag}
         </p>
 
-        {cyber && cyberPct ? (
-          <span className="mt-3 inline-flex w-fit items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[10px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.5)] sm:text-[11px]">
-            Cyber −{cyberPct}%
-          </span>
-        ) : null}
-
         {published ? (
-          <span className="mt-4 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+          <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[11px] font-bold uppercase tracking-wider text-accent">
             Ver producto
             <span aria-hidden="true" className="transition group-hover:translate-x-0.5">
               →
             </span>
           </span>
         ) : (
-          <span className="mt-4 text-[11px] font-bold uppercase tracking-wider text-ink-500">
+          <span className="mt-auto pt-3 text-[11px] font-bold uppercase tracking-wider text-ink-500">
             Muy pronto en la tienda
           </span>
         )}

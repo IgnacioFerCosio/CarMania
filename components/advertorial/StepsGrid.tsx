@@ -36,6 +36,9 @@ export function StepsGrid({
                 </h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-ink-300 sm:mt-3 md:text-base">
                   {s.desc}
+                  {s.note && (
+                    <span className="text-xs sm:text-sm"> ({s.note})</span>
+                  )}
                 </p>
               </div>
             </li>

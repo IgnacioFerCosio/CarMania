@@ -345,7 +345,14 @@ export type AdvertorialData = {
    */
   includes: WhatsInBoxCopy & { slides: readonly MediaSlot[] };
   steps: SectionTitle & {
-    items: readonly { n: number; title: string; desc: string; media: MediaSlot }[];
+    items: readonly {
+      n: number;
+      title: string;
+      desc: string;
+      /** Aclaración corta: va entre paréntesis, en letra más chica, tras `desc`. */
+      note?: string;
+      media: MediaSlot;
+    }[];
   };
   comparison: SectionTitle & {
     /**

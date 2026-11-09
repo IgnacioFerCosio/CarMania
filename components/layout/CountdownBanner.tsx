@@ -1,12 +1,14 @@
 'use client';
 /**
  * COUNTDOWN BANNER — franja roja fija en el tope de la página.
- * Cuenta regresiva de 8 horas desde la primera visita.
+ * Un solo banner: oferta especial (cuenta regresiva de 8 horas desde la
+ * primera visita) + los beneficios de `PROMO_BARS.benefits` (envío, cuotas…).
+ * Mismo formato que tuvo el del Cyber, en los colores de la marca.
  * Al vencer, resetea automáticamente por otras 8 horas.
  * El deadline persiste en localStorage (clave: carmania_offer_deadline).
  */
 import { useState, useEffect } from 'react';
-import { CYBER } from '@/lib/config';
+import { CYBER, PROMO_BARS } from '@/lib/config';
 import { CyberBanner } from './CyberBanner';
 
 const STORAGE_KEY = 'carmania_offer_deadline';
@@ -33,17 +35,29 @@ function getOrCreateDeadline(): number {
   }
 }
 
-type TimeLeft = { hh: string; mm: string; ss: string };
+type TimeLeft = { h: string; m: string; s: string };
 
 function calcTimeLeft(ms: number): TimeLeft {
-  if (ms <= 0) return { hh: '00', mm: '00', ss: '00' };
-  const total = Math.floor(ms / 1000);
+  const total = Math.max(0, Math.floor(ms / 1000));
   return {
-    hh: String(Math.floor(total / 3600)).padStart(2, '0'),
-    mm: String(Math.floor((total % 3600) / 60)).padStart(2, '0'),
-    ss: String(total % 60).padStart(2, '0'),
+    h: String(Math.floor(total / 3600)).padStart(2, '0'),
+    m: String(Math.floor((total % 3600) / 60)).padStart(2, '0'),
+    s: String(total % 60).padStart(2, '0'),
   };
 }
+
+function Box({ value, unit }: { value: string; unit: string }) {
+  return (
+    <span className="flex items-baseline gap-px rounded bg-black/25 px-1.5 py-0.5 leading-none ring-1 ring-inset ring-white/20">
+      <span>{value}</span>
+      <span className="text-[8px] font-bold uppercase text-white/70">{unit}</span>
+    </span>
+  );
+}
+
+/** Cuánto se queda cada vista cuando el banner alterna (sólo abajo de xl). */
+const HOLD_COUNTDOWN_MS = 4200;
+const HOLD_BENEFIT_MS = 2400;
 
 /**
  * Durante el CyberMonday (`CYBER.enabled`) la franja es el `CyberBanner`, con
@@ -78,59 +92,102 @@ function OfferBanner() {
     return () => clearInterval(id);
   }, []);
 
+  // Abajo de xl no entran la cuenta y los beneficios a la vez: el banner
+  // alterna entre la cuenta (slot 0) y cada beneficio (slots 1..n). Desde xl
+  // se ven todos juntos y esto no se usa.
+  const benefits = PROMO_BARS.benefits;
+  const [slot, setSlot] = useState(0);
+  const slots = benefits.length + 1;
+  useEffect(() => {
+    const id = window.setTimeout(
+      () => setSlot((n) => (n + 1) % slots),
+      slot === 0 ? HOLD_COUNTDOWN_MS : HOLD_BENEFIT_MS,
+    );
+    return () => window.clearTimeout(id);
+  }, [slot, slots]);
+
+  const t = time ?? { h: '00', m: '00', s: '00' };
+
   return (
     <>
       {/* Banner fijo — 40 px de alto (h-10). Es el único elemento del header
           que queda pegado arriba; el navbar scrollea con la página y, cuando
-          se va, el acceso al carrito lo cubre `FloatingCartButton`. */}
-      <div
-        aria-label="Oferta por tiempo limitado"
-        className="fixed inset-x-0 top-0 z-50 flex h-10 items-center justify-center gap-2 bg-accent px-4 sm:gap-3"
+          se va, el acceso al carrito lo cubre `FloatingCartButton`. Todo el
+          banner es un link a las promos (en mobile no hay botón). */}
+      <a
+        href="#pricing"
+        aria-label="Oferta especial: ver las ofertas"
+        className="group fixed inset-x-0 top-0 z-50 flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden bg-accent px-3 shadow-[0_0_18px_rgba(215,7,7,0.55)] sm:gap-3 sm:px-4"
       >
-        {/* Label */}
-        <span className="flex items-center gap-1.5 font-display text-[11px] font-black italic uppercase tracking-widest text-white sm:text-xs">
-          <span aria-hidden="true">🔥</span>
-          Oferta relámpago
-        </span>
+        {/* Destello cíclico: una franja de luz inclinada que cruza la barra
+            (CSS puro, se apaga con prefers-reduced-motion). */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-1/4 -skew-x-12 animate-cyber-shine bg-gradient-to-r from-transparent via-white/40 to-transparent motion-reduce:hidden"
+        />
 
-        {/* Separador */}
-        <span aria-hidden="true" className="h-3.5 w-px bg-white/30" />
-
-        {/* Countdown — tabular-nums para que los dígitos no se muevan.
-            El placeholder de abajo usa la MISMA estructura (3 cajitas +
-            separadores, con el mismo flex/gap) que el estado real, solo
-            invisible — así el ancho es idéntico desde el primer paint y
-            montar no corre 52px el resto de la fila (el contenedor con
-            justify-center la recentraba entera). Medido: antes de este
-            fix, el placeholder medía ~53px contra ~105px del real. */}
-        <span className="flex items-center gap-1 font-display text-xs font-extrabold tabular-nums text-white sm:text-sm">
-          {time ? (
-            <>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.hh}</span>
-              <span className="opacity-60">:</span>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.mm}</span>
-              <span className="opacity-60">:</span>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">{time.ss}</span>
-            </>
-          ) : (
-            <span aria-hidden="true" className="flex items-center gap-1 opacity-0">
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
-              <span className="opacity-60">:</span>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
-              <span className="opacity-60">:</span>
-              <span className="rounded bg-black/25 px-1.5 py-0.5 leading-none">00</span>
-            </span>
-          )}
-        </span>
-
-        {/* CTA discreto (solo desktop) */}
-        <a
-          href="#pricing"
-          className="hidden shrink-0 rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white transition hover:bg-white/30 sm:inline-block"
+        {/* Cuenta regresiva. Abajo de xl comparte lugar con los beneficios
+            (grid de una celda: ambos ocupan el mismo sitio y el ancho lo
+            define el más grande, así nada se corre al alternar). Sin tiempo
+            todavía (build / antes de hidratar) va invisible con el mismo
+            ancho, así montar no corre nada. */}
+        <span
+          className={`relative grid place-items-center transition-opacity ${time ? 'opacity-100' : 'opacity-0'}`}
         >
+          <span
+            className={`col-start-1 row-start-1 flex items-center gap-2 transition-opacity duration-300 xl:opacity-100 ${
+              slot === 0 ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <span className="flex items-center gap-1.5 font-display text-[11px] font-black italic uppercase tracking-widest text-white sm:text-xs">
+              {/* Punto "en vivo": reemplaza al emoji, que cambia según el
+                  sistema. El aro se apaga con prefers-reduced-motion. */}
+              <span aria-hidden="true" className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70 motion-reduce:hidden" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+              </span>
+              Oferta especial
+            </span>
+            <span className="flex items-center gap-1 font-display text-xs font-extrabold tabular-nums text-white sm:text-sm">
+              <Box value={t.h} unit="h" />
+              <Box value={t.m} unit="m" />
+              <Box value={t.s} unit="s" />
+            </span>
+          </span>
+
+          {/* Beneficios, de a uno (abajo de xl). */}
+          {benefits.map((text, i) => (
+            <span
+              key={text}
+              aria-hidden={slot !== i + 1}
+              className={`col-start-1 row-start-1 max-w-[190px] text-center font-display text-[10px] font-black uppercase italic leading-[1.1] tracking-wider text-white transition-opacity duration-300 sm:max-w-none sm:whitespace-nowrap sm:text-xs xl:hidden ${
+                slot === i + 1 ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {text}
+            </span>
+          ))}
+        </span>
+
+        {/* Beneficios, todos juntos (desde xl). */}
+        <span aria-hidden="true" className="hidden h-3.5 w-px bg-white/30 xl:block" />
+        <ul className="relative hidden items-center gap-x-3 font-display text-[11px] font-black uppercase italic tracking-wider text-white xl:flex">
+          {benefits.map((text, i) => (
+            <li key={text} className="flex items-center gap-3 whitespace-nowrap">
+              {i > 0 && (
+                <span aria-hidden="true" className="text-white/60">
+                  •
+                </span>
+              )}
+              {text}
+            </li>
+          ))}
+        </ul>
+
+        <span className="relative hidden shrink-0 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-accent transition group-hover:bg-white/90 md:inline-block">
           Ver oferta
-        </a>
-      </div>
+        </span>
+      </a>
 
       {/* Spacer en flujo normal — empuja el contenido de la página hacia abajo */}
       <div aria-hidden="true" className="h-10 w-full" />

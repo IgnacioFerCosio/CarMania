@@ -15,10 +15,10 @@
  * Sin pack de 1: los packs son 2x / 4x / 6x (ver el comentario de los
  * bundles en la config).
  *
- * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta se puede abrir
- * sólo con la URL, para probarla: no está en el sitemap, /tienda la muestra como
- * "Próximamente" sin link y lleva `noindex`. A diferencia de /soplador, no da
- * 404. Publicarla es sacar ese flag. 
+ * Con `comingSoon: true` en STORE_PRODUCTS (estado actual en producción) esta ruta
+ * se abre sólo con la URL: fuera del sitemap, "Próximamente" sin link en /tienda
+ * y `noindex`. Publicarla es sacar ese flag.
+ * A diferencia de /soplador, no da 404.
  */
 import type { Metadata } from 'next';
 import ReactDOM from 'react-dom';

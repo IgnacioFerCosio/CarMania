@@ -488,7 +488,8 @@ export const ROMPEVIDRIOS = {
         {
           n: 2,
           title: 'Apretá',
-          desc: 'Apoyalo en una esquina de la ventanilla y apretá: el resorte dispara la punta de tungsteno y el vidrio estalla. Sin fuerza.',
+          desc: 'Apoyalo en una esquina de la ventanilla y apretá: el resorte dispara la punta de tungsteno y el vidrio estalla.',
+          note: 'Utilizar en vidrios laterales o luneta. Nunca en parabrisas.',
           media: {
             id: 'RV-07',
             kind: 'gif',

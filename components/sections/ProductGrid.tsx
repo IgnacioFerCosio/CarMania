@@ -48,10 +48,14 @@ export function ProductGrid({
         {/* Durante el Cyber se esconden las cards "Próximamente" (producto sin
             publicar y slot vacío): en un evento de compra son espacio muerto.
             Con menos de 4 cards la grilla se angosta y queda centrada. */}
+        {/* En desktop las cards miden lo mismo que en una grilla de 4: con 3
+            visibles (Cyber) la grilla es de 3 columnas con el ancho de 3 de
+            esas 4 (3/4 del ancho menos un gap-5 de 20px / 4), centrada. En
+            mobile y tablet siguen 2 columnas. */}
         <div
           className={`mt-9 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 ${
-            cyberTrim && visible.length < 4
-              ? 'mx-auto max-w-3xl'
+            visible.length + slots.length === 3
+              ? 'lg:mx-auto lg:max-w-[calc(75%-5px)] lg:grid-cols-3'
               : 'lg:grid-cols-4'
           }`}
         >

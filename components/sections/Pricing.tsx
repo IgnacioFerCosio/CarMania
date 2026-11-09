@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { formatARS, type BundleData } from '@/lib/shopify';
-import { CYBER, PAYMENTS, RETURNS } from '@/lib/config';
+import { CYBER, PAYMENT_LOGOS, PAYMENTS, RETURNS, STOCK_URGENCY } from '@/lib/config';
 import { CyberLogo } from '@/components/ui/CyberLogo';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { Bundle, LandingConfig } from '@/lib/landings/types';
@@ -268,8 +268,24 @@ export function Pricing({
                   />
                 </div>
 
+                {/* Urgencia: va en el hueco entre el botón y la garantía (la misma
+                    altura que tenía ese margen: mt-4 / sm:mt-5), así la card no
+                    se estira. Titila con `animate-pulse`; se apaga con
+                    prefers-reduced-motion. */}
+                {STOCK_URGENCY.enabled && (
+                  <p className="flex h-4 items-center justify-center gap-1.5 text-center text-[10px] font-black uppercase italic leading-none tracking-wider text-accent sm:h-5 sm:text-[11px]">
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-accent motion-reduce:animate-none"
+                    />
+                    <span className="animate-pulse motion-reduce:animate-none">
+                      {STOCK_URGENCY.text}
+                    </span>
+                  </p>
+                )}
+
                 {/* Trust bottom */}
-                <div className="mt-4 flex items-center justify-center gap-x-4 gap-y-1 border-t border-ink-800 pt-3 text-center text-[10px] uppercase tracking-wider text-ink-400 sm:mt-5 sm:flex-col sm:gap-1 sm:pt-4 sm:text-[11px]">
+                <div className="flex items-center justify-center gap-x-4 gap-y-1 border-t border-ink-800 pt-3 text-center text-[10px] uppercase tracking-wider text-ink-400 sm:flex-col sm:gap-1 sm:pt-4 sm:text-[11px]">
                   <span>Devolución {RETURNS.days} días</span>
                   <span className="hidden sm:inline">Garantía 1 año</span>
                   <span className="inline sm:hidden">· Garantía 1 año</span>
@@ -383,13 +399,7 @@ export function Pricing({
             Pagás con tarjeta, débito o MercadoPago
           </span>
           <div className="grid w-full grid-cols-5 gap-2">
-            {[
-              { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
-              { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
-              { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
-              { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
-              { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
-            ].map((m) => (
+            {PAYMENT_LOGOS.map((m) => (
               <span
                 key={m.name}
                 className="flex h-11 items-center justify-center rounded-lg border border-ink-800 bg-ink-900"

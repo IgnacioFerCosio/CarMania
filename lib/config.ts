@@ -84,8 +84,8 @@ export const PAYMENTS = {
  */
 export const PAYMENT_LOGOS = [
   { name: 'Visa', src: '/payments/visa.svg', lg: false, w: 1000, h: 325 },
-  { name: 'Mastercard', src: '/payments/Mastercard-logo.svg', lg: false, w: 576, h: 512 },
-  { name: 'Mercado Pago', src: '/payments/Mercado_Pago.svg', lg: true, w: 1049, h: 425 },
+  { name: 'Mastercard', src: '/payments/Mastercard-mono.svg', lg: true, w: 152, h: 94 },
+  { name: 'Mercado Pago', src: '/payments/Mercado_Pago-mono.svg', lg: true, w: 1049, h: 425 },
   { name: 'American Express', src: '/payments/american-express-stacked.svg', lg: false, w: 100, h: 28 },
   { name: 'Naranja X', src: '/payments/NaranjaX-logo.svg', lg: false, w: 200, h: 60 },
 ] as const;
@@ -136,7 +136,7 @@ export const TRACKING = {
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const CYBER = {
-  enabled: true,
+  enabled: false,
   name: 'CYBER WEEK',
   extensionName: 'EXTENSIÓN CYBER WEEK',
   startsAt: '2026-11-02T00:00:00-03:00',
@@ -152,10 +152,22 @@ export const CYBER = {
 } as const;
 
 /**
+ * Urgencia de stock debajo del botón de compra de cada pack (`Pricing`). Es un
+ * mensaje de escasez: tiene que ser CIERTO (stock real corto). Si no lo es,
+ * `enabled: false`. Va en el hueco de arriba de la garantía, sin estirar la card.
+ */
+export const STOCK_URGENCY = {
+  enabled: true,
+  text: 'Últimas unidades disponibles',
+} as const;
+
+/**
  * Banner superior tipo "promo strip".
  * Lo dejamos en config para que lo puedas apagar/cambiar sin tocar el componente.
  */
 export const PROMO_BARS = {
+  /** Beneficios que viajan dentro del banner de oferta especial (`CountdownBanner`). */
+  benefits: ['Envío gratis a todo el país', '3 cuotas sin interés', 'Garantía de 30 días'],
   top: {
     enabled: true,
     text: CYBER.enabled
@@ -395,16 +407,14 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     comingSoon: true,
   },
   {
-    // ⚠️ Igual que el soplador: el producto no existe en Shopify y faltan
-    // todas las fotos y videos (ver docs/superpowers/specs/rompevidrios-assets.md).
-    // La foto es un placeholder propio hasta que llegue RV-13
-    // (`/rompevidrios/packs/pack-2x.webp`): la card "Próximamente" SÍ se ve
-    // en producción, y apuntarla a un archivo que no existe la mostraría rota.
+    // La foto es la del llavero solo (unidad), no el pack x2. En producción
+    // sigue como "Próximamente" (2026-11-08): se abre sólo con la URL, con
+    // noindex. Publicarlo es sacar `comingSoon`.
     handle: 'pack-x2-llavero-rescate-pro',
     title: 'Llavero Rescate PRO™',
     blurb:
       'Rompevidrios a resorte y corta cinturón en el llavero. Lo apoyás, apretás y salís. Con vidrio de prueba incluido.',
-    image: '/rompevidrios/tienda/proximamente.webp',
+    image: '/rompevidrios/tienda/llavero-unidad.webp',
     href: '/llavero-rescate',
     fallbackPrice: 49990, // espejo de ROMPEVIDRIOS.fallbackPricing.price (pack 2x)
     specTag: 'ROMPEVIDRIOS + CORTA CINTURÓN',

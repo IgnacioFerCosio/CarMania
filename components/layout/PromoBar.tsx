@@ -4,29 +4,18 @@
  * Si querés desactivarlo, cambiá PROMO_BARS.top.enabled a false en config.
  *
  * Dos modos:
- *  - sin props: un solo mensaje centrado (el de PROMO_BARS.top). Es lo que
- *    usan `/` y `/parasol`, y se resuelve entero en el servidor.
- *  - con `messages`: un beneficio a la vez, rotando en bucle. Lo delega en
- *    `PromoRotator`, que es el único pedazo que necesita estado.
+ *  - sin props: no pinta nada. Las landings (`/`, `/parasol`…) llevan los
+ *    beneficios dentro del banner de arriba (`CountdownBanner`, ver
+ *    PROMO_BARS.benefits), así que el montaje queda por compatibilidad.
+ *  - con `messages`: un beneficio a la vez, rotando en bucle. Lo usa /tienda
+ *    y lo delega en `PromoRotator`, que es el único pedazo que necesita estado.
  */
-import { CYBER, PROMO_BARS } from '@/lib/config';
+import { PROMO_BARS } from '@/lib/config';
 import { PromoRotator } from './PromoRotator';
 
 export function PromoBar({ messages }: { messages?: readonly string[] } = {}) {
   if (!PROMO_BARS.top.enabled) return null;
-
-  // Durante el Cyber las landings no llevan esta barra: sus beneficios van
-  // dentro del banner morado (ver CYBER.benefits). /tienda, que pasa
-  // `messages` y no monta el banner, la conserva.
-  if (!messages && CYBER.enabled) return null;
-
-  if (!messages) {
-    return (
-      <div className="bg-ink-950 py-2 text-center text-[11px] font-bold uppercase tracking-widest text-ink-200 md:text-xs">
-        « {PROMO_BARS.top.text} »
-      </div>
-    );
-  }
+  if (!messages) return null;
 
   return <PromoRotator messages={messages} />;
 }

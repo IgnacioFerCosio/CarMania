@@ -10,7 +10,7 @@
 import { useEffect, useRef } from 'react';
 import { formatARS } from '@/lib/shopify';
 import { nextTierOf, tierOf } from '@/lib/tiers';
-import { CYBER, PAYMENTS, RETURNS, SHIPPING } from '@/lib/config';
+import { CYBER, PAYMENT_LOGOS, PAYMENTS, RETURNS, SHIPPING } from '@/lib/config';
 import { CROSS_SELL_LABEL } from '@/lib/landings';
 import { Icon } from '@/components/ui/Icon';
 import { CyberLogo } from '@/components/ui/CyberLogo';
@@ -19,6 +19,24 @@ import { useCart } from './CartProvider';
 import { CartLineItem } from './CartLineItem';
 import { UpsellBanner } from './UpsellBanner';
 import { CrossSellCard } from './CrossSellCard';
+
+/**
+ * Cómo se dibuja cada logo en el carrito (chips de igual tamaño, 5 por fila).
+ * Los de config (Hero, /tienda, packs) son versiones en blanco; acá van en sus
+ * colores sobre chips blancos, así que Mastercard y Mercado Pago usan sus
+ * archivos a color. Mercado Pago va más grande (`wide`: sin padding y un poco
+ * ampliado) porque su trazo es fino y claro.
+ */
+const CART_LOGO_LOOK: Record<
+  string,
+  { bg?: string; src?: string; w?: number; h?: number; img?: string; wide?: boolean }
+> = {
+  Mastercard: { src: '/payments/Mastercard-color.svg', w: 152, h: 94, img: 'h-6' },
+  'Mercado Pago': { src: '/payments/Mercado_Pago.svg', w: 1049, h: 425, img: 'h-8', wide: true },
+  Visa: { img: 'h-4' },
+  'American Express': { img: 'h-6' },
+  'Naranja X': { img: 'h-4' },
+};
 
 export function CartDrawer({
   ctaHref = '#pricing',
@@ -320,6 +338,41 @@ export function CartDrawer({
                 </dd>
               </div>
             </dl>
+
+            {/* Cuotas sin interés, como en el checkout: sobre el total del carrito. */}
+            {PAYMENTS.installments > 1 && cart.total > 0 && (
+              <p className="mt-1.5 text-right text-xs text-ink-400">
+                o {PAYMENTS.installments} {PAYMENTS.installmentsLabel} de{' '}
+                <span className="font-bold tabular-nums text-white">
+                  {formatARS(Math.round(cart.total / PAYMENTS.installments))}
+                </span>
+              </p>
+            )}
+
+            {/* Medios de pago: los mismos logos de /tienda, en chips claros para
+                que se vean en sus colores sobre el fondo oscuro. */}
+            <ul className="mt-3 grid grid-cols-5 gap-1.5">
+              {PAYMENT_LOGOS.map((p) => {
+                const look = CART_LOGO_LOOK[p.name];
+                return (
+                  <li
+                    key={p.name}
+                    className={`flex h-9 items-center justify-center overflow-hidden rounded-md ${look?.wide ? 'px-0' : 'px-1.5'} ${look?.bg ?? 'bg-white'}`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={look?.src ?? p.src}
+                      alt={p.name}
+                      width={look?.w ?? p.w}
+                      height={look?.h ?? p.h}
+                      loading="lazy"
+                      decoding="async"
+                      className={`w-auto max-w-full object-contain ${look?.img ?? 'h-5'} ${look?.wide ? 'scale-110' : ''}`}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
 
             <button
               type="button"
