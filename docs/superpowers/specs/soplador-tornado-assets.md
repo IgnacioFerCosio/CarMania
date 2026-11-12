@@ -6,10 +6,30 @@ intercambiable (botón rojo), cargador y manual. Lo vende LAMBO TECH (código
 IA, con la foto del proveedor como referencia de forma.
 
 Precios: x1 $119.990 · x2 $179.990 (2ª al 50%) · x3 $239.990 (3x2).
-Specs exactas: **pendientes**. Ningún número (km/h, RPM, PA, mAh, autonomía)
-entra al copy ni a una imagen hasta tenerlo del proveedor. Los videos de
-referencia prometen "250 km/h" y "150.000 RPM", y la caja "35.000 PA": son de
-otros modelos y no los copiamos.
+
+## Specs del proveedor (2026-11-12)
+
+Lambo Tech LT-2522, línea Violent Fan.
+
+| | |
+|---|---|
+| Presión de soplado | 35.000 Pa |
+| Función | Sólo sopla (no aspira ni tritura) |
+| Batería | Li-Ion recargable, desmontable, **21 V nominales** |
+| Cargador | De pared, 220 V, ficha cilíndrica |
+| Color | Negro con detalles rojos |
+| Usos | Secado de autos, talleres, PC, hojas secas, brasas |
+| En la caja | 1 soplador, 1 batería, 1 cargador, 1 manual |
+
+Reglas de copy que salen de acá:
+- **Voltaje: decimos 21 V**, nunca los "36V / 48V" de la etiqueta comercial:
+  es inflado y un cliente que lo mide nos lo puede reclamar.
+- 35.000 Pa es dato del proveedor: se puede usar, citado como tal.
+- **No hay** km/h, RPM, autonomía, tiempo de carga ni peso: no se inventan. Los
+  "250 km/h" y "150.000 RPM" de los ads son de otros modelos.
+- **No trae boquillas ni maletín**: nada de "boquilla intercambiable" ni
+  unboxing en maletín. Es soplado directo.
+- No aspira: ningún copy ni imagen que lo muestre aspirando.
 
 ## Regla de producto
 
@@ -66,13 +86,13 @@ HowItWorks, Pricing, BenefitsShowcase). Carpeta propuesta: `public/tornado/`.
 | T-04 | Secar el auto | Agua que sale del capó y del parabrisas de un auto oscuro recién lavado |
 | T-05 | La vereda | Hojas secas volando de una vereda de baldosas |
 | T-06 | El garage / taller | Polvo y viruta del piso o de la mesa de trabajo |
-| T-07 | El interior del auto | Tapizados y alfombras (la boquilla fina) |
+| T-07 | La PC | Polvo saliendo del gabinete de una PC abierta |
 | T-08 | El patio / pileta | Hojas fuera del borde de la pileta o del deck |
 
 ### 4. Qué incluye
 | ID | Qué |
 |---|---|
-| T-09 | Flat lay: soplador, batería, cargador, boquillas y manual sobre fondo oscuro (confirmar el contenido con el proveedor) |
+| T-09 | Flat lay: soplador, batería, cargador de pared y manual sobre fondo oscuro (sin boquillas ni maletín: no vienen) |
 | T-10 | Despiece flotando, como el del turbo (`feat/soplador-turbo`) — motor, turbina, batería |
 
 ### 5. Antes / después (mismo encuadre)
@@ -83,8 +103,8 @@ HowItWorks, Pricing, BenefitsShowcase). Carpeta propuesta: `public/tornado/`.
 ### 6. Cómo funciona (3 videos, H.264, sin audio)
 | ID | Paso |
 |---|---|
-| T-13 | Calzar la batería (clic) |
-| T-14 | Elegir la boquilla |
+| T-13 | Cargar la batería en el cargador de pared |
+| T-14 | Calzar la batería en la empuñadura (clic) |
 | T-15 | Apretar el gatillo y soplar |
 
 ### 7. Beneficios
@@ -97,7 +117,6 @@ HowItWorks, Pricing, BenefitsShowcase). Carpeta propuesta: `public/tornado/`.
 
 ## Pendiente del proveedor
 
-- Specs: velocidad del aire, potencia, batería (V / mAh), autonomía, tiempo de
-  carga, peso, velocidades.
-- Qué trae la caja exactamente (¿maletín? ¿cuántas boquillas?).
+- Autonomía, tiempo de carga, mAh, peso y si tiene más de una velocidad: son
+  las dudas que va a tener el cliente y hoy no las podemos contestar.
 - ¿Vende baterías sueltas? (para un pack "con batería extra").
