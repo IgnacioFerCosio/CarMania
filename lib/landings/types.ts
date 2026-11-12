@@ -239,6 +239,11 @@ export type LandingConfig = {
    */
   whatsInBox?: WhatsInBoxData;
   reviews: readonly Review[];
+  /**
+   * Reseñas del carrusel del hero. Opcional: sin esto, el hero usa `reviews`
+   * tal cual. Ver `pickHeroReviews` (sólo 5★, cortadas con "…").
+   */
+  heroReviews?: readonly Review[];
   ratingBreakdown: {
     average: number;
     total: number;

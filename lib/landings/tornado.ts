@@ -26,6 +26,7 @@
  */
 import type { Bundle, LandingConfig, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
+import { pickHeroReviews } from './heroReviews';
 
 /**
  * Reseñas del Soplador Tornado PRO (cargadas el 2026-11-12, en el orden que
@@ -341,6 +342,8 @@ export const TORNADO = {
     testimonial: TORNADO_REVIEWS[5],
   },
   reviews: TORNADO_REVIEWS,
+  // El hero muestra sólo las de 5★, cortadas al largo de las del soporte.
+  heroReviews: pickHeroReviews(TORNADO_REVIEWS),
   ratingBreakdown: {
     average: 4.8,
     total: TORNADO_REVIEWS.length,
