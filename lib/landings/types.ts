@@ -97,7 +97,8 @@ export type Step = {
   title: string;
   desc: string;
   /** Video del paso. Antes vivía hardcodeado en HowItWorks.tsx. */
-  video: string;
+  video?: string;
+  /** Foto del paso: se muestra sólo si no hay `video`. */
   image?: string;
 };
 

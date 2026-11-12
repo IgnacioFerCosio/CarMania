@@ -23,7 +23,9 @@ import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
-import { BeforeAfter } from '@/components/sections/BeforeAfter';
+import Image from 'next/image';
+import { ProductCarousel } from '@/components/ui/ProductCarousel';
+import { LazyVideo } from '@/components/ui/LazyVideo';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
@@ -69,8 +71,8 @@ const METADATA: Metadata = {
 export default async function SopladorTornadoPage() {
   if (!isPublished(TORNADO_STORE)) notFound();
 
-  // La imagen del hero es el LCP de esta página.
-  ReactDOM.preload(TORNADO.heroMedia.src, {
+  // El hero es un video: su poster es el LCP de esta página.
+  ReactDOM.preload(TORNADO.heroMedia.poster ?? TORNADO.heroMedia.src, {
     as: 'image',
     fetchPriority: 'high',
     type: 'image/webp',
@@ -120,10 +122,24 @@ export default async function SopladorTornadoPage() {
         <UseCases config={TORNADO} />
 
         {/* 3. Qué incluye */}
-        {TORNADO.whatsInBox && <WhatsInBox data={TORNADO.whatsInBox} />}
+        {/* Carrusel propio: las fotos de la galería y, en el medio, los dos
+            videos de Commonkart (con permiso, recortados sin marca de agua). */}
+        {TORNADO.whatsInBox && (
+          <WhatsInBox
+            data={TORNADO.whatsInBox}
+            media={
+              <ProductCarousel
+                nodes={[
+                  <GallerySlide key="caja" {...TORNADO.whatsInBox.gallery[0]} />,
+                  <LazyVideo key="patio" src="/tornado/videos/patio.mp4" className="h-full w-full object-cover" />,
+                  <LazyVideo key="escoba" src="/tornado/videos/escoba.mp4" className="h-full w-full object-cover" />,
+                  ...TORNADO.whatsInBox.gallery.slice(1).map((g) => <GallerySlide key={g.src} {...g} />),
+                ]}
+              />
+            }
+          />
+        )}
 
-        {/* 4. Antes / después — la vereda con y sin hojas */}
-        {TORNADO.beforeAfter && <BeforeAfter data={TORNADO.beforeAfter} />}
 
         {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={TORNADO} />
@@ -167,4 +183,9 @@ export default async function SopladorTornadoPage() {
       )}
     </CartProvider>
   );
+}
+
+/** Una foto del carrusel de "qué incluye", igual que las de `ProductCarousel`. */
+function GallerySlide({ src, alt }: { src: string; alt: string }) {
+  return <Image src={src} alt={alt} fill className="object-cover" sizes="(min-width: 768px) 512px, 100vw" />;
 }

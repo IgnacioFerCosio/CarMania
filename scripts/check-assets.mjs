@@ -63,14 +63,6 @@ const PENDIENTES = new Set([
   '/soplador/bundles/SopladorX2.webp',
   '/soplador/bundles/SopladorX3.webp',
 
-  // Soplador Tornado PRO: faltan el antes/después y los 3 videos. Ver
-  // docs/superpowers/specs/soplador-tornado-assets.md (IDs T-xx).
-  '/tornado/before-after/antes.webp', // T-11
-  '/tornado/before-after/despues.webp', // T-12
-  '/tornado/how-to-use/01-carga-la-bateria.mp4', // T-13
-  '/tornado/how-to-use/02-calza-la-bateria.mp4', // T-14
-  '/tornado/how-to-use/03-apreta-el-gatillo.mp4', // T-15
-
   // ── Config inerte: se referencia pero NO se renderiza, así que no puede
   // dar 404. Está acá para que el check no la marque, no porque haya que
   // subir los archivos. Si algún día se activa, hay que conseguirlos.

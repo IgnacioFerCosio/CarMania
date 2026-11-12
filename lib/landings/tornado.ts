@@ -198,11 +198,13 @@ export const TORNADO = {
       'La fuerza de un soplador de jardín en el tamaño de un taladro. Sin cable que arrastrar ni enchufe que buscar.',
   },
   heroMedia: {
-    // Render maestro (T-01). Es el LCP de /soplador-tornado.
-    kind: 'image',
-    src: '/tornado/hero/tornado-hero.webp',
-    width: 1600,
-    height: 1600,
+    // Video de secado del auto (de Commonkart, con permiso; recortado sin la
+    // marca de agua). El poster es el LCP de /soplador-tornado.
+    kind: 'video',
+    src: '/tornado/videos/secado.mp4',
+    poster: '/tornado/videos/secado-poster.webp',
+    width: 480,
+    height: 764,
     badgeLine1: 'PRESIÓN DE',
     badgeLine2: '35.000 Pa', // dato del proveedor (ficha LT-2522)
   },
@@ -232,25 +234,29 @@ export const TORNADO = {
     { label: 'LA PC', image: '/tornado/use-cases/pc.webp', alt: 'Soplando el polvo de adentro del gabinete de una PC' },
     { label: 'EL PATIO', image: '/tornado/use-cases/patio.webp', alt: 'Volando las hojas del borde de la pileta y del deck' },
   ],
-  /** Tomas T-13 a T-15 del plan. */
+  /**
+   * Tomas T-13 a T-15 del plan. Por ahora con fotos fijas (`image`): no hay
+   * videos de uso que respeten el producto. Cuando los haya, sumar `video`
+   * (tiene prioridad sobre la foto).
+   */
   steps: [
     {
       n: 1,
       title: 'Cargá la batería',
       desc: 'Enchufá el cargador de pared que viene en la caja y dejá la batería cargando.',
-      video: '/tornado/how-to-use/01-carga-la-bateria.mp4',
+      image: '/tornado/whats-in-box/que-incluye.webp',
     },
     {
       n: 2,
       title: 'Calzala en el mango',
       desc: 'La batería entra de un clic abajo de la empuñadura. Se saca igual de fácil para volver a cargarla.',
-      video: '/tornado/how-to-use/02-calza-la-bateria.mp4',
+      image: '/tornado/reviews/05.webp',
     },
     {
       n: 3,
       title: 'Apretá el gatillo',
       desc: 'Apuntá y soplá. Hojas, agua, polvo o brasas: con una mano y sin cable que arrastrar.',
-      video: '/tornado/how-to-use/03-apreta-el-gatillo.mp4',
+      image: '/tornado/use-cases/secado.webp',
     },
   ],
   benefits: [
@@ -305,18 +311,9 @@ export const TORNADO = {
       body: 'Los sopladores con cable te atan al enchufe: alargue, nudos y el cable enganchado en cada planta. Y los de nafta hacen ruido, pesan y hay que arrancarlos.',
     },
   ],
-  /** Tomas T-11 / T-12 del plan. */
-  beforeAfter: {
-    headline: 'LA MISMA VEREDA. UNA PASADA.',
-    accentWord: 'UNA PASADA.',
-    body: 'Deslizá para ver la diferencia. A la izquierda, la vereda tapada de hojas. A la derecha, la misma vereda después de una pasada.',
-    beforeSrc: '/tornado/before-after/antes.webp',
-    beforeAlt: 'Vereda de baldosas tapada de hojas secas',
-    beforeLabel: 'Antes',
-    afterSrc: '/tornado/before-after/despues.webp',
-    afterAlt: 'La misma vereda limpia después de usar el Soplador Tornado PRO',
-    afterLabel: 'Después',
-  },
+  // Sin `beforeAfter` por ahora: faltan las fotos (T-11 / T-12) y la sección
+  // se veía en negro. Cuando estén, volver a cargarla con
+  // /tornado/before-after/antes.webp y despues.webp.
   /** Contenido de la caja según el proveedor (2026-11-12). */
   whatsInBox: {
     headline: 'Calzá la batería y soplá.',
