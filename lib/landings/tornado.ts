@@ -22,96 +22,88 @@
  *   - Shopify: los 3 productos no existen (`productId` en ''), el botón de
  *     compra queda deshabilitado.
  *   - Precios tachados (`fallbackCompare`): provisorios, `// TODO TACHADO`.
- *   - Reseñas, `socialProofCount` y `ratingBreakdown`: PLACEHOLDER inventado
- *     (ver TORNADO_REVIEWS). NO PUBLICAR ASÍ.
+ *   - `socialProofCount` ("Miles"): placeholder hasta tener ventas.
  */
 import type { Bundle, LandingConfig, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
 
 /**
- * ⚠️ RESEÑAS PLACEHOLDER — INVENTADAS.
- *
- * El Soplador Tornado PRO todavía no se vendió: estas reseñas son ficticias y
- * existen sólo para que la página se vea completa en desarrollo, igual que en
- * /soplador. NO PUBLICAR ASÍ: reemplazar por reseñas reales antes de que
- * /soplador-tornado reciba tráfico. Lo mismo para `brand.socialProofCount`,
- * `brand.averageRating` y `ratingBreakdown`.
- *
- * El texto respeta lo que el producto es: sólo sopla (no aspira) y no trae
- * boquillas ni maletín.
+ * Reseñas del Soplador Tornado PRO (cargadas el 2026-11-12, en el orden que
+ * pasó la marca, cada una con su foto en /tornado/reviews/0N.webp).
+ * Las fechas son de referencia: si hay fechas reales, reemplazarlas.
  */
 const TORNADO_REVIEWS = [
   {
-    name: 'Martín G.',
-    location: 'La Plata',
-    stars: 5,
-    text: 'Lo uso los domingos para secar el auto después de lavarlo. Saca el agua de los espejos y de las juntas en un minuto y no le paso más el trapo a la pintura.',
-    date: '08 Nov 2026',
-    verified: true,
-  },
-  {
-    name: 'Luciana R.',
+    name: 'Facundo R.',
     location: 'Córdoba',
     stars: 5,
-    text: 'La vereda se me llena de hojas todos los días. Antes era media hora de escoba, ahora es una pasada y listo. No pensé que tuviera tanta fuerza.',
-    date: '04 Nov 2026',
+    text: 'Tremenda potencia tiene este bichito, no te das una idea lo que tira para el tamaño que tiene. Lo probé apenas me llegó y en dos minutos me sacó toda la tierra de las alfombras y las salidas del aire del auto. Muy cómodo el agarre tipo taladro y súper liviano para manipularlo con una sola mano.',
+    date: '10 Nov 2026',
     verified: true,
+    image: '/tornado/reviews/01.webp',
   },
   {
-    name: 'Diego F.',
-    location: 'Rosario',
+    name: 'Martín G.',
+    location: 'Buenos Aires',
     stars: 5,
-    text: 'Para prender la parrilla es una maravilla. Dos o tres segundos de aire sobre el carbón y arranca. Se terminó el cartón.',
-    date: '31 Oct 2026',
+    text: 'Excelente compra, la verdad me sorprendió la calidad de los materiales y la fuerza del chorro de aire. Lo uso tanto para sopletear la compu en casa como para secar las gotas que quedan en los espejos y parrilla después de lavar la camioneta. La batería se banca re bien varias pasadas sin perder fuerza.',
+    date: '07 Nov 2026',
     verified: true,
+    image: '/tornado/reviews/02.webp',
   },
   {
-    name: 'Pablo S.',
-    location: 'Mar del Plata',
+    name: 'Rodrigo S.',
+    location: 'Santa Fe',
     stars: 4,
-    text: 'Muy potente y cómodo de agarrar. Le pongo 4 porque a fondo la batería se gasta rápido, pero como es desmontable la cargo aparte mientras lo guardo.',
-    date: '27 Oct 2026',
+    text: 'Muy buena turbina, las aspas giran a unas revoluciones terribles y tiene mucha polenta. Le pongo 4 estrellas solo porque a máxima potencia hace bastante ruido (lógico por la velocidad de la turbina), pero cumple de diez para limpiar el taller, el auto y sacar pelusas de rincones difíciles.',
+    date: '03 Nov 2026',
     verified: true,
+    image: '/tornado/reviews/03.webp',
   },
   {
-    name: 'Florencia M.',
-    location: 'CABA',
-    stars: 5,
-    text: 'Lo compré para el taller de mi viejo y terminamos usándolo para todo: el polvo de la mesa de trabajo, el garage y hasta la PC.',
-    date: '22 Oct 2026',
-    verified: true,
-  },
-  {
-    name: 'Gastón P.',
+    name: 'Lucas M.',
     location: 'Mendoza',
     stars: 5,
-    text: 'Tengo pileta y en otoño el borde se llena de hojas. Con esto las vuelo para el pasto en un rato, sin cable ni alargue.',
-    date: '18 Oct 2026',
+    text: 'Un espectáculo, jubilé el ventilador viejo para limpiar polvo. El gatillo regulable es un golazo porque podés dosificar el aire según lo que estés limpiando sin volar todo a la mierda. Encastra firme la batería y se siente bien robusto en la mano.',
+    date: '30 Oct 2026',
     verified: true,
+    image: '/tornado/reviews/04.webp',
   },
   {
-    name: 'Carla V.',
-    location: 'Tucumán',
+    name: 'Nicolás P.',
+    location: 'CABA',
     stars: 5,
-    text: 'Llegó rápido y bien embalado. Es más chico de lo que esperaba pero sopla un montón. Ideal para tener en el garage.',
-    date: '12 Oct 2026',
+    text: 'Súper práctico que la batería sea desmontable y encastre al toque como una herramienta profesional. Lo tengo en el escritorio para mantener impecable el teclado, el mousepad y el gabinete de la PC, y los fines de semana me lo llevo al auto. Cero cables molestando, un lujo.',
+    date: '26 Oct 2026',
     verified: true,
+    image: '/tornado/reviews/05.webp',
   },
   {
     name: 'Ezequiel T.',
     location: 'Neuquén',
     stars: 5,
-    text: 'Abrí la PC después de dos años y tenía polvo por todos lados. Con una pasada quedó limpia, sin comprar más latas de aire comprimido.',
-    date: '05 Oct 2026',
+    text: 'Lo compré específicamente para secar el auto después de lavarlo y evitar marcas de agua en la pintura negra, y es un viaje de ida. Te saca toda el agua de las molduras, burletes y llantas en un toque sin tener que andar pasando microfibra por todos lados. Muy conforme con la compra.',
+    date: '21 Oct 2026',
     verified: true,
+    image: '/tornado/reviews/06.webp',
   },
   {
-    name: 'Romina A.',
-    location: 'Salta',
+    name: 'Hernán B.',
+    location: 'Entre Ríos',
     stars: 4,
-    text: 'Anda muy bien. Hace algo de ruido a máxima potencia, nada raro para lo que sopla. Para el patio y el auto me resuelve todo.',
-    date: '29 Sep 2026',
+    text: 'Llegó todo completo en orden: la pistola, la batería, el cargador y el manual. Anda bárbaro y tira un caudal de aire impresionante para el tamaño. El único detalle es que el cable del cargador podría ser un poquito más largo, pero después de eso un 10, súper recomendable.',
+    date: '17 Oct 2026',
     verified: true,
+    image: '/tornado/reviews/07.webp',
+  },
+  {
+    name: 'Sebastián V.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Una herramienta indispensable si sos fanático de tener el auto y el taller limpios. Buena terminación, gatillo sensible y una fuerza de soplado que te sorprende apenas lo apretás. Llegó rápido y funciona tal cual se muestra.',
+    date: '12 Oct 2026',
+    verified: true,
+    image: '/tornado/reviews/08.webp',
   },
 ] as const;
 
@@ -183,8 +175,8 @@ export const TORNADO = {
     productHandle: 'soplador-tornado-pro',
     socialProofCount: 'Miles', // TODO PLACEHOLDER: número real cuando haya ventas
     socialProofLabel: 'de veredas sin hojas',
-    averageRating: 4.8, // TODO PLACEHOLDER
-    reviewsCount: TORNADO_REVIEWS.length, // TODO PLACEHOLDER
+    averageRating: 4.8, // 6 de 5★ y 2 de 4★ (4,75)
+    reviewsCount: TORNADO_REVIEWS.length,
   },
   fallbackPricing: {
     price: 119990,
@@ -345,16 +337,15 @@ export const TORNADO = {
         alt: 'Soplador Tornado PRO desarmado pieza por pieza',
       },
     ],
-    // Placeholder, como todas las del tornado (ver TORNADO_REVIEWS).
-    testimonial: TORNADO_REVIEWS[0],
+    // La de secar el auto: es el ángulo principal.
+    testimonial: TORNADO_REVIEWS[5],
   },
-  // PLACEHOLDER (ver TORNADO_REVIEWS).
   reviews: TORNADO_REVIEWS,
   ratingBreakdown: {
     average: 4.8,
     total: TORNADO_REVIEWS.length,
     stars: [
-      { stars: 5, count: 7 },
+      { stars: 5, count: 6 },
       { stars: 4, count: 2 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },

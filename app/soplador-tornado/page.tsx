@@ -4,8 +4,7 @@
  * Misma estructura que `/soplador` (Turbo PRO, pausado): cambia sólo la
  * config. Diferencias a propósito:
  *   - Sin `CarBrands` ni `PitchBlock`, igual que /soplador.
- *   - `Reviews` sólo si `TORNADO.reviews` tiene alguna. Hoy son placeholder
- *     (ver lib/landings/tornado.ts): NO publicar así.
+ *   - `Reviews` sólo si `TORNADO.reviews` tiene alguna.
  *
  * Los 3 productos todavía no existen en Shopify (productId en ''), así que
  * los botones de compra quedan deshabilitados. Material pendiente: ver
