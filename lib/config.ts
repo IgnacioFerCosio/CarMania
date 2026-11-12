@@ -339,6 +339,12 @@ export type StoreProduct = {
    * para que no quede a medio ocultar.
    */
   comingSoon?: boolean;
+  /**
+   * Saca la card de la grilla de /tienda y el link del nav, también en dev y
+   * en las previews. La landing NO se borra: con `comingSoon` sigue dando 404
+   * en producción y se abre por URL en dev. Es para productos pausados.
+   */
+  hidden?: boolean;
 };
 
 /**
@@ -405,6 +411,9 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     specTag: 'RECARGABLE USB',
     badge: 'NUEVO',
     comingSoon: true,
+    // Pausado (2026-11-12): se continúa con otro soplador (inalámbrico, con
+    // batería). Para retomarlo, sacar `hidden`.
+    hidden: true,
   },
   {
     // La foto es la del llavero solo (unidad), no el pack x2. En producción
