@@ -22,11 +22,98 @@
  *   - Shopify: los 3 productos no existen (`productId` en ''), el botón de
  *     compra queda deshabilitado.
  *   - Precios tachados (`fallbackCompare`): provisorios, `// TODO TACHADO`.
- *   - Reseñas: vacías a propósito. No se inventan; la sección no se dibuja
- *     hasta que haya reales.
+ *   - Reseñas, `socialProofCount` y `ratingBreakdown`: PLACEHOLDER inventado
+ *     (ver TORNADO_REVIEWS). NO PUBLICAR ASÍ.
  */
 import type { Bundle, LandingConfig, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
+
+/**
+ * ⚠️ RESEÑAS PLACEHOLDER — INVENTADAS.
+ *
+ * El Soplador Tornado PRO todavía no se vendió: estas reseñas son ficticias y
+ * existen sólo para que la página se vea completa en desarrollo, igual que en
+ * /soplador. NO PUBLICAR ASÍ: reemplazar por reseñas reales antes de que
+ * /soplador-tornado reciba tráfico. Lo mismo para `brand.socialProofCount`,
+ * `brand.averageRating` y `ratingBreakdown`.
+ *
+ * El texto respeta lo que el producto es: sólo sopla (no aspira) y no trae
+ * boquillas ni maletín.
+ */
+const TORNADO_REVIEWS = [
+  {
+    name: 'Martín G.',
+    location: 'La Plata',
+    stars: 5,
+    text: 'Lo uso los domingos para secar el auto después de lavarlo. Saca el agua de los espejos y de las juntas en un minuto y no le paso más el trapo a la pintura.',
+    date: '08 Nov 2026',
+    verified: true,
+  },
+  {
+    name: 'Luciana R.',
+    location: 'Córdoba',
+    stars: 5,
+    text: 'La vereda se me llena de hojas todos los días. Antes era media hora de escoba, ahora es una pasada y listo. No pensé que tuviera tanta fuerza.',
+    date: '04 Nov 2026',
+    verified: true,
+  },
+  {
+    name: 'Diego F.',
+    location: 'Rosario',
+    stars: 5,
+    text: 'Para prender la parrilla es una maravilla. Dos o tres segundos de aire sobre el carbón y arranca. Se terminó el cartón.',
+    date: '31 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Pablo S.',
+    location: 'Mar del Plata',
+    stars: 4,
+    text: 'Muy potente y cómodo de agarrar. Le pongo 4 porque a fondo la batería se gasta rápido, pero como es desmontable la cargo aparte mientras lo guardo.',
+    date: '27 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Florencia M.',
+    location: 'CABA',
+    stars: 5,
+    text: 'Lo compré para el taller de mi viejo y terminamos usándolo para todo: el polvo de la mesa de trabajo, el garage y hasta la PC.',
+    date: '22 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Gastón P.',
+    location: 'Mendoza',
+    stars: 5,
+    text: 'Tengo pileta y en otoño el borde se llena de hojas. Con esto las vuelo para el pasto en un rato, sin cable ni alargue.',
+    date: '18 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Carla V.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Llegó rápido y bien embalado. Es más chico de lo que esperaba pero sopla un montón. Ideal para tener en el garage.',
+    date: '12 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Ezequiel T.',
+    location: 'Neuquén',
+    stars: 5,
+    text: 'Abrí la PC después de dos años y tenía polvo por todos lados. Con una pasada quedó limpia, sin comprar más latas de aire comprimido.',
+    date: '05 Oct 2026',
+    verified: true,
+  },
+  {
+    name: 'Romina A.',
+    location: 'Salta',
+    stars: 4,
+    text: 'Anda muy bien. Hace algo de ruido a máxima potencia, nada raro para lo que sopla. Para el patio y el auto me resuelve todo.',
+    date: '29 Sep 2026',
+    verified: true,
+  },
+] as const;
 
 const TORNADO_BUNDLES: readonly Bundle[] = [
   {
@@ -94,12 +181,10 @@ export const TORNADO = {
   brand: {
     tagline: 'Soplador Tornado PRO™',
     productHandle: 'soplador-tornado-pro',
-    // Vacío: sin ventas no hay prueba social que mostrar. Con '' el Pricing
-    // no dibuja la línea de estrellas.
-    socialProofCount: '',
-    socialProofLabel: '',
-    averageRating: 0,
-    reviewsCount: 0,
+    socialProofCount: 'Miles', // TODO PLACEHOLDER: número real cuando haya ventas
+    socialProofLabel: 'de veredas sin hojas',
+    averageRating: 4.8, // TODO PLACEHOLDER
+    reviewsCount: TORNADO_REVIEWS.length, // TODO PLACEHOLDER
   },
   fallbackPricing: {
     price: 119990,
@@ -214,9 +299,9 @@ export const TORNADO = {
     },
   ],
   benefitsImage: {
-    // T-16 (balde de agua) o el despiece (T-10) cuando existan; mientras, el hero.
-    src: '/tornado/hero/tornado-hero.webp',
-    alt: 'Soplador Tornado PRO negro con su batería desmontable',
+    // Despiece (T-10).
+    src: '/tornado/benefits/despiece.webp',
+    alt: 'Soplador Tornado PRO desarmado: rejilla, turbina y motor salen del cabezal, y abajo la placa y la batería',
   },
   // No se renderizan (igual que en /soplador); el tipo los pide.
   pitchBlocks: [
@@ -248,20 +333,29 @@ export const TORNADO = {
     items: ['Soplador Tornado PRO™', 'Batería de litio recargable', 'Cargador de pared', 'Manual'],
     gallery: [
       {
+        src: '/tornado/whats-in-box/que-incluye.webp',
+        alt: 'Lo que trae la caja: soplador, batería, cargador de pared y manual',
+      },
+      {
         src: '/tornado/hero/tornado-hero.webp',
         alt: 'Soplador Tornado PRO negro con su batería desmontable',
       },
+      {
+        src: '/tornado/benefits/despiece.webp',
+        alt: 'Soplador Tornado PRO desarmado pieza por pieza',
+      },
     ],
+    // Placeholder, como todas las del tornado (ver TORNADO_REVIEWS).
+    testimonial: TORNADO_REVIEWS[0],
   },
-  // Vacías a propósito: no se inventan reseñas. La página no dibuja la
-  // sección mientras esté vacía.
-  reviews: [],
+  // PLACEHOLDER (ver TORNADO_REVIEWS).
+  reviews: TORNADO_REVIEWS,
   ratingBreakdown: {
-    average: 0,
-    total: 0,
+    average: 4.8,
+    total: TORNADO_REVIEWS.length,
     stars: [
-      { stars: 5, count: 0 },
-      { stars: 4, count: 0 },
+      { stars: 5, count: 7 },
+      { stars: 4, count: 2 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },
