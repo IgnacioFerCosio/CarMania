@@ -38,6 +38,8 @@ export function ReviewsExpandable({
         ))}
       </ul>
 
+      {/* Sin reseñas de sobra no hay nada que desplegar. */}
+      {restantes > 0 && (
       <div className="mt-7 flex justify-center sm:mt-9">
         <button
           type="button"
@@ -53,6 +55,7 @@ export function ReviewsExpandable({
           />
         </button>
       </div>
+      )}
     </>
   );
 }
