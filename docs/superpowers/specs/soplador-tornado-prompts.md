@@ -71,6 +71,23 @@ The handle parts are exploded DOWNWARD along ONE straight vertical axis, evenly 
 
 Every part is clearly separated, nothing overlapping, no wires crossing between parts, no extra or duplicated parts. Matte black plastic, no logos, no text, no labels. Photorealistic, sharp focus, 4K.
 ```
+**T-10 v2** (después de probarlo: abrir la carcasa en dos mitades confunde a
+la IA, porque de perfil la segunda mitad parece otro soplador). Cuerpo entero
+y en 3/4:
+```
+Technical exploded-view product render of a cordless pistol-grip air blower, three-quarter front view, on a seamless dark charcoal background, soft studio light, subtle red rim light. The whole scene floats in the air, nothing touches the ground.
+
+The main body stays in ONE piece (head and handle together), not split.
+
+From the open front of the head, the inner parts are pulled straight out FORWARD along the airflow axis, perfectly centered on that axis, evenly spaced, getting farther from the body in this order: 1) the small electric motor, closest to the head; 2) the fan impeller with many curved blades; 3) the front grille ring, farthest away. Each part is the right size to fit back inside the head.
+
+Below the handle, along one straight vertical axis: the small circuit board, then the detachable battery pack with its red release button, floating just under the handle.
+
+No extra parts, no duplicated tubes, no fins on top of the body, no wires. Matte black plastic, no logos, no text. Photorealistic, sharp focus, 4K.
+```
+Cuando la imagen sale casi bien, conviene **editarla** en vez de generar de
+nuevo ("edit this image: …"), un cambio por vez.
+
 Si sigue saliendo mal, dos alternativas que la IA resuelve mejor:
 - **Corte (cutaway):** el soplador entero con una ventana recortada en el
   cabezal que deja ver motor y turbina, y la batería apenas separada abajo.
