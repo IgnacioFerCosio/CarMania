@@ -57,10 +57,25 @@ First-person view: a hand holding the blower on a wooden pool deck, leaves flyin
 Top-down flat lay on a dark background: the blower, its detachable battery pack, a wall charger with a cylindrical plug and a small user manual with a blank cover, neatly arranged. Nothing else.
 ```
 
-**T-10 Despiece** — 1:1
+**T-10 Despiece** — 1:1 o 4:5. Los modelos fallan cuando se les pide "todo
+flotando": mezclan ejes y dejan el cuerpo casi entero. Hay que pedir dos ejes
+fijos y el orden exacto de las piezas:
 ```
-Exploded view of the blower, every internal part floating separately and aligned on a diagonal: front grille, fan impeller, brushless motor, housing halves, trigger, circuit board, detachable battery pack. Dark background, studio product render.
+Technical exploded-view product render of a cordless pistol-grip air blower, side view (profile, camera perpendicular to the blower), on a seamless dark charcoal background with soft studio light and a subtle red rim light.
+
+The blower is split into its two clamshell housing halves, pulled apart left and right with a small gap, both perfectly aligned, showing the inside.
+
+The head parts are exploded FORWARD along ONE straight horizontal axis, the axis of the airflow, evenly spaced, in this exact order from the back of the head to the front: electric motor, fan impeller (many curved blades), round fan shroud, front grille ring.
+
+The handle parts are exploded DOWNWARD along ONE straight vertical axis, evenly spaced, in this exact order from top to bottom: trigger switch, small circuit board, battery terminal plate, detachable battery pack with red release button.
+
+Every part is clearly separated, nothing overlapping, no wires crossing between parts, no extra or duplicated parts. Matte black plastic, no logos, no text, no labels. Photorealistic, sharp focus, 4K.
 ```
+Si sigue saliendo mal, dos alternativas que la IA resuelve mejor:
+- **Corte (cutaway):** el soplador entero con una ventana recortada en el
+  cabezal que deja ver motor y turbina, y la batería apenas separada abajo.
+- **Armado a mano:** generar cada pieza sola sobre fondo transparente y
+  componer el despiece en Canva o Photoshop. Es más trabajo, pero queda exacto.
 
 **T-11 / T-12 Antes y después** — 1:1, **mismo encuadre en las dos**
 ```
