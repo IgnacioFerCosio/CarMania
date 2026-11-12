@@ -63,6 +63,24 @@ const PENDIENTES = new Set([
   '/soplador/bundles/SopladorX2.webp',
   '/soplador/bundles/SopladorX3.webp',
 
+  // Soplador Tornado PRO: todo IA, ningún archivo existe todavía. Ver
+  // docs/superpowers/specs/soplador-tornado-assets.md (IDs T-xx).
+  '/tornado/hero/tornado-hero.webp', // T-01
+  '/tornado/use-cases/parrilla.webp', // T-03
+  '/tornado/use-cases/secado.webp', // T-04
+  '/tornado/use-cases/vereda.webp', // T-05
+  '/tornado/use-cases/taller.webp', // T-06
+  '/tornado/use-cases/pc.webp', // T-07
+  '/tornado/use-cases/patio.webp', // T-08
+  '/tornado/before-after/antes.webp', // T-11
+  '/tornado/before-after/despues.webp', // T-12
+  '/tornado/how-to-use/01-carga-la-bateria.mp4', // T-13
+  '/tornado/how-to-use/02-calza-la-bateria.mp4', // T-14
+  '/tornado/how-to-use/03-apreta-el-gatillo.mp4', // T-15
+  '/tornado/bundles/TornadoX1.webp',
+  '/tornado/bundles/TornadoX2.webp',
+  '/tornado/bundles/TornadoX3.webp',
+
   // ── Config inerte: se referencia pero NO se renderiza, así que no puede
   // dar 404. Está acá para que el check no la marque, no porque haya que
   // subir los archivos. Si algún día se activa, hay que conseguirlos.

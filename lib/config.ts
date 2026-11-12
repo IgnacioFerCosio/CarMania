@@ -416,6 +416,23 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     hidden: true,
   },
   {
+    // Reemplaza al Turbo. Producto sin Shopify y sin fotos todavía: `hidden`
+    // para que /tienda no muestre una card sin imagen, y `comingSoon` para
+    // que /soplador-tornado dé 404 en producción. Publicar = sacar los dos.
+    // Plan de material: docs/superpowers/specs/soplador-tornado-assets.md.
+    handle: 'soplador-tornado-pro',
+    title: 'Soplador Tornado PRO™',
+    blurb:
+      'Soplador inalámbrico de alta potencia con batería desmontable. Hojas, agua del auto, polvo del taller y el fuego de la parrilla.',
+    image: '/tornado/hero/tornado-hero.webp',
+    href: '/soplador-tornado',
+    fallbackPrice: 119990, // espejo de TORNADO.fallbackPricing.price
+    specTag: 'INALÁMBRICO · 35.000 Pa',
+    badge: 'NUEVO',
+    comingSoon: true,
+    hidden: true,
+  },
+  {
     // La foto es la del llavero solo (unidad), no el pack x2. En producción
     // sigue como "Próximamente" (2026-11-08): se abre sólo con la URL, con
     // noindex. Publicarlo es sacar `comingSoon`.

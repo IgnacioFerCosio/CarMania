@@ -115,7 +115,8 @@ export type PitchBlockData = {
  */
 export type WhatsInBoxData = WhatsInBoxCopy & {
   gallery: readonly { src: string; alt: string }[];
-  testimonial: Review;
+  /** Opcional: sin reseñas reales, la sección sale sin opinión. */
+  testimonial?: Review;
 };
 
 /** El texto de la sección "qué incluye", sin el carrusel ni la opinión. */
