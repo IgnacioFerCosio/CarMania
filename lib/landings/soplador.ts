@@ -276,8 +276,8 @@ export const SOPLADOR = {
     },
   ],
   benefitsImage: {
-    src: '/soplador/hero/soplador-hero.webp',
-    alt: 'Soplador Turbo PRO en negro, con su boquilla intercambiable',
+    src: '/soplador/benefits/soplador-despiece.webp',
+    alt: 'Soplador Turbo PRO desarmado: boquillas, turbina, motor, placa, botones y batería flotando por separado',
   },
   pitchBlocks: [
     {
