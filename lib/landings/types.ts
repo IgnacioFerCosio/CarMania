@@ -256,6 +256,8 @@ export type LandingConfig = {
   heroReviews?: readonly Review[];
   /** Videos del producto en acción. Opcional: hoy sólo /soplador-tornado. */
   videoShowcase?: VideoShowcaseData;
+  /** Tabla comparativa (`ComparisonTable`, la del llavero). Opcional. */
+  comparison?: AdvertorialData['comparison'];
   ratingBreakdown: {
     average: number;
     total: number;
@@ -386,9 +388,10 @@ export type AdvertorialData = {
     /**
      * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre
      * la mano y la guantera; `items` son los tres puntos numerados (1 llavero,
-     * 2 martillo, 3 apoyacabezas).
+     * 2 martillo, 3 apoyacabezas). Opcional: sin mapa, la tabla va sola y
+     * centrada (/soplador-tornado).
      */
-    map: {
+    map?: {
       distanceLabel: string;
       items: readonly { n: number; tone: 'ours' | 'other'; title: string; desc: string }[];
     };

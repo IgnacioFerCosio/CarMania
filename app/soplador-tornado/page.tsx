@@ -24,6 +24,7 @@ import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { VideoShowcase } from '@/components/sections/VideoShowcase';
+import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -124,6 +125,10 @@ export default async function SopladorTornadoPage() {
 
         {/* 5. Videos en acción — en lugar de "Cómo funciona" (sin material propio) */}
         {TORNADO.videoShowcase && <VideoShowcase data={TORNADO.videoShowcase} />}
+
+        {/* Comparativa — justo antes de los precios: primero por qué este,
+            después cuánto sale. */}
+        {TORNADO.comparison && <ComparisonTable comparison={TORNADO.comparison} />}
 
         {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={TORNADO} />

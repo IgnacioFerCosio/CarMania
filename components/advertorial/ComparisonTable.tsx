@@ -71,8 +71,10 @@ export function ComparisonTable({
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <SectionHeading heading={comparison} />
 
-        <div className="mt-10 grid items-center gap-12 sm:mt-14 lg:grid-cols-2 lg:gap-14">
-          <CarMap map={comparison.map} />
+        <div
+          className={`mt-10 grid items-center gap-12 sm:mt-14 ${comparison.map ? 'lg:grid-cols-2 lg:gap-14' : ''}`}
+        >
+          {comparison.map && <CarMap map={comparison.map} />}
 
           {/* Apilados (celular y tablet), la tabla va antes que el mapa; en
               desktop, el mapa a la izquierda y la tabla a la derecha. */}
@@ -115,6 +117,8 @@ export function ComparisonTable({
                   className="relative z-20 flex items-end justify-center px-1"
                   style={{ gridColumn: i + 2, gridRow: 1 }}
                 >
+                  {/* Sin imagen todavía, la columna sale sin figura. */}
+                  {c.image && (
                   <Image
                     src={c.image}
                     alt=""
@@ -123,6 +127,7 @@ export function ComparisonTable({
                     sizes="120px"
                     className="max-h-full w-auto max-w-full object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)] sm:max-w-[138%]"
                   />
+                  )}
                 </div>
               ))}
 

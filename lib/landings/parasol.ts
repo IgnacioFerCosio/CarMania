@@ -284,7 +284,7 @@ export const PARASOL = {
   useCases: [
     { label: 'CERO CALOR', image: '/parasol/use-cases/calor.webp', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
     { label: 'CERO RAJADURAS', image: '/parasol/use-cases/tablero.webp', alt: 'Tablero protegido del sol, sin plásticos rajados' },
-    { label: 'CERO DECOLORACIÓN', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
+    { label: 'CERO DESTEÑIDO', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
     { label: 'MÁS FRESCURA', image: '/parasol/use-cases/volante.webp', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
     { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.webp', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
     { label: 'MÁS CONFORT', image: '/parasol/use-cases/aire.webp', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },

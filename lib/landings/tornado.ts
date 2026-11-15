@@ -228,7 +228,7 @@ export const TORNADO = {
   /** Casos de uso: tomas T-03 a T-08 del plan. */
   useCases: [
     { label: 'LA PARRILLA', image: '/tornado/use-cases/parrilla.webp', alt: 'Prendiendo el carbón de la parrilla con el chorro del soplador' },
-    { label: 'SECAR EL AUTO', image: '/tornado/use-cases/secado.webp', alt: 'Volando el agua del capó de un auto recién lavado' },
+    { label: 'EL AUTO', image: '/tornado/use-cases/secado.webp', alt: 'Volando el agua del capó de un auto recién lavado' },
     { label: 'LA VEREDA', image: '/tornado/use-cases/vereda.webp', alt: 'Barriendo con aire las hojas secas de la vereda' },
     { label: 'EL TALLER', image: '/tornado/use-cases/taller.webp', alt: 'Sacando el polvo y la viruta de la mesa de trabajo' },
     { label: 'LA PC', image: '/tornado/use-cases/pc.webp', alt: 'Soplando el polvo de adentro del gabinete de una PC' },
@@ -271,6 +271,28 @@ export const TORNADO = {
       { src: '/tornado/videos/secado.mp4', label: 'Seca el auto sin tocarlo' },
       { src: '/tornado/videos/patio.mp4', label: 'Las hojas, fuera en una pasada' },
       { src: '/tornado/videos/escoba.mp4', label: 'Escoba vs. Tornado' },
+    ],
+  },
+  /**
+   * Comparativa (misma tabla que /llavero-rescate, sin el mapa del auto).
+   * TODO imágenes: faltan los recortes sin fondo del soplador a nafta y del de
+   * cable (`image: ''` = la columna sale sin figura). Van en
+   * /tornado/comparativa/nafta.webp y cable.webp.
+   */
+  comparison: {
+    title: 'Tres sopladores. Uno solo sin cable ni nafta.',
+    accent: 'Uno solo sin cable ni nafta.',
+    columns: [
+      { name: 'Tornado PRO™', image: '/tornado/comparativa/tornado.webp', width: 213, height: 320 },
+      { name: 'Soplador a nafta', image: '', width: 240, height: 320 },
+      { name: 'Soplador con cable', image: '', width: 240, height: 320 },
+    ],
+    rows: [
+      { label: 'Sin cable ni alargue', values: [true, true, false] },
+      { label: 'Sin nafta ni humo', values: [true, false, true] },
+      { label: 'Arranca con el gatillo', values: [true, false, true] },
+      { label: 'Se usa con una mano', values: [true, false, 'algunos'] },
+      { label: 'Lo guardás en un cajón', values: [true, false, false] },
     ],
   },
   benefits: [
