@@ -43,11 +43,9 @@ export function UseCases({
   const { useCasesTitle, useCasesPrefix } = config.sectionCopy;
   // 'Para ' en el soporte, '' en el parasol — un solo text node, sin marcador.
   const labelPrefix = useCasesPrefix ? `${useCasesPrefix} ` : '';
-  // Largo del rótulo más largo, en caracteres: con él se calcula un solo
-  // tamaño de letra para toda la grilla (todas las tarjetas parejas). En el
-  // celular el prefijo no se muestra, así que no cuenta.
-  const nMobile = Math.max(...useCases.map((c) => c.label.length));
-  const nFull = Math.max(...useCases.map((c) => (labelPrefix + c.label).length));
+  // Largo del rótulo más largo (prefijo incluido), en caracteres: con él se
+  // calcula un solo tamaño de letra para toda la grilla (tarjetas parejas).
+  const nMax = Math.max(...useCases.map((c) => (labelPrefix + c.label).length));
 
   return (
     <section className="bg-[#24262A] py-14 sm:py-16 md:py-24">
@@ -73,23 +71,21 @@ export function UseCases({
 
             {/* Siempre en un renglón y del mismo tamaño en toda la grilla: el
                 tamaño de diseño (--fs) baja lo justo para que el rótulo más
-                largo (--n caracteres) entre en el ancho de la tarjeta (100cqw
+                largo (--n caracteres, prefijo incluido) entre en el ancho de la tarjeta (100cqw
                 menos los márgenes, --pad). 0,69 em = ancho medio de una
                 mayúscula de la display, medido en el navegador. */}
             <span
-              className="absolute bottom-2.5 left-2 whitespace-nowrap font-display font-black italic uppercase tracking-wider text-white [--fs:11px] [--n:var(--nm)] [--pad:1rem] sm:bottom-3 sm:left-3 sm:[--fs:12px] sm:[--n:var(--nf)] sm:[--pad:1.5rem] md:[--fs:14px] lg:[--fs:16px]"
+              className="absolute bottom-2.5 left-2 whitespace-nowrap font-display font-black italic uppercase tracking-wider text-white [--fs:11px] [--pad:1rem] sm:bottom-3 sm:left-3 sm:[--fs:12px] sm:[--pad:1.5rem] md:[--fs:14px] lg:[--fs:16px]"
               style={
                 {
-                  '--nm': nMobile,
-                  '--nf': nFull,
+                  '--n': nMax,
                   fontSize: 'min(var(--fs), calc((100cqw - var(--pad)) / (var(--n) * 0.69)))',
                 } as React.CSSProperties
               }
             >
               {labelPrefix ? (
                 <>
-                  {/* En el celular no entra: "LA PARRILLA" se entiende solo. */}
-                  <span className="hidden sm:inline">{labelPrefix}</span>
+                  {labelPrefix}
                   <span className="text-accent">{c.label}</span>
                 </>
               ) : (

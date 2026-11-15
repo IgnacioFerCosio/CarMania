@@ -220,19 +220,21 @@ export const TORNADO = {
     carBrandsTitle: 'Anda en',
     carBrandsTitleAccent: 'cualquier auto',
     useCasesTitle: 'Un soplador. Mil usos.',
-    useCasesPrefix: 'Para',
+    // Sin prefijo, como el parasol: el rótulo es el beneficio y la última
+    // palabra va en rojo ("CERO HOJAS").
+    useCasesPrefix: '',
   },
   // No se renderiza en /soplador-tornado (no hay compatibilidad por marca).
   // Queda sólo porque el tipo lo pide.
   carBrands: SOPORTE.carBrands,
   /** Casos de uso: tomas T-03 a T-08 del plan. */
   useCases: [
-    { label: 'LA PARRILLA', image: '/tornado/use-cases/parrilla.webp', alt: 'Prendiendo el carbón de la parrilla con el chorro del soplador' },
-    { label: 'EL AUTO', image: '/tornado/use-cases/secado.webp', alt: 'Volando el agua del capó de un auto recién lavado' },
-    { label: 'LA VEREDA', image: '/tornado/use-cases/vereda.webp', alt: 'Barriendo con aire las hojas secas de la vereda' },
-    { label: 'EL TALLER', image: '/tornado/use-cases/taller.webp', alt: 'Sacando el polvo y la viruta de la mesa de trabajo' },
-    { label: 'LA PC', image: '/tornado/use-cases/pc.webp', alt: 'Soplando el polvo de adentro del gabinete de una PC' },
-    { label: 'EL PATIO', image: '/tornado/use-cases/patio.webp', alt: 'Volando las hojas del borde de la pileta y del deck' },
+    { label: 'FUEGO RÁPIDO', image: '/tornado/use-cases/parrilla.webp', alt: 'Prendiendo el carbón de la parrilla con el chorro del soplador' },
+    { label: 'CERO GOTAS', image: '/tornado/use-cases/secado.webp', alt: 'Volando el agua del capó de un auto recién lavado' },
+    { label: 'CERO HOJAS', image: '/tornado/use-cases/vereda.webp', alt: 'Barriendo con aire las hojas secas de la vereda' },
+    { label: 'CERO VIRUTA', image: '/tornado/use-cases/taller.webp', alt: 'Sacando el polvo y la viruta de la mesa de trabajo' },
+    { label: 'CERO POLVO', image: '/tornado/use-cases/pc.webp', alt: 'Soplando el polvo de adentro del gabinete de una PC' },
+    { label: 'PILETA LIMPIA', image: '/tornado/use-cases/patio.webp', alt: 'Volando las hojas del borde de la pileta y del deck' },
   ],
   /**
    * Tomas T-13 a T-15 del plan. Por ahora con fotos fijas (`image`): no hay
