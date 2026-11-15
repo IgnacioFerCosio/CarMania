@@ -102,6 +102,15 @@ export type Step = {
   image?: string;
 };
 
+/** Sección de videos verticales del producto en acción (`VideoShowcase`). */
+export type VideoShowcaseData = {
+  eyebrow?: string;
+  /** `accent` es la subcadena de `title` que se pinta en rojo. */
+  title: string;
+  accent: string;
+  videos: readonly { src: string; label: string }[];
+};
+
 export type PitchBlockData = {
   eyebrow?: string;
   headline: string;
@@ -245,6 +254,8 @@ export type LandingConfig = {
    * tal cual. Ver `pickHeroReviews` (sólo 5★, cortadas con "…").
    */
   heroReviews?: readonly Review[];
+  /** Videos del producto en acción. Opcional: hoy sólo /soplador-tornado. */
+  videoShowcase?: VideoShowcaseData;
   ratingBreakdown: {
     average: number;
     total: number;

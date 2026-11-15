@@ -23,10 +23,7 @@ import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
-import Image from 'next/image';
-import { ProductCarousel } from '@/components/ui/ProductCarousel';
-import { LazyVideo } from '@/components/ui/LazyVideo';
-import { HowItWorks } from '@/components/sections/HowItWorks';
+import { VideoShowcase } from '@/components/sections/VideoShowcase';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -121,28 +118,12 @@ export default async function SopladorTornadoPage() {
         {/* 2. Usos */}
         <UseCases config={TORNADO} />
 
-        {/* 3. Qué incluye */}
-        {/* Carrusel propio: las fotos de la galería y, en el medio, los dos
-            videos de Commonkart (con permiso, recortados sin marca de agua). */}
-        {TORNADO.whatsInBox && (
-          <WhatsInBox
-            data={TORNADO.whatsInBox}
-            media={
-              <ProductCarousel
-                nodes={[
-                  <GallerySlide key="caja" {...TORNADO.whatsInBox.gallery[0]} />,
-                  <LazyVideo key="patio" src="/tornado/videos/patio.mp4" className="h-full w-full object-cover" />,
-                  <LazyVideo key="escoba" src="/tornado/videos/escoba.mp4" className="h-full w-full object-cover" />,
-                  ...TORNADO.whatsInBox.gallery.slice(1).map((g) => <GallerySlide key={g.src} {...g} />),
-                ]}
-              />
-            }
-          />
-        )}
+        {/* 3. Qué incluye — sólo la foto de la caja */}
+        {TORNADO.whatsInBox && <WhatsInBox data={TORNADO.whatsInBox} />}
 
 
-        {/* 5. Cómo funciona (3 videos) */}
-        <HowItWorks config={TORNADO} />
+        {/* 5. Videos en acción — en lugar de "Cómo funciona" (sin material propio) */}
+        {TORNADO.videoShowcase && <VideoShowcase data={TORNADO.videoShowcase} />}
 
         {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={TORNADO} />
@@ -183,9 +164,4 @@ export default async function SopladorTornadoPage() {
       )}
     </CartProvider>
   );
-}
-
-/** Una foto del carrusel de "qué incluye", igual que las de `ProductCarousel`. */
-function GallerySlide({ src, alt }: { src: string; alt: string }) {
-  return <Image src={src} alt={alt} fill className="object-cover" sizes="(min-width: 768px) 512px, 100vw" />;
 }

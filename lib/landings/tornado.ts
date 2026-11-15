@@ -259,6 +259,20 @@ export const TORNADO = {
       image: '/tornado/use-cases/secado.webp',
     },
   ],
+  /**
+   * Videos de Commonkart (con permiso, recortados sin la marca de agua y sin
+   * audio). Ocupan el lugar de "Cómo funciona", que no tiene material propio.
+   */
+  videoShowcase: {
+    eyebrow: 'Miralo en acción',
+    title: 'Sin trucos: así sopla',
+    accent: 'así sopla',
+    videos: [
+      { src: '/tornado/videos/secado.mp4', label: 'Seca el auto sin tocarlo' },
+      { src: '/tornado/videos/patio.mp4', label: 'Las hojas, fuera en una pasada' },
+      { src: '/tornado/videos/escoba.mp4', label: 'Escoba vs. Tornado' },
+    ],
+  },
   benefits: [
     {
       icon: 'bolt',
@@ -325,14 +339,6 @@ export const TORNADO = {
       {
         src: '/tornado/whats-in-box/que-incluye.webp',
         alt: 'Lo que trae la caja: soplador, batería, cargador de pared y manual',
-      },
-      {
-        src: '/tornado/hero/tornado-hero.webp',
-        alt: 'Soplador Tornado PRO negro con su batería desmontable',
-      },
-      {
-        src: '/tornado/benefits/despiece.webp',
-        alt: 'Soplador Tornado PRO desarmado pieza por pieza',
       },
     ],
     // La de secar el auto: es el ángulo principal.
