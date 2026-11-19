@@ -18,7 +18,6 @@ import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { HeroTestimonialCarousel } from '@/components/ui/HeroTestimonialCarousel';
-import { DeferredVideo } from '@/components/ui/DeferredVideo';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -194,14 +193,6 @@ function HeroMedia({
           height={media.height}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      ) : media.deferVideo ? (
-        <DeferredVideo
-          src={media.src}
-          poster={media.poster}
-          width={media.width}
-          height={media.height}
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (

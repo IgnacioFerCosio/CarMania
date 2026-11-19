@@ -203,7 +203,6 @@ export const TORNADO = {
     kind: 'video',
     src: '/tornado/videos/secado.mp4',
     poster: '/tornado/videos/secado-poster.webp',
-    deferVideo: true,
     width: 480,
     height: 764,
     // Un beneficio, no una ficha técnica: es lo que muestra el video de atrás.
