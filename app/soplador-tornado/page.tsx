@@ -128,13 +128,15 @@ export default async function SopladorTornadoPage() {
 
         {/* Comparativa — justo antes de los precios: primero por qué este,
             después cuánto sale. */}
-        {TORNADO.comparison && <ComparisonTable comparison={TORNADO.comparison} />}
+        {/* Comparativa y beneficios en el gris de garantías: así los precios,
+            en negro, quedan recortados entre dos secciones distintas. */}
+        {TORNADO.comparison && <ComparisonTable comparison={TORNADO.comparison} bg="ink" />}
 
         {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={TORNADO} />
 
         {/* 7. Beneficios */}
-        <BenefitsShowcase config={TORNADO} />
+        <BenefitsShowcase config={TORNADO} bg="ink" />
 
         {/* 8. Reseñas — sólo con reseñas reales */}
         {TORNADO.reviews.length > 0 && (

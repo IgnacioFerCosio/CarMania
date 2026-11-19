@@ -85,13 +85,21 @@ function ShowcaseCard({ b }: { b: Benefit }) {
 
 export function BenefitsShowcase({
   config = SOPORTE,
-}: { config?: LandingConfig } = {}) {
+  bg = 'black',
+}: {
+  config?: LandingConfig;
+  /** 'ink' = el gris de la sección de garantías, para separarla de la de al lado. */
+  bg?: 'black' | 'ink';
+} = {}) {
   const { headlines, benefits, benefitsImage } = config;
   const left = benefits.slice(0, 3);
   const right = benefits.slice(3, 6);
 
   return (
-    <section id="benefits" className="bg-ink-950 py-16 sm:py-20 md:py-28">
+    <section
+      id="benefits"
+      className={`${bg === 'ink' ? 'bg-ink-900' : 'bg-ink-950'} py-16 sm:py-20 md:py-28`}
+    >
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="text-center">
