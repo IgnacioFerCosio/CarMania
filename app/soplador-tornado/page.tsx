@@ -25,6 +25,7 @@ import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { VideoShowcase } from '@/components/sections/VideoShowcase';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
+import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -62,6 +63,8 @@ const METADATA: Metadata = {
     type: 'website',
     locale: 'es_AR',
     siteName: 'CARMANIA',
+    // Imagen para compartir (WhatsApp, Facebook): 1200×630, ver /public/og.
+    images: [{ url: '/og/tornado.jpg', width: 1200, height: 630, alt: 'Soplador Tornado PRO™ de CARMANIA' }],
   },
   alternates: { canonical: TORNADO.metadata.canonical },
 };
@@ -159,6 +162,9 @@ export default async function SopladorTornadoPage() {
 
       <Footer />
 
+      {/* Barra fija del celular: aparece al pasar el hero y baja a los packs.
+          Es la del llavero: no necesita los productos de Shopify. */}
+      <StickyCTA label="Comprar ahora" href="#pricing" />
       <WhatsAppFloat prefilled={TORNADO.whatsappPrefilled} />
       <FloatingCartButton />
       <CartDrawer />

@@ -203,10 +203,12 @@ export const TORNADO = {
     kind: 'video',
     src: '/tornado/videos/secado.mp4',
     poster: '/tornado/videos/secado-poster.webp',
+    deferVideo: true,
     width: 480,
     height: 764,
-    badgeLine1: 'PRESIÓN DE',
-    badgeLine2: '35.000 Pa', // dato del proveedor (ficha LT-2522)
+    // Un beneficio, no una ficha técnica: es lo que muestra el video de atrás.
+    badgeLine1: 'SECA EL AUTO',
+    badgeLine2: 'SIN TOCARLO',
   },
   heroSubHighlights: ['inalámbrico', 'parrilla'],
   sectionCopy: {
@@ -384,8 +386,10 @@ export const TORNADO = {
   faq: [
     {
       q: '¿Cuánto dura la batería?',
-      // TODO — pedir autonomía y tiempo de carga al proveedor.
-      a: 'Depende de cuánto lo uses seguido: es un soplador de alta potencia y trabaja en tandas. Como la batería es desmontable, se carga aparte en el enchufe de la pared mientras guardás el soplador.',
+      // ESTIMADO, no medido: batería de 21 V (18 V nominales, ~2 Ah ≈ 36 Wh) con
+      // un motor que tira ~150–250 W → 9–14 min continuos; el cargador de pared
+      // típico de 1 A la llena en ~2 h. Confirmar con la muestra o el proveedor.
+      a: 'A máxima potencia y con el gatillo apretado sin parar, rinde unos 10 a 15 minutos. Como se usa de a ratos (secar el auto, barrer la vereda, prender la parrilla), una carga alcanza para varias tareas. La batería se saca del mango y se carga en el enchufe de la pared en unas 2 horas.',
     },
     {
       q: '¿También aspira?',

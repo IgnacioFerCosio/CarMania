@@ -163,6 +163,11 @@ export type HeroMedia = {
   src: string;
   /** Poster del video (primer frame). Sólo aplica a `kind: 'video'`. */
   poster?: string;
+  /**
+   * Sólo `kind: 'video'`: el video recién baja después del `load` de la página
+   * (`DeferredVideo`); hasta entonces se ve el poster, que es el LCP.
+   */
+  deferVideo?: boolean;
   /** Dimensiones intrínsecas del media, para reservar el espacio. */
   width: number;
   height: number;
