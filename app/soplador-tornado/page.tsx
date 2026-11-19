@@ -25,7 +25,6 @@ import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { VideoShowcase } from '@/components/sections/VideoShowcase';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
-import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
@@ -162,9 +161,6 @@ export default async function SopladorTornadoPage() {
 
       <Footer />
 
-      {/* Barra fija del celular: aparece al pasar el hero y baja a los packs.
-          Es la del llavero: no necesita los productos de Shopify. */}
-      <StickyCTA label="Comprar ahora" href="#pricing" />
       <WhatsAppFloat prefilled={TORNADO.whatsappPrefilled} />
       <FloatingCartButton />
       <CartDrawer />
