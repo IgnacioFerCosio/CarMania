@@ -1,15 +1,17 @@
 'use client';
 
 /**
- * VIDEO SHOWCASE — carrusel de videos verticales del producto en acción.
+ * VIDEO SHOWCASE — videos verticales del producto en acción.
  *
- * Se reproduce un video por vez (el primero a la vista). Cuando termina, la
- * fila se corre sola un lugar hacia la derecha y arranca el siguiente. Para
- * que el giro sea infinito, la lista se repite una vez al final: al llegar a
- * la copia del primero, la fila vuelve al original sin animación (se ven
- * iguales, así que el salto no se nota).
+ * Desktop (md+): los 3 en grilla, todos reproduciéndose a la vez en loop,
+ * sin moverse (ya se ven enteros).
  *
- * Mobile: ~1 video y medio a la vista. Desktop: 3.
+ * Mobile: carrusel centrado que arranca en el video del medio, con un margen
+ * de los vecinos a cada lado. Se reproduce sólo el del centro; cuando termina,
+ * la fila se corre sola al siguiente. También se navega con las flechas.
+ * Es infinito: la lista se repite 3 veces y, cuando el centro cae en la
+ * primera o la tercera copia, la fila salta a la misma posición de la copia
+ * del medio sin animación (se ven iguales, así que el salto no se nota).
  *
  * Los videos recién reciben su `src` cuando la sección está por entrar en
  * pantalla, y sólo se reproducen mientras se ve. Tienen que estar en /public
@@ -18,8 +20,9 @@
  * Lleva `id="how"` porque ocupa el lugar de "Cómo funciona": así el link
  * del Navbar sigue llevando a esta altura de la página.
  */
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { VideoShowcaseData } from '@/lib/landings/types';
+import { Icon } from '@/components/ui/Icon';
 
 /** Duración del corrimiento entre videos, en ms. */
 const SLIDE_MS = 600;
@@ -27,31 +30,45 @@ const SLIDE_MS = 600;
 export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
   const { eyebrow, title, accent, videos } = data;
   const n = videos.length;
-  const items = [...videos, ...videos];
+  // Tres copias: [0..n) | [n..2n) | [2n..3n). En desktop sólo se ve la del medio.
+  const items = [...videos, ...videos, ...videos];
+  const start = n + Math.floor(n / 2); // el video del medio, en la copia del medio
 
   const sectionRef = useRef<HTMLElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(start);
   const [animate, setAnimate] = useState(true);
-  const [step, setStep] = useState(0);
+  const [geo, setGeo] = useState({ step: 0, card: 0, view: 0 });
+  const [desktop, setDesktop] = useState(false);
   const [load, setLoad] = useState(false); // cerca del viewport: ya hay src
   const [inView, setInView] = useState(false); // a la vista: se reproduce
 
-  // Ancho de un corrimiento = ancho de una tarjeta + el gap de la fila.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const update = () => setDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  // Medidas para centrar: ancho de la tarjeta, del corrimiento y de la ventana.
   useLayoutEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    const view = viewportRef.current;
+    if (!track || !view) return;
     const measure = () => {
       const first = track.children[0] as HTMLElement | undefined;
       if (!first) return;
+      const card = first.getBoundingClientRect().width;
       const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      setStep(first.getBoundingClientRect().width + gap);
+      setGeo({ step: card + gap, card, view: view.getBoundingClientRect().width });
     };
     measure();
     const ro = new ResizeObserver(measure);
-    ro.observe(track);
+    ro.observe(view);
     return () => ro.disconnect();
   }, []);
 
@@ -78,28 +95,31 @@ export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
     };
   }, []);
 
-  // Sólo el video activo corre; el resto queda pausado en su primer cuadro.
+  // Desktop: corren los 3 de la copia del medio. Mobile: sólo el del centro.
   useEffect(() => {
     videoRefs.current.forEach((v, k) => {
       if (!v) return;
-      if (k === index && inView && load) {
-        v.currentTime = 0;
+      const middleCopy = k >= n && k < 2 * n;
+      const playing = inView && load && (desktop ? middleCopy : k === index);
+      if (playing) {
+        if (!desktop) v.currentTime = 0;
         v.play().catch(() => {});
       } else {
         v.pause();
       }
     });
-  }, [index, inView, load]);
+  }, [index, inView, load, desktop, n]);
 
-  const next = useCallback((k: number) => {
-    setIndex((i) => (k === i ? i + 1 : i));
-  }, []);
+  const go = (to: number) => {
+    setAnimate(true);
+    setIndex(to);
+  };
 
-  // Llegó a la copia del primero: vuelve al original sin animación.
+  // El centro cayó en una copia de los costados: vuelve a la del medio sin animación.
   const onTransitionEnd = () => {
-    if (index < n) return;
+    if (index >= n && index < 2 * n) return;
     setAnimate(false);
-    setIndex(index - n);
+    setIndex(index < n ? index + n : index - n);
   };
   useEffect(() => {
     if (animate) return;
@@ -107,59 +127,94 @@ export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
     return () => cancelAnimationFrame(id);
   }, [animate]);
 
-  const i = title.indexOf(accent);
-  const before = i >= 0 ? title.slice(0, i) : title;
-  const after = i >= 0 ? title.slice(i + accent.length) : '';
+  const offset = (geo.view - geo.card) / 2 - index * geo.step;
+
+  const t = title.indexOf(accent);
+  const before = t >= 0 ? title.slice(0, t) : title;
+  const after = t >= 0 ? title.slice(t + accent.length) : '';
 
   return (
     <section ref={sectionRef} id="how" className="bg-[#24262A] py-14 sm:py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="text-center">
+      <div className="mx-auto max-w-6xl md:px-6">
+        <div className="px-4 text-center md:px-0">
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
           <h2 className="heading-display mt-2 text-2xl leading-tight sm:text-3xl md:text-5xl">
             {before}
-            {i >= 0 && <span className="text-accent">{accent}</span>}
+            {t >= 0 && <span className="text-accent">{accent}</span>}
             {after}
           </h2>
         </div>
 
-        <div className="mt-8 overflow-hidden sm:mt-12">
+        <div ref={viewportRef} className="relative mt-8 overflow-hidden sm:mt-12 md:overflow-visible">
           <ul
             ref={trackRef}
             onTransitionEnd={onTransitionEnd}
-            className="flex gap-3 md:gap-6"
-            style={{
-              transform: `translateX(${-index * step}px)`,
-              transition: animate ? `transform ${SLIDE_MS}ms cubic-bezier(0.22,1,0.36,1)` : 'none',
-            }}
+            className="flex gap-3 md:grid md:grid-cols-3 md:gap-6"
+            style={
+              desktop
+                ? undefined
+                : {
+                    transform: `translateX(${offset}px)`,
+                    transition: animate
+                      ? `transform ${SLIDE_MS}ms cubic-bezier(0.22,1,0.36,1)`
+                      : 'none',
+                  }
+            }
           >
-            {items.map((v, k) => (
-              <li
-                key={k}
-                aria-hidden={k >= n || undefined}
-                className="w-[68%] shrink-0 overflow-hidden rounded-2xl border border-ink-800 bg-ink-950 sm:w-[44%] md:w-[calc((100%-3rem)/3)]"
-              >
-                <div className="relative aspect-[480/764] w-full overflow-hidden bg-ink-900">
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[k] = el;
-                    }}
-                    // #t=0.1: que el navegador muestre el primer cuadro en
-                    // pausa (Safari si no deja el recuadro en negro).
-                    src={load ? `${v.src}#t=0.1` : undefined}
-                    muted
-                    playsInline
-                    preload="metadata"
-                    onEnded={() => next(k)}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <p className="px-4 py-3.5 font-display text-sm font-black uppercase italic tracking-wider text-white sm:text-base">
-                  {v.label}
-                </p>
-              </li>
-            ))}
+            {items.map((v, k) => {
+              const middleCopy = k >= n && k < 2 * n;
+              return (
+                <li
+                  key={k}
+                  aria-hidden={!middleCopy || undefined}
+                  className={`w-[78%] shrink-0 overflow-hidden rounded-2xl border border-ink-800 bg-ink-950 sm:w-[46%] md:w-auto ${
+                    middleCopy ? '' : 'md:hidden'
+                  }`}
+                >
+                  <div className="relative aspect-[480/764] w-full overflow-hidden bg-ink-900">
+                    <video
+                      ref={(el) => {
+                        videoRefs.current[k] = el;
+                      }}
+                      // #t=0.1: que el navegador muestre el primer cuadro en
+                      // pausa (Safari si no deja el recuadro en negro).
+                      // En desktop las copias de los costados están ocultas: sin src.
+                      src={load && (!desktop || middleCopy) ? `${v.src}#t=0.1` : undefined}
+                      muted
+                      playsInline
+                      loop={desktop}
+                      preload="metadata"
+                      onEnded={() => {
+                        if (!desktop && k === index) go(index + 1);
+                      }}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <p className="px-4 py-3.5 font-display text-sm font-black uppercase italic tracking-wider text-white sm:text-base">
+                    {v.label}
+                  </p>
+                </li>
+              );
+            })}
           </ul>
+
+          {/* Flechas: sólo en el carrusel del celular. */}
+          <button
+            type="button"
+            onClick={() => go(index - 1)}
+            aria-label="Video anterior"
+            className="absolute left-2 top-[42%] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-ink-700 bg-ink-950/80 text-white backdrop-blur transition hover:border-accent hover:bg-ink-900 md:hidden"
+          >
+            <Icon name="arrow-right" className="h-4 w-4 rotate-180" />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(index + 1)}
+            aria-label="Video siguiente"
+            className="absolute right-2 top-[42%] flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-ink-700 bg-ink-950/80 text-white backdrop-blur transition hover:border-accent hover:bg-ink-900 md:hidden"
+          >
+            <Icon name="arrow-right" className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </section>
