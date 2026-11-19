@@ -277,24 +277,23 @@ export const TORNADO = {
   },
   /**
    * Comparativa (misma tabla que /llavero-rescate, sin el mapa del auto).
-   * TODO imágenes: faltan los recortes sin fondo del soplador a nafta y del de
-   * cable (`image: ''` = la columna sale sin figura). Van en
-   * /tornado/comparativa/nafta.webp y cable.webp.
+   * Figuras recortadas sin fondo; las marcas del de nafta y del de cable van
+   * difuminadas a propósito (no mostramos productos de terceros con su logo).
    */
   comparison: {
     title: 'Tres sopladores. Uno solo sin cable ni nafta.',
     accent: 'Uno solo sin cable ni nafta.',
     columns: [
       { name: 'Tornado PRO™', image: '/tornado/comparativa/tornado.webp', width: 213, height: 320 },
-      { name: 'Soplador a nafta', image: '', width: 240, height: 320 },
-      { name: 'Soplador con cable', image: '', width: 240, height: 320 },
+      { name: 'Soplador a nafta', image: '/tornado/comparativa/nafta.webp', width: 491, height: 320 },
+      { name: 'Soplador con cable', image: '/tornado/comparativa/cable.webp', width: 349, height: 320 },
     ],
     rows: [
       { label: 'Sin cable ni alargue', values: [true, true, false] },
       { label: 'Sin nafta ni humo', values: [true, false, true] },
       { label: 'Arranca con el gatillo', values: [true, false, true] },
-      { label: 'Se usa con una mano', values: [true, false, 'algunos'] },
-      { label: 'Lo guardás en un cajón', values: [true, false, false] },
+      { label: 'Se usa con una mano', values: [true, false, true] },
+      { label: 'Batería desmontable', values: [true, false, false] },
     ],
   },
   benefits: [
