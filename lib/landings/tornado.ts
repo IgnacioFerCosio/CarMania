@@ -285,8 +285,8 @@ export const TORNADO = {
     accent: 'Uno solo sin cable ni nafta.',
     columns: [
       { name: 'Tornado PRO™', image: '/tornado/comparativa/tornado.webp', width: 213, height: 320 },
-      { name: 'Soplador a nafta', image: '/tornado/comparativa/nafta.webp', width: 491, height: 320 },
-      { name: 'Soplador con cable', image: '/tornado/comparativa/cable.webp', width: 349, height: 320 },
+      { name: 'Soplador a nafta', image: '/tornado/comparativa/nafta.webp', width: 492, height: 320 },
+      { name: 'Soplador con cable', image: '/tornado/comparativa/cable.webp', width: 350, height: 320 },
     ],
     rows: [
       { label: 'Sin cable ni alargue', values: [true, true, false] },
