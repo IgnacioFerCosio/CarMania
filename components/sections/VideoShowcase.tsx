@@ -38,6 +38,9 @@ export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLUListElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  // Mobile: tarjetas que ya pidieron su video. Se suman el centro y sus dos
+  // vecinos a medida que se navega, y no se sacan (no se vuelve a bajar nada).
+  const seen = useRef<Set<number>>(new Set());
 
   const [index, setIndex] = useState(start);
   const [animate, setAnimate] = useState(true);
@@ -129,6 +132,12 @@ export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
 
   const offset = (geo.view - geo.card) / 2 - index * geo.step;
 
+  if (load && !desktop) [index - 1, index, index + 1].forEach((k) => seen.current.add(k));
+  // Desktop: sólo la copia del medio (las otras están ocultas).
+  // Mobile: sólo el centro y sus vecinos, que son los que se ven.
+  const hasSrc = (k: number) =>
+    load && (desktop ? k >= n && k < 2 * n : seen.current.has(k));
+
   const t = title.indexOf(accent);
   const before = t >= 0 ? title.slice(0, t) : title;
   const after = t >= 0 ? title.slice(t + accent.length) : '';
@@ -178,8 +187,7 @@ export function VideoShowcase({ data }: { data: VideoShowcaseData }) {
                       }}
                       // #t=0.1: que el navegador muestre el primer cuadro en
                       // pausa (Safari si no deja el recuadro en negro).
-                      // En desktop las copias de los costados están ocultas: sin src.
-                      src={load && (!desktop || middleCopy) ? `${v.src}#t=0.1` : undefined}
+                      src={hasSrc(k) ? `${v.src}#t=0.1` : undefined}
                       muted
                       playsInline
                       loop={desktop}
