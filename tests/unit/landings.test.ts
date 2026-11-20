@@ -9,6 +9,7 @@ import { describe, it, expect } from 'vitest';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
+import { TRABAVOLANTE } from '@/lib/landings/trabavolante';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { buildTiers, nextTierOf } from '@/lib/tiers';
@@ -19,6 +20,7 @@ const LANDINGS: Record<string, LandingConfig> = {
   '/': SOPORTE,
   '/parasol': PARASOL,
   '/soplador': SOPLADOR,
+  '/trabavolante': TRABAVOLANTE,
   '/llavero-rescate': ROMPEVIDRIOS,
 };
 
