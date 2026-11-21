@@ -433,6 +433,22 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     hidden: true,
   },
   {
+    // ⚠️ El producto NO existe en Shopify y la landing usa material de
+    // TitanLock que hay que regenerar (ver los TODOs de
+    // lib/landings/trabavolante.ts y docs/superpowers/specs/trabavolante-assets.md).
+    // Por eso `comingSoon`: "Próximamente" en el catálogo y 404 en producción.
+    handle: 'trabavolante-titan-pro',
+    title: 'Trabavolante Titan PRO™',
+    blurb:
+      'Se envuelve en el volante y se engancha al cinturón de seguridad. Acero de 5 mm y cerradura anti-taladro, puesto en 3 segundos.',
+    image: '/trabavolante/hero/trabavolante-oscuro.webp',
+    href: '/trabavolante',
+    fallbackPrice: 39990, // TODO PRECIO REAL — espejo de TRABAVOLANTE.fallbackPricing.price
+    specTag: 'ANCLA AL CINTURÓN',
+    badge: 'NUEVO',
+    comingSoon: true,
+  },
+  {
     // La foto es la del llavero solo (unidad), no el pack x2. En producción
     // sigue como "Próximamente" (2026-11-08): se abre sólo con la URL, con
     // noindex. Publicarlo es sacar `comingSoon`.

@@ -11,6 +11,7 @@ import { SOPORTE } from './soporte';
 import { PARASOL } from './parasol';
 import { SOPLADOR } from './soplador';
 import { TORNADO } from './tornado';
+import { TRABAVOLANTE } from './trabavolante';
 import { ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 import type { CrossSell, UpsellTier } from './types';
 
@@ -19,6 +20,7 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
   ...PARASOL.upsellChain,
   ...SOPLADOR.upsellChain,
   ...TORNADO.upsellChain,
+  ...TRABAVOLANTE.upsellChain,
   // Arranca en 2 unidades (no hay pack de 1). Va última: si quedara detrás
   // de una escalera que termina en 1 unidad, `nextTierOf` la ofrecería como
   // upsell de esa. El test de config lo vigila.
@@ -53,7 +55,8 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
  * Si agregás un pack nuevo a una escalera, sumalo también a los dos
  * descuentos en Shopify (en "Comprá" de uno y en "Llevá" del otro).
  *
- * El soplador no entra: todavía no está incorporado como producto.
+ * El soplador y el trabavolante no entran: todavía no están incorporados
+ * como productos.
  *
  * TODO rompevidrios ↔ soporte: el plan es ofrecer uno con el otro, pero la
  * card del carrito siempre anuncia el combo, así que hace falta crear antes

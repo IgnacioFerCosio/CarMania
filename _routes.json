@@ -31,6 +31,13 @@
     "/soplador/hero/*",
     "/tornado/*",
     "/og/*",
+    "/trabavolante/hero/*",
+    "/trabavolante/use-cases/*",
+    "/trabavolante/how-to-use/*",
+    "/trabavolante/whats-in-box/*",
+    "/trabavolante/bundles/*",
+    "/trabavolante/benefits/*",
+    "/trabavolante/reviews/*",
     "/rompevidrios/*",
     "/cyber/*"
   ]

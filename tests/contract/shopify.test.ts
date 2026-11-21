@@ -26,6 +26,7 @@ import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
 import { TORNADO } from '@/lib/landings/tornado';
+import { TRABAVOLANTE } from '@/lib/landings/trabavolante';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
 import type { LandingConfig, UpsellTier } from '@/lib/landings/types';
@@ -97,6 +98,7 @@ const LANDINGS: [string, LandingConfig][] = [
   ['/parasol', PARASOL],
   ['/soplador', SOPLADOR],
   ['/soplador-tornado', TORNADO],
+  ['/trabavolante', TRABAVOLANTE],
   ['/llavero-rescate', ROMPEVIDRIOS],
 ];
 
