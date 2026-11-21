@@ -62,25 +62,21 @@ function Box({ value, unit }: { value: string; unit: string }) {
   );
 }
 
-/** Cuánto se queda cada vista cuando el banner alterna (sólo abajo de xl). */
-const HOLD_COUNTDOWN_MS = 4200;
-const HOLD_BENEFIT_MS = 2400;
+/** Cuánto se queda cada beneficio cuando rotan (sólo abajo de xl). */
+const HOLD_BENEFIT_MS = 2800;
 
 export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
   const { phase, now, on } = useCyberPhase(true);
 
-  // Abajo de xl no entran la cuenta y los beneficios a la vez: el banner
-  // alterna entre la cuenta (slot 0) y cada beneficio (slots 1..n). Desde xl
-  // se ven todos juntos y esto no se usa.
+  // Abajo de xl no entran todos los beneficios: la cuenta queda FIJA (es la
+  // urgencia, no puede desaparecer) y los beneficios rotan de a uno a su
+  // lado. Desde xl se ven todos juntos y esto no se usa.
   const [slot, setSlot] = useState(0);
-  const slots = CYBER.benefits.length + 1;
+  const slots = CYBER.benefits.length;
   useEffect(() => {
-    const id = window.setTimeout(
-      () => setSlot((n) => (n + 1) % slots),
-      slot === 0 ? HOLD_COUNTDOWN_MS : HOLD_BENEFIT_MS,
-    );
-    return () => window.clearTimeout(id);
-  }, [slot, slots]);
+    const id = window.setInterval(() => setSlot((n) => (n + 1) % slots), HOLD_BENEFIT_MS);
+    return () => window.clearInterval(id);
+  }, [slots]);
 
   if (!on) return null;
 
@@ -112,17 +108,11 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
 
         <span aria-hidden="true" className="h-3.5 w-px bg-white/30" />
 
-        {/* Cuenta regresiva. Abajo de xl comparte lugar con los beneficios
-            (grid de una celda: ambos ocupan el mismo sitio y el ancho lo
-            define el más grande, así nada se corre al alternar). */}
+        {/* Cuenta regresiva: siempre visible. */}
         <span
-          className={`relative grid place-items-center transition-opacity ${phase === null || now === null ? 'opacity-0' : 'opacity-100'}`}
+          className={`relative shrink-0 transition-opacity ${phase === null || now === null ? 'opacity-0' : 'opacity-100'}`}
         >
-          <span
-            className={`col-start-1 row-start-1 flex items-center gap-1.5 transition-opacity duration-300 xl:opacity-100 ${
-              slot === 0 ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
+          <span className="flex items-center gap-1.5">
             <span
               className={`text-[10px] font-bold uppercase tracking-wider text-cyber-300 ${
                 extension ? 'inline' : 'hidden sm:inline'
@@ -138,14 +128,19 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
               <Box value={pad(t.s)} unit="s" />
             </span>
           </span>
+        </span>
 
-          {/* Beneficios, de a uno (abajo de xl). */}
+        {/* Beneficios, de a uno, rotando al lado de la cuenta (abajo de xl).
+            Grid de una celda: todos ocupan el mismo sitio y el ancho lo
+            define el más largo, así la cuenta no se corre al cambiar. */}
+        <span aria-hidden="true" className="h-3.5 w-px bg-white/30 xl:hidden" />
+        <span className="relative grid min-w-0 max-w-[160px] place-items-center sm:max-w-none xl:hidden">
           {CYBER.benefits.map((text, i) => (
             <span
               key={text}
-              aria-hidden={slot !== i + 1}
-              className={`col-start-1 row-start-1 max-w-[190px] text-center font-display text-[10px] font-black uppercase italic leading-[1.1] tracking-wider text-white transition-opacity duration-300 sm:max-w-none sm:whitespace-nowrap sm:text-xs xl:hidden ${
-                slot === i + 1 ? 'opacity-100' : 'opacity-0'
+              aria-hidden={slot !== i}
+              className={`col-start-1 row-start-1 text-center font-display text-[10px] font-black uppercase italic leading-[1.1] tracking-wider text-white transition-opacity duration-300 sm:whitespace-nowrap sm:text-xs ${
+                slot === i ? 'opacity-100' : 'opacity-0'
               }`}
             >
               {text}
