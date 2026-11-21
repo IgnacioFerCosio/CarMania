@@ -170,7 +170,7 @@ export const CYBER = {
    * Beneficios que viajan DENTRO del banner (en el evento se saca la barra
    * negra de abajo, `PromoBar`, y su contenido pasa acá).
    */
-  benefits: ['3 cuotas sin interés', 'Envío gratis', 'Muchos más descuentos y promociones'],
+  benefits: ['3 cuotas sin interés', 'Envío gratis', 'Más descuentos y promos'],
   /**
    * En `npm run dev` y en las previews el evento se ve SIEMPRE, aunque no esté
    * en fecha, para ir revisándolo (`?evento=off` lo apaga en esa pestaña).
