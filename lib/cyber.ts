@@ -53,10 +53,10 @@ export function cyberTargetOf(phase: Exclude<CyberPhase, 'ended'>, now: number):
 }
 
 /**
- * Sólo en dev y en las previews: `?evento=on` / `?evento=off` fuerza el
- * evento para verlo antes (o sin él) sin tocar fechas. Queda guardado en la
- * pestaña (sessionStorage) mientras navegás. En producción no existe: el
- * build no incluye este código en el script del <head>.
+ * Sólo en dev y en las previews: con `CYBER.previewOn` el evento se ve
+ * siempre; `?evento=on` / `?evento=off` lo fuerza en la pestaña
+ * (sessionStorage) y `?evento=clear` vuelve al default. En producción no
+ * existe: el build no incluye este código en el script del <head>.
  */
 export const EVENT_OVERRIDE_KEY = 'carmania_evento';
 
@@ -64,10 +64,11 @@ export function eventOverride(): 'on' | 'off' | null {
   if (!showsDrafts() || typeof window === 'undefined') return null;
   try {
     const v = window.sessionStorage.getItem(EVENT_OVERRIDE_KEY);
-    return v === 'on' || v === 'off' ? v : null;
+    if (v === 'on' || v === 'off') return v;
   } catch {
-    return null;
+    // sin sessionStorage: sigue con el default de abajo
   }
+  return CYBER.previewOn ? 'on' : null;
 }
 
 /** La fase que se usa para pintar: la real, o la forzada en dev. */
@@ -89,10 +90,11 @@ export function effectivePhaseAt(now: number): CyberPhase {
 export function eventGateScript(): string | null {
   if (!CYBER.enabled) return null;
   const override = showsDrafts()
-    ? `try{var q=new URLSearchParams(location.search).get('evento');` +
+    ? `var f=null;try{var q=new URLSearchParams(location.search).get('evento');` +
       `if(q==='on'||q==='off')sessionStorage.setItem('${EVENT_OVERRIDE_KEY}',q);` +
       `if(q==='clear')sessionStorage.removeItem('${EVENT_OVERRIDE_KEY}');` +
-      `var f=sessionStorage.getItem('${EVENT_OVERRIDE_KEY}');if(f==='on')on=true;if(f==='off')on=false;}catch(e){}`
+      `f=sessionStorage.getItem('${EVENT_OVERRIDE_KEY}');}catch(e){}` +
+      `f=f||${CYBER.previewOn ? "'on'" : 'null'};if(f==='on')on=true;if(f==='off')on=false;`
     : '';
   return (
     `(function(){var n=Date.now(),on=n>=${CYBER_STARTS}&&n<=${CYBER_EXTENSION_ENDS};` +

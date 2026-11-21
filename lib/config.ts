@@ -154,13 +154,14 @@ export const CYBER = {
   /** Extensión opcional después de `endsAt` (banner dice "Extensión"). `null` = sin extensión. */
   extensionEndsAt: null as string | null,
   /**
-   * Logo del evento (banner, packs, cards, carrito). `null` → se dibuja un
-   * logo de texto con los colores del evento. Cuando exista el archivo, va en
+   * Logo del evento (banner, packs, cards, carrito). `null` → se usa el
+   * dibujado en SVG (`EventBadge` en components/ui/CyberLogo.tsx), con los
+   * dorados del tema. Cuando exista el archivo, va en
    * `public/cyber/` (ya excluida en `_routes.json`), exportado a ~2x del alto
    * en que se ve (h-16 → 128 px de alto alcanza). El del Cyber era
    * `{ src: '/cyber/cyber-week-logo-sm.webp', width: 160, height: 118 }`.
    */
-  logo: { src: '/cyber/black-friday-logo.webp', width: 217, height: 140 } as {
+  logo: null as {
     src: string;
     width: number;
     height: number;
@@ -170,6 +171,12 @@ export const CYBER = {
    * negra de abajo, `PromoBar`, y su contenido pasa acá).
    */
   benefits: ['3 cuotas sin interés', 'Envío gratis', 'Muchos más descuentos y promociones'],
+  /**
+   * En `npm run dev` y en las previews el evento se ve SIEMPRE, aunque no esté
+   * en fecha, para ir revisándolo (`?evento=off` lo apaga en esa pestaña).
+   * Producción no lo lee: ahí manda sólo la fecha. Pasado el evento, `false`.
+   */
+  previewOn: true,
   /** Card propia para el pack x6 del soporte debajo de los 3 packs. */
   pack6Card: true,
 } as const;
