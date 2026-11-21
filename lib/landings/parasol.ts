@@ -249,12 +249,12 @@ export const PARASOL = {
     kind: 'video',
     src: '/parasol/hero/parasol-hero.mp4',
     poster: '/parasol/hero/parasol-hero-poster.webp',
-    // 720×720 H.264 sin audio, CRF 31, ~1,1 MB (el original de 1080×1080 con
-    // audio pesaba 18 MB). Mismo criterio que el hero de la home: la caja del
+    // 540×540 H.264 sin audio, CRF 31, ~650 KB (el original de 1080×1080 con
+    // audio pesaba 18 MB). El peso del video es lo que más mueve el LCP. Mismo criterio que el hero de la home: la caja del
     // hero nunca supera los ~600 px de ancho. El poster es el primer frame
     // del video ya encodeado, así no salta al arrancar, y es el LCP.
-    width: 720,
-    height: 720,
+    width: 540,
+    height: 540,
     badgeLine1: 'SE ABRE EN',
     badgeLine2: '3 SEGUNDOS',
   },
@@ -284,7 +284,7 @@ export const PARASOL = {
   useCases: [
     { label: 'CERO CALOR', image: '/parasol/use-cases/calor.webp', alt: 'Interior del auto más fresco con el Parasol PRO puesto' },
     { label: 'CERO RAJADURAS', image: '/parasol/use-cases/tablero.webp', alt: 'Tablero protegido del sol, sin plásticos rajados' },
-    { label: 'CERO DECOLORACIÓN', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
+    { label: 'CERO DESTEÑIDO', image: '/parasol/use-cases/tapizados.webp', alt: 'Asientos y tapizados sin decolorar por el sol' },
     { label: 'MÁS FRESCURA', image: '/parasol/use-cases/volante.webp', alt: 'Volante a la sombra, sin quemar al agarrarlo' },
     { label: 'MÁS PRIVACIDAD', image: '/parasol/use-cases/privacidad.webp', alt: 'El Parasol PRO tapa la vista al interior del auto desde afuera' },
     { label: 'MÁS CONFORT', image: '/parasol/use-cases/aire.webp', alt: 'Subir a un auto que ya está fresco, el aire acondicionado rinde más' },

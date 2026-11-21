@@ -16,7 +16,7 @@
  */
 import type { AdvertorialData } from '@/lib/landings/types';
 
-type MapData = AdvertorialData['comparison']['map'];
+type MapData = NonNullable<AdvertorialData['comparison']['map']>;
 
 /** Marcador numerado. */
 function Marker({

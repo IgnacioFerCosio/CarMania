@@ -97,8 +97,18 @@ export type Step = {
   title: string;
   desc: string;
   /** Video del paso. Antes vivía hardcodeado en HowItWorks.tsx. */
-  video: string;
+  video?: string;
+  /** Foto del paso: se muestra sólo si no hay `video`. */
   image?: string;
+};
+
+/** Sección de videos verticales del producto en acción (`VideoShowcase`). */
+export type VideoShowcaseData = {
+  eyebrow?: string;
+  /** `accent` es la subcadena de `title` que se pinta en rojo. */
+  title: string;
+  accent: string;
+  videos: readonly { src: string; label: string }[];
 };
 
 export type PitchBlockData = {
@@ -115,7 +125,8 @@ export type PitchBlockData = {
  */
 export type WhatsInBoxData = WhatsInBoxCopy & {
   gallery: readonly { src: string; alt: string }[];
-  testimonial: Review;
+  /** Opcional: sin reseñas reales, la sección sale sin opinión. */
+  testimonial?: Review;
 };
 
 /** El texto de la sección "qué incluye", sin el carrusel ni la opinión. */
@@ -152,6 +163,7 @@ export type HeroMedia = {
   src: string;
   /** Poster del video (primer frame). Sólo aplica a `kind: 'video'`. */
   poster?: string;
+
   /** Dimensiones intrínsecas del media, para reservar el espacio. */
   width: number;
   height: number;
@@ -238,6 +250,15 @@ export type LandingConfig = {
    */
   whatsInBox?: WhatsInBoxData;
   reviews: readonly Review[];
+  /**
+   * Reseñas del carrusel del hero. Opcional: sin esto, el hero usa `reviews`
+   * tal cual. Ver `pickHeroReviews` (sólo 5★, cortadas con "…").
+   */
+  heroReviews?: readonly Review[];
+  /** Videos del producto en acción. Opcional: hoy sólo /soplador-tornado. */
+  videoShowcase?: VideoShowcaseData;
+  /** Tabla comparativa (`ComparisonTable`, la del llavero). Opcional. */
+  comparison?: AdvertorialData['comparison'];
   ratingBreakdown: {
     average: number;
     total: number;
@@ -368,9 +389,10 @@ export type AdvertorialData = {
     /**
      * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre
      * la mano y la guantera; `items` son los tres puntos numerados (1 llavero,
-     * 2 martillo, 3 apoyacabezas).
+     * 2 martillo, 3 apoyacabezas). Opcional: sin mapa, la tabla va sola y
+     * centrada (/soplador-tornado).
      */
-    map: {
+    map?: {
       distanceLabel: string;
       items: readonly { n: number; tone: 'ours' | 'other'; title: string; desc: string }[];
     };

@@ -113,7 +113,19 @@ export function StoreHero() {
         </h1>
 
         <p className="mx-auto mt-7 max-w-xl text-sm leading-relaxed text-ink-300 sm:text-base md:mt-8">
-          {STORE_SECTIONS.heroSub}
+          {/* En el celular, lo que sigue a la primera coma va en su propio
+              renglón: el corte natural queda más prolijo que el del navegador. */}
+          {(() => {
+            const i = STORE_SECTIONS.heroSub.indexOf(', ');
+            if (i < 0) return STORE_SECTIONS.heroSub;
+            return (
+              <>
+                {STORE_SECTIONS.heroSub.slice(0, i + 1)}
+                <br className="sm:hidden" />{' '}
+                {STORE_SECTIONS.heroSub.slice(i + 2)}
+              </>
+            );
+          })()}
         </p>
 
         <a

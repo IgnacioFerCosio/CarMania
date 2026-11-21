@@ -71,11 +71,11 @@ export const HERO_MEDIA = {
   kind: 'video',
   src: '/hero/VideoPrincipal.mp4',
   poster: '/hero/VideoPrincipal-poster.webp',
-  // 576×1024 H.264 sin audio, CRF 31, ~0,9 MB (el original de 720p con
+  // 432×768 H.264 sin audio, CRF 31, ~530 KB (el original de 720p con
   // audio pesaba 2,2 MB y en 4G lento tardaba más de 10 s en bajar). La
   // caja del hero nunca supera los ~600 px de ancho, así que no se nota.
-  width: 576,
-  height: 1024,
+  width: 432,
+  height: 768,
   badgeLine1: 'NO SE',
   badgeLine2: 'CAE MÁS',
 } as const;

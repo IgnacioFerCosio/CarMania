@@ -339,6 +339,12 @@ export type StoreProduct = {
    * para que no quede a medio ocultar.
    */
   comingSoon?: boolean;
+  /**
+   * Saca la card de la grilla de /tienda y el link del nav, también en dev y
+   * en las previews. La landing NO se borra: con `comingSoon` sigue dando 404
+   * en producción y se abre por URL en dev. Es para productos pausados.
+   */
+  hidden?: boolean;
 };
 
 /**
@@ -405,6 +411,26 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     specTag: 'RECARGABLE USB',
     badge: 'NUEVO',
     comingSoon: true,
+    // Pausado (2026-11-12): se continúa con otro soplador (inalámbrico, con
+    // batería). Para retomarlo, sacar `hidden`.
+    hidden: true,
+  },
+  {
+    // Reemplaza al Turbo. Producto sin Shopify y sin fotos todavía: `hidden`
+    // para que /tienda no muestre una card sin imagen, y `comingSoon` para
+    // que /soplador-tornado dé 404 en producción. Publicar = sacar los dos.
+    // Plan de material: docs/superpowers/specs/soplador-tornado-assets.md.
+    handle: 'soplador-tornado-pro',
+    title: 'Soplador Tornado PRO™',
+    blurb:
+      'Soplador inalámbrico de alta potencia con batería desmontable. Hojas, agua del auto, polvo del taller y el fuego de la parrilla.',
+    image: '/tornado/hero/tornado-hero.webp',
+    href: '/soplador-tornado',
+    fallbackPrice: 119990, // espejo de TORNADO.fallbackPricing.price
+    specTag: 'INALÁMBRICO · 35.000 Pa',
+    badge: 'NUEVO',
+    comingSoon: true,
+    hidden: true,
   },
   {
     // La foto es la del llavero solo (unidad), no el pack x2. En producción

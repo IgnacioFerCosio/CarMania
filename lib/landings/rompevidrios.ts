@@ -148,9 +148,9 @@ export const ROMPEVIDRIOS = {
     reviewsFooter: 'clientes que ya manejan tranquilos con CARMANIA.',
     faqEyebrow: 'Preguntas frecuentes',
     faqTitle: 'Lo que más nos preguntan',
-    // Mismo banner que /: el marquee de marcas. Dice "Lo llevás en" y no
-    // "Compatible con": el llavero va en cualquier auto, pero no rompe laminados.
-    carBrandsTitle: 'Lo llevás en',
+    // Mismo banner que /: el marquee de marcas. Dice "Te saca de" y no
+    // "Compatible con": sirve en cualquier auto, pero no rompe laminados.
+    carBrandsTitle: 'Te saca de',
     carBrandsTitleAccent: 'cualquier auto',
     useCasesTitle: 'Cuando cada segundo cuenta.',
     // Sin prefijo: la última palabra de cada etiqueta va en rojo (como en /parasol).

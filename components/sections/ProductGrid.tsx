@@ -29,7 +29,8 @@ export function ProductGrid({
   const cyberTrim = CYBER.enabled;
   // En el Cyber la grilla muestra sólo lo que se vende: lo que tiene
   // `comingSoon` queda afuera también en dev (donde `isPublished` lo abre).
-  const visible = cyberTrim ? products.filter(({ product }) => !product.comingSoon) : products;
+  const shown = products.filter(({ product }) => !product.hidden);
+  const visible = cyberTrim ? shown.filter(({ product }) => !product.comingSoon) : shown;
   const slots = cyberTrim ? [] : STORE_COMING_SOON;
 
   return (

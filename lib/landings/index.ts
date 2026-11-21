@@ -10,6 +10,7 @@
 import { SOPORTE } from './soporte';
 import { PARASOL } from './parasol';
 import { SOPLADOR } from './soplador';
+import { TORNADO } from './tornado';
 import { ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 import type { CrossSell, UpsellTier } from './types';
 
@@ -17,6 +18,7 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
   ...SOPORTE.upsellChain,
   ...PARASOL.upsellChain,
   ...SOPLADOR.upsellChain,
+  ...TORNADO.upsellChain,
   // Arranca en 2 unidades (no hay pack de 1). Va última: si quedara detrás
   // de una escalera que termina en 1 unidad, `nextTierOf` la ofrecería como
   // upsell de esa. El test de config lo vigila.

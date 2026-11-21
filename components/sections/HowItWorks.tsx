@@ -5,6 +5,7 @@
  */
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
+import Image from 'next/image';
 import { LazyVideo } from '@/components/ui/LazyVideo';
 
 // Los videos de cada paso viven en /public/how-to-use/ y se sirven desde el
@@ -34,10 +35,20 @@ export function HowItWorks({ config = SOPORTE }: { config?: LandingConfig } = {}
               {/* Video sin ningún texto encima. El aspect-ratio del contenedor
                   reserva el espacio aunque el video todavía no se haya montado. */}
               <div className="relative aspect-video w-full overflow-hidden bg-ink-900 sm:aspect-[6/5]">
-                <LazyVideo
-                  src={s.video}
-                  className="h-full w-full object-cover"
-                />
+                {s.video ? (
+                  <LazyVideo
+                    src={s.video}
+                    className="h-full w-full object-cover"
+                  />
+                ) : s.image ? (
+                  <Image
+                    src={s.image}
+                    alt={s.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                  />
+                ) : null}
               </div>
 
               {/* Texto debajo */}

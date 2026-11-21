@@ -58,6 +58,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_AR',
     siteName: 'CARMANIA',
+    // Imagen para compartir (WhatsApp, Facebook): 1200×630, ver /public/og.
+    images: [{ url: '/og/soporte.jpg', width: 1200, height: 630, alt: 'Soporte Magnético PRO™ de CARMANIA' }],
   },
   alternates: { canonical: '/' },
 };

@@ -120,7 +120,7 @@ export function Hero({
             {/* Sin reseñas (producto nuevo) no hay carrusel: no se inventan. */}
             {config.reviews.length > 0 && (
               <HeroTestimonialCarousel
-                {...(config.reviews === SOPORTE.reviews ? {} : { reviews: config.reviews })}
+                {...(config.reviews === SOPORTE.reviews ? {} : { reviews: config.heroReviews ?? config.reviews })}
               />
             )}
           </div>

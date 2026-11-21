@@ -50,7 +50,7 @@ export function storeLinks(productosHref = '#productos'): NavLink[] {
     // El soplador entra sólo si está publicado: mientras tenga `comingSoon` la
     // ruta responde 404 (salvo en `npm run dev`, ver `isPublished`).
     // Durante el Cyber no va ni en dev: no es parte del evento.
-    ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && isPublished(p) && !CYBER.enabled).map(
+    ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && !p.hidden && isPublished(p) && !CYBER.enabled).map(
       (p): NavLink => ({ href: p.href, label: 'Soplador PRO', badge: 'NUEVO' }),
     ),
     { href: productosHref, label: 'Ver todo' },
