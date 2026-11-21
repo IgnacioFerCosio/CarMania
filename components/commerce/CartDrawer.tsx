@@ -10,7 +10,7 @@
 import { useEffect, useRef } from 'react';
 import { formatARS } from '@/lib/shopify';
 import { nextTierOf, tierOf } from '@/lib/tiers';
-import { CYBER, PAYMENT_LOGOS, PAYMENTS, RETURNS, SHIPPING } from '@/lib/config';
+import { CYBER, PAYMENT_LOGOS, PAYMENTS, SHIPPING } from '@/lib/config';
 import { CROSS_SELL_LABEL } from '@/lib/landings';
 import { Icon } from '@/components/ui/Icon';
 import { CyberLogo } from '@/components/ui/CyberLogo';
@@ -389,10 +389,12 @@ export function CartDrawer({
               <Icon name="arrow-right" className="h-5 w-5" />
             </button>
 
-            <p className="mt-3 flex items-center justify-center gap-x-3 text-center text-[11px] uppercase tracking-wider text-ink-500">
-              <span>Devolución {RETURNS.days} días</span>
-              <span aria-hidden="true">·</span>
-              <span>Pago seguro con {PAYMENTS.provider}</span>
+            {/* Un solo renglón: en mobile la línea doble (devolución · pago
+                seguro) se partía en 3-4 renglones y le comía lugar a los
+                productos. La devolución ya la dicen los packs y la franja de
+                garantías. */}
+            <p className="mt-2 whitespace-nowrap text-center text-[10px] uppercase tracking-wider text-ink-500">
+              Pago seguro con {PAYMENTS.provider}
             </p>
           </div>
         )}
