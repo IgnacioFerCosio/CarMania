@@ -1,6 +1,6 @@
 'use client';
 /**
- * CYBER BANNER — la franja fija de arriba durante el CyberMonday.
+ * CYBER BANNER — la franja fija de arriba durante el evento (ver CYBER en config).
  *
  * Reemplaza al `CountdownBanner` de 8 h mientras `CYBER.enabled` esté en true
  * (ver config). A diferencia de aquél, la cuenta es REAL: va hasta una fecha
@@ -9,7 +9,7 @@
  *
  *  - antes de `startsAt`        → "Empieza en"
  *  - hasta `endsAt`             → "Termina en"
- *  - hasta `extensionEndsAt`    → "Extensión Cyber Week"
+ *  - hasta `extensionEndsAt`    → "Extensión"
  *  En las dos la cuenta es de hasta 24 h: vence a la medianoche de Argentina y
  *  se reinicia sola cada día (ver `cyberTargetOf`).
  *  - pasado todo                → no se pinta nada (ni el spacer)
@@ -27,6 +27,7 @@ import { useEffect, useState } from 'react';
 import { CYBER } from '@/lib/config';
 import { cyberTargetOf } from '@/lib/cyber';
 import { useCyberPhase } from './useCyberPhase';
+import { EventMark } from '@/components/ui/CyberLogo';
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -42,21 +43,12 @@ function parts(ms: number) {
   };
 }
 
-/**
- * Logo del evento (propio, no el de la CACE). `<img>` plano y no next/image:
- * en Cloudflare `/_next/image` no optimiza y `/cyber` se sirve como estático.
- * 160 px de ancho alcanzan para `h-9` a 2x.
- */
+/** Logo del evento en el banner (archivo o logo de texto, ver `EventMark`). */
 function CyberMark() {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/cyber/cyber-week-logo-sm.webp"
-      alt={CYBER.name}
-      width={160}
-      height={118}
-      decoding="async"
-      className="h-9 w-auto shrink-0 animate-cyber-glow drop-shadow-[0_0_8px_rgba(196,181,253,0.7)] motion-reduce:animate-none"
+    <EventMark
+      priority
+      className="h-9 shrink-0 animate-cyber-glow drop-shadow-[0_0_8px_rgb(var(--cyber-glow-soft)/0.7)] motion-reduce:animate-none"
     />
   );
 }
@@ -108,7 +100,7 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
       <a
         href={href}
         aria-label={`${extension ? CYBER.extensionName : CYBER.name}: ver las ofertas`}
-        className="group fixed inset-x-0 top-0 z-50 flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden border-b border-cyber-400/40 bg-gradient-to-r from-cyber-800 via-cyber-600 to-cyber-800 px-3 shadow-[0_0_18px_rgba(124,58,237,0.55)] sm:gap-3 sm:px-4"
+        className="group fixed inset-x-0 top-0 z-50 flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden border-b border-cyber-500/70 bg-gradient-to-r from-cyber-band via-cyber-band-mid to-cyber-band px-3 shadow-[0_0_18px_rgb(var(--cyber-glow)/0.55)] sm:gap-3 sm:px-4"
       >
         {/* Destello cíclico: una franja de luz inclinada que cruza la barra. */}
         <span
@@ -172,7 +164,7 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
           ))}
         </ul>
 
-        <span className="relative hidden shrink-0 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-cyber-700 transition group-hover:bg-cyber-300 md:inline-block">
+        <span className="relative hidden shrink-0 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-black transition group-hover:bg-cyber-300 md:inline-block">
           Ver oferta
         </span>
       </a>

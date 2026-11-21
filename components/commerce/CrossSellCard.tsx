@@ -13,6 +13,7 @@
  * puede ponerlo en la línea del otro producto (ver `CROSS_SELLS`). El total,
  * en cambio, baja siempre lo mismo.
  */
+import { CYBER } from '@/lib/config';
 import { formatARS } from '@/lib/shopify';
 import type { ResolvedCrossSell } from '@/lib/crossSell';
 import { Icon } from '@/components/ui/Icon';
@@ -31,7 +32,7 @@ export function CrossSellCard({ offer, busy, cyber = false, onAdd }: Props) {
   return (
     <section aria-label="Completá tu auto" className="mt-5">
       <p className="mb-2 font-display text-[12px] font-black uppercase italic tracking-wider text-ink-400">
-        Completá tu auto{cyber && <span className="text-cyber-300"> · Combo Cyber</span>}
+        Completá tu auto{cyber && <span className="text-cyber-300"> · Combo {CYBER.shortName}</span>}
       </p>
 
       <div
@@ -62,11 +63,11 @@ export function CrossSellCard({ offer, busy, cyber = false, onAdd }: Props) {
             </h3>
             {/* Fuera de la foto: sobre la imagen tapaba el producto. */}
             <span
-              className={`shrink-0 whitespace-nowrap rounded-md px-1.5 py-0.5 font-display text-[10px] font-black leading-none text-white ${
-                cyber ? 'bg-cyber-600' : 'bg-accent'
+              className={`shrink-0 whitespace-nowrap rounded-md px-1.5 py-0.5 font-display text-[10px] font-black leading-none ${
+                cyber ? 'bg-cyber-600 text-cyber-on' : 'bg-accent text-white'
               }`}
             >
-              {cyber ? 'CYBER ' : ''}−{pct}%
+              {cyber ? `${CYBER.shortName.toUpperCase()} ` : ''}−{pct}%
             </span>
           </div>
           <p className="mt-0.5 text-[12px] leading-snug text-ink-400">{offer.pitch}</p>
@@ -94,8 +95,8 @@ export function CrossSellCard({ offer, busy, cyber = false, onAdd }: Props) {
               onClick={onAdd}
               disabled={busy}
               aria-label={`Agregar ${offer.name} por ${formatARS(offer.offerPrice)}`}
-              className={`flex h-9 shrink-0 items-center gap-1 rounded-full px-3 font-display text-[12px] font-black uppercase italic tracking-wider text-white transition disabled:cursor-wait disabled:opacity-60 ${
-                cyber ? 'bg-cyber-600 hover:bg-cyber-500' : 'bg-accent hover:bg-accent-600'
+              className={`flex h-9 shrink-0 items-center gap-1 rounded-full px-3 font-display text-[12px] font-black uppercase italic tracking-wider transition disabled:cursor-wait disabled:opacity-60 ${
+                cyber ? 'bg-cyber-600 text-cyber-on hover:bg-cyber-500' : 'bg-accent text-white hover:bg-accent-600'
               }`}
             >
               <Icon name="plus" className="h-4 w-4" />

@@ -9,12 +9,10 @@
  * argumenta en la landing. Acá sólo se invita a entrar.
  *
  * `ProductCard` es un link entero a la landing del producto, no un botón de
- * compra: la venta se argumenta en la landing, no acá. Con `comingSoon` la
- * misma card se ve completa (foto, título, texto) pero no es link: la
- * landing existe y todavía no se publica, y linkear a un 404 es peor que no
- * linkear.
- * `ComingSoonCard` rellena la grilla mientras el catálogo no llegue a 4 — no
- * es link porque todavía no hay a dónde ir.
+ * compra: la venta se argumenta en la landing, no acá. Si le llega un
+ * producto sin publicar, la card se ve completa pero no es link (linkear a un
+ * 404 es peor que no linkear). Hoy no pasa: `ProductGrid` no los muestra en
+ * producción, y en dev todo cuenta como publicado.
  *
  * Server Components — no tienen estado ni handlers.
  */
@@ -86,8 +84,10 @@ export function ProductCard({
               texto, debajo del título). Sin Cyber queda el hueco, y el badge
               se mantiene a la derecha. */}
           {cyber && cyberPct ? (
-            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 font-display text-[9px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.5)] sm:text-[10px]">
-              Cyber −{cyberPct}%
+            <span className="inline-flex items-center whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 font-display text-[9px] font-black italic uppercase tracking-wider text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.5)] sm:text-[10px]">
+              {/* En mobile la card es angosta: el nombre del evento ya lo dice
+                  el logo de la foto, el chip queda en el descuento. */}
+              <span className="hidden sm:inline">{CYBER.shortName}&nbsp;</span>−{cyberPct}%
             </span>
           ) : (
             <span />
@@ -144,46 +144,5 @@ export function ProductCard({
     </Link>
   ) : (
     <div className={className}>{inner}</div>
-  );
-}
-
-/**
- * Slot vacío de la grilla. Mismo alto y mismos tags que una card real para
- * que la fila no se desarme, pero apagada y sin link.
- */
-export function ComingSoonCard({
-  specTag,
-  badge,
-}: {
-  specTag: string;
-  badge: string;
-}) {
-  return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-dashed border-ink-700 bg-ink-950/60">
-      <div className="relative m-2 mb-0 aspect-square overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_38%,#212327,#121316_78%)]">
-        {/* Silueta: el mismo cuadrado de una foto, pero vacío */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-display text-6xl font-black italic text-white/[0.05] sm:text-7xl">
-            ?
-          </span>
-        </div>
-        <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-2 p-2">
-          <span className="hidden sm:block">
-            <Tag>{specTag}</Tag>
-          </span>
-          <Tag>{badge}</Tag>
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col border-t border-ink-800 p-4 sm:p-5">
-        <h3 className="font-display text-sm font-black italic uppercase tracking-wide text-ink-500 sm:text-base">
-          Próximamente
-        </h3>
-        <p className="mt-2 flex-1 text-[13px] leading-relaxed text-ink-600">
-          Estamos probando el próximo producto. Si querés enterarte primero,
-          escribinos por WhatsApp.
-        </p>
-      </div>
-    </div>
   );
 }

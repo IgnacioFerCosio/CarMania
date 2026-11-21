@@ -27,7 +27,7 @@ const GLOW =
   'shadow-[0_0_14px_rgba(215,7,7,0.55),0_0_34px_rgba(215,7,7,0.4),0_0_70px_rgba(215,7,7,0.28),inset_0_1px_0_rgba(215,7,7,0.55),inset_0_-1px_0_rgba(215,7,7,0.55)]';
 
 const GLOW_CYBER =
-  'shadow-[0_0_14px_rgba(139,92,246,0.55),0_0_34px_rgba(139,92,246,0.4),0_0_70px_rgba(139,92,246,0.28),inset_0_1px_0_rgba(139,92,246,0.55),inset_0_-1px_0_rgba(139,92,246,0.55)]';
+  'shadow-[0_0_14px_rgb(var(--cyber-glow)/0.55),0_0_34px_rgb(var(--cyber-glow)/0.4),0_0_70px_rgb(var(--cyber-glow)/0.28),inset_0_1px_0_rgb(var(--cyber-glow)/0.55),inset_0_-1px_0_rgb(var(--cyber-glow)/0.55)]';
 
 export function SubPromoBar({ href }: { href?: string } = {}) {
   if (!PROMO_BARS.sub.enabled) return null;
@@ -35,7 +35,7 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
   // z-30: sobre el contenido de la página — si no, la sección siguiente tapa
   // el derrame de luz de abajo. Por debajo del navbar (40), del banner fijo
   // (50) y del drawer del carrito (60/61).
-  // En el Cyber el neón pasa a morado (ver CYBER en config).
+  // En el evento el neón pasa al color del evento (ver CYBER en config).
   const cyber = CYBER.enabled;
   // En el Cyber la franja no es sticky: es parte de la página, no del header
   // (el banner fijo de arriba ya acompaña al scroll).
@@ -48,7 +48,7 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
     <span
       className={`neon-pulse block text-center text-[12px] font-black uppercase italic tracking-[0.18em] md:text-sm ${
         cyber
-          ? 'text-cyber-400 [text-shadow:0_0_10px_rgba(139,92,246,0.9)]'
+          ? 'text-cyber-400 [text-shadow:0_0_10px_rgb(var(--cyber-glow)/0.9)]'
           : 'text-accent [text-shadow:0_0_10px_rgba(215,7,7,0.85)]'
       }`}
     >

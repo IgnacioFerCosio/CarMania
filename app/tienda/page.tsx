@@ -77,7 +77,7 @@ async function getProducts(): Promise<{ product: StoreProduct; price: number }[]
 }
 
 /**
- * "Cyber −X%" de la card: el descuento del pack de entrada de su landing
+ * "<CYBER.shortName> −X%" de la card: el descuento del pack de entrada de su landing
  * (precio contra tachado, mismos números que ve quien entra a la landing).
  */
 function cyberPctOf(product: StoreProduct, bundlesData: Record<string, BundleData>): number {
@@ -116,7 +116,7 @@ export default async function TiendaPage() {
 
   return (
     <CartProvider bundlesData={bundlesData} upsellChain={ALL_UPSELL_CHAINS}>
-      {/* Cyber: el banner morado (lleva a los productos) en vez de la barra negra. */}
+      {/* Evento (CYBER): el banner del evento (lleva a los productos) en vez de la barra negra. */}
       {CYBER.enabled ? (
         <CyberBanner href="#productos" />
       ) : (

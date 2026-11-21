@@ -135,10 +135,10 @@ export function Pricing({
                 key={b.id}
                 className={`${mobileOrder} relative flex flex-col rounded-2xl border bg-ink-900 p-5 sm:rounded-3xl sm:p-6 md:order-none md:p-7 ${b.recommended
                     ? CYBER.enabled
-                      ? 'border-cyber-500 shadow-[0_30px_80px_-20px_rgba(124,58,237,0.55)] ring-2 ring-cyber-500/30 md:scale-[1.03]'
+                      ? 'border-cyber-500 shadow-[0_30px_80px_-20px_rgb(var(--cyber-glow)/0.55)] ring-2 ring-cyber-500/30 md:scale-[1.03]'
                       : 'border-accent shadow-[0_30px_80px_-20px_rgba(215,7,7,0.45)] ring-2 ring-accent/30 md:scale-[1.03]'
                     : cyberHero
-                      ? 'border-cyber-500/60 shadow-[0_24px_60px_-24px_rgba(124,58,237,0.5)]'
+                      ? 'border-cyber-500/60 shadow-[0_24px_60px_-24px_rgb(var(--cyber-glow)/0.5)]'
                       : 'border-ink-800'
                   }`}
               >
@@ -148,10 +148,10 @@ export function Pricing({
                     <span
                       className={`inline-flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider shadow-lg ${b.recommended
                           ? CYBER.enabled
-                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-cyber-on'
                             : 'bg-accent text-white'
                           : cyberHero
-                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-white'
+                            ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 text-cyber-on'
                             : 'bg-white text-ink-950'
                         }`}
                     >
@@ -190,8 +190,8 @@ export function Pricing({
                 {/* Precios */}
                 <div className="mt-2 text-center">
                   {CYBER.enabled && cyberPct > 0 && (
-                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
-                      Cyber −{cyberPct}%
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.55)] sm:text-xs">
+                      {CYBER.shortName} −{cyberPct}%
                     </span>
                   )}
                   <div className="text-[11px] uppercase tracking-wider text-ink-400 sm:text-xs">
@@ -297,7 +297,7 @@ export function Pricing({
         {/* Pack x6: card propia, ancha. Va DENTRO del <ul> para poder ordenarla: en mobile
             queda antes de la unidad suelta (order-3 vs order-4), en desktop ocupa toda la fila de abajo. */}
         {x6 && (
-          <li className="relative order-3 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgba(124,58,237,0.55)] md:order-1 md:col-span-3 md:mt-4">
+          <li className="relative order-3 overflow-visible rounded-3xl border border-cyber-500/60 bg-ink-900 shadow-[0_30px_80px_-30px_rgb(var(--cyber-glow)/0.55)] md:order-1 md:col-span-3 md:mt-4">
             <div className="pointer-events-none absolute -right-2 -top-6 z-10 rotate-6 sm:-right-3 sm:-top-7">
               <CyberLogo className="h-14 sm:h-16" />
             </div>
@@ -317,7 +317,7 @@ export function Pricing({
               </div>
 
               <div className="text-center md:text-left">
-                <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-lg">
+                <span className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-4 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-cyber-on shadow-lg">
                   <Icon name="star" className="h-3 w-3" />
                   El pack más completo
                 </span>
@@ -330,8 +330,8 @@ export function Pricing({
 
                 <div className="mt-4">
                   {x6Pct > 0 && (
-                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-white shadow-[0_0_14px_rgba(124,58,237,0.55)] sm:text-xs">
-                      Cyber −{x6Pct}%
+                    <span className="mb-2 inline-flex items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-3 py-1 font-display text-[11px] font-black italic uppercase tracking-wider text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.55)] sm:text-xs">
+                      {CYBER.shortName} −{x6Pct}%
                     </span>
                   )}
                   {x6Compare > x6Total && (

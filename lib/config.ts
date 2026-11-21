@@ -108,16 +108,21 @@ export const TRACKING = {
 
 /**
  * ─────────────────────────────────────────────────────────────────────────
- * CYBER — ambientación temporal del CyberMonday 2026. Es un solo interruptor:
+ * CYBER — ambientación temporal del evento de compra del momento (hoy Black
+ * Friday 2026; el nombre quedó del CyberMonday, el primero que se armó). Es un
+ * solo interruptor:
  *
- *  - `enabled: true`  → `CountdownBanner` pinta el banner morado con una
+ *  - `enabled: true`  → `CountdownBanner` pinta el banner del evento con una
  *    cuenta REAL (en vez del de 8 h que se reinicia), el logo del evento,
- *    los packs con "CYBER −X%", el carrito en morado, las barras de promo
- *    hablan del Cyber y /tienda esconde las cards "Próximamente".
+ *    los packs con "<shortName> −X%", la card del pack x6, el carrito con los
+ *    colores del evento y las barras de promo hablan del evento.
+ *  - Los COLORES no viven acá: salen de `lib/event-theme.ts` (Tailwind los
+ *    lee de ahí). Cambiar de evento = cambiar `EVENT_THEME_ID` allá y los
+ *    textos y fechas de acá.
  *  - Las fases pasan SOLAS según la hora del visitante (ver `lib/cyber.ts`):
  *      antes de `startsAt`           → "Empieza en"
  *      hasta `endsAt`                → "Termina en"
- *      hasta `extensionEndsAt`       → "Extensión Cyber Week"
+ *      hasta `extensionEndsAt`       → "Extensión"
  *    La cuenta del banner es siempre de hasta 24 h: vence a la medianoche de
  *    Argentina y se reinicia sola cada día (ver `cyberTargetOf`).
  *      después                       → el banner, el logo y las píldoras se
@@ -127,27 +132,38 @@ export const TRACKING = {
  *  - `enabled: false` → todo vuelve a como era, sin tocar componentes.
  *
  * Lo que NO se apaga solo: los textos de las barras de promo y los colores
- * morados de botones/packs están en el HTML del build. Pasada la extensión,
- * poné `enabled: false` y redeployá.
+ * del evento en botones/packs están en el HTML del build. Pasada la
+ * extensión, poné `enabled: false` y redeployá.
  *
  * Las fechas llevan el offset de Argentina (-03:00) para que el conteo no
- * dependa de la zona del visitante. Confirmarlas en cybermonday.com.ar.
- * `extensionEndsAt` es decisión de la marca, no del evento.
+ * dependa de la zona del visitante. `extensionEndsAt` es decisión de la marca.
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const CYBER = {
-  enabled: false,
-  name: 'CYBER WEEK',
-  extensionName: 'EXTENSIÓN CYBER WEEK',
-  startsAt: '2026-11-02T00:00:00-03:00',
-  endsAt: '2026-11-04T23:59:59-03:00',
-  extensionEndsAt: '2026-11-08T23:59:59-03:00',
+  enabled: true,
+  name: 'BLACK FRIDAY',
+  extensionName: 'EXTENSIÓN BLACK FRIDAY',
+  /** En píldoras, chips y el combo del carrito: "Black Friday −30%". */
+  shortName: 'Black Friday',
+  /** Texto del botón del hero durante el evento. */
+  heroCta: 'Aprovechá el Black Friday',
+  startsAt: '2026-11-27T00:00:00-03:00',
+  endsAt: '2026-11-29T23:59:59-03:00',
+  extensionEndsAt: '2026-11-30T23:59:59-03:00',
   /**
-   * Beneficios que viajan DENTRO del banner (en el Cyber se saca la barra
+   * Logo del evento (banner, packs, cards, carrito). `null` → se dibuja un
+   * logo de texto con los colores del evento. Cuando exista el archivo, va en
+   * `public/cyber/` (ya excluida en `_routes.json`), exportado a ~2x del alto
+   * en que se ve (h-16 → 128 px de alto alcanza). El del Cyber era
+   * `{ src: '/cyber/cyber-week-logo-sm.webp', width: 160, height: 118 }`.
+   */
+  logo: null as { src: string; width: number; height: number } | null,
+  /**
+   * Beneficios que viajan DENTRO del banner (en el evento se saca la barra
    * negra de abajo, `PromoBar`, y su contenido pasa acá).
    */
   benefits: ['3 cuotas sin interés', 'Envío gratis', 'Muchos más descuentos y promociones'],
-  /** Card propia para el pack x6 debajo de los 3 packs (experimento del evento). */
+  /** Card propia para el pack x6 del soporte debajo de los 3 packs. */
   pack6Card: true,
 } as const;
 
@@ -333,16 +349,17 @@ export type StoreProduct = {
   /** Le agrega el ícono de fuego al badge. Reservado para el más vendido. */
   badgeHot?: boolean;
   /**
-   * La landing existe en el repo pero todavía no se publica: la card se ve
-   * en el catálogo (foto, título, "Próximamente") pero no linkea, la ruta
-   * responde 404, y no va al sitemap ni al nav de /tienda. Es UN solo flag
-   * para que no quede a medio ocultar.
+   * La landing existe en el repo pero todavía no se publica: en producción
+   * no hay card en /tienda (nada de "Próximamente", para no anunciar un
+   * producto que se pueda copiar), la ruta responde 404 y no va al sitemap.
+   * En dev y en las previews se ve todo, como link. Es UN solo flag para que
+   * no quede a medio ocultar.
    */
   comingSoon?: boolean;
   /**
-   * Saca la card de la grilla de /tienda y el link del nav, también en dev y
-   * en las previews. La landing NO se borra: con `comingSoon` sigue dando 404
-   * en producción y se abre por URL en dev. Es para productos pausados.
+   * Producto pausado. Hoy hace lo mismo que `comingSoon` en /tienda (fuera en
+   * producción, card en dev y en las previews); queda para marcar que no es
+   * "falta poco" sino "frenado". La landing NO se borra.
    */
   hidden?: boolean;
 };
@@ -479,14 +496,6 @@ export const STORE_PRICE_PERKS = [
   { icon: 'truck', label: 'Envío gratis a todo el país' },
   { icon: 'shield', label: 'Garantía de 30 días' },
 ] as const;
-
-/**
- * Slots vacíos de la grilla — completan las 4 columnas mientras el catálogo
- * tenga menos de 4 productos. No son links: no hay a dónde ir todavía.
- * Cuando sumes un producto real, borrá un slot de acá y agregalo arriba.
- * Vacío desde que entró el rompevidrios (4º producto).
- */
-export const STORE_COMING_SOON: readonly { id: string; specTag: string; badge: string }[] = [];
 
 /** Copy del encabezado de /tienda. */
 export const STORE_HEADLINES = {

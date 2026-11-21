@@ -5,17 +5,18 @@
  * usa decide de dónde salen los precios (Shopify en el build, o el fallback
  * de config).
  *
- * Grilla de 4 como la de CARMOUNT: los productos reales primero y, detrás,
- * los slots de `STORE_COMING_SOON` para completar la fila. Cuando el catálogo
- * llegue a 4 productos, vaciá ese array en config y los slots desaparecen.
+ * Grilla de 4 como la de CARMOUNT. En producción muestra SÓLO lo que se
+ * vende: sin cards "Próximamente" (un producto anunciado antes de tiempo es
+ * una idea servida para que la copien). En dev y en las previews
+ * (`showsDrafts`) muestra todos, `comingSoon` y `hidden` incluidos, como
+ * links: es el acceso rápido para abrir y editar cada landing.
  */
-import { ProductCard, ComingSoonCard } from '@/components/commerce/ProductCard';
+import { ProductCard } from '@/components/commerce/ProductCard';
 import {
-  CYBER,
   PAYMENT_LOGOS,
-  STORE_COMING_SOON,
   STORE_HEADLINES,
   STORE_SECTIONS,
+  showsDrafts,
   type StoreProduct,
 } from '@/lib/config';
 
@@ -26,12 +27,20 @@ export function ProductGrid({
   // muestra; se deja en el tipo para no tocar el fetch de /tienda.
   products: { product: StoreProduct; price: number; cyberPct?: number }[];
 }) {
-  const cyberTrim = CYBER.enabled;
-  // En el Cyber la grilla muestra sólo lo que se vende: lo que tiene
-  // `comingSoon` queda afuera también en dev (donde `isPublished` lo abre).
-  const shown = products.filter(({ product }) => !product.hidden);
-  const visible = cyberTrim ? shown.filter(({ product }) => !product.comingSoon) : shown;
-  const slots = cyberTrim ? [] : STORE_COMING_SOON;
+  const drafts = showsDrafts();
+  const visible = products.filter(
+    ({ product }) => drafts || (!product.comingSoon && !product.hidden),
+  );
+  // En desktop cada card mide lo mismo que en una grilla de 4: con menos
+  // cards la grilla se angosta a ese ancho y queda centrada (N/4 del ancho
+  // menos los gap-5 de 20px que sobran). En mobile y tablet siguen 2 columnas.
+  const n = visible.length;
+  const cols =
+    n >= 4
+      ? 'lg:grid-cols-4'
+      : n === 3
+        ? 'lg:mx-auto lg:max-w-[calc(75%-5px)] lg:grid-cols-3'
+        : 'lg:mx-auto lg:max-w-[calc(50%-10px)] lg:grid-cols-2';
 
   return (
     <section id="productos" className="bg-[#24262A] py-14 sm:py-20 md:py-24">
@@ -46,29 +55,11 @@ export function ProductGrid({
           </h2>
         </div>
 
-        {/* Durante el Cyber se esconden las cards "Próximamente" (producto sin
-            publicar y slot vacío): en un evento de compra son espacio muerto.
-            Con menos de 4 cards la grilla se angosta y queda centrada. */}
-        {/* En desktop las cards miden lo mismo que en una grilla de 4: con 3
-            visibles (Cyber) la grilla es de 3 columnas con el ancho de 3 de
-            esas 4 (3/4 del ancho menos un gap-5 de 20px / 4), centrada. En
-            mobile y tablet siguen 2 columnas. */}
         <div
-          className={`mt-9 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 ${
-            visible.length + slots.length === 3
-              ? 'lg:mx-auto lg:max-w-[calc(75%-5px)] lg:grid-cols-3'
-              : 'lg:grid-cols-4'
-          }`}
+          className={`mt-9 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 ${cols}`}
         >
           {visible.map(({ product, cyberPct }) => (
             <ProductCard key={product.handle} product={product} cyberPct={cyberPct} />
-          ))}
-          {slots.map((slot) => (
-            <ComingSoonCard
-              key={slot.id}
-              specTag={slot.specTag}
-              badge={slot.badge}
-            />
           ))}
         </div>
 

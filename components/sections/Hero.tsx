@@ -82,13 +82,13 @@ export function Hero({
             <div className="mt-6 sm:mt-7">
               <a
                 href="#pricing"
-                className={`group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 font-display text-base font-black uppercase italic tracking-wider text-white transition sm:w-auto sm:px-8 md:text-lg ${
+                className={`group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 font-display text-base font-black uppercase italic tracking-wider transition sm:w-auto sm:px-8 md:text-lg ${
                   CYBER.enabled
-                    ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgba(124,58,237,0.5)] hover:from-cyber-600 hover:to-cyber-400 hover:shadow-[0_10px_30px_rgba(124,58,237,0.65)]'
-                    : 'bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.4)] hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)]'
+                    ? 'text-cyber-on bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgb(var(--cyber-glow)/0.5)] hover:from-cyber-600 hover:to-cyber-400 hover:shadow-[0_10px_30px_rgb(var(--cyber-glow)/0.65)]'
+                    : 'text-white bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.4)] hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)]'
                 }`}
               >
-                {CYBER.enabled ? 'Aprovechá el Cyber' : 'Comprar ahora'}
+                {CYBER.enabled ? CYBER.heroCta : 'Comprar ahora'}
                 <Icon
                   name="arrow-right"
                   className="h-5 w-5 transition-transform group-hover:translate-x-1"

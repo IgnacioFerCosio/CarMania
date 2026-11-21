@@ -67,7 +67,7 @@ export function UpsellBanner({ current, next, quantity, busy, onUpgrade }: Props
 
       <span
         aria-hidden="true"
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white transition group-hover:scale-110 ${cyber ? 'bg-cyber-600' : 'bg-accent'}`}
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition group-hover:scale-110 ${cyber ? 'bg-cyber-600 text-cyber-on' : 'bg-accent text-white'}`}
       >
         <Icon name="plus" className="h-4 w-4" />
       </span>

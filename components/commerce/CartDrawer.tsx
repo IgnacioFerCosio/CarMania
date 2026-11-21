@@ -67,7 +67,7 @@ export function CartDrawer({
   // Cyber: el carrito se viste de morado y el combo se llama "Combo Cyber".
   // Pasada la extensión vuelve solo a como era.
   const { on: cyber } = useCyberPhase();
-  const comboLabel = cyber ? 'Combo Cyber: Soporte + Parasol' : CROSS_SELL_LABEL;
+  const comboLabel = cyber ? `Combo ${CYBER.shortName}: Soporte + Parasol` : CROSS_SELL_LABEL;
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -378,10 +378,10 @@ export function CartDrawer({
               type="button"
               onClick={checkout}
               disabled={busy}
-              className={`mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl font-display text-base font-black uppercase italic tracking-wider text-white transition disabled:cursor-wait disabled:opacity-70 ${
+              className={`mt-4 flex h-14 w-full items-center justify-center gap-2 rounded-xl font-display text-base font-black uppercase italic tracking-wider transition disabled:cursor-wait disabled:opacity-70 ${
                 cyber
-                  ? 'bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgba(124,58,237,0.5)] hover:from-cyber-600 hover:to-cyber-400'
-                  : 'bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.35)] hover:bg-accent-600'
+                  ? 'text-cyber-on bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgb(var(--cyber-glow)/0.5)] hover:from-cyber-600 hover:to-cyber-400'
+                  : 'text-white bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.35)] hover:bg-accent-600'
               }`}
             >
               <Icon name="lock" className="h-4 w-4" />

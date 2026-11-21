@@ -61,6 +61,13 @@ presencia web del producto.
   `CARMANIA_PREVIEW` con `CF_PAGES_BRANCH`). `showsDrafts()` en
   `lib/config.ts` es esa misma regla, para secciones que esperan material
   real (las reseñas de `/llavero-rescate`).
+- **`/tienda` en producción muestra sólo lo que se vende:** nada de cards
+  "Próximamente" (anunciar un producto antes de tiempo es regalarlo para que
+  lo copien). Fuera las que tienen `comingSoon` o `hidden`. En dev y en las
+  previews (`showsDrafts()`) se ven todas, como links, para entrar a editar
+  cada landing. La grilla se angosta y centra sola con 2 o 3 cards.
+  `/soplador` (pausado) queda así: 404 en prod, sin card ni link, con el
+  código intacto.
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el
@@ -82,20 +89,28 @@ presencia web del producto.
   sola vez, para no contar la compra doble. El `Pageview` de las navegaciones
   internas lo manda solo el pixel (mira el history); no hay que dispararlo a mano.
 
-- **Cyber Week (APAGADO el 2026-11-08, `CYBER.enabled = false`; el código queda por si vuelve un evento):** todo cuelga del bloque `CYBER`
-  de `lib/config.ts`. `enabled: true` pinta el banner morado fijo (`CyberBanner`,
-  reemplaza al contador de 8 h; en `/tienda` lleva a `#productos`), los logos,
-  "Cyber −X%" en packs y cards, la card propia del pack x6 (`pack6Card`), el
-  carrito en morado ("Combo Cyber") y saca la barra negra de las landings. Las
-  fases pasan solas por la hora del visitante (`lib/cyber.ts`): "Empieza en" →
-  "Termina en" → "Extensión Cyber Week" → todo lo vivo se esconde. Desde que
-  arranca, la cuenta del banner es siempre de hasta 24 h: vence a la medianoche
-  argentina y se reinicia sola cada día. Lo que NO se
-  apaga solo (está en el HTML del build): textos de las barras, colores morados de
-  botones/packs, la barra de neón de `/tienda` y el chip del navbar. **Pasada la
-  extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra negra y el
-  contador de 8 h). Ningún texto lleva fecha; las fechas viven sólo en `CYBER`
-  y `tests/unit/cyber.test.ts` las vigila. Logo en `public/cyber/`.
+- **Eventos de compra (hoy Black Friday 2026, rama `feat/black-friday`; antes
+  Cyber Week, apagado el 2026-11-08):** todo cuelga del bloque `CYBER` de
+  `lib/config.ts` (el nombre quedó del primer evento). `enabled: true` pinta el
+  banner fijo del evento (`CyberBanner`, reemplaza al contador de 8 h; en
+  `/tienda` lleva a `#productos`), los logos, "<shortName> −X%" en packs y
+  cards, la card propia del pack x6 del soporte (`pack6Card`), el carrito con
+  los colores del evento ("Combo <shortName>") y saca la barra negra de las
+  landings. **Los colores salen de `lib/event-theme.ts`** (paletas del manual
+  de marca, página "Eventos"): Tailwind arma la escala `cyber-*`, `text-cyber-on`
+  (texto sobre el color: negro en Black Friday, el manual prohíbe blanco sobre
+  dorado) y las variables `--cyber-glow`/`--cyber-glow-soft` de las sombras.
+  Cambiar de evento = `EVENT_THEME_ID` + nombre, textos y fechas en `CYBER`.
+  `CYBER.logo` en `null` dibuja un logo de texto (`EventMark`); el archivo va en
+  `public/cyber/`. Las fases pasan solas por la hora del visitante
+  (`lib/cyber.ts`): "Empieza en" → "Termina en" → "Extensión" → todo lo vivo
+  se esconde. Desde que arranca, la cuenta del banner es siempre de hasta 24 h:
+  vence a la medianoche argentina y se reinicia sola cada día. Lo que NO se
+  apaga solo (está en el HTML del build): textos de las barras, colores del
+  evento en botones/packs, la barra de neón de `/tienda` y el chip del navbar.
+  **Pasada la extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra
+  negra y el contador de 8 h). Ningún texto lleva fecha; las fechas viven sólo
+  en `CYBER` y `tests/unit/cyber.test.ts` las vigila.
 
 ## Datos de producto (¡importante para el copy!)
 - El kit nuevo trae **2 aros metálicos adhesivos** (uno de repuesto) y 2

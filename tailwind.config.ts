@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+import { EVENT_THEME as EV } from './lib/event-theme';
 
 const config: Config = {
   content: [
@@ -18,16 +20,20 @@ const config: Config = {
           600: '#B00606',
           700: '#7E0404',
         },
-        // Morado del CyberMonday. Sólo lo usan las piezas temporales del
-        // evento (ver CYBER en lib/config.ts).
+        // Color del evento de compra activo (CYBER en lib/config.ts). La escala
+        // sale de lib/event-theme.ts: hoy Black Friday (dorado). `on` es el
+        // texto que va encima del color; `band`/`band-mid`, el banner fijo.
         cyber: {
-          300: '#C4B5FD',
-          400: '#A78BFA',
-          500: '#8B5CF6',
-          600: '#7C3AED',
-          700: '#6D28D9',
-          800: '#5B21B6',
-          950: '#1E0A3C',
+          300: EV[300],
+          400: EV[400],
+          500: EV[500],
+          600: EV[600],
+          700: EV[700],
+          800: EV[800],
+          950: EV[950],
+          on: EV.on,
+          band: EV.band,
+          'band-mid': EV.bandMid,
         },
         ink: {
           950: '#0A0A0A',
@@ -88,7 +94,12 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Sombras y halos del evento: `shadow-[0_0_14px_rgb(var(--cyber-glow)/0.5)]`.
+    plugin(({ addBase }) => {
+      addBase({ ':root': { '--cyber-glow': EV.glow, '--cyber-glow-soft': EV.glowSoft } });
+    }),
+  ],
 };
 
 export default config;

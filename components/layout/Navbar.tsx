@@ -12,7 +12,7 @@
  */
 import Image from 'next/image';
 import Link from 'next/link';
-import { BRAND, CYBER, STORE_PRODUCTS, isPublished } from '@/lib/config';
+import { BRAND, CYBER } from '@/lib/config';
 import { Icon } from '@/components/ui/Icon';
 import { CartButton } from '@/components/commerce/CartButton';
 import { NavMobileMenu } from './NavMobileMenu';
@@ -44,15 +44,7 @@ const LANDING_LINKS: NavLink[] = [
 export function storeLinks(productosHref = '#productos'): NavLink[] {
   return [
     { href: '/', label: 'Soporte PRO', highlight: true, badge: 'TOP' },
-    // Sin badge: el lugar de "lo nuevo" lo ocupa el soplador, y dos etiquetas
-    // iguales se anulan entre sí. Además el nav no da para tres píldoras.
     { href: '/parasol', label: 'Parasol PRO' },
-    // El soplador entra sólo si está publicado: mientras tenga `comingSoon` la
-    // ruta responde 404 (salvo en `npm run dev`, ver `isPublished`).
-    // Durante el Cyber no va ni en dev: no es parte del evento.
-    ...STORE_PRODUCTS.filter((p) => p.href === '/soplador' && !p.hidden && isPublished(p) && !CYBER.enabled).map(
-      (p): NavLink => ({ href: p.href, label: 'Soplador PRO', badge: 'NUEVO' }),
-    ),
     { href: productosHref, label: 'Ver todo' },
   ];
 }
@@ -144,8 +136,8 @@ export function Navbar({
         {/* CTA (solo desktop) + carrito */}
         <div className="col-start-3 flex items-center justify-end gap-2 sm:gap-3">
           {CYBER.enabled && cyber && (
-            <span className="hidden animate-pulse items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 text-[10px] font-black italic uppercase tracking-widest text-white shadow-[0_0_14px_rgba(124,58,237,0.65)] md:inline-flex">
-              Cyber
+            <span className="hidden animate-pulse items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 text-[10px] font-black italic uppercase tracking-widest text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.65)] md:inline-flex">
+              {CYBER.shortName}
             </span>
           )}
           <a

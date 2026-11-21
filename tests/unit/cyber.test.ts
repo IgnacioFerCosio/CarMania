@@ -33,23 +33,23 @@ describe('CYBER — fechas y fases', () => {
   });
 
   it('recorre las fases en orden y cada una cierra donde dice', () => {
-    expect(cyberPhaseAt(ART('2026-11-01T23:59:59'))).toBe('pre');
-    expect(cyberPhaseAt(ART('2026-11-02T00:00:00'))).toBe('live');
-    expect(cyberPhaseAt(ART('2026-11-04T23:59:59'))).toBe('live');
-    expect(cyberPhaseAt(ART('2026-11-05T00:00:00'))).toBe('extension');
-    expect(cyberPhaseAt(ART('2026-11-08T23:59:59'))).toBe('extension');
-    expect(cyberPhaseAt(ART('2026-11-09T00:00:00'))).toBe('ended');
+    expect(cyberPhaseAt(ART('2026-11-26T23:59:59'))).toBe('pre');
+    expect(cyberPhaseAt(ART('2026-11-27T00:00:00'))).toBe('live');
+    expect(cyberPhaseAt(ART('2026-11-29T23:59:59'))).toBe('live');
+    expect(cyberPhaseAt(ART('2026-11-30T00:00:00'))).toBe('extension');
+    expect(cyberPhaseAt(ART('2026-11-30T23:59:59'))).toBe('extension');
+    expect(cyberPhaseAt(ART('2026-12-01T00:00:00'))).toBe('ended');
   });
 
   it('antes del evento la cuenta apunta al inicio', () => {
-    const now = ART('2026-11-01T20:00:00');
+    const now = ART('2026-11-26T20:00:00');
     expect(cyberTargetOf('pre', now)).toBe(CYBER_STARTS);
   });
 
   it('en marcha y en la extensión la cuenta es de hasta 24 h: vence a la medianoche argentina', () => {
-    const now = ART('2026-11-03T14:30:00');
-    expect(cyberTargetOf('live', now)).toBe(ART('2026-11-04T00:00:00'));
-    expect(cyberTargetOf('extension', ART('2026-11-06T09:00:00'))).toBe(ART('2026-11-07T00:00:00'));
+    const now = ART('2026-11-28T14:30:00');
+    expect(cyberTargetOf('live', now)).toBe(ART('2026-11-29T00:00:00'));
+    expect(cyberTargetOf('extension', ART('2026-11-30T09:00:00'))).toBe(ART('2026-12-01T00:00:00'));
   });
 
   it('nextMidnightART: un segundo antes de las 00 vence en 1 s, y a las 00 en punto reinicia en 24 h', () => {
@@ -97,6 +97,11 @@ describe('CYBER — contenido', () => {
   it('el pack x6 de la card propia existe en la escalera del soporte', () => {
     if (!CYBER.pack6Card) return;
     expect(SOPORTE.upsellChain.some((t) => t.id === 'x6')).toBe(true);
+  });
+
+  it('el "<shortName> −X%" no lleva fecha y el logo, si hay, vive en /cyber', () => {
+    expect(CYBER.shortName).not.toMatch(/\d/);
+    if (CYBER.logo) expect(CYBER.logo.src.startsWith('/cyber/')).toBe(true);
   });
 
   it('el soporte y el parasol se venden y no están marcados como próximamente', () => {
