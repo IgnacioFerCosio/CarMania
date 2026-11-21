@@ -4,9 +4,8 @@
  * Botón flotante de WhatsApp en la esquina inferior derecha.
  * Aparece después de 1.5s para no competir con el hero.
  *
- * Va pegado abajo (16 px + el área segura del iPhone). `aboveMobileBar` lo
- * sube en mobile para no quedar tapado por una barra fija de compra (la de
- * `/llavero-rescate`, `StickyCTA`, que sólo existe hasta md).
+ * Va pegado abajo (16 px + el área segura del iPhone). Si alguna vez vuelve
+ * una barra fija de compra en mobile, hay que subirlo para que no lo tape.
  *
  * El número y el mensaje precargado salen de lib/config.ts.
  */
@@ -16,8 +15,7 @@ import { Icon } from '@/components/ui/Icon';
 
 export function WhatsAppFloat({
   prefilled = WHATSAPP.prefilled,
-  aboveMobileBar = false,
-}: { prefilled?: string; aboveMobileBar?: boolean } = {}) {
+}: { prefilled?: string } = {}) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -33,11 +31,7 @@ export function WhatsAppFloat({
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Hablar por WhatsApp"
-      className={`group fixed right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-all duration-500 hover:scale-110 hover:bg-[#20bd5a] sm:h-14 sm:w-14 md:bottom-6 md:right-6 md:h-16 md:w-16 ${
-        aboveMobileBar
-          ? 'bottom-[calc(88px+env(safe-area-inset-bottom))] sm:bottom-20'
-          : 'bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-5'
-      } ${
+      className={`group fixed right-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_rgba(37,211,102,0.45)] transition-all duration-500 hover:scale-110 hover:bg-[#20bd5a] sm:h-14 sm:w-14 md:bottom-6 md:right-6 md:h-16 md:w-16 bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:bottom-5 ${
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >

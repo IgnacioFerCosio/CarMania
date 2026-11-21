@@ -338,8 +338,6 @@ export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 export type ComparisonColumn = { name: string; image: string; width: number; height: number };
 
 export type AdvertorialData = {
-  /** El botón que se repite en la página: siempre baja a #pricing. */
-  cta: { label: string; href: string };
   /** El copy del hero sale de `headlines`, como en las otras landings. */
   hero: { media: MediaSlot };
   /**

@@ -50,7 +50,6 @@ import { ReviewsPlaceholder } from '@/components/advertorial/ReviewsPlaceholder'
 import { SpecsBlock } from '@/components/advertorial/SpecsBlock';
 import { TrustBlock } from '@/components/sections/TrustBlock';
 import { ClosingBlock } from '@/components/advertorial/ClosingBlock';
-import { StickyCTA } from '@/components/advertorial/StickyCTA';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { SOPORTE } from '@/lib/landings/soporte';
@@ -273,8 +272,7 @@ export default async function RompevidriosPage() {
 
       <Footer />
 
-      <StickyCTA label={ADV.cta.label} href={ADV.cta.href} />
-      <WhatsAppFloat aboveMobileBar prefilled={ROMPEVIDRIOS.whatsappPrefilled} />
+      <WhatsAppFloat prefilled={ROMPEVIDRIOS.whatsappPrefilled} />
       <FloatingCartButton />
       <CartDrawer />
 

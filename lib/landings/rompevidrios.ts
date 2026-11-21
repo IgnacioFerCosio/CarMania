@@ -22,8 +22,6 @@ import type { AdvertorialConfig, MediaSlot, Review } from './types';
 import { SOPORTE } from './soporte';
 import { PRECIO_LISTA, ROMPEVIDRIOS_BUNDLES, ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 
-const CTA_LABEL = 'Comprar ahora';
-
 /**
  * Las 6 situaciones de la grilla "Cuando cada segundo cuenta" (UseCases).
  * Fotos verticales 2:3; el `label` es el de la tarjeta, con la última palabra
@@ -317,8 +315,6 @@ export const ROMPEVIDRIOS = {
   },
 
   advertorial: {
-    cta: { label: CTA_LABEL, href: '#pricing' },
-
     situations: SITUACIONES,
 
     hero: {
