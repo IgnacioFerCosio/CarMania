@@ -34,8 +34,8 @@ function Tag({
     <span
       className={
         tone === 'accent'
-          ? 'inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[9px] font-black uppercase italic tracking-wider text-white shadow-[0_2px_10px_rgba(215,7,7,0.5)] sm:text-[10px]'
-          : 'rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur-sm sm:text-[10px]'
+          ? 'inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-accent px-2 py-1 sm:px-2.5 text-[9px] font-black uppercase italic tracking-wider text-white shadow-[0_2px_10px_rgba(215,7,7,0.5)] sm:text-[10px]'
+          : 'whitespace-nowrap rounded-full border border-white/15 bg-black/50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-ink-200 backdrop-blur-sm sm:text-[10px]'
       }
     >
       {children}
@@ -100,7 +100,8 @@ export function ProductCard({
               mientras no se pueda abrir. */}
           <Tag tone="accent">
             {published && product.badgeHot && (
-              <Icon name="fire" className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+              // El fuego sólo desde sm: en mobile no entra junto al chip del evento.
+              <Icon name="fire" className="hidden h-3 w-3 sm:block" />
             )}
             {published ? product.badge : 'Próximamente'}
           </Tag>

@@ -274,7 +274,7 @@ export default async function RompevidriosPage() {
       <Footer />
 
       <StickyCTA label={ADV.cta.label} href={ADV.cta.href} />
-      <WhatsAppFloat prefilled={ROMPEVIDRIOS.whatsappPrefilled} />
+      <WhatsAppFloat aboveMobileBar prefilled={ROMPEVIDRIOS.whatsappPrefilled} />
       <FloatingCartButton />
       <CartDrawer />
 

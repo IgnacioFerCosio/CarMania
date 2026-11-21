@@ -48,7 +48,7 @@ export function ReviewsExpandable({
           aria-controls="reviews-grid"
           className="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-950 px-7 py-3.5 font-display text-xs font-black uppercase italic tracking-wider text-white transition hover:border-accent hover:text-accent sm:text-sm"
         >
-          {open ? 'Ver menos' : `Ver las ${restantes} restantes`}
+          {open ? 'Ver menos' : 'Ver más'}
           <Icon
             name="chevron-down"
             className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
