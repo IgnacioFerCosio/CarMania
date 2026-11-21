@@ -112,28 +112,29 @@ export const TRACKING = {
  * Friday 2026; el nombre quedó del CyberMonday, el primero que se armó). Es un
  * solo interruptor:
  *
- *  - `enabled: true`  → `CountdownBanner` pinta el banner del evento con una
- *    cuenta REAL (en vez del de 8 h que se reinicia), el logo del evento,
- *    los packs con "<shortName> −X%", la card del pack x6, el carrito con los
- *    colores del evento y las barras de promo hablan del evento.
+ *  - `enabled: true`  → el build trae las DOS versiones de la página y el
+ *    reloj del visitante elige: entre `startsAt` y el cierre se ve el banner
+ *    del evento con su cuenta (en vez del de 8 h), el logo, los packs con
+ *    "<shortName> −X%", la card del pack x6, el carrito con los colores del
+ *    evento y las barras de promo del evento; fuera de esas fechas, la página
+ *    de siempre. Prende y apaga SOLO, sin redeploy (ver `lib/cyber.ts`).
+ *    En dev y previews, `?evento=on` / `?evento=off` lo fuerza para probar.
  *  - Los COLORES no viven acá: salen de `lib/event-theme.ts` (Tailwind los
  *    lee de ahí). Cambiar de evento = cambiar `EVENT_THEME_ID` allá y los
  *    textos y fechas de acá.
  *  - Las fases pasan SOLAS según la hora del visitante (ver `lib/cyber.ts`):
- *      antes de `startsAt`           → "Empieza en"
- *      hasta `endsAt`                → "Termina en"
- *      hasta `extensionEndsAt`       → "Extensión"
+ *      antes de `startsAt`           → página normal (sin "Empieza en")
+ *      hasta `endsAt`                → evento, "Termina en"
+ *      hasta `extensionEndsAt`       → evento, "Extensión" (si no es null)
+ *      después                       → página normal otra vez
  *    La cuenta del banner es siempre de hasta 24 h: vence a la medianoche de
  *    Argentina y se reinicia sola cada día (ver `cyberTargetOf`).
- *      después                       → el banner, el logo y las píldoras se
- *                                      esconden (no vuelve el contador viejo)
  *  - Ningún texto lleva la fecha: sólo la cuenta regresiva. Así la extensión
  *    no obliga a reescribir nada.
  *  - `enabled: false` → todo vuelve a como era, sin tocar componentes.
  *
- * Lo que NO se apaga solo: los textos de las barras de promo y los colores
- * del evento en botones/packs están en el HTML del build. Pasada la
- * extensión, poné `enabled: false` y redeployá.
+ * Pasado el evento todo se apaga solo; igual conviene poner `enabled: false`
+ * en el próximo deploy, para no seguir mandando el HTML doble.
  *
  * Las fechas llevan el offset de Argentina (-03:00) para que el conteo no
  * dependa de la zona del visitante. `extensionEndsAt` es decisión de la marca.
@@ -147,9 +148,11 @@ export const CYBER = {
   shortName: 'Black Friday',
   /** Texto del botón del hero durante el evento. */
   heroCta: 'Aprovechá el Black Friday',
-  startsAt: '2026-11-27T00:00:00-03:00',
+  /** Se prende solo el lunes 23 a las 00:00 y se apaga solo al cerrar el domingo 29. */
+  startsAt: '2026-11-23T00:00:00-03:00',
   endsAt: '2026-11-29T23:59:59-03:00',
-  extensionEndsAt: '2026-11-30T23:59:59-03:00',
+  /** Extensión opcional después de `endsAt` (banner dice "Extensión"). `null` = sin extensión. */
+  extensionEndsAt: null as string | null,
   /**
    * Logo del evento (banner, packs, cards, carrito). `null` → se dibuja un
    * logo de texto con los colores del evento. Cuando exista el archivo, va en
@@ -157,7 +160,11 @@ export const CYBER = {
    * en que se ve (h-16 → 128 px de alto alcanza). El del Cyber era
    * `{ src: '/cyber/cyber-week-logo-sm.webp', width: 160, height: 118 }`.
    */
-  logo: null as { src: string; width: number; height: number } | null,
+  logo: { src: '/cyber/black-friday-logo.webp', width: 217, height: 140 } as {
+    src: string;
+    width: number;
+    height: number;
+  } | null,
   /**
    * Beneficios que viajan DENTRO del banner (en el evento se saca la barra
    * negra de abajo, `PromoBar`, y su contenido pasa acá).
@@ -186,15 +193,13 @@ export const PROMO_BARS = {
   benefits: ['Envío gratis a todo el país', '3 cuotas sin interés', 'Garantía de 30 días'],
   top: {
     enabled: true,
-    text: CYBER.enabled
-      ? `${CYBER.name} · Envío gratis a todo el país · 3 cuotas sin interés`
-      : 'Envío gratis a todo el país · 3 cuotas sin interés',
+    text: 'Envío gratis a todo el país · 3 cuotas sin interés',
   },
   sub: {
     enabled: true,
-    text: CYBER.enabled
-      ? `« ${CYBER.name} CARMANIA »`
-      : '« OFERTA POR TIEMPO LIMITADO »',
+    text: '« OFERTA POR TIEMPO LIMITADO »',
+    /** Mientras se ve el evento (ver CYBER). */
+    eventText: `« ${CYBER.name} CARMANIA »`,
   },
 } as const;
 
@@ -357,9 +362,9 @@ export type StoreProduct = {
    */
   comingSoon?: boolean;
   /**
-   * Producto pausado. Hoy hace lo mismo que `comingSoon` en /tienda (fuera en
-   * producción, card en dev y en las previews); queda para marcar que no es
-   * "falta poco" sino "frenado". La landing NO se borra.
+   * Producto pausado, fuera de TODOS lados: sin card en /tienda y con la ruta
+   * en 404 también en dev y en las previews. La landing y su config NO se
+   * borran: para retomarlo, sacar el flag.
    */
   hidden?: boolean;
 };
@@ -380,6 +385,7 @@ export function showsDrafts(): boolean {
  * nav de /tienda y la ruta). En producción el flag manda.
  */
 export function isPublished(product: StoreProduct): boolean {
+  if (product.hidden) return false;
   return !product.comingSoon || showsDrafts();
 }
 
@@ -428,14 +434,14 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     specTag: 'RECARGABLE USB',
     badge: 'NUEVO',
     comingSoon: true,
-    // Pausado (2026-11-12): se continúa con otro soplador (inalámbrico, con
-    // batería). Para retomarlo, sacar `hidden`.
+    // Pausado (2026-11-12, confirmado 2026-11-21: no se vende por ahora):
+    // fuera de /tienda y 404 incluso en dev. Para retomarlo, sacar `hidden`.
     hidden: true,
   },
   {
-    // Reemplaza al Turbo. Producto sin Shopify y sin fotos todavía: `hidden`
-    // para que /tienda no muestre una card sin imagen, y `comingSoon` para
-    // que /soplador-tornado dé 404 en producción. Publicar = sacar los dos.
+    // Reemplaza al Turbo. Producto sin Shopify todavía: `comingSoon` para que
+    // /soplador-tornado dé 404 en producción (en dev se ve). Publicar = sacar
+    // el flag.
     // Plan de material: docs/superpowers/specs/soplador-tornado-assets.md.
     handle: 'soplador-tornado-pro',
     title: 'Soplador Tornado PRO™',
@@ -447,7 +453,6 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     specTag: 'INALÁMBRICO · 35.000 Pa',
     badge: 'NUEVO',
     comingSoon: true,
-    hidden: true,
   },
   {
     // ⚠️ El producto NO existe en Shopify y la landing usa material de
@@ -515,7 +520,6 @@ export const STORE_HEADLINES = {
  * 3 de CARMOUNT. `/` y `/parasol` siguen con el mensaje único de PROMO_BARS.
  */
 export const STORE_PROMO_MESSAGES: readonly string[] = [
-  ...(CYBER.enabled ? [`${CYBER.name} · ofertas por tiempo limitado`] : []),
   'Envío gratis a todo el país',
   'Garantía de 30 días',
   '3 cuotas sin interés',

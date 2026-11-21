@@ -136,7 +136,7 @@ export function Navbar({
         {/* CTA (solo desktop) + carrito */}
         <div className="col-start-3 flex items-center justify-end gap-2 sm:gap-3">
           {CYBER.enabled && cyber && (
-            <span className="hidden animate-pulse items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 text-[10px] font-black italic uppercase tracking-widest text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.65)] md:inline-flex">
+            <span className="hidden animate-pulse items-center rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 text-[10px] font-black italic uppercase tracking-widest text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.65)] event:md:inline-flex">
               {CYBER.shortName}
             </span>
           )}

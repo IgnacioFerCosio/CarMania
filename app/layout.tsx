@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 // Removed Vercel-specific analytics packages (migrated to Cloudflare)
 import { TRACKING } from '@/lib/config';
+import { eventGateScript } from '@/lib/cyber';
 import { MetaPixel } from '@/components/analytics/MetaPixel';
 import { TikTokPixel } from '@/components/analytics/TikTokPixel';
 import './globals.css';
@@ -53,9 +54,19 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const EVENT_GATE = eventGateScript();
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-AR" className={inter.variable}>
+    // suppressHydrationWarning: el script del <head> le pone `data-event` a
+    // <html> antes de que React hidrate (ver `eventGateScript`).
+    <html lang="es-AR" className={inter.variable} suppressHydrationWarning>
+      {EVENT_GATE && (
+        <head>
+          {/* Prende/apaga el evento (CYBER) por fecha, antes de pintar. */}
+          <script dangerouslySetInnerHTML={{ __html: EVENT_GATE }} />
+        </head>
+      )}
       {/* Sin Google Tag Manager (2026-09-21): el contenedor GTM-TMK9STLD
           tenía una sola etiqueta, GA4 (G-0Z48MJSSZ2), y GA4 no se usa. Eran
           290 KB y ~260 ms de main thread por visita — el INP de producción

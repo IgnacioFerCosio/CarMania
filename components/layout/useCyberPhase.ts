@@ -16,7 +16,7 @@
  */
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { CYBER } from '@/lib/config';
-import { cyberPhaseAt, type CyberPhase } from '@/lib/cyber';
+import { effectivePhaseAt, isEventPhase, type CyberPhase } from '@/lib/cyber';
 
 const CHECK_EVERY_MS = 15_000;
 
@@ -37,7 +37,7 @@ function subscribe(cb: () => void) {
   };
 }
 
-const getSnapshot = (): CyberPhase | null => cyberPhaseAt(Date.now());
+const getSnapshot = (): CyberPhase | null => effectivePhaseAt(Date.now());
 const getServerSnapshot = (): CyberPhase | null => null;
 
 export function useCyberPhase(ticks = false): {
@@ -55,6 +55,18 @@ export function useCyberPhase(ticks = false): {
     return () => window.clearInterval(id);
   }, [ticks]);
 
-  // `on`: hay que pintar el Cyber. Sin hidratar todavía cuenta como encendido.
-  return { phase, now: ticks ? now : null, on: CYBER.enabled && phase !== 'ended' };
+  // Una pestaña que queda abierta cuando arranca o cierra el evento cambia
+  // sola: el atributo de <html> que lee el CSS (`event:`) sigue a la fase.
+  useEffect(() => {
+    if (!CYBER.enabled || phase === null) return;
+    document.documentElement.setAttribute('data-event', isEventPhase(phase) ? 'on' : 'off');
+  }, [phase]);
+
+  // `on`: hay que pintar el evento. Sin hidratar todavía cuenta como
+  // encendido; si no corresponde, el CSS (`event:`) ya lo tiene oculto.
+  return {
+    phase,
+    now: ticks ? now : null,
+    on: CYBER.enabled && (phase === null || isEventPhase(phase)),
+  };
 }

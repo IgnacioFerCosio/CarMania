@@ -25,7 +25,8 @@ import { CartProvider } from '@/components/commerce/CartProvider';
 import { CartDrawer } from '@/components/commerce/CartDrawer';
 import { FloatingCartButton } from '@/components/commerce/FloatingCartButton';
 import { getProduct, getBundlesData, type BundleData } from '@/lib/shopify';
-import { CYBER, STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
+import { STORE_PRODUCTS, STORE_PROMO_MESSAGES, type StoreProduct } from '@/lib/config';
+import { EventSwitch } from '@/components/ui/EventSwitch';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { SOPORTE } from '@/lib/landings/soporte';
 import { PARASOL } from '@/lib/landings/parasol';
@@ -116,12 +117,12 @@ export default async function TiendaPage() {
 
   return (
     <CartProvider bundlesData={bundlesData} upsellChain={ALL_UPSELL_CHAINS}>
-      {/* Evento (CYBER): el banner del evento (lleva a los productos) en vez de la barra negra. */}
-      {CYBER.enabled ? (
-        <CyberBanner href="#productos" />
-      ) : (
-        <PromoBar messages={STORE_PROMO_MESSAGES} />
-      )}
+      {/* Evento (CYBER, en sus fechas): el banner del evento (lleva a los
+          productos) en vez de la barra negra. */}
+      <EventSwitch
+        on={<CyberBanner href="#productos" />}
+        off={<PromoBar messages={STORE_PROMO_MESSAGES} />}
+      />
       <Navbar
         links={storeLinks()}
         homeHref="/tienda"

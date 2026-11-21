@@ -82,13 +82,22 @@ export function Hero({
             <div className="mt-6 sm:mt-7">
               <a
                 href="#pricing"
-                className={`group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 font-display text-base font-black uppercase italic tracking-wider transition sm:w-auto sm:px-8 md:text-lg ${
+                className={`group inline-flex h-14 w-full items-center justify-center gap-2 rounded-full px-6 font-display text-base font-black uppercase italic tracking-wider text-white transition sm:w-auto sm:px-8 md:text-lg bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.4)] hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)] ${
+                  // Con el evento armado, sus colores y su texto aplican sólo
+                  // en sus fechas (variante `event:`, ver EventSwitch).
                   CYBER.enabled
-                    ? 'text-cyber-on bg-gradient-to-r from-cyber-700 to-cyber-500 shadow-[0_8px_24px_rgb(var(--cyber-glow)/0.5)] hover:from-cyber-600 hover:to-cyber-400 hover:shadow-[0_10px_30px_rgb(var(--cyber-glow)/0.65)]'
-                    : 'text-white bg-accent shadow-[0_8px_24px_rgba(215,7,7,0.4)] hover:bg-accent-600 hover:shadow-[0_10px_30px_rgba(215,7,7,0.55)]'
+                    ? 'event:bg-gradient-to-r event:from-cyber-700 event:to-cyber-500 event:text-cyber-on event:shadow-[0_8px_24px_rgb(var(--cyber-glow)/0.5)] event:hover:from-cyber-600 event:hover:to-cyber-400 event:hover:shadow-[0_10px_30px_rgb(var(--cyber-glow)/0.65)]'
+                    : ''
                 }`}
               >
-                {CYBER.enabled ? CYBER.heroCta : 'Comprar ahora'}
+                {CYBER.enabled ? (
+                  <>
+                    <span className="event:hidden">Comprar ahora</span>
+                    <span className="hidden event:inline">{CYBER.heroCta}</span>
+                  </>
+                ) : (
+                  'Comprar ahora'
+                )}
                 <Icon
                   name="arrow-right"
                   className="h-5 w-5 transition-transform group-hover:translate-x-1"

@@ -14,7 +14,7 @@ export function CyberEyebrow() {
   if (!on) return null;
 
   return (
-    <p className="mb-3 flex items-center justify-center gap-3 sm:mb-4" aria-label={`${CYBER.name} CARMANIA`}>
+    <p className="mb-3 hidden items-center justify-center gap-3 event:flex sm:mb-4" aria-label={`${CYBER.name} CARMANIA`}>
       <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-transparent to-cyber-400 sm:w-14" />
       <span className="flex items-center gap-1.5 font-display text-[12px] font-black italic uppercase tracking-[0.28em] text-transparent [text-shadow:none] sm:text-sm">
         <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-cyber-300 drop-shadow-[0_0_6px_rgb(var(--cyber-glow-soft)/0.9)]" fill="currentColor">

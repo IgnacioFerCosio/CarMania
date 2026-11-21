@@ -73,7 +73,8 @@ export function CyberLogo({
   if (!on) return null;
 
   return (
-    <span className="relative inline-flex flex-col items-center">
+    // `hidden event:inline-flex`: antes de hidratar ya se oculta fuera de fecha.
+    <span className="relative hidden flex-col items-center event:inline-flex">
       <EventMark priority={priority} className={`drop-shadow-[0_4px_14px_rgb(var(--cyber-glow)/0.55)] ${className}`} />
       {phase === 'extension' && (
         <span className="-mt-1 rounded-full bg-white px-2 py-0.5 font-display text-[9px] font-black italic uppercase tracking-widest text-black shadow-md">

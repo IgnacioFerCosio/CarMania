@@ -8,8 +8,9 @@
  * El deadline persiste en localStorage (clave: carmania_offer_deadline).
  */
 import { useState, useEffect } from 'react';
-import { CYBER, PROMO_BARS } from '@/lib/config';
+import { PROMO_BARS } from '@/lib/config';
 import { CyberBanner } from './CyberBanner';
+import { EventSwitch } from '@/components/ui/EventSwitch';
 
 const STORAGE_KEY = 'carmania_offer_deadline';
 const DURATION_MS = 8 * 60 * 60 * 1000; // 8 horas en ms
@@ -60,11 +61,12 @@ const HOLD_COUNTDOWN_MS = 4200;
 const HOLD_BENEFIT_MS = 2400;
 
 /**
- * Durante el CyberMonday (`CYBER.enabled`) la franja es el `CyberBanner`, con
- * cuenta real. Apagando el flag en config vuelve esta, sin tocar las páginas.
+ * Durante el evento (CYBER, en sus fechas) la franja es el `CyberBanner`, con
+ * cuenta real; fuera de las fechas, esta. Las dos van al HTML y el reloj del
+ * visitante elige (ver `EventSwitch`), sin tocar las páginas.
  */
 export function CountdownBanner() {
-  return CYBER.enabled ? <CyberBanner /> : <OfferBanner />;
+  return <EventSwitch on={<CyberBanner />} off={<OfferBanner />} />;
 }
 
 function OfferBanner() {

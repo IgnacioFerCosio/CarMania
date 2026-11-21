@@ -7,7 +7,7 @@
  * fija para todos los visitantes por igual, no se reinicia ni depende de
  * localStorage.
  *
- *  - antes de `startsAt`        → "Empieza en"
+ *  - antes de `startsAt`        → no se pinta (la página es la de siempre)
  *  - hasta `endsAt`             → "Termina en"
  *  - hasta `extensionEndsAt`    → "Extensión"
  *  En las dos la cuenta es de hasta 24 h: vence a la medianoche de Argentina y
@@ -67,7 +67,7 @@ const HOLD_COUNTDOWN_MS = 4200;
 const HOLD_BENEFIT_MS = 2400;
 
 export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
-  const { phase, now } = useCyberPhase(true);
+  const { phase, now, on } = useCyberPhase(true);
 
   // Abajo de xl no entran la cuenta y los beneficios a la vez: el banner
   // alterna entre la cuenta (slot 0) y cada beneficio (slots 1..n). Desde xl
@@ -82,15 +82,15 @@ export function CyberBanner({ href = '#pricing' }: { href?: string } = {}) {
     return () => window.clearTimeout(id);
   }, [slot, slots]);
 
-  if (phase === 'ended') return null;
+  if (!on) return null;
 
   const t =
-    phase === null || now === null
+    phase === null || phase === 'ended' || now === null
       ? { d: 0, h: 0, m: 0, s: 0 }
       : parts(cyberTargetOf(phase, now) - now);
 
   const extension = phase === 'extension';
-  const label = phase === 'pre' ? 'Empieza en' : extension ? 'Extensión' : 'Termina en';
+  const label = extension ? 'Extensión' : 'Termina en';
 
   return (
     <>

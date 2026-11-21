@@ -54,7 +54,11 @@ export function ProductCard({
   const published = isPublished(product);
   const cyber = CYBER.enabled && published;
   const className = `group flex flex-col overflow-hidden rounded-2xl border bg-ink-950 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-18px_rgba(0,0,0,0.9)] ${
-    cyber ? 'border-cyber-500/50 hover:border-cyber-400' : 'border-ink-800 hover:border-accent/60'
+    // Con el evento armado, los colores del evento se aplican sólo en sus
+    // fechas (variante `event:`, ver EventSwitch).
+    cyber
+      ? 'border-ink-800 hover:border-accent/60 event:border-cyber-500/50 event:hover:border-cyber-400'
+      : 'border-ink-800 hover:border-accent/60'
   }`;
 
   const inner = (
@@ -84,14 +88,14 @@ export function ProductCard({
               texto, debajo del título). Sin Cyber queda el hueco, y el badge
               se mantiene a la derecha. */}
           {cyber && cyberPct ? (
-            <span className="inline-flex items-center whitespace-nowrap rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 font-display text-[9px] font-black italic uppercase tracking-wider text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.5)] sm:text-[10px]">
+            <span className="hidden items-center whitespace-nowrap event:inline-flex rounded-full bg-gradient-to-r from-cyber-700 to-cyber-500 px-2.5 py-1 font-display text-[9px] font-black italic uppercase tracking-wider text-cyber-on shadow-[0_0_14px_rgb(var(--cyber-glow)/0.5)] sm:text-[10px]">
               {/* En mobile la card es angosta: el nombre del evento ya lo dice
                   el logo de la foto, el chip queda en el descuento. */}
               <span className="hidden sm:inline">{CYBER.shortName}&nbsp;</span>−{cyberPct}%
             </span>
-          ) : (
-            <span />
-          )}
+          ) : null}
+          {/* Hueco a la izquierda para que el badge quede a la derecha. */}
+          <span className={cyber && cyberPct ? 'event:hidden' : undefined} />
           {/* "Próximamente" pisa al badge de config: es el dato que importa
               mientras no se pueda abrir. */}
           <Tag tone="accent">

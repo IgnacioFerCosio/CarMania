@@ -8,8 +8,9 @@
  * Grilla de 4 como la de CARMOUNT. En producción muestra SÓLO lo que se
  * vende: sin cards "Próximamente" (un producto anunciado antes de tiempo es
  * una idea servida para que la copien). En dev y en las previews
- * (`showsDrafts`) muestra todos, `comingSoon` y `hidden` incluidos, como
- * links: es el acceso rápido para abrir y editar cada landing.
+ * (`showsDrafts`) muestra también los `comingSoon`, como
+ * links: es el acceso rápido para abrir y editar cada landing. Los `hidden`
+ * (pausados) no aparecen en ningún lado.
  */
 import { ProductCard } from '@/components/commerce/ProductCard';
 import {
@@ -29,7 +30,7 @@ export function ProductGrid({
 }) {
   const drafts = showsDrafts();
   const visible = products.filter(
-    ({ product }) => drafts || (!product.comingSoon && !product.hidden),
+    ({ product }) => !product.hidden && (drafts || !product.comingSoon),
   );
   // En desktop cada card mide lo mismo que en una grilla de 4: con menos
   // cards la grilla se angosta a ese ancho y queda centrada (N/4 del ancho

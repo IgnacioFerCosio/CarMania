@@ -1,20 +1,36 @@
 /**
- * Fases del Cyber — pura, sin React. La usan el banner, el logo y el carrito.
- * Las fechas salen de `CYBER` en config; ver ahí la explicación de cada fase.
+ * Fases del evento (CYBER en config) — pura, sin React. La usan el banner,
+ * los logos, el carrito y el script del <head> que prende/apaga el evento.
+ *
+ * El evento se ve SÓLO entre `startsAt` y el cierre (`extensionEndsAt`, o
+ * `endsAt` si no hay extensión), según el reloj del visitante. Fuera de ahí
+ * la página es la de siempre, sin redeploy: el HTML trae las dos versiones y
+ * el atributo `data-event` de <html> elige cuál se ve (ver `eventGateScript`).
  */
-import { CYBER } from './config';
+import { CYBER, showsDrafts } from './config';
 
 export type CyberPhase = 'pre' | 'live' | 'extension' | 'ended';
 
 export const CYBER_STARTS = Date.parse(CYBER.startsAt);
 export const CYBER_ENDS = Date.parse(CYBER.endsAt);
-export const CYBER_EXTENSION_ENDS = Date.parse(CYBER.extensionEndsAt);
+/** Sin extensión, el cierre es `endsAt`. */
+export const CYBER_EXTENSION_ENDS = CYBER.extensionEndsAt ? Date.parse(CYBER.extensionEndsAt) : CYBER_ENDS;
 
 export function cyberPhaseAt(now: number): CyberPhase {
   if (now < CYBER_STARTS) return 'pre';
   if (now <= CYBER_ENDS) return 'live';
   if (now <= CYBER_EXTENSION_ENDS) return 'extension';
   return 'ended';
+}
+
+/** ¿Se ve el evento en esta fase? Antes de empezar y después de cerrar, no. */
+export function isEventPhase(phase: CyberPhase): boolean {
+  return phase === 'live' || phase === 'extension';
+}
+
+/** ¿Se ve el evento en este momento? (con el interruptor `CYBER.enabled`). */
+export function eventOnAt(now: number): boolean {
+  return CYBER.enabled && isEventPhase(cyberPhaseAt(now));
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -27,14 +43,60 @@ export function nextMidnightART(now: number): number {
 }
 
 /**
- * A qué hora vence la cuenta que se muestra.
- *
- * Antes del evento cuenta hasta que empieza. Una vez en marcha (y en la
- * extensión) la cuenta es SIEMPRE de hasta 24 h: vence a la medianoche de
- * Argentina y se reinicia sola cada día, hasta que se apague a mano
- * (`CYBER.enabled = false`) o pase `extensionEndsAt`.
+ * A qué hora vence la cuenta que se muestra. Con el evento visible es SIEMPRE
+ * la próxima medianoche argentina: la cuenta es de hasta 24 h y se reinicia
+ * sola cada día. (`pre` no se muestra: el banner aparece recién al empezar.)
  */
 export function cyberTargetOf(phase: Exclude<CyberPhase, 'ended'>, now: number): number {
   if (phase === 'pre') return CYBER_STARTS;
   return nextMidnightART(now);
+}
+
+/**
+ * Sólo en dev y en las previews: `?evento=on` / `?evento=off` fuerza el
+ * evento para verlo antes (o sin él) sin tocar fechas. Queda guardado en la
+ * pestaña (sessionStorage) mientras navegás. En producción no existe: el
+ * build no incluye este código en el script del <head>.
+ */
+export const EVENT_OVERRIDE_KEY = 'carmania_evento';
+
+export function eventOverride(): 'on' | 'off' | null {
+  if (!showsDrafts() || typeof window === 'undefined') return null;
+  try {
+    const v = window.sessionStorage.getItem(EVENT_OVERRIDE_KEY);
+    return v === 'on' || v === 'off' ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/** La fase que se usa para pintar: la real, o la forzada en dev. */
+export function effectivePhaseAt(now: number): CyberPhase {
+  const phase = cyberPhaseAt(now);
+  const forced = eventOverride();
+  if (forced === 'off') return 'ended';
+  if (forced === 'on' && !isEventPhase(phase)) return 'live';
+  return phase;
+}
+
+/**
+ * Script inline del <head>: corre antes de pintar y pone `data-event="on"`
+ * u `"off"` en <html>. Todo lo del evento cuelga de eso con la variante
+ * `event:` de Tailwind, así nadie ve un parpadeo de la otra versión.
+ * Sin JS (o con `CYBER.enabled = false`) no hay atributo y se ve la página
+ * normal. Las fechas salen de las mismas constantes que usa todo lo demás.
+ */
+export function eventGateScript(): string | null {
+  if (!CYBER.enabled) return null;
+  const override = showsDrafts()
+    ? `try{var q=new URLSearchParams(location.search).get('evento');` +
+      `if(q==='on'||q==='off')sessionStorage.setItem('${EVENT_OVERRIDE_KEY}',q);` +
+      `if(q==='clear')sessionStorage.removeItem('${EVENT_OVERRIDE_KEY}');` +
+      `var f=sessionStorage.getItem('${EVENT_OVERRIDE_KEY}');if(f==='on')on=true;if(f==='off')on=false;}catch(e){}`
+    : '';
+  return (
+    `(function(){var n=Date.now(),on=n>=${CYBER_STARTS}&&n<=${CYBER_EXTENSION_ENDS};` +
+    override +
+    `document.documentElement.setAttribute('data-event',on?'on':'off');})();`
+  );
 }

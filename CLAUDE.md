@@ -64,10 +64,10 @@ presencia web del producto.
 - **`/tienda` en producción muestra sólo lo que se vende:** nada de cards
   "Próximamente" (anunciar un producto antes de tiempo es regalarlo para que
   lo copien). Fuera las que tienen `comingSoon` o `hidden`. En dev y en las
-  previews (`showsDrafts()`) se ven todas, como links, para entrar a editar
-  cada landing. La grilla se angosta y centra sola con 2 o 3 cards.
-  `/soplador` (pausado) queda así: 404 en prod, sin card ni link, con el
-  código intacto.
+  previews (`showsDrafts()`) se ven las `comingSoon`, como links, para entrar
+  a editar cada landing. `hidden` = pausado: fuera de todos lados, ruta en 404
+  también en dev (hoy `/soplador`, el Turbo; el código queda intacto). La
+  grilla se angosta y centra sola con 2 o 3 cards.
 - **Bundles = productos Shopify separados** (no variantes). Los 3 product
   IDs viven en `lib/config.ts` → `BUNDLES`.
 - **Combo soporte + parasol:** con los dos productos en el carrito, en el
@@ -89,9 +89,17 @@ presencia web del producto.
   sola vez, para no contar la compra doble. El `Pageview` de las navegaciones
   internas lo manda solo el pixel (mira el history); no hay que dispararlo a mano.
 
-- **Eventos de compra (hoy Black Friday 2026, rama `feat/black-friday`; antes
-  Cyber Week, apagado el 2026-11-08):** todo cuelga del bloque `CYBER` de
-  `lib/config.ts` (el nombre quedó del primer evento). `enabled: true` pinta el
+- **Eventos de compra (hoy Black Friday 2026, del lunes 23/11 00:00 al domingo
+  29/11 23:59:59, rama `feat/black-friday`; antes Cyber Week):** todo cuelga
+  del bloque `CYBER` de `lib/config.ts` (el nombre quedó del primer evento).
+  **Prende y apaga solo, sin redeploy:** con `enabled: true` el HTML trae las
+  dos versiones de la página; un script inline del `<head>`
+  (`eventGateScript` en `lib/cyber.ts`) pone `data-event="on"|"off"` en
+  `<html>` según la hora del visitante, y todo lo del evento cuelga de la
+  variante `event:` de Tailwind (`EventSwitch` para bloques enteros). Fuera de
+  fechas (antes o después) se ve la página de siempre. En dev y previews,
+  `?evento=on` / `?evento=off` / `?evento=clear` lo fuerza (queda en la
+  pestaña); en prod ese código no se incluye. En el evento se ve el
   banner fijo del evento (`CyberBanner`, reemplaza al contador de 8 h; en
   `/tienda` lleva a `#productos`), los logos, "<shortName> −X%" en packs y
   cards, la card propia del pack x6 del soporte (`pack6Card`), el carrito con
@@ -102,15 +110,15 @@ presencia web del producto.
   dorado) y las variables `--cyber-glow`/`--cyber-glow-soft` de las sombras.
   Cambiar de evento = `EVENT_THEME_ID` + nombre, textos y fechas en `CYBER`.
   `CYBER.logo` en `null` dibuja un logo de texto (`EventMark`); el archivo va en
-  `public/cyber/`. Las fases pasan solas por la hora del visitante
-  (`lib/cyber.ts`): "Empieza en" → "Termina en" → "Extensión" → todo lo vivo
-  se esconde. Desde que arranca, la cuenta del banner es siempre de hasta 24 h:
-  vence a la medianoche argentina y se reinicia sola cada día. Lo que NO se
-  apaga solo (está en el HTML del build): textos de las barras, colores del
-  evento en botones/packs, la barra de neón de `/tienda` y el chip del navbar.
-  **Pasada la extensión: `CYBER.enabled = false` y redeploy** (vuelven la barra
-  negra y el contador de 8 h). Ningún texto lleva fecha; las fechas viven sólo
-  en `CYBER` y `tests/unit/cyber.test.ts` las vigila.
+  `public/cyber/`. Fases: "Termina en" hasta `endsAt` y "Extensión" hasta
+  `extensionEndsAt` (opcional, `null` = sin extensión). La cuenta del banner es
+  siempre de hasta 24 h: vence a la medianoche argentina y se reinicia sola
+  cada día. **Ojo con los precios:** esto sólo cambia lo visual. Si el
+  descuento se hace cambiando precios en Shopify, la landing los muestra
+  congelados hasta el próximo deploy (ver Gotchas): hay que redeployar al
+  empezar y al terminar. Pasado el evento conviene `CYBER.enabled = false` en
+  el próximo deploy (para no mandar el HTML doble). Ningún texto lleva fecha;
+  las fechas viven sólo en `CYBER` y `tests/unit/cyber.test.ts` las vigila.
 
 ## Datos de producto (¡importante para el copy!)
 - El kit nuevo trae **2 aros metálicos adhesivos** (uno de repuesto) y 2

@@ -20,7 +20,8 @@
  *
  * Sin estado hover a propósito.
  */
-import { CYBER, PROMO_BARS } from '@/lib/config';
+import { PROMO_BARS } from '@/lib/config';
+import { EventSwitch } from '@/components/ui/EventSwitch';
 
 /** Halo hacia afuera + un toque de luz interna pegada a los bordes. */
 const GLOW =
@@ -31,14 +32,23 @@ const GLOW_CYBER =
 
 export function SubPromoBar({ href }: { href?: string } = {}) {
   if (!PROMO_BARS.sub.enabled) return null;
+  // Durante el evento (en sus fechas) va la versión del evento; si no, la de
+  // siempre. Las dos van al HTML y el reloj del visitante elige.
+  return (
+    <EventSwitch
+      on={<Bar href={href} cyber text={PROMO_BARS.sub.eventText} />}
+      off={<Bar href={href} cyber={false} text={PROMO_BARS.sub.text} />}
+    />
+  );
+}
 
+function Bar({ href, cyber, text }: { href?: string; cyber: boolean; text: string }) {
   // z-30: sobre el contenido de la página — si no, la sección siguiente tapa
   // el derrame de luz de abajo. Por debajo del navbar (40), del banner fijo
   // (50) y del drawer del carrito (60/61).
-  // En el evento el neón pasa al color del evento (ver CYBER en config).
-  const cyber = CYBER.enabled;
-  // En el Cyber la franja no es sticky: es parte de la página, no del header
-  // (el banner fijo de arriba ya acompaña al scroll).
+  // En el evento el neón pasa al color del evento (ver CYBER en config), y la
+  // franja no es sticky: es parte de la página, no del header (el banner
+  // fijo de arriba ya acompaña al scroll).
   const position = cyber ? '' : 'sticky top-0';
   const shell = cyber
     ? `relative z-30 block border-y border-cyber-500/70 bg-black py-2.5 ${GLOW_CYBER}`
@@ -52,7 +62,7 @@ export function SubPromoBar({ href }: { href?: string } = {}) {
           : 'text-accent [text-shadow:0_0_10px_rgba(215,7,7,0.85)]'
       }`}
     >
-      {PROMO_BARS.sub.text}
+      {text}
     </span>
   );
 

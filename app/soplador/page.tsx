@@ -14,10 +14,9 @@
  * que los botones de compra quedan deshabilitados a propósito. Ver el
  * checklist en docs/superpowers/specs/soplador-assets.md.
  *
- * MIENTRAS el soplador tenga `comingSoon: true` en STORE_PRODUCTS esta ruta
- * responde 404: la landing está en producción pero no se puede abrir. El
- * catálogo la muestra como "Próximamente". Sacar el flag la publica. En
- * `npm run dev` se abre igual (ver `isPublished`).
+ * PAUSADO: con `hidden: true` en STORE_PRODUCTS esta ruta responde 404 en
+ * todos lados, también en dev, y no tiene card ni link. El código queda para
+ * retomarlo: sacar `hidden` (y `comingSoon` para publicarlo).
  */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';

@@ -96,8 +96,11 @@ const config: Config = {
   },
   plugins: [
     // Sombras y halos del evento: `shadow-[0_0_14px_rgb(var(--cyber-glow)/0.5)]`.
-    plugin(({ addBase }) => {
+    plugin(({ addBase, addVariant }) => {
       addBase({ ':root': { '--cyber-glow': EV.glow, '--cyber-glow-soft': EV.glowSoft } });
+      // `event:` aplica sólo mientras se ve el evento: el script del <head>
+      // pone data-event="on" en <html> según las fechas de CYBER (lib/cyber.ts).
+      addVariant('event', 'html[data-event="on"] &');
     }),
   ],
 };
