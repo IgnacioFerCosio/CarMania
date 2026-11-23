@@ -403,7 +403,7 @@ export const TRABAVOLANTE = {
     },
     other: {
       name: 'Traba común',
-      doneLabel: 'Recién terminás',
+      doneLabel: 'Y ni te cuento para sacarlo',
       steps: [
         { label: 'Te bajás del auto', icon: 'door' },
         { label: 'Vas hasta atrás', icon: 'walk' },
