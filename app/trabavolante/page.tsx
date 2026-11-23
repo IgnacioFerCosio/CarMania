@@ -5,10 +5,9 @@
  * único que cambia es la config que reciben las secciones. El armado sigue al
  * soplador (producto que todavía no existe en Shopify):
  *   hero → beneficios en cuadros → marcas (es universal) → qué incluye →
- *   cómo funciona → comparativa → packs → beneficios → reseñas → garantía →
- *   FAQ → CTA final.
+ *   cómo funciona → packs → comparativa → reseñas → garantía → FAQ → CTA final.
  *
- * La comparativa (vs. el bastón y la alarma) es la tabla de /llavero-rescate,
+ * La comparativa (vs. las trabas comunes) es la tabla de /llavero-rescate,
  * sin el mapa del auto: la comparación con el trabavolante de barra es el
  * ángulo más fuerte de los creativos de TitanLock.
  *
@@ -34,7 +33,6 @@ import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
-import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
 import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
@@ -153,31 +151,31 @@ export default async function TrabavolantePage() {
         {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={TRABAVOLANTE} />
 
-        {/* 6. Comparativa: Titan PRO vs. bastón vs. alarma */}
-        <ComparisonTable comparison={TRABAVOLANTE.comparison} bg="ink" />
-
-        {/* 7. Pricing */}
+        {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={TRABAVOLANTE} />
 
-        {/* 8. Specs / beneficios */}
-        <BenefitsShowcase config={TRABAVOLANTE} />
+        {/* 7. Comparativa: Titan PRO vs. trabas comunes */}
+        <ComparisonTable comparison={TRABAVOLANTE.comparison} bg="ink" />
 
-        {/* 9. Reseñas: sólo con reseñas reales cargadas */}
+        {/* Sin BenefitsShowcase ("Pensado para la calle argentina"): lo que
+            decía ya está en los cuadros, la comparativa y las FAQ. */}
+
+        {/* 8. Reseñas: sólo con reseñas reales cargadas */}
         {TRABAVOLANTE.reviews.length > 0 && (
           <Reviews config={TRABAVOLANTE}>
             <ReviewsExpandable reviews={TRABAVOLANTE.reviews} collapseAfter={8} />
           </Reviews>
         )}
 
-        {/* 10. Garantía + medios de pago */}
+        {/* 9. Garantía + medios de pago */}
         <div id="trust">
           <TrustBlock config={TRABAVOLANTE} />
         </div>
 
-        {/* 11. FAQ */}
+        {/* 10. FAQ */}
         <FAQ config={TRABAVOLANTE} />
 
-        {/* 12. CTA final */}
+        {/* 11. CTA final */}
         <BackToPricingCTA config={TRABAVOLANTE} />
       </main>
 

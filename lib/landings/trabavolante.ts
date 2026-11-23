@@ -370,7 +370,7 @@ export const TRABAVOLANTE = {
     accent: 'más.',
     columns: [
       { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 170, height: 320 },
-      { name: 'Trabas comunes', image: '', width: 0, height: 0 }, // TODO recorte del bastón
+      { name: 'Trabas comunes', image: '/trabavolante/comparativa/trabas-comunes.webp', width: 339, height: 382 },
     ],
     rows: [
       { label: 'Lo ponés en segundos', values: [true, false] },
