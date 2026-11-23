@@ -369,7 +369,7 @@ export const TRABAVOLANTE = {
     title: 'No es un trabavolante más.',
     accent: 'más.',
     columns: [
-      { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 170, height: 320 },
+      { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 235, height: 420 },
       { name: 'Trabas comunes', image: '/trabavolante/comparativa/trabas-comunes.webp', width: 339, height: 382 },
     ],
     rows: [
@@ -381,6 +381,23 @@ export const TRABAVOLANTE = {
       { label: 'Se ancla al cinturón', values: [true, false] },
       { label: 'No raya el volante', values: [true, false] },
     ],
+  },
+  /**
+   * Debajo de la comparativa: cuánto lleva ponerlo. El "3 segundos" es la
+   * promesa del título; la traba común va por pasos y sin tiempo, porque no
+   * lo medimos.
+   */
+  timeRace: {
+    eyebrow: 'Cada vez que te bajás',
+    title: 'Lo que tardás en trabar el auto',
+    accent: 'trabar el auto',
+    ours: { name: 'Titan PRO™', time: '3 segundos', steps: ['Envolvés', 'Enganchás', 'Listo'] },
+    other: {
+      name: 'Traba común',
+      endLabel: 'Todavía no terminaste',
+      steps: ['La sacás del baúl', 'La armás', 'La calzás en el volante', 'La cerrás con llave'],
+    },
+    note: 'Por eso el bastón termina en el baúl. El mejor trabavolante es el que usás todas las noches.',
   },
   faq: [
     {

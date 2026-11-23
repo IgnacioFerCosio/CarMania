@@ -259,6 +259,8 @@ export type LandingConfig = {
   videoShowcase?: VideoShowcaseData;
   /** Tabla comparativa (`ComparisonTable`, la del llavero). Opcional. */
   comparison?: AdvertorialData['comparison'];
+  /** Animación de tiempos debajo de la comparativa (/trabavolante). */
+  timeRace?: TimeRace;
   ratingBreakdown: {
     average: number;
     total: number;
@@ -336,6 +338,18 @@ export type MediaSlot = {
 export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 
 export type ComparisonColumn = { name: string; image: string; width: number; height: number };
+
+/**
+ * "Carrera" animada debajo de la comparativa (/trabavolante): cuánto lleva
+ * poner cada uno. Lo nuestro muestra su tiempo; lo otro, sólo los pasos (sin
+ * inventar un tiempo que no medimos).
+ */
+export type TimeRace = SectionTitle & {
+  ours: { name: string; time: string; steps: readonly string[] };
+  other: { name: string; endLabel: string; steps: readonly string[] };
+  /** Frase de cierre debajo de las barras. */
+  note: string;
+};
 
 export type AdvertorialData = {
   /** El copy del hero sale de `headlines`, como en las otras landings. */

@@ -33,6 +33,7 @@ import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
+import { TimeRace } from '@/components/sections/TimeRace';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
 import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
@@ -156,6 +157,8 @@ export default async function TrabavolantePage() {
 
         {/* 7. Comparativa: Titan PRO vs. trabas comunes */}
         <ComparisonTable comparison={TRABAVOLANTE.comparison} bg="ink" />
+        {/* Pegada a la tabla (mismo fondo): cuánto lleva poner cada uno, animado */}
+        <TimeRace data={TRABAVOLANTE.timeRace} />
 
         {/* Sin BenefitsShowcase ("Pensado para la calle argentina"): lo que
             decía ya está en los cuadros, la comparativa y las FAQ. */}
