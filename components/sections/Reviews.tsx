@@ -58,7 +58,11 @@ export function Reviews({
                 {sectionCopy.reviewsTitle + ' '}<span className="text-accent">{sectionCopy.reviewsTitleAccent}</span>
               </h2>
               <p className="mt-1 text-xs text-ink-400 sm:text-sm">
-                Basado en {total} reseñas verificadas
+                {/* "verificadas" sólo si lo son todas (las del trabavolante
+                    no vienen de compras de la tienda). Un solo texto después
+                    de {total}, para que el HTML de las otras quede igual. */}
+                Basado en {total}
+                {reviews.every((r) => r.verified) ? ' reseñas verificadas' : ' reseñas'}
               </p>
             </div>
           </div>

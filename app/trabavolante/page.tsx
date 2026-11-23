@@ -142,7 +142,13 @@ export default async function TrabavolantePage() {
         <CarBrands config={TRABAVOLANTE} />
 
         {/* 4. Qué incluye — carrusel + caja + reseña, como en / */}
-        {TRABAVOLANTE.whatsInBox && <WhatsInBox data={TRABAVOLANTE.whatsInBox} />}
+        {/* La foto de la reseña va en el círculo de la opinión, como en /llavero-rescate. */}
+        <WhatsInBox
+          data={{
+            ...TRABAVOLANTE.whatsInBox,
+            testimonialPhoto: TRABAVOLANTE.whatsInBox.testimonial?.image,
+          }}
+        />
 
         {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={TRABAVOLANTE} />

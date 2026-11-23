@@ -29,14 +29,18 @@ más de 2 toneladas", "compatible con el 99 % de los autos", "grado militar",
 las encuestas "98 % / 97 % / 96 %" y "180.000 clientes". Si algún día se
 quieren usar, tiene que ser con un ensayo o una encuesta nuestra.
 
-## 2. Reseñas — vacías hasta tener las reales
+## 2. Reseñas
 
-Se sacaron las de ejemplo (texto inventado + fotos de clientes de TitanLock).
-Con `TRABAVOLANTE_REVIEWS` vacío no se muestra la sección de reseñas, ni el
-carrusel del hero, ni la opinión de "qué incluye". Las estrellas y los clientes
-de arriba de los packs son los de la marca (los del soporte), como en
-`/llavero-rescate`. Para cargar las reales: ver el comentario de
-`TRABAVOLANTE_REVIEWS` en la config.
+Cargadas el 2026-11-23: 8 reseñas (7 de 5★ y 1 de 4★, promedio 4,88) con las
+fotos de `TITANLOCK/Reviews Landing`, en `public/trabavolante/reviews/`
+(800×600; las que llegaron más chicas, en su tamaño). Van sin fecha y sin el
+tilde de "compra verificada" (el producto todavía no se vende por la tienda),
+y el encabezado dice "reseñas" a secas. Ojo antes de publicar:
+
+- En 4 fotos se lee **TITANLOCK** en la carcasa (en familia, en pareja, con las
+  llaves y en la mano) y la de "puesto en el volante" es un auto con volante
+  a la derecha, que no se vende en Argentina.
+- La de Matías Sosa dice "viene con **dos** llaves"; la página promete 3.
 
 ## 3. Imágenes y videos — qué hay hoy y qué conviene rehacer
 
@@ -56,6 +60,7 @@ que se ve (en Cloudflare `/_next/image` devuelve el original).
 | `whats-in-box/02-en-la-mano.webp` | `infalible.png` sin la franja naranja con el logo. Se lee TITANLOCK grabado en la carcasa. | Sí. |
 | `whats-in-box/03-cerradura.webp` | `llavesCerradura.png` sin el texto ni el círculo. Se lee TITANLOCK. | Sí. |
 | `whats-in-box/04-volante-trabado.webp` | Cuadro del video con el trabavolante puesto. | Sí si cambia el video. |
+| `reviews/01…08.webp` | Fotos de las reseñas (ver §2). | Si llegan fotos sin el logo de TitanLock. |
 | `comparativa/titan-pro.webp` | El recorte del producto girado, para la tabla. 170×320, transparente. | Ídem bundles. |
 | `comparativa/baston.webp`, `comparativa/alarma.webp` | **No existen**: las columnas salen sin figura (`image: ''`). | Generar (prompts en §6). |
 

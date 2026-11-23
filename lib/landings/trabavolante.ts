@@ -20,7 +20,6 @@
  *     disponible") en vez de habilitarse contra un merchandise inexistente.
  *     El `productHandle` es el que debería salir del título; confirmalo al
  *     crear el producto (al parasol Shopify le dejó el ™ en el handle).
- *   - Reseñas: vacías hasta tener las reales (ver `TRABAVOLANTE_REVIEWS`).
  *   - Imágenes y videos: salen del material de TitanLock, con el logo de
  *     ellos grabado en la carcasa. Ver el checklist de assets.
  *
@@ -37,17 +36,91 @@ import type { Bundle, LandingConfig, Review, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
 
 /**
- * Reseñas del Titan PRO: vacío hasta que lleguen las reales.
+ * Reseñas del Titan PRO (las pasó Ignacio el 2026-11-23, con sus fotos).
  *
- * Con la lista vacía la página no muestra la sección de reseñas, ni el
- * carrusel de opiniones del hero, ni la opinión de "qué incluye". Para
- * cargarlas: cada una con `name`, `location`, `stars`, `text`, `date`
- * ('12 Nov 2026'), `verified` y, si tiene foto, `image` en
- * /public/trabavolante/reviews/ (4:3, ~1000 px de ancho, webp). Después,
- * `ratingBreakdown` con el conteo real por estrellas y, si se quiere,
- * `whatsInBox.testimonial` apuntando a una de ellas.
+ * Orden: primero las fotos con gente y el producto a la vista (también son las
+ * del carrusel del hero), después las del producto puesto y al final los
+ * primeros planos. Fotos en /public/trabavolante/reviews/, 4:3 a 800×600
+ * (las que llegaron más chicas quedaron en su tamaño original).
+ *
+ * `date` va vacío y `verified` en false: no vinieron con fecha, y el producto
+ * todavía no se vende por la tienda, así que no hay compra que verificar.
+ * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
  */
-const TRABAVOLANTE_REVIEWS: readonly Review[] = [];
+const TRABAVOLANTE_REVIEWS: readonly Review[] = [
+  {
+    name: 'Ezequiel Villalba',
+    location: 'Neuquén',
+    stars: 5,
+    text: 'Un golazo para viajar tranquilos en familia. Lo enganchás al cinturón en un toque y queda trabado firme. La verdad que por lo que sale vale totalmente la pena para sumar seguridad.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/01-en-familia.webp',
+  },
+  {
+    name: 'Gustavo Ferreyra',
+    location: 'Entre Ríos',
+    stars: 5,
+    text: 'Muy contentos con el producto. Es liviano para manipular pero súper resistente, ideal para tener siempre a mano en el auto sin andar renegando con fierros pesados. Excelente atención y envío.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/02-en-pareja.webp',
+  },
+  {
+    name: 'Rodrigo Benítez',
+    location: 'CABA',
+    stars: 5,
+    text: 'Impecable terminación. Combinó bárbaro con el interior claro y no raya absolutamente nada gracias al recubrimiento de tela. Es mucho más cómodo y disuasivo que las trabas rígidas tradicionales.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/03-volante-claro.webp',
+  },
+  {
+    name: 'Facundo Pereyra',
+    location: 'Buenos Aires',
+    stars: 5,
+    text: 'Excelente calidad, súper robusto. Tenía miedo de que me marque el volante de cuero pero la funda protectora que trae es impecable. Se coloca en dos segundos en el anclaje del cinturón y queda re firme.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/04-puesto-en-el-volante.webp',
+  },
+  {
+    name: 'Matías Sosa',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Recién recibido y ya lo probé. Viene con dos llaves de muy buena calidad y se nota que el cable está bien reforzado. Súper recomendable, cumplió con todo lo que prometen.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/05-con-las-llaves.webp',
+  },
+  {
+    name: 'Nicolás Ibáñez',
+    location: 'Santa Fe',
+    stars: 5,
+    text: 'Calzó perfecto en mi auto. Me gustó mucho que no ocupa nada de espacio cuando lo guardás abajo del asiento y al ponerlo queda bien tenso entre el volante y el cinturón. Llegó rápido.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/06-volante-y-cinturon.webp',
+  },
+  {
+    name: 'Hernán Castellanos',
+    location: 'Mendoza',
+    stars: 4,
+    text: 'Muy práctico para usar de noche o cuando bajás rápido a hacer un trámite. Al principio le tenés que agarrar la mano al ángulo para pasarlo por el volante, pero después lo ponés sin mirar. Buena relación precio-calidad.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/07-de-noche.webp',
+  },
+  {
+    name: 'Marcelo Giménez',
+    location: 'Córdoba',
+    stars: 5,
+    text: 'Muy conforme con la compra. El cable de acero es re grueso y la cerradura se siente pesada y segura. Lo uso todos los días cuando dejo el auto en la calle y me da mucha más tranquilidad.',
+    date: '',
+    verified: false,
+    image: '/trabavolante/reviews/08-en-la-mano.webp',
+  },
+];
 
 const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
   {
@@ -263,6 +336,9 @@ export const TRABAVOLANTE = {
     body: ' El Titan PRO se enrolla y entra en la guantera, así lo usás cada vez que te bajás y no sólo cuando te acordás.',
     note: 'Sin instalación: no se atornilla ni se pega nada al auto.',
     items: ['1 Trabavolante Titan PRO™', '3 llaves de seguridad', 'Manual de uso'],
+    // La de las terminaciones (Rodrigo): habla de la funda y el volante, al
+    // lado de lo que trae la caja.
+    testimonial: TRABAVOLANTE_REVIEWS[2],
     gallery: [
       { src: '/trabavolante/whats-in-box/01-producto.webp', alt: 'Trabavolante Titan PRO' },
       { src: '/trabavolante/whats-in-box/02-en-la-mano.webp', alt: 'La traba del Titan PRO en la mano, adentro de un auto' },
@@ -271,14 +347,13 @@ export const TRABAVOLANTE = {
     ],
   },
   reviews: TRABAVOLANTE_REVIEWS,
-  // Sin reseñas todavía: la sección no se muestra. Con las reales, el
-  // promedio y el conteo por estrellas de verdad.
+  // 7 de 5 estrellas y 1 de 4.
   ratingBreakdown: {
-    average: 0,
-    total: 0,
+    average: 4.88, // 39 / 8
+    total: TRABAVOLANTE_REVIEWS.length,
     stars: [
-      { stars: 5, count: 0 },
-      { stars: 4, count: 0 },
+      { stars: 5, count: 7 },
+      { stars: 4, count: 1 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },
