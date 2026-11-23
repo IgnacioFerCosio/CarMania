@@ -31,7 +31,7 @@ export type Bundle = {
    * Si está, `Pricing` lo muestra en lugar de `unitsLabel` + `bonus`
    * (`/llavero-rescate`); sin esto, las cards son las de siempre.
    */
-  includes?: readonly { icon: 'keychain' | 'glass' | 'mount'; text: string }[];
+  includes?: readonly { icon: 'keychain' | 'glass' | 'mount' | 'titan' | 'key'; text: string }[];
   freeShipping: boolean;
   recommended: boolean;
   fallbackPrice: number;

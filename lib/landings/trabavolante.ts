@@ -132,7 +132,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 1,
     unitsLabel: '1 unidad',
     badge: null,
-    bonus: '+ 3 llaves incluidas',
+    bonus: '+ 3 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '1 Trabavolante Titan PRO™' },
+      { icon: 'key', text: '3 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 39990, // TODO PRECIO REAL
@@ -148,7 +154,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 2,
     unitsLabel: '2 unidades · 2ª al 50%',
     badge: 'MÁS ELEGIDO',
-    bonus: '+ 3 llaves por unidad',
+    bonus: '+ 6 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '2 Trabavolantes Titan PRO™' },
+      { icon: 'key', text: '6 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: true,
     fallbackPrice: 59990, // TODO PRECIO REAL — 1,5 × el x1 (redondeado)
@@ -164,7 +176,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 3,
     unitsLabel: '3 unidades · 3ª GRATIS',
     badge: '3X2',
-    bonus: '+ 3 llaves por unidad',
+    bonus: '+ 9 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '3 Trabavolantes Titan PRO™' },
+      { icon: 'key', text: '9 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 79990, // TODO PRECIO REAL — 2 × el x1 (redondeado)
@@ -331,11 +349,13 @@ export const TRABAVOLANTE = {
     },
   ],
   whatsInBox: {
-    headline: 'Todo lo que trae la caja',
+    // La lista ya va bajo un "¿Qué incluye?" fijo del componente: el título no lo repite.
+    headline: 'Simple y compacto',
     lead: 'Chau al bastón de un metro.',
     body: ' El Titan PRO se enrolla y entra en la guantera, así lo usás cada vez que te bajás y no sólo cuando te acordás.',
     note: 'Sin instalación: no se atornilla ni se pega nada al auto.',
-    items: ['1 Trabavolante Titan PRO™', '3 llaves de seguridad', 'Manual de uso'],
+    // Las instrucciones vienen impresas en la caja, no en un folleto aparte.
+    items: ['1 Trabavolante Titan PRO™', '3 llaves de seguridad', 'Instrucciones impresas en la caja'],
     // La de las terminaciones (Rodrigo): habla de la funda y el volante, al
     // lado de lo que trae la caja.
     testimonial: TRABAVOLANTE_REVIEWS[2],
@@ -370,7 +390,7 @@ export const TRABAVOLANTE = {
     accent: 'más.',
     columns: [
       { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 235, height: 420 },
-      { name: 'Trabas comunes', image: '/trabavolante/comparativa/trabas-comunes.webp', width: 339, height: 382 },
+      { name: 'Trabas comunes', image: '/trabavolante/comparativa/trabas-comunes.webp', width: 336, height: 378 },
     ],
     rows: [
       { label: 'Lo ponés en segundos', values: [true, false] },

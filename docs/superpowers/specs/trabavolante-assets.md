@@ -145,3 +145,11 @@ de ahí `bundles/TrabavolanteX1/X2/X3.webp` (900², con 1/2/3 unidades):
    > Macro of a thick soft black padded sleeve resting on a stitched leather steering wheel, showing no marks on the leather, shallow depth of field, warm soft light, vertical 2:3, photorealistic.
 6. `llaves` — 3 LLAVES:
    > Three identical silver security keys on an open palm, next to a matte black lock body with no logo, dark background, soft top light with a red (#D70707) rim, vertical 2:3, photorealistic, no text.
+
+**Packs** (`bundles/TrabavolanteX1/X2/X3.webp`, 900², hoy provisorios armados con
+el recorte): editar `queincluye (2).jpeg` en Gemini/ChatGPT, adjuntando también
+el recorte del producto, con este prompt (cambiando la cantidad):
+
+> Using the first image as the scene and style reference (same matte black CARMANIA box with its logo, same dark slate surface and lighting), create a square product photo of a bundle: the CARMANIA box standing slightly behind, and in front of it TWO identical steering wheel locks like the second image (black padded cable loop with two orange rings, black seatbelt-tongue lock body), arranged neatly side by side, with SIX silver keys with black heads laid in front in two groups of three. Photorealistic, premium, no text other than the logo on the box, no extra objects.
+
+Para el x1: "ONE … THREE silver keys"; para el x3: "THREE … NINE silver keys in three groups of three".
