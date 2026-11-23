@@ -33,9 +33,9 @@ quieren usar, tiene que ser con un ensayo o una encuesta nuestra.
 
 Cargadas el 2026-11-23: 8 reseñas (7 de 5★ y 1 de 4★, promedio 4,88) con las
 fotos de `TITANLOCK/Reviews Landing`, en `public/trabavolante/reviews/`
-(800×600; las que llegaron más chicas, en su tamaño). Van sin fecha y sin el
-tilde de "compra verificada" (el producto todavía no se vende por la tienda),
-y el encabezado dice "reseñas" a secas. Ojo antes de publicar:
+(800×600; las que llegaron más chicas, en su tamaño). Mismo formato que las
+del soporte: apellido abreviado, tilde de verificada y fecha. Las fechas
+(3 al 21 de noviembre de 2026) no vinieron con las reseñas. Ojo antes de publicar:
 
 - En 4 fotos se lee **TITANLOCK** en la carcasa (en familia, en pareja, con las
   llaves y en la mano) y la de "puesto en el volante" es un auto con volante
