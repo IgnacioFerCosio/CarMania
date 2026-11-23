@@ -391,13 +391,33 @@ export const TRABAVOLANTE = {
     eyebrow: 'Cada vez que te bajás',
     title: 'Lo que tardás en trabar el auto',
     accent: 'trabar el auto',
-    ours: { name: 'Titan PRO™', time: '3 segundos', steps: ['Envolvés', 'Enganchás', 'Listo'] },
+    ours: {
+      name: 'Titan PRO™',
+      time: '3 segundos',
+      doneLabel: 'Y ya te fuiste',
+      steps: [
+        { label: 'Envolvés el volante', icon: 'wrap' },
+        { label: 'Enganchás el cinturón', icon: 'buckle' },
+        { label: 'Listo', icon: 'lock' },
+      ],
+    },
     other: {
       name: 'Traba común',
-      endLabel: 'Todavía no terminaste',
-      steps: ['La sacás del baúl', 'La armás', 'La calzás en el volante', 'La cerrás con llave'],
+      doneLabel: 'Recién terminás',
+      steps: [
+        { label: 'Te bajás del auto', icon: 'door' },
+        { label: 'Vas hasta atrás', icon: 'walk' },
+        { label: 'Abrís el baúl', icon: 'trunk' },
+        { label: 'Sacás el bastón', icon: 'bar' },
+        { label: 'Volvés al asiento', icon: 'walk' },
+        { label: 'Lo armás (un buen rato)', icon: 'wrench', weight: 2.5 },
+        { label: 'Lo calzás en el volante', icon: 'wheel' },
+        { label: 'Hacés fuerza para trabarlo', icon: 'force', weight: 1.5 },
+        { label: 'Le marca el volante', icon: 'alert', bad: true },
+      ],
     },
     note: 'Por eso el bastón termina en el baúl. El mejor trabavolante es el que usás todas las noches.',
+    cta: { label: 'Quiero el mío', href: '#pricing' },
   },
   faq: [
     {

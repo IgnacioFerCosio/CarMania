@@ -340,15 +340,20 @@ export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 export type ComparisonColumn = { name: string; image: string; width: number; height: number };
 
 /**
- * "Carrera" animada debajo de la comparativa (/trabavolante): cuánto lleva
- * poner cada uno. Lo nuestro muestra su tiempo; lo otro, sólo los pasos (sin
- * inventar un tiempo que no medimos).
+ * "Carrera" animada debajo de la comparativa (/trabavolante): el camino de
+ * cada uno, paso a paso, en loop. Lo nuestro muestra su tiempo; lo otro, sólo
+ * los pasos (sin inventar un tiempo que no medimos).
+ *
+ * `icon` es uno de los dibujos de `TimeRace.tsx`; `weight` alarga ese paso
+ * (1 = normal), para los que llevan "un buen rato".
  */
+export type TimeRaceStep = { label: string; icon: string; weight?: number; bad?: boolean };
 export type TimeRace = SectionTitle & {
-  ours: { name: string; time: string; steps: readonly string[] };
-  other: { name: string; endLabel: string; steps: readonly string[] };
-  /** Frase de cierre debajo de las barras. */
+  ours: { name: string; time: string; doneLabel: string; steps: readonly TimeRaceStep[] };
+  other: { name: string; doneLabel: string; steps: readonly TimeRaceStep[] };
+  /** Frase de cierre debajo de las columnas. */
   note: string;
+  cta: { label: string; href: string };
 };
 
 export type AdvertorialData = {
