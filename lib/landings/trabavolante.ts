@@ -253,7 +253,7 @@ export const TRABAVOLANTE = {
   useCases: [
     { label: 'ACERO REFORZADO', image: '/trabavolante/use-cases/acero.webp', alt: 'El cable de acero trenzado del trabavolante, cortado, con la funda acolchada' },
     { label: 'ANCLA AL CINTURÓN', image: '/trabavolante/use-cases/cinturon.webp', alt: 'La traba enganchada en el anclaje del cinturón de seguridad' },
-    { label: 'VOLANTE TRABADO', image: '/trabavolante/use-cases/traba.webp', alt: 'Un conductor intenta girar el volante y el cable lo frena' },
+    { label: 'VOLANTE INMÓVIL', image: '/trabavolante/use-cases/traba.webp', alt: 'Un conductor intenta girar el volante y el cable lo frena' },
     { label: 'LISTO EN SEGUNDOS', image: '/trabavolante/use-cases/segundos.webp', alt: 'Una mano envolviendo el trabavolante en el volante' },
     { label: 'CERO RAYONES', image: '/trabavolante/use-cases/volante.webp', alt: 'La funda acolchada del cable sobre un volante de cuero' },
     { label: 'TRES LLAVES', image: '/trabavolante/use-cases/llaves.webp', alt: 'Las tres llaves del trabavolante en la palma de la mano' },
