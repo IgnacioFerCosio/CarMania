@@ -224,9 +224,9 @@ export const TRABAVOLANTE = {
     width: 720,
     height: 720,
     // No "X EN 3 SEGUNDOS" como el parasol y el llavero (y el título ya lo
-    // dice): el video muestra cómo intentan cortarlo, así que va la dureza.
-    badgeLine1: 'A PRUEBA DE',
-    badgeLine2: 'CORTAFRÍOS',
+    // dice): el video muestra cómo intentan cortarlo y perforarlo.
+    badgeLine1: 'ANTICORTE Y',
+    badgeLine2: 'ANTITALADRO',
   },
   heroSubHighlights: ['cinturón de seguridad', 'acero de 5 mm'],
   sectionCopy: {
@@ -251,12 +251,12 @@ export const TRABAVOLANTE = {
    * accent). Todos salen del material de TitanLock, sin su franja de logo.
    */
   useCases: [
-    { label: 'ACERO DE 5 MM', image: '/trabavolante/use-cases/acero.webp', alt: 'Un cortafríos contra el cable de acero del trabavolante' },
+    { label: 'ACERO REFORZADO', image: '/trabavolante/use-cases/acero.webp', alt: 'El cable de acero trenzado del trabavolante, cortado, con la funda acolchada' },
     { label: 'ANCLA AL CINTURÓN', image: '/trabavolante/use-cases/cinturon.webp', alt: 'La traba enganchada en el anclaje del cinturón de seguridad' },
-    { label: 'VOLANTE TRABADO', image: '/trabavolante/use-cases/traba.webp', alt: 'Tirando del trabavolante puesto: no se suelta' },
-    { label: 'LISTO EN SEGUNDOS', image: '/trabavolante/use-cases/segundos.webp', alt: 'El trabavolante envuelto en el volante de un auto' },
-    { label: 'CERO RAYONES', image: '/trabavolante/use-cases/volante.webp', alt: 'La funda acolchada del cable sobre el volante, sin marcarlo' },
-    { label: '3 LLAVES', image: '/trabavolante/use-cases/llaves.webp', alt: 'Una de las llaves del trabavolante en la mano' },
+    { label: 'VOLANTE TRABADO', image: '/trabavolante/use-cases/traba.webp', alt: 'Un conductor intenta girar el volante y el cable lo frena' },
+    { label: 'LISTO EN SEGUNDOS', image: '/trabavolante/use-cases/segundos.webp', alt: 'Una mano envolviendo el trabavolante en el volante' },
+    { label: 'CERO RAYONES', image: '/trabavolante/use-cases/volante.webp', alt: 'La funda acolchada del cable sobre un volante de cuero' },
+    { label: 'TRES LLAVES', image: '/trabavolante/use-cases/llaves.webp', alt: 'Las tres llaves del trabavolante en la palma de la mano' },
   ],
   steps: [
     {
@@ -339,11 +339,9 @@ export const TRABAVOLANTE = {
     // La de las terminaciones (Rodrigo): habla de la funda y el volante, al
     // lado de lo que trae la caja.
     testimonial: TRABAVOLANTE_REVIEWS[2],
+    // Una sola foto por ahora (el carrusel esconde flechas y puntos solo).
     gallery: [
-      { src: '/trabavolante/whats-in-box/01-producto.webp', alt: 'Trabavolante Titan PRO' },
-      { src: '/trabavolante/whats-in-box/02-en-la-mano.webp', alt: 'La traba del Titan PRO en la mano, adentro de un auto' },
-      { src: '/trabavolante/whats-in-box/03-cerradura.webp', alt: 'La cerradura anti-taladro de la traba' },
-      { src: '/trabavolante/whats-in-box/04-volante-trabado.webp', alt: 'El Titan PRO puesto en el volante' },
+      { src: '/trabavolante/whats-in-box/que-incluye.webp', alt: 'La caja, el Trabavolante Titan PRO y sus tres llaves' },
     ],
   },
   reviews: TRABAVOLANTE_REVIEWS,

@@ -54,12 +54,9 @@ que se ve (en Cloudflare `/_next/image` devuelve el original).
 | `hero/trabavolante-oscuro.webp` | Producto recortado sobre fondo de estudio negro. Card de `/tienda`. 1200². | Conviene un render/foto propio con caja CARMANIA, como `bundles/BundleX1.webp` del soporte. |
 | `bundles/TrabavolanteX1/X2/X3.webp` | El mismo recorte ×1, ×2, ×3 sobre fondo de estudio, sin llaves (las llaves plateadas no se podían separar del fondo). 900². | Igual que arriba: ideal con la caja y las llaves. |
 | `benefits/trabavolante-producto.webp` | Recorte con transparencia, para el bloque de beneficios. | Ídem. |
-| `use-cases/*.webp` (6) | Cuadros de los videos: cortafríos, anclaje al cinturón, tirón, volante, funda, llave. 600×900. | Sí si cambia el video. |
+| `use-cases/*.webp` (6) | Fotos generadas (2026-11-23) con los prompts de §6. 600×900. | No. |
 | `how-to-use/01…03.mp4` | Cortes de los videos: envolver, enganchar, tirar. 640², sin audio. | Ídem. |
-| `whats-in-box/01-producto.webp` | Recorte sobre fondo de estudio. | Ídem bundles. |
-| `whats-in-box/02-en-la-mano.webp` | `infalible.png` sin la franja naranja con el logo. Se lee TITANLOCK grabado en la carcasa. | Sí. |
-| `whats-in-box/03-cerradura.webp` | `llavesCerradura.png` sin el texto ni el círculo. Se lee TITANLOCK. | Sí. |
-| `whats-in-box/04-volante-trabado.webp` | Cuadro del video con el trabavolante puesto. | Sí si cambia el video. |
+| `whats-in-box/que-incluye.webp` | Foto generada (2026-11-23): caja lisa, trabavolante y 3 llaves. Única imagen de "qué incluye" (sin carrusel). | Ponerle el logo CARMANIA a la caja. |
 | `reviews/01…08.webp` | Fotos de las reseñas (ver §2). | Si llegan fotos sin el logo de TitanLock. |
 | `comparativa/titan-pro.webp` | El recorte del producto girado, para la tabla. 170×320, transparente. | Ídem bundles. |
 | `comparativa/baston.webp` | **No existe**: la columna "Trabas comunes" sale sin figura (`image: ''`). | Generar (prompt en §6). |
@@ -121,11 +118,11 @@ producto: se dejan. Fondo y luz como los packs del soporte y del parasol
 la luz). Exportar al tamaño indicado y reemplazar con el mismo nombre.
 
 **Imagen principal del producto** — `hero/trabavolante-oscuro.webp` (1200²) y
-de ahí `whats-in-box/01-producto.webp` (1024²) y `bundles/TrabavolanteX1/X2/X3.webp` (900², con 1/2/3 unidades):
+de ahí `bundles/TrabavolanteX1/X2/X3.webp` (900², con 1/2/3 unidades):
 
 > Premium product photo of a steering wheel lock: a flexible braided steel cable covered in a thick black padded sleeve with two orange rings, forming a loop, ending in a matte black lock body shaped like a seatbelt tongue, smooth surface with no logo or text. Next to it, three silver keys. Centered on a seamless matte black studio background, soft top light, subtle red (#D70707) rim light on the edges, soft reflection on the floor. Square, 1:1, photorealistic, sharp, no text.
 
-**Qué trae la caja** — `whats-in-box/02…04` (1024²; hoy dicen TITANLOCK):
+**Qué trae la caja** — `whats-in-box/que-incluye.webp` (1024²; ya generada):
 
 > Overhead flat lay on a matte black surface: a black product box with a thin red (#D70707) accent line and no visible text, the steering wheel lock (black padded cable loop with orange rings and a black seatbelt-tongue lock body, no logos) coiled next to it, three silver keys fanned out, and a small folded instruction leaflet. Even soft studio lighting, clean minimal arrangement, square 1:1, photorealistic, no text or logos.
 
