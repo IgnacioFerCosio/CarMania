@@ -23,7 +23,8 @@ import { Icon } from '@/components/ui/Icon';
 import { CtaLink } from '@/components/advertorial/CtaLink';
 
 /** Duración de un paso "normal" de cada carril, en ms. */
-const OURS_STEP = 650;
+// El Titan dura sus "3 segundos" de verdad: 3 pasos de 1 s.
+const OURS_STEP = 1000;
 const OTHER_STEP = 1100;
 const START = 400;
 /** Cuánto queda quieto el final antes de volver a empezar. */
