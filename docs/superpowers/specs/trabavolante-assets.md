@@ -29,13 +29,14 @@ más de 2 toneladas", "compatible con el 99 % de los autos", "grado militar",
 las encuestas "98 % / 97 % / 96 %" y "180.000 clientes". Si algún día se
 quieren usar, tiene que ser con un ensayo o una encuesta nuestra.
 
-## 2. Reseñas — NO PUBLICAR ASÍ
+## 2. Reseñas — vacías hasta tener las reales
 
-Las 8 reseñas de la config son **texto inventado**, y 7 llevan **fotos de
-clientes de TitanLock** (de `TITANLOCK/Reviews`, sólo las que no muestran
-caras). Antes de publicar: reseñas reales nuestras o sacar la sección.
-Lo mismo con `ratingBreakdown` (4,8 / 8 reseñas). La reseña del carrusel del
-hero y la de "qué incluye" salen de la misma lista.
+Se sacaron las de ejemplo (texto inventado + fotos de clientes de TitanLock).
+Con `TRABAVOLANTE_REVIEWS` vacío no se muestra la sección de reseñas, ni el
+carrusel del hero, ni la opinión de "qué incluye". Las estrellas y los clientes
+de arriba de los packs son los de la marca (los del soporte), como en
+`/llavero-rescate`. Para cargar las reales: ver el comentario de
+`TRABAVOLANTE_REVIEWS` en la config.
 
 ## 3. Imágenes y videos — qué hay hoy y qué conviene rehacer
 
@@ -55,7 +56,8 @@ que se ve (en Cloudflare `/_next/image` devuelve el original).
 | `whats-in-box/02-en-la-mano.webp` | `infalible.png` sin la franja naranja con el logo. Se lee TITANLOCK grabado en la carcasa. | Sí. |
 | `whats-in-box/03-cerradura.webp` | `llavesCerradura.png` sin el texto ni el círculo. Se lee TITANLOCK. | Sí. |
 | `whats-in-box/04-volante-trabado.webp` | Cuadro del video con el trabavolante puesto. | Sí si cambia el video. |
-| `reviews/01…07.webp` | Fotos de clientes de TitanLock (ver §2). | Sí, obligatorio. |
+| `comparativa/titan-pro.webp` | El recorte del producto girado, para la tabla. 170×320, transparente. | Ídem bundles. |
+| `comparativa/baston.webp`, `comparativa/alarma.webp` | **No existen**: las columnas salen sin figura (`image: ''`). | Generar (prompts en §6). |
 
 **Lo que no se usó** (está en la carpeta, pero tiene texto en inglés, el
 logo de TitanLock en grande, caras de terceros o claims sin fuente): las
@@ -104,3 +106,41 @@ Fuente: `ouvra.store/products/titanlock`, `/products/titanlockpro` y la home.
    antes de sumarlo a `CROSS_SELLS` (ver `lib/landings/index.ts`).
 4. `npm test` y, como el gate va a marcar `/tienda` y `/trabavolante`,
    revisar el diff y `npm run gate:capture`.
+
+## 6. Prompts de imágenes (2026-11-23)
+
+Para todos: adjuntar `TITANLOCK.png` como referencia del producto y pedir la
+carcasa **lisa, sin logo ni texto**. Las fundas naranjas son parte del
+producto: se dejan. Fondo y luz como los packs del soporte y del parasol
+(estudio negro, luz cenital suave, un toque de rojo `#D70707` en el borde de
+la luz). Exportar al tamaño indicado y reemplazar con el mismo nombre.
+
+**Imagen principal del producto** — `hero/trabavolante-oscuro.webp` (1200²) y
+de ahí `whats-in-box/01-producto.webp` (1024²) y `bundles/TrabavolanteX1/X2/X3.webp` (900², con 1/2/3 unidades):
+
+> Premium product photo of a steering wheel lock: a flexible braided steel cable covered in a thick black padded sleeve with two orange rings, forming a loop, ending in a matte black lock body shaped like a seatbelt tongue, smooth surface with no logo or text. Next to it, three silver keys. Centered on a seamless matte black studio background, soft top light, subtle red (#D70707) rim light on the edges, soft reflection on the floor. Square, 1:1, photorealistic, sharp, no text.
+
+**Qué trae la caja** — `whats-in-box/02…04` (1024²; hoy dicen TITANLOCK):
+
+> Overhead flat lay on a matte black surface: a black product box with a thin red (#D70707) accent line and no visible text, the steering wheel lock (black padded cable loop with orange rings and a black seatbelt-tongue lock body, no logos) coiled next to it, three silver keys fanned out, and a small folded instruction leaflet. Even soft studio lighting, clean minimal arrangement, square 1:1, photorealistic, no text or logos.
+
+**Tabla comparativa** — recortes con fondo transparente, verticales (~320 px de alto):
+
+> `comparativa/baston.webp`: A classic red and black steering wheel club lock bar (long telescopic bar with two hooks), product cutout on a transparent background, standing diagonally, studio lighting, photorealistic, no brand, no text.
+
+> `comparativa/alarma.webp`: A generic black car alarm remote key fob with two buttons, product cutout on a transparent background, slightly angled, studio lighting, photorealistic, no brand, no text.
+
+**Cuadros de características** (`use-cases/*.webp`, 600×900, vertical 2:3, interior de auto oscuro, luz dramática lateral, sin texto ni logos):
+
+1. `acero` — ACERO DE 5 MM:
+   > Extreme macro of a braided steel cable inside a black padded sleeve, the cut end showing the twisted steel strands, dark car interior background, dramatic side light with a red (#D70707) rim, vertical 2:3, photorealistic, no text.
+2. `cinturon` — ANCLA AL CINTURÓN:
+   > Close-up of a matte black lock body clicked into a car seatbelt buckle receiver between the front seat and the center console, a black padded cable rising from it, dark interior, soft directional light, vertical 2:3, photorealistic, no logos.
+3. `traba` — VOLANTE TRABADO:
+   > A driver's hand trying to turn a leather steering wheel that is held by a taut black padded cable running down to the seat, tension visible, dark car interior at night, vertical 2:3, photorealistic, no text.
+4. `segundos` — LISTO EN SEGUNDOS:
+   > A hand quickly wrapping a black padded cable with orange rings around the top of a steering wheel, slight motion blur on the hand, sharp cable, dark car interior, vertical 2:3, photorealistic.
+5. `volante` — CERO RAYONES:
+   > Macro of a thick soft black padded sleeve resting on a stitched leather steering wheel, showing no marks on the leather, shallow depth of field, warm soft light, vertical 2:3, photorealistic.
+6. `llaves` — 3 LLAVES:
+   > Three identical silver security keys on an open palm, next to a matte black lock body with no logo, dark background, soft top light with a red (#D70707) rim, vertical 2:3, photorealistic, no text.

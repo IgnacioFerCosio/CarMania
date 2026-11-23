@@ -20,8 +20,7 @@
  *     disponible") en vez de habilitarse contra un merchandise inexistente.
  *     El `productHandle` es el que debería salir del título; confirmalo al
  *     crear el producto (al parasol Shopify le dejó el ™ en el handle).
- *   - Reseñas / `ratingBreakdown`: inventadas (ver el aviso de
- *     `TRABAVOLANTE_REVIEWS`).
+ *   - Reseñas: vacías hasta tener las reales (ver `TRABAVOLANTE_REVIEWS`).
  *   - Imágenes y videos: salen del material de TitanLock, con el logo de
  *     ellos grabado en la carcasa. Ver el checklist de assets.
  *
@@ -34,96 +33,21 @@
  * seguridad inflada es exposición directa bajo la ley de defensa del
  * consumidor. Lo que hay que confirmar está marcado `// TODO VERIFICAR`.
  */
-import type { Bundle, LandingConfig, UpsellTier } from './types';
+import type { Bundle, LandingConfig, Review, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
 
 /**
- * ⚠️ RESEÑAS PLACEHOLDER — INVENTADAS.
+ * Reseñas del Titan PRO: vacío hasta que lleguen las reales.
  *
- * El Titan PRO todavía no se vendió: estos textos los escribí yo para que la
- * sección renderice completa en desarrollo.
- *
- * ⚠️ Y LAS FOTOS SON DE CLIENTES DE TITANLOCK (UK), no nuestros: salen de la
- * carpeta `Reviews/` del material del producto. Se eligieron sólo las que no
- * muestran caras. Foto ajena + texto inventado es la peor mezcla posible (ver
- * el aviso de las reseñas del parasol).
- *
- * NO PUBLICAR ASÍ. Antes de sacar `comingSoon`: reseñas reales de clientes
- * nuestros, o sacar la sección. Lo mismo para `ratingBreakdown`.
+ * Con la lista vacía la página no muestra la sección de reseñas, ni el
+ * carrusel de opiniones del hero, ni la opinión de "qué incluye". Para
+ * cargarlas: cada una con `name`, `location`, `stars`, `text`, `date`
+ * ('12 Nov 2026'), `verified` y, si tiene foto, `image` en
+ * /public/trabavolante/reviews/ (4:3, ~1000 px de ancho, webp). Después,
+ * `ratingBreakdown` con el conteo real por estrellas y, si se quiere,
+ * `whatsInBox.testimonial` apuntando a una de ellas.
  */
-const TRABAVOLANTE_REVIEWS = [
-  {
-    name: 'Martín G.',
-    location: 'La Matanza',
-    stars: 5,
-    text: 'Me robaron el auto anterior en la puerta de casa. Ahora lo pongo todas las noches, tardo literalmente tres segundos. Se ve desde afuera y eso ya es la mitad del trabajo.',
-    date: '12 Nov 2026',
-    verified: true,
-    image: '/trabavolante/reviews/01.webp',
-  },
-  {
-    name: 'Carla P.',
-    location: 'Rosario',
-    stars: 5,
-    text: 'El bastón que tenía era enorme y terminaba tirado en el baúl sin usar. Este lo enrollo y va en la puerta. Lo uso siempre, que era el punto.',
-    date: '08 Nov 2026',
-    verified: true,
-    image: '/trabavolante/reviews/02.webp',
-  },
-  {
-    name: 'Diego R.',
-    location: 'Córdoba',
-    stars: 5,
-    text: 'Lo dejo puesto cuando estaciono en el centro. Al principio dudé de que agarrara en el cinturón, pero hace click igual que la hebilla y no se suelta.',
-    date: '03 Nov 2026',
-    verified: true,
-    image: '/trabavolante/reviews/03.webp',
-  },
-  {
-    name: 'Florencia M.',
-    location: 'Mar del Plata',
-    stars: 4,
-    text: 'Cumple. El volante queda trabado de verdad. Le saco una estrella porque en mi auto tuve que probar por qué parte del volante pasarlo para que quede bien justo.',
-    date: '29 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/04.webp',
-  },
-  {
-    name: 'Pablo S.',
-    location: 'Quilmes',
-    stars: 5,
-    text: 'Tengo el volante forrado en cuero y tenía miedo de que lo marcara. Nada: el cable tiene una funda acolchada y no deja ni una marca.',
-    date: '24 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/05.webp',
-  },
-  {
-    name: 'Luciana F.',
-    location: 'Mendoza',
-    stars: 5,
-    text: 'Lo compré para mi viejo, que deja el auto en la calle. Es fácil de poner incluso para él. Viene con tres llaves, así que una quedó en casa de repuesto.',
-    date: '19 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/06.webp',
-  },
-  {
-    name: 'Gastón V.',
-    location: 'Tigre',
-    stars: 5,
-    text: 'Lo uso en la camioneta del laburo. Me da tranquilidad dejarla en obra todo el día. Se pone y se saca en un toque.',
-    date: '15 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/07.webp',
-  },
-  {
-    name: 'Romina A.',
-    location: 'La Plata',
-    stars: 4,
-    text: 'Muy bueno y se nota firme. La primera vez me costó encontrar el lado de la llave para sacarlo, después ya sale solo.',
-    date: '10 Oct 2026',
-    verified: true,
-  },
-] as const;
+const TRABAVOLANTE_REVIEWS: readonly Review[] = [];
 
 const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
   {
@@ -191,10 +115,12 @@ export const TRABAVOLANTE = {
   brand: {
     tagline: 'Trabavolante Titan PRO™',
     productHandle: 'trabavolante-titan-pro', // TODO SHOPIFY — confirmar al crear el producto
-    socialProofCount: 'Miles', // TODO: número real cuando haya ventas
-    socialProofLabel: 'de autos protegidos',
-    averageRating: 4.8,
-    reviewsCount: TRABAVOLANTE_REVIEWS.length, // TODO: reseñas reales
+    // Estrellas y clientes de arriba de los packs: los de la marca (los del
+    // soporte), como en /llavero-rescate. El producto todavía no tiene los suyos.
+    socialProofCount: SOPORTE.brand.socialProofCount,
+    socialProofLabel: SOPORTE.brand.socialProofLabel,
+    averageRating: SOPORTE.brand.averageRating,
+    reviewsCount: TRABAVOLANTE_REVIEWS.length,
   },
   // Espejo del bundle x1.
   fallbackPricing: {
@@ -224,8 +150,10 @@ export const TRABAVOLANTE = {
     // logo. El poster es el primer frame del video ya encodeado (el LCP).
     width: 720,
     height: 720,
-    badgeLine1: 'SE PONE EN',
-    badgeLine2: '3 SEGUNDOS',
+    // No "X EN 3 SEGUNDOS" como el parasol y el llavero (y el título ya lo
+    // dice): el anclaje al cinturón es lo que no tiene ningún otro.
+    badgeLine1: 'ANCLADO AL',
+    badgeLine2: 'CINTURÓN',
   },
   heroSubHighlights: ['cinturón de seguridad', 'acero de 5 mm'],
   sectionCopy: {
@@ -328,12 +256,6 @@ export const TRABAVOLANTE = {
       accentWord: 'MÁS FÁCIL',
       body: 'Nadie quiere perder tiempo en la calle. Un auto con el volante trabado a la vista es un auto que obliga a cortar acero frente a todos: el que roba lo ve, pasa de largo y busca otro. El Titan PRO no espera a que intenten: los desanima antes.',
     },
-    {
-      eyebrow: 'La alternativa',
-      headline: '¿TODAVÍA USÁS EL BASTÓN?',
-      accentWord: 'EL BASTÓN?',
-      body: 'El trabavolante de barra pesa, ocupa todo el baúl, raya el volante y lleva su tiempo ponerlo. Termina pasando lo de siempre: queda tirado atrás y no lo usás. El Titan PRO se enrolla, entra en la puerta y se pone en tres segundos. El mejor trabavolante es el que usás todas las noches.',
-    },
   ],
   whatsInBox: {
     headline: 'Todo lo que trae la caja',
@@ -347,18 +269,41 @@ export const TRABAVOLANTE = {
       { src: '/trabavolante/whats-in-box/03-cerradura.webp', alt: 'La cerradura anti-taladro de la traba' },
       { src: '/trabavolante/whats-in-box/04-volante-trabado.webp', alt: 'El Titan PRO puesto en el volante' },
     ],
-    testimonial: TRABAVOLANTE_REVIEWS[1],
   },
   reviews: TRABAVOLANTE_REVIEWS,
+  // Sin reseñas todavía: la sección no se muestra. Con las reales, el
+  // promedio y el conteo por estrellas de verdad.
   ratingBreakdown: {
-    average: 4.8,
-    total: TRABAVOLANTE_REVIEWS.length,
+    average: 0,
+    total: 0,
     stars: [
-      { stars: 5, count: 6 },
-      { stars: 4, count: 2 },
+      { stars: 5, count: 0 },
+      { stars: 4, count: 0 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },
+    ],
+  },
+  /**
+   * Comparativa (entre "cómo funciona" y los packs), con la misma tabla que
+   * /llavero-rescate y sin el mapa del auto: acá no importa dónde está cada
+   * cosa. `image` vacía = la columna sale sin figura, hasta tener el recorte
+   * (webp con transparencia, ~320 px de alto, en /trabavolante/comparativa/).
+   */
+  comparison: {
+    title: 'Lo que el bastón y la alarma no hacen.',
+    accent: 'no hacen.',
+    columns: [
+      { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 170, height: 320 },
+      { name: 'Bastón clásico', image: '', width: 0, height: 0 }, // TODO recorte del bastón
+      { name: 'Alarma', image: '', width: 0, height: 0 }, // TODO recorte del control de la alarma
+    ],
+    rows: [
+      { label: 'Traba el volante', values: [true, true, false] },
+      { label: 'Anclado al cinturón', values: [true, false, false] },
+      { label: 'Se pone en segundos', values: [true, false, 'se activa sola'] },
+      { label: 'Entra en la guantera', values: [true, false, 'va instalada'] },
+      { label: 'Sin instalador ni cables', values: [true, true, false] },
     ],
   },
   faq: [
