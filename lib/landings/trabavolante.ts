@@ -273,9 +273,9 @@ export const TRABAVOLANTE = {
     },
     {
       n: 3,
-      title: 'Olvidate',
-      desc: 'El volante ya no gira y el cable no se suelta. Para sacarlo, girás la llave y listo.',
-      video: '/trabavolante/how-to-use/03-olvidate.mp4',
+      title: 'Hasta un chico lo pone',
+      desc: 'Es tan simple que lo pone cualquiera de la familia. El volante ya no gira y, para sacarlo, girás la llave.',
+      video: '/trabavolante/how-to-use/03-hasta-un-chico.mp4',
     },
   ],
   benefits: [
