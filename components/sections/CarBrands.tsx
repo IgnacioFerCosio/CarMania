@@ -13,8 +13,6 @@ import type { LandingConfig } from '@/lib/landings/types';
 export function CarBrands({ config = SOPORTE }: { config?: LandingConfig } = {}) {
   const { carBrands } = config;
   const { carBrandsTitle, carBrandsTitleAccent } = config.sectionCopy;
-  // Duplicamos la lista para que el marquee loopee sin "salto"
-  const items = [...carBrands, ...carBrands];
 
   return (
     <section className="bg-ink-950 py-10 sm:py-12 md:py-16">
@@ -35,15 +33,30 @@ export function CarBrands({ config = SOPORTE }: { config?: LandingConfig } = {})
       </div>
 
       <div className="mt-7 overflow-hidden sm:mt-10 md:mt-12">
-        <div className="marquee-track flex items-center gap-7 sm:gap-12 md:gap-16">
-          {items.map((b, i) => (
-            <BrandItem
-              key={`${b.name}-${i}`}
-              name={b.name}
-              logo={b.logo}
-              w={b.w}
-              h={b.h}
-            />
+        {/* Dos copias idénticas de la lista. La animación arranca en -50%
+            (la segunda copia ya ocupa todo el ancho) y vuelve a 0, donde la
+            primera queda en el mismo lugar: el salto no se ve. El espacio
+            entre marcas va como `pr` de cada copia y no como `gap` del track,
+            para que la mitad exacta del track sea una copia entera. */}
+        {/* 48 s y no los 30 s de `.marquee-track`: con 19 marcas la tira es
+            ~1,6 veces más larga y a 30 s pasaba demasiado rápido. */}
+        <div className="marquee-track flex [animation-duration:48s]">
+          {[0, 1].map((copy) => (
+            <div
+              key={copy}
+              aria-hidden={copy === 1 || undefined}
+              className="flex shrink-0 items-center gap-7 pr-7 sm:gap-12 sm:pr-12 md:gap-16 md:pr-16"
+            >
+              {carBrands.map((b) => (
+                <BrandItem
+                  key={b.name}
+                  name={b.name}
+                  logo={b.logo}
+                  w={b.w}
+                  h={b.h}
+                />
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -74,7 +87,13 @@ function BrandItem({
         alt={name}
         width={w}
         height={h}
-        loading="lazy"
+        // Sin `loading="lazy"`: el track tiene overflow oculto y el lazy
+        // pedía cada logo recién al entrar en pantalla, así que la tira
+        // arrancaba vacía y se iba llenando desde la izquierda.
+        // `fetchPriority="low"` hace dos cosas: no le compiten al hero y React
+        // no les mete un <link rel="preload"> en el <head> (lo hace con toda
+        // <img> que no sea lazy, salvo las de prioridad baja).
+        fetchPriority="low"
         decoding="async"
         className="h-7 w-auto shrink-0 opacity-60 [filter:brightness(0)_invert(1)] transition hover:opacity-100 sm:h-9 md:h-10"
       />
