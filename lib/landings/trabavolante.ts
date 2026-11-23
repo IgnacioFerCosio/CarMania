@@ -88,7 +88,7 @@ const TRABAVOLANTE_REVIEWS: readonly Review[] = [
     name: 'Matías S.',
     location: 'Tucumán',
     stars: 5,
-    text: 'Recién recibido y ya lo probé. Viene con dos llaves de muy buena calidad y se nota que el cable está bien reforzado. Súper recomendable, cumplió con todo lo que prometen.',
+    text: 'Recién recibido y ya lo probé. Viene con tres llaves de muy buena calidad y se nota que el cable está bien reforzado. Súper recomendable, cumplió con todo lo que prometen.',
     date: '12 Nov 2026',
     verified: true,
     image: '/trabavolante/reviews/05-con-las-llaves.webp',
