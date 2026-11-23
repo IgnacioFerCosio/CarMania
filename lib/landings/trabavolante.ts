@@ -236,11 +236,11 @@ export const TRABAVOLANTE = {
     kind: 'video',
     src: '/trabavolante/hero/trabavolante-hero.mp4',
     poster: '/trabavolante/hero/trabavolante-hero-poster.webp',
-    // 720×720 H.264 sin audio, CRF 31, ~0,9 MB. Sale del video "Ponelo.
-    // Trabalo. Olvidate." de TitanLock recortado arriba de la franja con su
-    // logo. El poster es el primer frame del video ya encodeado (el LCP).
-    width: 720,
-    height: 720,
+    // 540×540 H.264 sin audio, CRF 30, ~620 KB (como el del parasol). Sale
+    // del video "Ponelo. Trabalo. Olvidate." de TitanLock recortado arriba de
+    // la franja con su logo. El poster es su primer frame (el LCP).
+    width: 540,
+    height: 540,
     // No "X EN 3 SEGUNDOS" como el parasol y el llavero (y el título ya lo
     // dice): el video muestra cómo intentan cortarlo y perforarlo.
     badgeLine1: 'ANTICORTE Y',

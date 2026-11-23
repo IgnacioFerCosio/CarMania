@@ -64,18 +64,25 @@ export function TimeRace({ data }: { data: TimeRaceData }) {
   useEffect(() => {
     const el = ref.current;
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    // 10 veces por segundo alcanza: cada paso dura medio segundo o más.
+    // Sólo se re-renderiza cuando algo cambia de paso (~15 veces por ciclo),
+    // no con un intervalo fijo: con 10 renders por segundo el componente
+    // se comía el hilo principal mientras estaba en pantalla.
+    const marks = [...new Set([0, ...o.at, o.end, ...x.at, x.end])].sort((a, b) => a - b);
     let timer = 0;
-    let t0 = 0;
+    let running = false;
+    const tick = (n: number) => {
+      setT(marks[n]);
+      const next = n + 1 < marks.length ? marks[n + 1] - marks[n] : cycle - marks[n];
+      timer = window.setTimeout(() => tick(n + 1 < marks.length ? n + 1 : 0), next);
+    };
     const start = () => {
-      if (timer) return;
-      t0 = performance.now();
-      setT(0);
-      timer = window.setInterval(() => setT((performance.now() - t0) % cycle), 100);
+      if (running) return;
+      running = true;
+      tick(0);
     };
     const stop = () => {
-      window.clearInterval(timer);
-      timer = 0;
+      running = false;
+      window.clearTimeout(timer);
     };
     if (!('IntersectionObserver' in window)) {
       start();
