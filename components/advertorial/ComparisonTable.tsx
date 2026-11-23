@@ -16,7 +16,8 @@
  * celdas llevan fila y columna explícitas (si no, la grilla las acomoda mal) y
  * las filas siguen siendo una tabla normal para un lector de pantalla (ARIA).
  *
- * Entra en 375 px sin scroll horizontal: 1 columna de nombres + 3 de productos.
+ * Entra en 375 px sin scroll horizontal: 1 columna de nombres + 2 o 3 de
+ * productos. Con 2 (/trabavolante), cada producto tiene más lugar.
  */
 import Image from 'next/image';
 import type { AdvertorialData } from '@/lib/landings/types';
@@ -84,7 +85,7 @@ export function ComparisonTable({
               aria-label={columns.map((c) => c.name).join(', ')}
               className="relative grid [--fig-h:112px] sm:[--fig-h:140px]"
               style={{
-                gridTemplateColumns: 'minmax(0,1.25fr) repeat(3, minmax(0,1fr))',
+                gridTemplateColumns: `minmax(0,1.25fr) repeat(${columns.length}, minmax(0,1fr))`,
                 gridTemplateRows: `var(--fig-h) repeat(${lastRow - 1}, auto)`,
               }}
             >

@@ -62,7 +62,7 @@ que se ve (en Cloudflare `/_next/image` devuelve el original).
 | `whats-in-box/04-volante-trabado.webp` | Cuadro del video con el trabavolante puesto. | Sí si cambia el video. |
 | `reviews/01…08.webp` | Fotos de las reseñas (ver §2). | Si llegan fotos sin el logo de TitanLock. |
 | `comparativa/titan-pro.webp` | El recorte del producto girado, para la tabla. 170×320, transparente. | Ídem bundles. |
-| `comparativa/baston.webp`, `comparativa/alarma.webp` | **No existen**: las columnas salen sin figura (`image: ''`). | Generar (prompts en §6). |
+| `comparativa/baston.webp` | **No existe**: la columna "Trabas comunes" sale sin figura (`image: ''`). | Generar (prompt en §6). |
 
 **Lo que no se usó** (está en la carpeta, pero tiene texto en inglés, el
 logo de TitanLock en grande, caras de terceros o claims sin fuente): las
@@ -129,11 +129,10 @@ de ahí `whats-in-box/01-producto.webp` (1024²) y `bundles/TrabavolanteX1/X2/X3
 
 > Overhead flat lay on a matte black surface: a black product box with a thin red (#D70707) accent line and no visible text, the steering wheel lock (black padded cable loop with orange rings and a black seatbelt-tongue lock body, no logos) coiled next to it, three silver keys fanned out, and a small folded instruction leaflet. Even soft studio lighting, clean minimal arrangement, square 1:1, photorealistic, no text or logos.
 
-**Tabla comparativa** — recortes con fondo transparente, verticales (~320 px de alto):
+**Tabla comparativa** — recorte con fondo transparente, vertical (~320 px de alto):
 
 > `comparativa/baston.webp`: A classic red and black steering wheel club lock bar (long telescopic bar with two hooks), product cutout on a transparent background, standing diagonally, studio lighting, photorealistic, no brand, no text.
 
-> `comparativa/alarma.webp`: A generic black car alarm remote key fob with two buttons, product cutout on a transparent background, slightly angled, studio lighting, photorealistic, no brand, no text.
 
 **Cuadros de características** (`use-cases/*.webp`, 600×900, vertical 2:3, interior de auto oscuro, luz dramática lateral, sin texto ni logos):
 

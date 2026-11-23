@@ -375,14 +375,16 @@ export type AdvertorialData = {
   };
   comparison: SectionTitle & {
     /**
-     * Las tres columnas: [la nuestra, el martillo, el apoyacabezas]. `image` es
-     * el recorte sin fondo (webp con transparencia) que se para sobre la tabla.
+     * Las columnas, la nuestra primero: dos (/trabavolante: nosotros vs. los
+     * demás) o tres (/llavero-rescate: llavero, martillo y apoyacabezas).
+     * `image` es el recorte sin fondo (webp con transparencia) que se para
+     * sobre la tabla; vacía, la columna sale sin figura.
      */
-    columns: readonly [ComparisonColumn, ComparisonColumn, ComparisonColumn];
+    columns: readonly [ComparisonColumn, ComparisonColumn, ...ComparisonColumn[]];
     /** true = ✓, false = ✗, string = texto tal cual ("pocos"). Mismo orden que `columns`. */
     rows: readonly {
       label: string;
-      values: readonly [boolean | string, boolean | string, boolean | string];
+      values: readonly [boolean | string, boolean | string, ...(boolean | string)[]];
     }[];
     /**
      * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre

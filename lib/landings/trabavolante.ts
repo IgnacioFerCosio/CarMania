@@ -224,9 +224,9 @@ export const TRABAVOLANTE = {
     width: 720,
     height: 720,
     // No "X EN 3 SEGUNDOS" como el parasol y el llavero (y el título ya lo
-    // dice): el anclaje al cinturón es lo que no tiene ningún otro.
-    badgeLine1: 'ANCLADO AL',
-    badgeLine2: 'CINTURÓN',
+    // dice): el video muestra cómo intentan cortarlo, así que va la dureza.
+    badgeLine1: 'A PRUEBA DE',
+    badgeLine2: 'CORTAFRÍOS',
   },
   heroSubHighlights: ['cinturón de seguridad', 'acero de 5 mm'],
   sectionCopy: {
@@ -360,25 +360,28 @@ export const TRABAVOLANTE = {
     ],
   },
   /**
-   * Comparativa (entre "cómo funciona" y los packs), con la misma tabla que
-   * /llavero-rescate y sin el mapa del auto: acá no importa dónde está cada
-   * cosa. `image` vacía = la columna sale sin figura, hasta tener el recorte
-   * (webp con transparencia, ~320 px de alto, en /trabavolante/comparativa/).
+   * Comparativa (entre "cómo funciona" y los packs): Titan PRO contra las
+   * trabas de siempre, sobre la base de la tabla de TitanLock (sin su
+   * "garantía de por vida" ni el "grado militar"). Misma tabla que
+   * /llavero-rescate, con 2 columnas y sin el mapa del auto. `image` vacía =
+   * la columna sale sin figura, hasta tener el recorte (webp con
+   * transparencia, ~320 px de alto, en /trabavolante/comparativa/).
    */
   comparison: {
-    title: 'Lo que el bastón y la alarma no hacen.',
-    accent: 'no hacen.',
+    title: 'No es un trabavolante más.',
+    accent: 'más.',
     columns: [
       { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 170, height: 320 },
-      { name: 'Bastón clásico', image: '', width: 0, height: 0 }, // TODO recorte del bastón
-      { name: 'Alarma', image: '', width: 0, height: 0 }, // TODO recorte del control de la alarma
+      { name: 'Trabas comunes', image: '', width: 0, height: 0 }, // TODO recorte del bastón
     ],
     rows: [
-      { label: 'Traba el volante', values: [true, true, false] },
-      { label: 'Anclado al cinturón', values: [true, false, false] },
-      { label: 'Se pone en segundos', values: [true, false, 'se activa sola'] },
-      { label: 'Entra en la guantera', values: [true, false, 'va instalada'] },
-      { label: 'Sin instalador ni cables', values: [true, true, false] },
+      { label: 'Lo ponés en segundos', values: [true, false] },
+      { label: 'Entra en la guantera', values: [true, false] },
+      // TODO VERIFICAR — 5 mm sale de la ficha de TitanLock.
+      { label: 'Cable de acero de 5 mm', values: [true, false] },
+      { label: 'Aguanta sierra, cortafríos y tirones', values: [true, false] },
+      { label: 'Se ancla al cinturón', values: [true, false] },
+      { label: 'No raya el volante', values: [true, false] },
     ],
   },
   faq: [
