@@ -344,7 +344,7 @@ export type ComparisonColumn = { name: string; image: string; width: number; hei
  * cada uno, paso a paso, en loop. Lo nuestro muestra su tiempo; lo otro, sólo
  * los pasos (sin inventar un tiempo que no medimos).
  *
- * `icon` es uno de los dibujos de `TimeRace.tsx`; `weight` alarga ese paso
+ * `icon` es una de las escenas de `TimeRace.tsx`; `weight` alarga ese paso
  * (1 = normal), para los que llevan "un buen rato".
  */
 export type TimeRaceStep = { label: string; icon: string; weight?: number; bad?: boolean };

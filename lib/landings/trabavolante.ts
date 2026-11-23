@@ -409,7 +409,7 @@ export const TRABAVOLANTE = {
         { label: 'Vas hasta atrás', icon: 'walk' },
         { label: 'Abrís el baúl', icon: 'trunk' },
         { label: 'Sacás el bastón', icon: 'bar' },
-        { label: 'Volvés al asiento', icon: 'walk' },
+        { label: 'Volvés al asiento', icon: 'walkback' },
         { label: 'Lo armás (un buen rato)', icon: 'wrench', weight: 2.5 },
         { label: 'Lo calzás en el volante', icon: 'wheel' },
         { label: 'Hacés fuerza para trabarlo', icon: 'force', weight: 1.5 },
