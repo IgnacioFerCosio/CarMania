@@ -355,7 +355,14 @@ export const TRABAVOLANTE = {
     body: ' El Titan PRO se enrolla y entra en la guantera, así lo usás cada vez que te bajás y no sólo cuando te acordás.',
     note: 'Sin instalación: no se atornilla ni se pega nada al auto.',
     // Las instrucciones vienen impresas en la caja, no en un folleto aparte.
-    items: ['1 Trabavolante Titan PRO™', '3 llaves de seguridad', 'Instrucciones impresas en la caja'],
+    // La funda viene puesta en el cable (no es una pieza suelta): se dice "ya
+    // colocada" para no prometer un accesorio aparte.
+    items: [
+      '1 Trabavolante Titan PRO™',
+      'Funda acolchada antirrayas (ya colocada)',
+      '3 llaves de seguridad',
+      'Instrucciones impresas en la caja',
+    ],
     // La de las terminaciones (Rodrigo): habla de la funda y el volante, al
     // lado de lo que trae la caja.
     testimonial: TRABAVOLANTE_REVIEWS[2],
