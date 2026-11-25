@@ -20,8 +20,6 @@
  *     disponible") en vez de habilitarse contra un merchandise inexistente.
  *     El `productHandle` es el que debería salir del título; confirmalo al
  *     crear el producto (al parasol Shopify le dejó el ™ en el handle).
- *   - Reseñas / `ratingBreakdown`: inventadas (ver el aviso de
- *     `TRABAVOLANTE_REVIEWS`).
  *   - Imágenes y videos: salen del material de TitanLock, con el logo de
  *     ellos grabado en la carcasa. Ver el checklist de assets.
  *
@@ -34,96 +32,95 @@
  * seguridad inflada es exposición directa bajo la ley de defensa del
  * consumidor. Lo que hay que confirmar está marcado `// TODO VERIFICAR`.
  */
-import type { Bundle, LandingConfig, UpsellTier } from './types';
+import type { Bundle, LandingConfig, Review, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
 
 /**
- * ⚠️ RESEÑAS PLACEHOLDER — INVENTADAS.
+ * Reseñas del Titan PRO (las pasó Ignacio el 2026-11-23, con sus fotos).
  *
- * El Titan PRO todavía no se vendió: estos textos los escribí yo para que la
- * sección renderice completa en desarrollo.
+ * Orden: primero las fotos con gente y el producto a la vista (también son las
+ * del carrusel del hero), después las del producto puesto y al final los
+ * primeros planos. Fotos en /public/trabavolante/reviews/, 4:3 a 800×600
+ * (las que llegaron más chicas quedaron en su tamaño original).
  *
- * ⚠️ Y LAS FOTOS SON DE CLIENTES DE TITANLOCK (UK), no nuestros: salen de la
- * carpeta `Reviews/` del material del producto. Se eligieron sólo las que no
- * muestran caras. Foto ajena + texto inventado es la peor mezcla posible (ver
- * el aviso de las reseñas del parasol).
- *
- * NO PUBLICAR ASÍ. Antes de sacar `comingSoon`: reseñas reales de clientes
- * nuestros, o sacar la sección. Lo mismo para `ratingBreakdown`.
+ * Mismo formato que las del soporte: apellido abreviado y fecha. Las fechas
+ * (noviembre de 2026) las puse yo, porque no vinieron con las reseñas.
+ * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
  */
-const TRABAVOLANTE_REVIEWS = [
+const TRABAVOLANTE_REVIEWS: readonly Review[] = [
   {
-    name: 'Martín G.',
-    location: 'La Matanza',
+    name: 'Ezequiel V.',
+    location: 'Neuquén',
     stars: 5,
-    text: 'Me robaron el auto anterior en la puerta de casa. Ahora lo pongo todas las noches, tardo literalmente tres segundos. Se ve desde afuera y eso ya es la mitad del trabajo.',
+    text: 'Un golazo para viajar tranquilos en familia. Lo enganchás al cinturón en un toque y queda trabado firme. La verdad que por lo que sale vale totalmente la pena para sumar seguridad.',
+    date: '21 Nov 2026',
+    verified: true,
+    image: '/trabavolante/reviews/01-en-familia.webp',
+  },
+  {
+    name: 'Gustavo F.',
+    location: 'Entre Ríos',
+    stars: 5,
+    text: 'Muy contentos con el producto. Es liviano para manipular pero súper resistente, ideal para tener siempre a mano en el auto sin andar renegando con fierros pesados. Excelente atención y envío.',
+    date: '19 Nov 2026',
+    verified: true,
+    image: '/trabavolante/reviews/02-en-pareja.webp',
+  },
+  {
+    name: 'Rodrigo B.',
+    location: 'CABA',
+    stars: 5,
+    text: 'Impecable terminación. Combinó bárbaro con el interior claro y no raya absolutamente nada gracias al recubrimiento de tela. Es mucho más cómodo y disuasivo que las trabas rígidas tradicionales.',
+    date: '17 Nov 2026',
+    verified: true,
+    image: '/trabavolante/reviews/03-volante-claro.webp',
+  },
+  {
+    name: 'Facundo P.',
+    location: 'Buenos Aires',
+    stars: 5,
+    text: 'Excelente calidad, súper robusto. Tenía miedo de que me marque el volante de cuero pero la funda protectora que trae es impecable. Se coloca en dos segundos en el anclaje del cinturón y queda re firme.',
+    date: '14 Nov 2026',
+    verified: true,
+    image: '/trabavolante/reviews/04-puesto-en-el-volante.webp',
+  },
+  {
+    name: 'Matías S.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Recién recibido y ya lo probé. Viene con tres llaves de muy buena calidad y se nota que el cable está bien reforzado. Súper recomendable, cumplió con todo lo que prometen.',
     date: '12 Nov 2026',
     verified: true,
-    image: '/trabavolante/reviews/01.webp',
+    image: '/trabavolante/reviews/05-con-las-llaves.webp',
   },
   {
-    name: 'Carla P.',
-    location: 'Rosario',
+    name: 'Nicolás I.',
+    location: 'Santa Fe',
     stars: 5,
-    text: 'El bastón que tenía era enorme y terminaba tirado en el baúl sin usar. Este lo enrollo y va en la puerta. Lo uso siempre, que era el punto.',
-    date: '08 Nov 2026',
+    text: 'Calzó perfecto en mi auto. Me gustó mucho que no ocupa nada de espacio cuando lo guardás abajo del asiento y al ponerlo queda bien tenso entre el volante y el cinturón. Llegó rápido.',
+    date: '09 Nov 2026',
     verified: true,
-    image: '/trabavolante/reviews/02.webp',
+    image: '/trabavolante/reviews/06-volante-y-cinturon.webp',
   },
   {
-    name: 'Diego R.',
+    name: 'Hernán C.',
+    location: 'Mendoza',
+    stars: 4,
+    text: 'Muy práctico para usar de noche o cuando bajás rápido a hacer un trámite. Al principio le tenés que agarrar la mano al ángulo para pasarlo por el volante, pero después lo ponés sin mirar. Buena relación precio-calidad.',
+    date: '06 Nov 2026',
+    verified: true,
+    image: '/trabavolante/reviews/07-de-noche.webp',
+  },
+  {
+    name: 'Marcelo G.',
     location: 'Córdoba',
     stars: 5,
-    text: 'Lo dejo puesto cuando estaciono en el centro. Al principio dudé de que agarrara en el cinturón, pero hace click igual que la hebilla y no se suelta.',
+    text: 'Muy conforme con la compra. El cable de acero es re grueso y la cerradura se siente pesada y segura. Lo uso todos los días cuando dejo el auto en la calle y me da mucha más tranquilidad.',
     date: '03 Nov 2026',
     verified: true,
-    image: '/trabavolante/reviews/03.webp',
+    image: '/trabavolante/reviews/08-en-la-mano.webp',
   },
-  {
-    name: 'Florencia M.',
-    location: 'Mar del Plata',
-    stars: 4,
-    text: 'Cumple. El volante queda trabado de verdad. Le saco una estrella porque en mi auto tuve que probar por qué parte del volante pasarlo para que quede bien justo.',
-    date: '29 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/04.webp',
-  },
-  {
-    name: 'Pablo S.',
-    location: 'Quilmes',
-    stars: 5,
-    text: 'Tengo el volante forrado en cuero y tenía miedo de que lo marcara. Nada: el cable tiene una funda acolchada y no deja ni una marca.',
-    date: '24 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/05.webp',
-  },
-  {
-    name: 'Luciana F.',
-    location: 'Mendoza',
-    stars: 5,
-    text: 'Lo compré para mi viejo, que deja el auto en la calle. Es fácil de poner incluso para él. Viene con tres llaves, así que una quedó en casa de repuesto.',
-    date: '19 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/06.webp',
-  },
-  {
-    name: 'Gastón V.',
-    location: 'Tigre',
-    stars: 5,
-    text: 'Lo uso en la camioneta del laburo. Me da tranquilidad dejarla en obra todo el día. Se pone y se saca en un toque.',
-    date: '15 Oct 2026',
-    verified: true,
-    image: '/trabavolante/reviews/07.webp',
-  },
-  {
-    name: 'Romina A.',
-    location: 'La Plata',
-    stars: 4,
-    text: 'Muy bueno y se nota firme. La primera vez me costó encontrar el lado de la llave para sacarlo, después ya sale solo.',
-    date: '10 Oct 2026',
-    verified: true,
-  },
-] as const;
+];
 
 const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
   {
@@ -135,7 +132,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 1,
     unitsLabel: '1 unidad',
     badge: null,
-    bonus: '+ 3 llaves incluidas',
+    bonus: '+ 3 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '1 Trabavolante Titan PRO™' },
+      { icon: 'key', text: '3 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 39990, // TODO PRECIO REAL
@@ -151,7 +154,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 2,
     unitsLabel: '2 unidades · 2ª al 50%',
     badge: 'MÁS ELEGIDO',
-    bonus: '+ 3 llaves por unidad',
+    bonus: '+ 6 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '2 Trabavolantes Titan PRO™' },
+      { icon: 'key', text: '6 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: true,
     fallbackPrice: 59990, // TODO PRECIO REAL — 1,5 × el x1 (redondeado)
@@ -167,7 +176,13 @@ const TRABAVOLANTE_BUNDLES: readonly Bundle[] = [
     quantity: 3,
     unitsLabel: '3 unidades · 3ª GRATIS',
     badge: '3X2',
-    bonus: '+ 3 llaves por unidad',
+    bonus: '+ 9 llaves de seguridad',
+    // Lo que se ve en la card: una línea por pieza con su ícono. Las llaves
+    // van en total (3 por unidad), no "por unidad".
+    includes: [
+      { icon: 'titan', text: '3 Trabavolantes Titan PRO™' },
+      { icon: 'key', text: '9 llaves de seguridad' },
+    ],
     freeShipping: true,
     recommended: false,
     fallbackPrice: 79990, // TODO PRECIO REAL — 2 × el x1 (redondeado)
@@ -191,10 +206,12 @@ export const TRABAVOLANTE = {
   brand: {
     tagline: 'Trabavolante Titan PRO™',
     productHandle: 'trabavolante-titan-pro', // TODO SHOPIFY — confirmar al crear el producto
-    socialProofCount: 'Miles', // TODO: número real cuando haya ventas
-    socialProofLabel: 'de autos protegidos',
-    averageRating: 4.8,
-    reviewsCount: TRABAVOLANTE_REVIEWS.length, // TODO: reseñas reales
+    // Estrellas y clientes de arriba de los packs: los de la marca (los del
+    // soporte), como en /llavero-rescate. El producto todavía no tiene los suyos.
+    socialProofCount: SOPORTE.brand.socialProofCount,
+    socialProofLabel: SOPORTE.brand.socialProofLabel,
+    averageRating: SOPORTE.brand.averageRating,
+    reviewsCount: TRABAVOLANTE_REVIEWS.length,
   },
   // Espejo del bundle x1.
   fallbackPricing: {
@@ -219,13 +236,15 @@ export const TRABAVOLANTE = {
     kind: 'video',
     src: '/trabavolante/hero/trabavolante-hero.mp4',
     poster: '/trabavolante/hero/trabavolante-hero-poster.webp',
-    // 720×720 H.264 sin audio, CRF 31, ~0,9 MB. Sale del video "Ponelo.
-    // Trabalo. Olvidate." de TitanLock recortado arriba de la franja con su
-    // logo. El poster es el primer frame del video ya encodeado (el LCP).
-    width: 720,
-    height: 720,
-    badgeLine1: 'SE PONE EN',
-    badgeLine2: '3 SEGUNDOS',
+    // 540×540 H.264 sin audio, CRF 30, ~620 KB (como el del parasol). Sale
+    // del video "Ponelo. Trabalo. Olvidate." de TitanLock recortado arriba de
+    // la franja con su logo. El poster es su primer frame (el LCP).
+    width: 540,
+    height: 540,
+    // No "X EN 3 SEGUNDOS" como el parasol y el llavero (y el título ya lo
+    // dice): el video muestra cómo intentan cortarlo y perforarlo.
+    badgeLine1: 'ANTICORTE Y',
+    badgeLine2: 'ANTITALADRO',
   },
   heroSubHighlights: ['cinturón de seguridad', 'acero de 5 mm'],
   sectionCopy: {
@@ -250,12 +269,12 @@ export const TRABAVOLANTE = {
    * accent). Todos salen del material de TitanLock, sin su franja de logo.
    */
   useCases: [
-    { label: 'ACERO DE 5 MM', image: '/trabavolante/use-cases/acero.webp', alt: 'Un cortafríos contra el cable de acero del trabavolante' },
+    { label: 'ACERO REFORZADO', image: '/trabavolante/use-cases/acero.webp', alt: 'El cable de acero trenzado del trabavolante, cortado, con la funda acolchada' },
     { label: 'ANCLA AL CINTURÓN', image: '/trabavolante/use-cases/cinturon.webp', alt: 'La traba enganchada en el anclaje del cinturón de seguridad' },
-    { label: 'VOLANTE TRABADO', image: '/trabavolante/use-cases/traba.webp', alt: 'Tirando del trabavolante puesto: no se suelta' },
-    { label: 'LISTO EN SEGUNDOS', image: '/trabavolante/use-cases/segundos.webp', alt: 'El trabavolante envuelto en el volante de un auto' },
-    { label: 'CERO RAYONES', image: '/trabavolante/use-cases/volante.webp', alt: 'La funda acolchada del cable sobre el volante, sin marcarlo' },
-    { label: '3 LLAVES', image: '/trabavolante/use-cases/llaves.webp', alt: 'Una de las llaves del trabavolante en la mano' },
+    { label: 'VOLANTE INMÓVIL', image: '/trabavolante/use-cases/traba.webp', alt: 'Un conductor intenta girar el volante y el cable lo frena' },
+    { label: 'LISTO EN SEGUNDOS', image: '/trabavolante/use-cases/segundos.webp', alt: 'Una mano envolviendo el trabavolante en el volante' },
+    { label: 'CERO RAYONES', image: '/trabavolante/use-cases/volante.webp', alt: 'La funda acolchada del cable sobre un volante de cuero' },
+    { label: 'TRES LLAVES', image: '/trabavolante/use-cases/llaves.webp', alt: 'Las tres llaves del trabavolante en la palma de la mano' },
   ],
   steps: [
     {
@@ -272,9 +291,9 @@ export const TRABAVOLANTE = {
     },
     {
       n: 3,
-      title: 'Olvidate',
-      desc: 'El volante ya no gira y el cable no se suelta. Para sacarlo, girás la llave y listo.',
-      video: '/trabavolante/how-to-use/03-olvidate.mp4',
+      title: 'Así de simple',
+      desc: 'Lo pone cualquiera de la familia, hasta un chico. El volante ya no gira y, para sacarlo, girás la llave.',
+      video: '/trabavolante/how-to-use/03-asi-de-simple.mp4',
     },
   ],
   benefits: [
@@ -328,38 +347,104 @@ export const TRABAVOLANTE = {
       accentWord: 'MÁS FÁCIL',
       body: 'Nadie quiere perder tiempo en la calle. Un auto con el volante trabado a la vista es un auto que obliga a cortar acero frente a todos: el que roba lo ve, pasa de largo y busca otro. El Titan PRO no espera a que intenten: los desanima antes.',
     },
-    {
-      eyebrow: 'La alternativa',
-      headline: '¿TODAVÍA USÁS EL BASTÓN?',
-      accentWord: 'EL BASTÓN?',
-      body: 'El trabavolante de barra pesa, ocupa todo el baúl, raya el volante y lleva su tiempo ponerlo. Termina pasando lo de siempre: queda tirado atrás y no lo usás. El Titan PRO se enrolla, entra en la puerta y se pone en tres segundos. El mejor trabavolante es el que usás todas las noches.',
-    },
   ],
   whatsInBox: {
-    headline: 'Todo lo que trae la caja',
+    // La lista ya va bajo un "¿Qué incluye?" fijo del componente: el título no lo repite.
+    headline: 'Simple y compacto',
     lead: 'Chau al bastón de un metro.',
     body: ' El Titan PRO se enrolla y entra en la guantera, así lo usás cada vez que te bajás y no sólo cuando te acordás.',
     note: 'Sin instalación: no se atornilla ni se pega nada al auto.',
-    items: ['1 Trabavolante Titan PRO™', '3 llaves de seguridad', 'Manual de uso'],
-    gallery: [
-      { src: '/trabavolante/whats-in-box/01-producto.webp', alt: 'Trabavolante Titan PRO' },
-      { src: '/trabavolante/whats-in-box/02-en-la-mano.webp', alt: 'La traba del Titan PRO en la mano, adentro de un auto' },
-      { src: '/trabavolante/whats-in-box/03-cerradura.webp', alt: 'La cerradura anti-taladro de la traba' },
-      { src: '/trabavolante/whats-in-box/04-volante-trabado.webp', alt: 'El Titan PRO puesto en el volante' },
+    // Las instrucciones vienen impresas en la caja, no en un folleto aparte.
+    // La funda viene puesta en el cable (no es una pieza suelta): se dice "ya
+    // colocada" para no prometer un accesorio aparte.
+    items: [
+      '1 Trabavolante Titan PRO™',
+      'Funda acolchada antirrayas (ya colocada)',
+      '3 llaves de seguridad',
+      'Instrucciones impresas en la caja',
     ],
-    testimonial: TRABAVOLANTE_REVIEWS[1],
+    // La de las terminaciones (Rodrigo): habla de la funda y el volante, al
+    // lado de lo que trae la caja.
+    testimonial: TRABAVOLANTE_REVIEWS[2],
+    // Una sola foto por ahora (el carrusel esconde flechas y puntos solo).
+    gallery: [
+      { src: '/trabavolante/whats-in-box/que-incluye.webp', alt: 'La caja, el Trabavolante Titan PRO y sus tres llaves' },
+    ],
   },
   reviews: TRABAVOLANTE_REVIEWS,
+  // 7 de 5 estrellas y 1 de 4.
   ratingBreakdown: {
-    average: 4.8,
+    average: 4.88, // 39 / 8
     total: TRABAVOLANTE_REVIEWS.length,
     stars: [
-      { stars: 5, count: 6 },
-      { stars: 4, count: 2 },
+      { stars: 5, count: 7 },
+      { stars: 4, count: 1 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },
     ],
+  },
+  /**
+   * Comparativa (entre "cómo funciona" y los packs): Titan PRO contra las
+   * trabas de siempre, sobre la base de la tabla de TitanLock (sin su
+   * "garantía de por vida" ni el "grado militar"). Misma tabla que
+   * /llavero-rescate, con 2 columnas y sin el mapa del auto. `image` vacía =
+   * la columna sale sin figura, hasta tener el recorte (webp con
+   * transparencia, ~320 px de alto, en /trabavolante/comparativa/).
+   */
+  comparison: {
+    title: 'No es un trabavolante más.',
+    accent: 'más.',
+    columns: [
+      { name: 'Titan PRO™', image: '/trabavolante/comparativa/titan-pro.webp', width: 235, height: 420 },
+      { name: 'Trabas comunes', image: '/trabavolante/comparativa/trabas-comunes.webp', width: 336, height: 378 },
+    ],
+    rows: [
+      { label: 'Lo ponés en segundos', values: [true, false] },
+      { label: 'Entra en la guantera', values: [true, false] },
+      // TODO VERIFICAR — 5 mm sale de la ficha de TitanLock.
+      { label: 'Cable de acero de 5 mm', values: [true, false] },
+      { label: 'Aguanta sierra, cortafríos y tirones', values: [true, false] },
+      { label: 'Se ancla al cinturón', values: [true, false] },
+      { label: 'No raya el volante', values: [true, false] },
+    ],
+  },
+  /**
+   * Debajo de la comparativa: cuánto lleva ponerlo. El "3 segundos" es la
+   * promesa del título; la traba común va por pasos y sin tiempo, porque no
+   * lo medimos.
+   */
+  timeRace: {
+    eyebrow: 'Cada vez que te bajás',
+    title: 'Lo que tardás en trabar el auto',
+    accent: 'trabar el auto',
+    ours: {
+      name: 'Titan PRO™',
+      time: '3 segundos',
+      doneLabel: 'Y ya te fuiste',
+      steps: [
+        { label: 'Envolvés el volante', icon: 'wrap' },
+        { label: 'Enganchás el cinturón', icon: 'buckle' },
+        { label: 'Listo', icon: 'lock' },
+      ],
+    },
+    other: {
+      name: 'Traba común',
+      doneLabel: 'Y ni te cuento para sacarlo',
+      steps: [
+        { label: 'Te bajás del auto', icon: 'door' },
+        { label: 'Vas hasta atrás', icon: 'walk' },
+        { label: 'Abrís el baúl', icon: 'trunk' },
+        { label: 'Sacás el bastón', icon: 'bar' },
+        { label: 'Volvés al asiento', icon: 'walkback' },
+        { label: 'Lo armás (un buen rato)', icon: 'wrench', weight: 2.5 },
+        { label: 'Lo calzás en el volante', icon: 'wheel' },
+        { label: 'Hacés fuerza para trabarlo', icon: 'force', weight: 1.5 },
+        { label: 'Le marca el volante', icon: 'alert', bad: true },
+      ],
+    },
+    note: 'Por eso el bastón termina en el baúl. El mejor trabavolante es el que usás todas las noches.',
+    cta: { label: 'Quiero el mío', href: '#pricing' },
   },
   faq: [
     {

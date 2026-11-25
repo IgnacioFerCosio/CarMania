@@ -31,7 +31,7 @@ export type Bundle = {
    * Si está, `Pricing` lo muestra en lugar de `unitsLabel` + `bonus`
    * (`/llavero-rescate`); sin esto, las cards son las de siempre.
    */
-  includes?: readonly { icon: 'keychain' | 'glass' | 'mount'; text: string }[];
+  includes?: readonly { icon: 'keychain' | 'glass' | 'mount' | 'titan' | 'key'; text: string }[];
   freeShipping: boolean;
   recommended: boolean;
   fallbackPrice: number;
@@ -259,6 +259,8 @@ export type LandingConfig = {
   videoShowcase?: VideoShowcaseData;
   /** Tabla comparativa (`ComparisonTable`, la del llavero). Opcional. */
   comparison?: AdvertorialData['comparison'];
+  /** Animación de tiempos debajo de la comparativa (/trabavolante). */
+  timeRace?: TimeRace;
   ratingBreakdown: {
     average: number;
     total: number;
@@ -337,6 +339,23 @@ export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 
 export type ComparisonColumn = { name: string; image: string; width: number; height: number };
 
+/**
+ * "Carrera" animada debajo de la comparativa (/trabavolante): el camino de
+ * cada uno, paso a paso, en loop. Lo nuestro muestra su tiempo; lo otro, sólo
+ * los pasos (sin inventar un tiempo que no medimos).
+ *
+ * `icon` es una de las escenas de `TimeRace.tsx`; `weight` alarga ese paso
+ * (1 = normal), para los que llevan "un buen rato".
+ */
+export type TimeRaceStep = { label: string; icon: string; weight?: number; bad?: boolean };
+export type TimeRace = SectionTitle & {
+  ours: { name: string; time: string; doneLabel: string; steps: readonly TimeRaceStep[] };
+  other: { name: string; doneLabel: string; steps: readonly TimeRaceStep[] };
+  /** Frase de cierre debajo de las columnas. */
+  note: string;
+  cta: { label: string; href: string };
+};
+
 export type AdvertorialData = {
   /** El copy del hero sale de `headlines`, como en las otras landings. */
   hero: { media: MediaSlot };
@@ -375,14 +394,16 @@ export type AdvertorialData = {
   };
   comparison: SectionTitle & {
     /**
-     * Las tres columnas: [la nuestra, el martillo, el apoyacabezas]. `image` es
-     * el recorte sin fondo (webp con transparencia) que se para sobre la tabla.
+     * Las columnas, la nuestra primero: dos (/trabavolante: nosotros vs. los
+     * demás) o tres (/llavero-rescate: llavero, martillo y apoyacabezas).
+     * `image` es el recorte sin fondo (webp con transparencia) que se para
+     * sobre la tabla; vacía, la columna sale sin figura.
      */
-    columns: readonly [ComparisonColumn, ComparisonColumn, ComparisonColumn];
+    columns: readonly [ComparisonColumn, ComparisonColumn, ...ComparisonColumn[]];
     /** true = ✓, false = ✗, string = texto tal cual ("pocos"). Mismo orden que `columns`. */
     rows: readonly {
       label: string;
-      values: readonly [boolean | string, boolean | string, boolean | string];
+      values: readonly [boolean | string, boolean | string, ...(boolean | string)[]];
     }[];
     /**
      * El mapa del auto (CarMap): `distanceLabel` va en la línea punteada entre

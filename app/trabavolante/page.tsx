@@ -5,13 +5,13 @@
  * único que cambia es la config que reciben las secciones. El armado sigue al
  * soplador (producto que todavía no existe en Shopify):
  *   hero → beneficios en cuadros → marcas (es universal) → qué incluye →
- *   "¿todavía usás el bastón?" → cómo funciona → packs → beneficios →
- *   reseñas → garantía → FAQ → CTA final.
+ *   cómo funciona → packs → comparativa → reseñas → garantía → FAQ → CTA final.
  *
- * El `PitchBlock` del bastón va renderizado a propósito (en el parasol están
- * comentados): la comparación con el trabavolante de barra es el ángulo más
- * fuerte de los creativos de TitanLock. El del "auto más fácil" queda en la
- * config, sin renderizar.
+ * La comparativa (vs. las trabas comunes) es la tabla de /llavero-rescate,
+ * sin el mapa del auto: la comparación con el trabavolante de barra es el
+ * ángulo más fuerte de los creativos de TitanLock.
+ *
+ * Las reseñas salen sólo cuando haya reales cargadas en la config.
  *
  * Ojo: los 3 productos todavía no existen en Shopify (productId en ''), así
  * que los botones de compra quedan deshabilitados a propósito. Ver el
@@ -31,9 +31,9 @@ import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { CarBrands } from '@/components/sections/CarBrands';
-import { PitchBlock } from '@/components/sections/PitchBlock';
 import { HowItWorks } from '@/components/sections/HowItWorks';
-import { BenefitsShowcase } from '@/components/sections/BenefitsShowcase';
+import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
+import { TimeRace } from '@/components/sections/TimeRace';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
 import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
@@ -141,10 +141,13 @@ export default async function TrabavolantePage() {
         <CarBrands config={TRABAVOLANTE} />
 
         {/* 4. Qué incluye — carrusel + caja + reseña, como en / */}
-        {TRABAVOLANTE.whatsInBox && <WhatsInBox data={TRABAVOLANTE.whatsInBox} />}
-
-        {/* vs. el trabavolante de barra ("¿Todavía usás el bastón?") */}
-        <PitchBlock data={TRABAVOLANTE.pitchBlocks[1]} />
+        {/* La foto de la reseña va en el círculo de la opinión, como en /llavero-rescate. */}
+        <WhatsInBox
+          data={{
+            ...TRABAVOLANTE.whatsInBox,
+            testimonialPhoto: TRABAVOLANTE.whatsInBox.testimonial?.image,
+          }}
+        />
 
         {/* 5. Cómo funciona (3 videos) */}
         <HowItWorks config={TRABAVOLANTE} />
@@ -152,13 +155,20 @@ export default async function TrabavolantePage() {
         {/* 6. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={TRABAVOLANTE} />
 
-        {/* 7. Specs / beneficios */}
-        <BenefitsShowcase config={TRABAVOLANTE} />
+        {/* 7. Comparativa: Titan PRO vs. trabas comunes */}
+        <ComparisonTable comparison={TRABAVOLANTE.comparison} bg="ink" />
+        {/* Pegada a la tabla (mismo fondo): cuánto lleva poner cada uno, animado */}
+        <TimeRace data={TRABAVOLANTE.timeRace} />
 
-        {/* 8. Reseñas */}
-        <Reviews config={TRABAVOLANTE}>
-          <ReviewsExpandable reviews={TRABAVOLANTE.reviews} collapseAfter={8} />
-        </Reviews>
+        {/* Sin BenefitsShowcase ("Pensado para la calle argentina"): lo que
+            decía ya está en los cuadros, la comparativa y las FAQ. */}
+
+        {/* 8. Reseñas: sólo con reseñas reales cargadas */}
+        {TRABAVOLANTE.reviews.length > 0 && (
+          <Reviews config={TRABAVOLANTE}>
+            <ReviewsExpandable reviews={TRABAVOLANTE.reviews} collapseAfter={8} />
+          </Reviews>
+        )}
 
         {/* 9. Garantía + medios de pago */}
         <div id="trust">

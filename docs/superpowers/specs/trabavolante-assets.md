@@ -29,13 +29,18 @@ más de 2 toneladas", "compatible con el 99 % de los autos", "grado militar",
 las encuestas "98 % / 97 % / 96 %" y "180.000 clientes". Si algún día se
 quieren usar, tiene que ser con un ensayo o una encuesta nuestra.
 
-## 2. Reseñas — NO PUBLICAR ASÍ
+## 2. Reseñas
 
-Las 8 reseñas de la config son **texto inventado**, y 7 llevan **fotos de
-clientes de TitanLock** (de `TITANLOCK/Reviews`, sólo las que no muestran
-caras). Antes de publicar: reseñas reales nuestras o sacar la sección.
-Lo mismo con `ratingBreakdown` (4,8 / 8 reseñas). La reseña del carrusel del
-hero y la de "qué incluye" salen de la misma lista.
+Cargadas el 2026-11-23: 8 reseñas (7 de 5★ y 1 de 4★, promedio 4,88) con las
+fotos de `TITANLOCK/Reviews Landing`, en `public/trabavolante/reviews/`
+(800×600; las que llegaron más chicas, en su tamaño). Mismo formato que las
+del soporte: apellido abreviado, tilde de verificada y fecha. Las fechas
+(3 al 21 de noviembre de 2026) no vinieron con las reseñas. Ojo antes de publicar:
+
+- En 4 fotos se lee **TITANLOCK** en la carcasa (en familia, en pareja, con las
+  llaves y en la mano) y la de "puesto en el volante" es un auto con volante
+  a la derecha, que no se vende en Argentina.
+- La de Matías Sosa dice "viene con **dos** llaves"; la página promete 3.
 
 ## 3. Imágenes y videos — qué hay hoy y qué conviene rehacer
 
@@ -49,13 +54,12 @@ que se ve (en Cloudflare `/_next/image` devuelve el original).
 | `hero/trabavolante-oscuro.webp` | Producto recortado sobre fondo de estudio negro. Card de `/tienda`. 1200². | Conviene un render/foto propio con caja CARMANIA, como `bundles/BundleX1.webp` del soporte. |
 | `bundles/TrabavolanteX1/X2/X3.webp` | El mismo recorte ×1, ×2, ×3 sobre fondo de estudio, sin llaves (las llaves plateadas no se podían separar del fondo). 900². | Igual que arriba: ideal con la caja y las llaves. |
 | `benefits/trabavolante-producto.webp` | Recorte con transparencia, para el bloque de beneficios. | Ídem. |
-| `use-cases/*.webp` (6) | Cuadros de los videos: cortafríos, anclaje al cinturón, tirón, volante, funda, llave. 600×900. | Sí si cambia el video. |
+| `use-cases/*.webp` (6) | Fotos generadas (2026-11-23) con los prompts de §6. 600×900. | No. |
 | `how-to-use/01…03.mp4` | Cortes de los videos: envolver, enganchar, tirar. 640², sin audio. | Ídem. |
-| `whats-in-box/01-producto.webp` | Recorte sobre fondo de estudio. | Ídem bundles. |
-| `whats-in-box/02-en-la-mano.webp` | `infalible.png` sin la franja naranja con el logo. Se lee TITANLOCK grabado en la carcasa. | Sí. |
-| `whats-in-box/03-cerradura.webp` | `llavesCerradura.png` sin el texto ni el círculo. Se lee TITANLOCK. | Sí. |
-| `whats-in-box/04-volante-trabado.webp` | Cuadro del video con el trabavolante puesto. | Sí si cambia el video. |
-| `reviews/01…07.webp` | Fotos de clientes de TitanLock (ver §2). | Sí, obligatorio. |
+| `whats-in-box/que-incluye.webp` | Foto generada (2026-11-23): caja lisa, trabavolante y 3 llaves. Única imagen de "qué incluye" (sin carrusel). | Ponerle el logo CARMANIA a la caja. |
+| `reviews/01…08.webp` | Fotos de las reseñas (ver §2). | Si llegan fotos sin el logo de TitanLock. |
+| `comparativa/titan-pro.webp` | El recorte del producto girado, para la tabla. 170×320, transparente. | Ídem bundles. |
+| `comparativa/baston.webp` | **No existe**: la columna "Trabas comunes" sale sin figura (`image: ''`). | Generar (prompt en §6). |
 
 **Lo que no se usó** (está en la carpeta, pero tiene texto en inglés, el
 logo de TitanLock en grande, caras de terceros o claims sin fuente): las
@@ -104,3 +108,48 @@ Fuente: `ouvra.store/products/titanlock`, `/products/titanlockpro` y la home.
    antes de sumarlo a `CROSS_SELLS` (ver `lib/landings/index.ts`).
 4. `npm test` y, como el gate va a marcar `/tienda` y `/trabavolante`,
    revisar el diff y `npm run gate:capture`.
+
+## 6. Prompts de imágenes (2026-11-23)
+
+Para todos: adjuntar `TITANLOCK.png` como referencia del producto y pedir la
+carcasa **lisa, sin logo ni texto**. Las fundas naranjas son parte del
+producto: se dejan. Fondo y luz como los packs del soporte y del parasol
+(estudio negro, luz cenital suave, un toque de rojo `#D70707` en el borde de
+la luz). Exportar al tamaño indicado y reemplazar con el mismo nombre.
+
+**Imagen principal del producto** — `hero/trabavolante-oscuro.webp` (1200²) y
+de ahí `bundles/TrabavolanteX1/X2/X3.webp` (900², con 1/2/3 unidades):
+
+> Premium product photo of a steering wheel lock: a flexible braided steel cable covered in a thick black padded sleeve with two orange rings, forming a loop, ending in a matte black lock body shaped like a seatbelt tongue, smooth surface with no logo or text. Next to it, three silver keys. Centered on a seamless matte black studio background, soft top light, subtle red (#D70707) rim light on the edges, soft reflection on the floor. Square, 1:1, photorealistic, sharp, no text.
+
+**Qué trae la caja** — `whats-in-box/que-incluye.webp` (1024²; ya generada):
+
+> Overhead flat lay on a matte black surface: a black product box with a thin red (#D70707) accent line and no visible text, the steering wheel lock (black padded cable loop with orange rings and a black seatbelt-tongue lock body, no logos) coiled next to it, three silver keys fanned out, and a small folded instruction leaflet. Even soft studio lighting, clean minimal arrangement, square 1:1, photorealistic, no text or logos.
+
+**Tabla comparativa** — recorte con fondo transparente, vertical (~320 px de alto):
+
+> `comparativa/baston.webp`: A classic red and black steering wheel club lock bar (long telescopic bar with two hooks), product cutout on a transparent background, standing diagonally, studio lighting, photorealistic, no brand, no text.
+
+
+**Cuadros de características** (`use-cases/*.webp`, 600×900, vertical 2:3, interior de auto oscuro, luz dramática lateral, sin texto ni logos):
+
+1. `acero` — ACERO DE 5 MM:
+   > Extreme macro of a braided steel cable inside a black padded sleeve, the cut end showing the twisted steel strands, dark car interior background, dramatic side light with a red (#D70707) rim, vertical 2:3, photorealistic, no text.
+2. `cinturon` — ANCLA AL CINTURÓN:
+   > Close-up of a matte black lock body clicked into a car seatbelt buckle receiver between the front seat and the center console, a black padded cable rising from it, dark interior, soft directional light, vertical 2:3, photorealistic, no logos.
+3. `traba` — VOLANTE TRABADO:
+   > A driver's hand trying to turn a leather steering wheel that is held by a taut black padded cable running down to the seat, tension visible, dark car interior at night, vertical 2:3, photorealistic, no text.
+4. `segundos` — LISTO EN SEGUNDOS:
+   > A hand quickly wrapping a black padded cable with orange rings around the top of a steering wheel, slight motion blur on the hand, sharp cable, dark car interior, vertical 2:3, photorealistic.
+5. `volante` — CERO RAYONES:
+   > Macro of a thick soft black padded sleeve resting on a stitched leather steering wheel, showing no marks on the leather, shallow depth of field, warm soft light, vertical 2:3, photorealistic.
+6. `llaves` — 3 LLAVES:
+   > Three identical silver security keys on an open palm, next to a matte black lock body with no logo, dark background, soft top light with a red (#D70707) rim, vertical 2:3, photorealistic, no text.
+
+**Packs** (`bundles/TrabavolanteX1/X2/X3.webp`, 900², hoy provisorios armados con
+el recorte): editar `queincluye (2).jpeg` en Gemini/ChatGPT, adjuntando también
+el recorte del producto, con este prompt (cambiando la cantidad):
+
+> Using the first image as the scene and style reference (same matte black CARMANIA box with its logo, same dark slate surface and lighting), create a square product photo of a bundle: the CARMANIA box standing slightly behind, and in front of it TWO identical steering wheel locks like the second image (black padded cable loop with two orange rings, black seatbelt-tongue lock body), arranged neatly side by side, with SIX silver keys with black heads laid in front in two groups of three. Photorealistic, premium, no text other than the logo on the box, no extra objects.
+
+Para el x1: "ONE … THREE silver keys"; para el x3: "THREE … NINE silver keys in three groups of three".
