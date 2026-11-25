@@ -16,8 +16,8 @@
  *     promesas del copy ("2ª al 50%", "3ª GRATIS"); lo vigila el test.
  *   - Shopify: los 3 productos no existen (`productId` en `''`): el botón
  *     queda deshabilitado ("Producto no disponible").
- *   - Imágenes: TODAS son cajas "FOTO PENDIENTE" con su ID (INF-01…15), que
- *     dicen qué va. Se reemplazan subiendo el archivo con el mismo nombre.
+ *   - Imágenes: los pasos (INF-09…11) y los packs (INF-13…15) siguen siendo
+ *     cajas "FOTO PENDIENTE" con su ID. Se reemplazan con el mismo nombre.
  *   - Reseñas: ninguna. La sección no sale hasta cargar reales.
  *
  * ⚠️ SOBRE LAS SPECS. Sólo uso lo que se ve en la foto del proveedor (la
@@ -148,8 +148,7 @@ export const INFLADOR = {
     // Sin prefijo "Para": los labels ya son beneficios, como en el trabavolante.
     useCasesPrefix: '',
   },
-  // No se muestra (la página no usa CarBrands: sirve para cualquier válvula,
-  // no depende de la marca del auto). Va porque el tipo lo pide.
+  // Universal: la misma tira de logos del soporte, el parasol y el trabavolante.
   carBrands: SOPORTE.carBrands,
   /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). */
   useCases: [

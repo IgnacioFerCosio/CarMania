@@ -478,8 +478,8 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     comingSoon: true,
   },
   {
-    // ⚠️ El producto NO existe en Shopify y todas las imágenes de la landing
-    // son placeholders "FOTO PENDIENTE" (ver docs/superpowers/specs/inflador-assets.md).
+    // ⚠️ El producto NO existe en Shopify y faltan imágenes de la landing
+    // (placeholders "FOTO PENDIENTE", ver docs/superpowers/specs/inflador-assets.md).
     // Por eso `comingSoon`: 404 en producción, fuera de /tienda.
     handle: 'inflador-pulse-pro',
     title: 'Inflador Pulse PRO™',

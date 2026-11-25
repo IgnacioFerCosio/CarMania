@@ -3,17 +3,16 @@
  *
  * Misma estructura y componentes que /trabavolante; lo único que cambia es la
  * config que reciben las secciones:
- *   hero → beneficios en cuadros → qué incluye → cómo funciona → packs →
+ *   hero → beneficios en cuadros → marcas → qué incluye → cómo funciona → packs →
  *   comparativa → reseñas → garantía → FAQ → CTA final.
  *
- * Sin CarBrands (sirve para cualquier válvula, no depende de la marca del
- * auto) ni TimeRace (sus escenas son las del trabavolante).
+ * Sin TimeRace (sus escenas son las del trabavolante).
  *
  * Las reseñas salen sólo cuando haya reales cargadas en la config.
  *
  * Ojo: los 3 productos todavía no existen en Shopify (productId en ''), así
- * que los botones de compra quedan deshabilitados a propósito, y todas las
- * imágenes son placeholders "FOTO PENDIENTE". Ver el checklist en
+ * que los botones de compra quedan deshabilitados a propósito, y los pasos y
+ * los packs siguen con placeholders "FOTO PENDIENTE". Ver el checklist en
  * docs/superpowers/specs/inflador-assets.md.
  *
  * MIENTRAS tenga `comingSoon: true` en STORE_PRODUCTS esta ruta responde 404
@@ -29,6 +28,7 @@ import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
+import { CarBrands } from '@/components/sections/CarBrands';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
 import { Pricing } from '@/components/sections/Pricing';
@@ -126,7 +126,10 @@ export default async function InfladorPage() {
         {/* 2. Beneficios en 6 cuadros — "Elegí. Apretá. Listo." */}
         <UseCases config={INFLADOR} />
 
-        {/* 3. Qué incluye */}
+        {/* 3. Compatibilidad — "Sirve en cualquier auto" (los logos del soporte) */}
+        <CarBrands config={INFLADOR} />
+
+        {/* 4. Qué incluye */}
         <WhatsInBox data={INFLADOR.whatsInBox} />
 
         {/* 4. Cómo funciona (3 pasos) */}
