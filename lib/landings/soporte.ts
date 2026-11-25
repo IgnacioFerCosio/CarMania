@@ -130,10 +130,17 @@ export const CAR_BRANDS = [
   { name: 'Renault',       logo: '/brands/renault.svg',    softWhite: false, w: 500,  h: 438  },
   { name: 'Peugeot',       logo: '/brands/peugeot.svg',    softWhite: true,  w: 1587, h: 1123 },
   { name: 'Fiat',          logo: '/brands/fiat.svg',       softWhite: false, w: 110,  h: 68   },
+  { name: 'Citroën',       logo: '/brands/citroen.svg',    softWhite: false, w: 809,  h: 1000 },
+  { name: 'Jeep',          logo: '/brands/jeep.svg',       softWhite: false, w: 1000, h: 403  },
   { name: 'Honda',         logo: '/brands/honda.svg',      softWhite: false, w: 2000, h: 1605 },
+  { name: 'Hyundai',       logo: '/brands/hyundai.svg',    softWhite: false, w: 1000, h: 514  },
   { name: 'Nissan',        logo: '/brands/nissan.svg',     softWhite: false, w: 265,  h: 221  },
+  { name: 'Ram',           logo: '/brands/ram.svg',        softWhite: false, w: 953,  h: 1000 },
+  { name: 'Kia',           logo: '/brands/kia.svg',        softWhite: false, w: 1000, h: 235  },
   { name: 'Mercedes-Benz', logo: '/brands/mercedes.svg',   softWhite: false, w: 1000, h: 1001 },
+  { name: 'Mitsubishi',    logo: '/brands/mitsubishi.svg', softWhite: false, w: 1000, h: 865  },
   { name: 'BMW',           logo: '/brands/bmw.svg',        softWhite: true,  w: 200,  h: 200  },
+  { name: 'Suzuki',        logo: '/brands/suzuki.svg',     softWhite: false, w: 991,  h: 1000 },
   { name: 'Audi',          logo: '/brands/audi.webp',      softWhite: false, w: 400,  h: 209  },
 ];
 
