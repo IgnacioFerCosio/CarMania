@@ -99,7 +99,78 @@ los del trabavolante). La comparativa acepta un recorte sin fondo por columna
 (`comparison.columns[].image`, webp con transparencia, ~320 px de alto, en
 `public/inflador/comparativa/`; sumar esa carpeta a `_routes.json`).
 
-## 5. Reseñas
+## 5. Prompts de imágenes (2026-11-25)
+
+**Paso 0, la imagen maestra.** Se genera primero y todas las demás la usan de
+referencia, para que el producto sea siempre el mismo. Adjuntar
+`docs/superpowers/specs/inflador-referencia-proveedor.png` (la foto del
+proveedor, ampliada) y pedir el equipo **sin logo**. Guardar la que salga como
+`inflador-maestra.png` (fuera de `/public`, no se publica).
+
+> Using the attached supplier photo as the exact product reference, create a high-resolution studio product photo of this portable cordless tire inflator. Keep its exact shape and proportions: a vertical rounded-rectangle body, roughly the size of a thick smartphone, glossy piano-black front panel with a hidden digital display in the upper half, one round black power button with a thin red ring in the lower third, matte black sides, and a fine air-vent grille along the bottom edge. Remove the "Lambo Tech" logo: the surface must be completely clean, no logo, no text. Show the display turned ON, glowing white segment digits reading "32" with small "PSI" units, and four small mode icons (car, motorcycle, bicycle, ball) lit dimly under the digits. Three-quarter front view, standing upright, on a seamless light grey background, soft even studio lighting, soft contact shadow. Square 1:1, photorealistic, ultra sharp, no text other than the display.
+
+Después, para todas: adjuntar `inflador-maestra.png` y empezar el prompt con
+*"Using the attached image as the exact product reference (same body, display
+and red-ring button, no logo),"*. Estilo de las otras landings: estudio negro,
+luz cenital suave y un toque de rojo `#D70707` en el borde de la luz.
+Exportar a webp al tamaño de la tabla de §4 y subir con el mismo nombre.
+
+**INF-02 · Card de /tienda** — `hero/inflador-oscuro.webp` (1200²):
+
+> …create a premium product photo of the inflator standing upright, display on showing "32 PSI", its black flexible air hose coiled beside it. Centered on a seamless matte black studio background, soft top light, subtle red (#D70707) rim light on the edges, soft reflection on the floor. Square 1:1, photorealistic, no text other than the display.
+
+**INF-01 · Hero** — `hero/inflador-hero.webp` (1080²; si después aparece el
+video, éste queda de poster):
+
+> …create a lifestyle photo: a hand holding the inflator next to a car tire, the black air hose screwed onto the tire valve, the display glowing "32 PSI" and clearly readable. Low angle, dark modern car (black or graphite alloy wheel), evening light with warm reflections, shallow depth of field, the product sharp in the foreground. Square 1:1, photorealistic, no logos, no text other than the display.
+
+**Cuadros de beneficios** (`use-cases/*.webp`, 400×600, vertical 2:3, sin texto
+ni logos salvo la pantalla):
+
+1. INF-03 `inalambrico` — SIN CABLES:
+   > …the inflator attached by its short hose to the front tire of a car parked on the shoulder of an Argentine highway at dusk, no cables anywhere, the driver crouching beside it, vertical 2:3, photorealistic.
+2. INF-04 `pantalla` — PANTALLA DIGITAL:
+   > …extreme close-up of the inflator's glossy black front with the display glowing "32 PSI" and the car mode icon lit, reflections on the glossy panel, dark background, red (#D70707) rim light, vertical 2:3, photorealistic.
+3. INF-05 `corte` — CORTE AUTOMÁTICO:
+   > …the inflator connected to a car tire valve, display showing "35 PSI" with a small check-style indicator, a hand stepping away from it (it works on its own), dark garage floor, soft light, vertical 2:3, photorealistic.
+4. INF-06 `modos` — CUATRO MODOS:
+   > …the inflator standing in the center surrounded by a car wheel, a motorcycle wheel, a bicycle wheel and a soccer ball, arranged on a dark studio floor, top light with a red (#D70707) rim, vertical 2:3, photorealistic.
+5. INF-07 `luz` — LUZ LED:
+   > …night scene on a dark road shoulder: the inflator's built-in LED light illuminating a car tire valve while it inflates, the only light source being the inflator and distant red tail lights, vertical 2:3, photorealistic, cinematic.
+6. INF-08 `guantera` — ENTRA EN LA GUANTERA:
+   > …the inflator with its coiled hose resting inside an open car glovebox, dark modern dashboard, the glovebox light on, vertical 2:3, photorealistic.
+
+**Cómo funciona** (`how-to-use/*.webp`, 1200×1000; pueden pasar a video):
+
+1. INF-09 `01-enrosca-la-manguera`:
+   > …close-up of two hands screwing the inflator's black air hose onto a car tire valve, the inflator held in one hand, alloy wheel, daylight, landscape 6:5, photorealistic.
+2. INF-10 `02-elegi-la-presion`:
+   > …close-up of a thumb pressing the button below the inflator's display, display showing "32 PSI" with the car mode icon lit, hose connected to a tire in the blurred background, landscape 6:5, photorealistic.
+3. INF-11 `03-se-corta-solo`:
+   > …the inflator connected to a car tire and resting on the ground by itself, display showing the reached pressure "32 PSI", the person walking away out of focus, landscape 6:5, photorealistic.
+
+**INF-12 · Qué incluye** — `whats-in-box/que-incluye.webp` (1024²). Adjuntar
+también `public/logo.png`:
+
+> …overhead flat lay on a matte black surface: a black product box with the attached CARMANIA logo and a thin red (#D70707) accent line, the inflator next to it, its black flexible air hose coiled, a black USB charging cable, three small nozzle adapters (ball needle, Presta and cone) and a small folded instruction leaflet. Even soft studio lighting, clean minimal arrangement, square 1:1, photorealistic, no other text or logos.
+
+**INF-13…15 · Packs** — `bundles/InfladorX1/X2/X3.webp` (900²). Adjuntar la
+INF-12 como escena y la maestra como producto:
+
+> Using the first image as the scene and style reference (same black CARMANIA box, same surface and lighting) and the second image as the exact product, create a square product photo of a bundle: the CARMANIA box standing slightly behind, and in front of it TWO identical inflators standing upright side by side, displays on, each with its coiled hose. Photorealistic, premium, no text other than the logo on the box and the displays, no extra objects.
+
+Para el x1: "ONE inflator"; para el x3: "THREE identical inflators", y en el x2
+y el x3 una caja por unidad si entran.
+
+**Comparativa (opcional)** — recortes con fondo transparente, ~320 px de alto,
+en `comparativa/` (sumar la carpeta a `_routes.json` y cargar `image` en
+`comparison.columns`):
+
+- `pulse-pro.webp`: la maestra recortada, sin fondo.
+- `compresor-12v.webp`: *"A typical cheap yellow 12V car air compressor with a long coiled power cable and cigarette-lighter plug, product cutout on a transparent background, studio lighting, photorealistic, no brand, no text."*
+- `estacion.webp`: *"A coin-operated air pump station hose with its gauge head, as found at a gas station, product cutout on a transparent background, photorealistic, no brand, no text."*
+
+## 6. Reseñas
 
 Ninguna. La sección no sale hasta que haya reales en `reviews` (mismo formato
 que las del trabavolante; actualizar `ratingBreakdown` y `brand.reviewsCount`).
