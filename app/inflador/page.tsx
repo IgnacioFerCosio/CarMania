@@ -130,7 +130,13 @@ export default async function InfladorPage() {
         <CarBrands config={INFLADOR} />
 
         {/* 4. Qué incluye */}
-        <WhatsInBox data={INFLADOR.whatsInBox} />
+        {/* La foto de la reseña va en el círculo de la opinión, como en /trabavolante. */}
+        <WhatsInBox
+          data={{
+            ...INFLADOR.whatsInBox,
+            testimonialPhoto: INFLADOR.whatsInBox.testimonial?.image,
+          }}
+        />
 
         {/* 4. Cómo funciona (3 pasos) */}
         <HowItWorks config={INFLADOR} />

@@ -174,5 +174,28 @@ en `comparativa/` (sumar la carpeta a `_routes.json` y cargar `image` en
 
 ## 6. Reseñas
 
-Ninguna. La sección no sale hasta que haya reales en `reviews` (mismo formato
-que las del trabavolante; actualizar `ratingBreakdown` y `brand.reviewsCount`).
+Cargadas el 2026-11-25: 8 reseñas (6 de 5★ y 2 de 4★, promedio 4,75), con el
+mismo formato que las del trabavolante (apellido abreviado y fecha; las fechas,
+del 6 al 23 de noviembre de 2026, las puse yo). Los títulos que vinieron
+("¡Una salvación!", etc.) no se usan: las cards de reseña no tienen título.
+La de María Victoria va también como opinión en "qué incluye".
+
+**Fotos pendientes** (800×600, 4:3, en `public/inflador/reviews/`; hoy son
+placeholders "FOTO PENDIENTE"):
+
+| ID | Archivo | Reseña | Qué tendría que mostrar |
+|---|---|---|---|
+| INF-R1 | `01-en-la-ruta.webp` | Juan Ignacio P. | El inflador en la rueda del auto, en la ruta. |
+| INF-R2 | `02-bici.webp` | Milagros F. | Inflando la bici. |
+| INF-R3 | `03-cuatro-ruedas.webp` | Gonzalo M. | Poniendo a punto las ruedas antes de viajar. |
+| INF-R4 | `04-pelota.webp` | Facundo S. | Inflando una pelota de fútbol con el pico de aguja. |
+| INF-R5 | `05-la-caja.webp` | María Victoria C. | La caja negra CARMANIA abierta con el kit. |
+| INF-R6 | `06-de-noche.webp` | Diego R. | Inflando de noche al costado de la ruta, con la luz. |
+| INF-R7 | `07-mochila.webp` | Sofía C. | El inflador en la mochila, con la bici de montaña. |
+| INF-R8 | `08-en-la-mano.webp` | Santiago B. | El inflador en la mano, pantalla en 32 PSI. |
+
+Ojo con lo que prometen las reseñas, antes de publicar: "la linterna que trae
+**arriba**" (Milagros y Diego) y el pico **Presta** (María Victoria) tienen que
+coincidir con la unidad real; "infla la rueda en un minuto" (Sofía) y "de 15 a
+32 libras al toque" (Santiago) son tiempos que la landing, a propósito, no
+promete.

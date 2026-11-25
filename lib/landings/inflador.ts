@@ -18,7 +18,7 @@
  *     queda deshabilitado ("Producto no disponible").
  *   - Imágenes: los pasos (INF-09…11) y los packs (INF-13…15) siguen siendo
  *     cajas "FOTO PENDIENTE" con su ID. Se reemplazan con el mismo nombre.
- *   - Reseñas: ninguna. La sección no sale hasta cargar reales.
+ *   - Reseñas: cargadas, con fotos placeholder (INF-R1…R8).
  *
  * ⚠️ SOBRE LAS SPECS. Sólo uso lo que se ve en la foto del proveedor (la
  * caja muestra pantalla digital y 4 modos: auto, moto, bici y pelota; en la
@@ -28,8 +28,92 @@
  * carga; función powerbank) NO se promete hasta medir una unidad nuestra.
  * Lo que hay que confirmar está marcado `// TODO VERIFICAR`.
  */
-import type { Bundle, LandingConfig, UpsellTier } from './types';
+import type { Bundle, LandingConfig, Review, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
+
+/**
+ * Reseñas del Pulse PRO (las pasó Ignacio el 2026-11-25, todavía sin fotos).
+ *
+ * Mismo formato que las del soporte y el trabavolante: apellido abreviado y
+ * fecha. Las fechas (noviembre de 2026) las puse yo, porque no vinieron con
+ * las reseñas. Las fotos son placeholders "FOTO PENDIENTE" (INF-R1…R8) en
+ * /public/inflador/reviews/, 4:3 a 800×600: se reemplazan con el mismo nombre.
+ * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
+ */
+const INFLADOR_REVIEWS: readonly Review[] = [
+  {
+    name: 'Juan Ignacio P.',
+    location: 'Córdoba',
+    stars: 5,
+    text: 'La verdad, una de las mejores compras que hice para el auto. Lo usé el finde pasado que salí a la ruta y sentía una cubierta medio baja. Lo seteás en 32 libras, arranca y corta solo, una maravilla. Es súper compacto, entra re bien en la guantera y el estuche/caja con el que viene está bárbaro para tener todo ordenado. El cable USB y los picos son clave.',
+    date: '23 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/01-en-la-ruta.webp',
+  },
+  {
+    name: 'Milagros F.',
+    location: 'La Plata',
+    stars: 5,
+    text: 'Me sorprendió lo chiquito que es, parece un celular de los de antes pero más grueso, no ocupa nada de espacio. Lo compré principalmente para inflar la bici y alguna que otra vez las ruedas del auto. Cumple de sobra. Es re intuitivo de usar y la pantalla digital se ve perfecta incluso de noche con la linterna que trae arriba. El cable trenzado se nota de re buena calidad.',
+    date: '21 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/02-bici.webp',
+  },
+  {
+    name: 'Gonzalo M.',
+    location: 'Mendoza',
+    stars: 4,
+    text: 'La verdad que es un golazo. Lo probé con las 4 ruedas del auto para ponerlas a punto antes de viajar y las dejó de diez. Lo único a tener en cuenta es que si tenés que inflar de cero una cubierta de chata capaz tarda un ratito y calienta un poco, pero para mantenimiento y emergencias es ideal. No depender más de las mangueras rotas de las estaciones de servicio no tiene precio.',
+    date: '19 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/03-cuatro-ruedas.webp',
+  },
+  {
+    name: 'Facundo S.',
+    location: 'Rosario',
+    stars: 5,
+    text: 'Espectacular. En casa lo usamos para todo: la moto, las bicis de los chicos y hasta para inflar las pelotas de fútbol con el pico de aguja que trae (viene re completo el kit). Me encanta que sea inalámbrico, te da una libertad tremenda. La batería dura bastante, ya inflé varias cosas y todavía no lo tuve que cargar.',
+    date: '17 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/04-pelota.webp',
+  },
+  {
+    name: 'María Victoria C.',
+    location: 'Tucumán',
+    stars: 5,
+    text: 'Llegó rapidísimo y la presentación en esa cajita negra de Carmania es un lujo. Viene con el cable para cargarlo, el piquito para las bicis (Presta) que para mí era fundamental, y el de pelota. El inflador en sí es re estético, con ese detalle en rojo. Lo probé apenas llegó y en un toque me niveló la rueda del auto. Re contenta con la compra.',
+    date: '14 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/05-la-caja.webp',
+  },
+  {
+    name: 'Diego R.',
+    location: 'Neuquén',
+    stars: 5,
+    text: 'Viajo mucho por la estepa y las rutas de acá y tener esto en el auto me da una paz mental enorme. La linternita de arriba te salva la vida si tenés que inflar de noche al costado del camino. Lo probé y marca la presión exacta (lo comparé con un manómetro que tengo). Corta solo cuando llega a lo que le programás. Vale cada peso.',
+    date: '12 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/06-de-noche.webp',
+  },
+  {
+    name: 'Sofía C.',
+    location: 'Salta',
+    stars: 4,
+    text: 'Lo llevo siempre en la mochila cuando salgo a pedalear por los cerros. Es un poquito pesado comparado con un inflador de mano común, pero te ahorra todo el esfuerzo físico y te infla la rueda en un minuto. Los materiales se sienten robustos, no es un plástico chino de esos que se rompen de la nada. Muy conforme con Carmania.',
+    date: '09 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/07-mochila.webp',
+  },
+  {
+    name: 'Santiago B.',
+    location: 'Paraná',
+    stars: 5,
+    text: 'Lo compré con desconfianza porque lo veía muy chico, pero la verdad que tiene una fuerza bárbara. Lo usé para inflar una cubierta que estaba en 15 libras y la llevó a 32 al toque. El display digital es clarísimo y el botón del medio es re cómodo. El detalle de que traiga todos los accesorios y picos en la caja suma muchísimo. Compra obligada para cualquiera que tenga auto.',
+    date: '06 Nov 2026',
+    verified: true,
+    image: '/inflador/reviews/08-en-la-mano.webp',
+  },
+];
 
 const INFLADOR_BUNDLES: readonly Bundle[] = [
   {
@@ -102,7 +186,7 @@ export const INFLADOR = {
     socialProofCount: SOPORTE.brand.socialProofCount,
     socialProofLabel: SOPORTE.brand.socialProofLabel,
     averageRating: SOPORTE.brand.averageRating,
-    reviewsCount: 0,
+    reviewsCount: INFLADOR_REVIEWS.length,
   },
   // Espejo del bundle x1.
   fallbackPricing: {
@@ -241,17 +325,20 @@ export const INFLADOR = {
       'Cable USB de carga',
       'Manual de uso',
     ],
+    // La de María Victoria: habla de la caja y lo que trae, al lado de la lista.
+    testimonial: INFLADOR_REVIEWS[4],
     gallery: [
       { src: '/inflador/whats-in-box/que-incluye.webp', alt: 'La caja, el Inflador Pulse PRO, la manguera, el cable USB y los picos' },
     ],
   },
-  reviews: [],
+  reviews: INFLADOR_REVIEWS,
+  // 6 de 5 estrellas y 2 de 4.
   ratingBreakdown: {
-    average: 0,
-    total: 0,
+    average: 4.75, // 38 / 8
+    total: INFLADOR_REVIEWS.length,
     stars: [
-      { stars: 5, count: 0 },
-      { stars: 4, count: 0 },
+      { stars: 5, count: 6 },
+      { stars: 4, count: 2 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
       { stars: 1, count: 0 },
