@@ -194,8 +194,21 @@ placeholders "FOTO PENDIENTE"):
 | INF-R7 | `07-mochila.webp` | Sofía C. | El inflador en la mochila, con la bici de montaña. |
 | INF-R8 | `08-en-la-mano.webp` | Santiago B. | El inflador en la mano, pantalla en 32 PSI. |
 
-Ojo con lo que prometen las reseñas, antes de publicar: "la linterna que trae
-**arriba**" (Milagros y Diego) y el pico **Presta** (María Victoria) tienen que
-coincidir con la unidad real; "infla la rueda en un minuto" (Sofía) y "de 15 a
-32 libras al toque" (Santiago) son tiempos que la landing, a propósito, no
-promete.
+Recortadas el 2026-11-25 a ~160 caracteres (las originales eran de ~400). El
+carrusel del hero y la opinión de "qué incluye" usan versiones más cortas
+todavía (`INFLADOR_HERO_REVIEWS` y `corta()`, hasta ~150), para que no se
+corten con "…". Al recortarlas salieron la "linterna que trae arriba", el pico
+"Presta" y los tiempos ("en un minuto", "al toque"), que la landing no promete.
+
+**Prompts de las fotos.** Adjuntar `inflador-maestra.png` (en INF-R5, también
+`queIncluye.jpeg` como referencia de la caja). Todas como foto de cliente: hecha
+con el celular, natural, sin pose de estudio.
+
+- **INF-R1** `01-en-la-ruta`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: the inflator connected by its hose to the rear tire of a silver hatchback parked on the gravel shoulder of an Argentine highway on a sunny afternoon, display showing "32 PSI". Natural daylight, slightly imperfect framing, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R2** `02-bici`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: a woman's hand holding the inflator connected to the rear tire of an urban bicycle leaning on a house wall at dusk, the display glowing clearly. Warm evening light, casual framing, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R3** `03-cuatro-ruedas`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: the inflator on the floor of a home garage connected to the front tire of a family SUV loaded with luggage on the roof rack, ready for a trip. Morning light through the garage door, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R4** `04-pelota`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: the inflator inflating a worn soccer ball with a needle adapter on the grass of a backyard, a child's bicycle blurred in the background. Natural daylight, casual framing, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R5** `05-la-caja`: *Using the first attached image as the exact product and the second as the exact box (black CARMANIA box with its logo), create an amateur smartphone photo taken by a customer right after unboxing: the open box on a wooden kitchen table, the inflator, the braided hose, the USB cable and the nozzles laid out next to it, a hand holding the inflator. Warm indoor light, landscape 4:3, photorealistic, no text other than the logo and the display.*
+- **INF-R6** `06-de-noche`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer at night: the inflator connected to the tire of a pickup truck on the shoulder of a Patagonian route, its LED light on, the display glowing, a phone flashlight adding light, dark empty steppe behind. Grainy night shot, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R7** `07-mochila`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: the inflator peeking out of the side pocket of an open hiking backpack resting next to a mountain bike on a dirt trail in the hills of Salta. Bright daylight, landscape 4:3, photorealistic, no text other than the display.*
+- **INF-R8** `08-en-la-mano`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo), create an amateur smartphone photo taken by a customer: a man's hand holding the inflator close to the camera, display showing "32 PSI", the hose connected to the tire of a car in a residential street, blurred in the background. Natural daylight, landscape 4:3, photorealistic, no text other than the display.*

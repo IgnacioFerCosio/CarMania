@@ -45,7 +45,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Juan Ignacio P.',
     location: 'Córdoba',
     stars: 5,
-    text: 'La verdad, una de las mejores compras que hice para el auto. Lo usé el finde pasado que salí a la ruta y sentía una cubierta medio baja. Lo seteás en 32 libras, arranca y corta solo, una maravilla. Es súper compacto, entra re bien en la guantera y el estuche/caja con el que viene está bárbaro para tener todo ordenado. El cable USB y los picos son clave.',
+    text: 'Lo usé el finde en la ruta con una cubierta medio baja. Lo seteás en 32 libras, arranca y corta solo, una maravilla. Súper compacto: entra re bien en la guantera.',
     date: '23 Nov 2026',
     verified: true,
     image: '/inflador/reviews/01-en-la-ruta.webp',
@@ -54,7 +54,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Milagros F.',
     location: 'La Plata',
     stars: 5,
-    text: 'Me sorprendió lo chiquito que es, parece un celular de los de antes pero más grueso, no ocupa nada de espacio. Lo compré principalmente para inflar la bici y alguna que otra vez las ruedas del auto. Cumple de sobra. Es re intuitivo de usar y la pantalla digital se ve perfecta incluso de noche con la linterna que trae arriba. El cable trenzado se nota de re buena calidad.',
+    text: 'Me sorprendió lo chiquito que es: parece un celular de los de antes, pero más grueso. Lo uso para la bici y el auto, es re intuitivo y la pantalla se ve perfecta hasta de noche.',
     date: '21 Nov 2026',
     verified: true,
     image: '/inflador/reviews/02-bici.webp',
@@ -63,7 +63,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Gonzalo M.',
     location: 'Mendoza',
     stars: 4,
-    text: 'La verdad que es un golazo. Lo probé con las 4 ruedas del auto para ponerlas a punto antes de viajar y las dejó de diez. Lo único a tener en cuenta es que si tenés que inflar de cero una cubierta de chata capaz tarda un ratito y calienta un poco, pero para mantenimiento y emergencias es ideal. No depender más de las mangueras rotas de las estaciones de servicio no tiene precio.',
+    text: 'Puse a punto las 4 ruedas antes de viajar y quedaron de diez. Para inflar de cero una cubierta de chata tarda un ratito, pero para mantenimiento y emergencias es ideal.',
     date: '19 Nov 2026',
     verified: true,
     image: '/inflador/reviews/03-cuatro-ruedas.webp',
@@ -72,7 +72,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Facundo S.',
     location: 'Rosario',
     stars: 5,
-    text: 'Espectacular. En casa lo usamos para todo: la moto, las bicis de los chicos y hasta para inflar las pelotas de fútbol con el pico de aguja que trae (viene re completo el kit). Me encanta que sea inalámbrico, te da una libertad tremenda. La batería dura bastante, ya inflé varias cosas y todavía no lo tuve que cargar.',
+    text: 'En casa lo usamos para todo: la moto, las bicis de los chicos y las pelotas de fútbol con el pico de aguja. Que sea inalámbrico te da una libertad tremenda.',
     date: '17 Nov 2026',
     verified: true,
     image: '/inflador/reviews/04-pelota.webp',
@@ -81,7 +81,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'María Victoria C.',
     location: 'Tucumán',
     stars: 5,
-    text: 'Llegó rapidísimo y la presentación en esa cajita negra de Carmania es un lujo. Viene con el cable para cargarlo, el piquito para las bicis (Presta) que para mí era fundamental, y el de pelota. El inflador en sí es re estético, con ese detalle en rojo. Lo probé apenas llegó y en un toque me niveló la rueda del auto. Re contenta con la compra.',
+    text: 'La cajita negra de Carmania es un lujo y trae todo: el cable para cargarlo, el pico para las bicis y el de pelota. Lo probé apenas llegó y en un toque me niveló la rueda.',
     date: '14 Nov 2026',
     verified: true,
     image: '/inflador/reviews/05-la-caja.webp',
@@ -90,7 +90,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Diego R.',
     location: 'Neuquén',
     stars: 5,
-    text: 'Viajo mucho por la estepa y las rutas de acá y tener esto en el auto me da una paz mental enorme. La linternita de arriba te salva la vida si tenés que inflar de noche al costado del camino. Lo probé y marca la presión exacta (lo comparé con un manómetro que tengo). Corta solo cuando llega a lo que le programás. Vale cada peso.',
+    text: 'Viajo mucho por la ruta y tenerlo en el auto me da una paz enorme. Lo comparé con mi manómetro y marca la presión exacta. Corta solo cuando llega a lo que le programás.',
     date: '12 Nov 2026',
     verified: true,
     image: '/inflador/reviews/06-de-noche.webp',
@@ -99,7 +99,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Sofía C.',
     location: 'Salta',
     stars: 4,
-    text: 'Lo llevo siempre en la mochila cuando salgo a pedalear por los cerros. Es un poquito pesado comparado con un inflador de mano común, pero te ahorra todo el esfuerzo físico y te infla la rueda en un minuto. Los materiales se sienten robustos, no es un plástico chino de esos que se rompen de la nada. Muy conforme con Carmania.',
+    text: 'Lo llevo en la mochila cuando salgo a pedalear. Pesa un poco más que un inflador de mano, pero te ahorra todo el esfuerzo. Los materiales se sienten robustos.',
     date: '09 Nov 2026',
     verified: true,
     image: '/inflador/reviews/07-mochila.webp',
@@ -108,11 +108,30 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Santiago B.',
     location: 'Paraná',
     stars: 5,
-    text: 'Lo compré con desconfianza porque lo veía muy chico, pero la verdad que tiene una fuerza bárbara. Lo usé para inflar una cubierta que estaba en 15 libras y la llevó a 32 al toque. El display digital es clarísimo y el botón del medio es re cómodo. El detalle de que traiga todos los accesorios y picos en la caja suma muchísimo. Compra obligada para cualquiera que tenga auto.',
+    text: 'Lo veía muy chico y desconfiaba, pero tiene una fuerza bárbara: una cubierta que estaba en 15 libras la llevó a 32 sin problema. La pantalla es clarísima.',
     date: '06 Nov 2026',
     verified: true,
     image: '/inflador/reviews/08-en-la-mano.webp',
   },
+];
+
+/**
+ * Versiones cortas para el carrusel del hero (sólo las de 5★, en el orden de
+ * la lista) y para la opinión de "qué incluye": hasta ~150 caracteres, para
+ * que entren en tres líneas sin cortarlas con "…" (ver `pickHeroReviews`).
+ */
+const corta = (name: string, text: string): Review => ({
+  ...INFLADOR_REVIEWS.find((r) => r.name === name)!,
+  text,
+});
+
+const INFLADOR_HERO_REVIEWS: readonly Review[] = [
+  corta('Juan Ignacio P.', 'Lo seteás en 32 libras, arranca y corta solo, una maravilla. Súper compacto: entra re bien en la guantera.'),
+  corta('Milagros F.', 'Me sorprendió lo chiquito que es. Lo uso para la bici y el auto, y la pantalla se ve perfecta hasta de noche.'),
+  corta('Facundo S.', 'Lo usamos para todo: la moto, las bicis de los chicos y las pelotas. Que sea inalámbrico te da una libertad tremenda.'),
+  corta('María Victoria C.', 'La cajita negra es un lujo y trae todo. Lo probé apenas llegó y en un toque me niveló la rueda.'),
+  corta('Diego R.', 'Lo comparé con mi manómetro y marca la presión exacta. Corta solo cuando llega a lo que le programás.'),
+  corta('Santiago B.', 'Lo veía muy chico, pero tiene una fuerza bárbara. La pantalla es clarísima.'),
 ];
 
 const INFLADOR_BUNDLES: readonly Bundle[] = [
@@ -325,13 +344,17 @@ export const INFLADOR = {
       'Cable USB de carga',
       'Manual de uso',
     ],
-    // La de María Victoria: habla de la caja y lo que trae, al lado de la lista.
-    testimonial: INFLADOR_REVIEWS[4],
+    // La de María Victoria (corta): habla de la caja y lo que trae, al lado de la lista.
+    testimonial: corta(
+      'María Victoria C.',
+      'La cajita negra de Carmania es un lujo y trae todo: el cable, el pico para las bicis y el de pelota.',
+    ),
     gallery: [
       { src: '/inflador/whats-in-box/que-incluye.webp', alt: 'La caja, el Inflador Pulse PRO, la manguera, el cable USB y los picos' },
     ],
   },
   reviews: INFLADOR_REVIEWS,
+  heroReviews: INFLADOR_HERO_REVIEWS,
   // 6 de 5 estrellas y 2 de 4.
   ratingBreakdown: {
     average: 4.75, // 38 / 8
