@@ -260,7 +260,7 @@ export const INFLADOR = {
   useCases: [
     { label: 'SIN CABLES', image: '/inflador/use-cases/inalambrico.webp', alt: 'Inflando la rueda de un auto en la ruta, sin cable a la cigarrera' },
     // Antes "PANTALLA DIGITAL" (ya se ve en el hero y en cómo funciona). La foto
-    // es un frame del video de fábrica (video1, 18,6 s).
+    // la generamos con IA (antes era un frame del video, con poca calidad).
     { label: 'CARGA EL CELULAR', image: '/inflador/use-cases/carga-celular.webp', alt: 'El inflador cargando un celular por USB, como batería externa' },
     { label: 'CORTE AUTOMÁTICO', image: '/inflador/use-cases/corte.webp', alt: 'El inflador se apaga solo al llegar a la presión elegida' },
     { label: 'CUATRO MODOS', image: '/inflador/use-cases/modos.webp', alt: 'Los modos de auto, moto, bici y pelota' },
