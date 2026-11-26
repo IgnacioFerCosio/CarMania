@@ -9,10 +9,8 @@
  * En mobile: stack vertical, imagen primero, después texto.
  *
  * SLOT DE IMAGEN: el div con id="hero-media" contiene el video del producto
- * (/public/hero/VideoPrincipal.mp4) con su poster webp. El poster va como
- * <img> de prioridad alta y es el elemento LCP de la página; el video se monta
- * encima después de la carga (DeferredHeroVideo). Cualquier cambio acá se nota
- * en Core Web Vitals.
+ * (/public/hero/VideoPrincipal.mp4) con su poster webp. Es el elemento LCP
+ * de la página — cualquier cambio acá se nota en Core Web Vitals.
  */
 import { CYBER, PAYMENT_LOGOS } from '@/lib/config';
 import { CyberEyebrow } from '@/components/ui/CyberEyebrow';
@@ -20,7 +18,6 @@ import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { Icon } from '@/components/ui/Icon';
 import { HeroTestimonialCarousel } from '@/components/ui/HeroTestimonialCarousel';
-import { DeferredHeroVideo } from '@/components/ui/DeferredHeroVideo';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -208,30 +205,18 @@ function HeroMedia({
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (
-        <>
-          {/* El poster es el LCP: <img> con prioridad alta, pintado de
-              entrada. El video se monta encima después de la carga (ver
-              DeferredHeroVideo). Mismo archivo que el ReactDOM.preload() de
-              cada página. Sin poster, cae al primer frame del video. */}
-          {media.poster && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={media.poster}
-              alt=""
-              width={media.width}
-              height={media.height}
-              fetchPriority="high"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          <DeferredHeroVideo
-            src={media.src}
-            poster={media.poster}
-            width={media.width}
-            height={media.height}
-          />
-        </>
+        <video
+          src={media.src}
+          poster={media.poster}
+          autoPlay={true}
+          muted={true}
+          loop={true}
+          playsInline={true}
+          preload="metadata"
+          width={media.width}
+          height={media.height}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
       )}
 
       <div
