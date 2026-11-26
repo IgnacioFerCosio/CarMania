@@ -410,6 +410,7 @@ export const INFLADOR = {
       { label: 'Lo usás con el auto apagado', values: [true, false, true] },
       { label: 'Infla bicis, pelotas e inflables', values: [true, true, false] },
       { label: 'Luz para la noche', values: [true, false, false] },
+      { label: 'Carga el celular', values: [true, false, false] },
     ],
   },
   faq: [
@@ -420,11 +421,11 @@ export const INFLADOR = {
     {
       // TODO VERIFICAR — tiempo real con una unidad nuestra.
       q: '¿Cuánto tarda en inflar una rueda?',
-      a: 'Para completar una rueda de auto que está baja, un par de minutos. Una rueda totalmente desinflada lleva más: el Pulse PRO es para tener las ruedas siempre bien, no para reemplazar a la gomería después de un pinchazo grande.',
+      a: 'Para completar una rueda de auto que está baja, un par de minutos. Una rueda totalmente desinflada lleva más.',
     },
     {
       q: '¿Qué presión le pongo?',
-      a: 'La que dice el fabricante de tu auto: está en una etiqueta en el marco de la puerta del conductor o en el manual. Se mide con la rueda fría.',
+      a: 'Tiene un modo para cada cosa (auto, moto, bici y pelota), cada uno con su presión. Y la podés cambiar a mano: en el auto, poné la que dice el fabricante, que está en una etiqueta en el marco de la puerta del conductor o en el manual. Se mide con la rueda fría.',
     },
     {
       // Se ve en los dos videos de fábrica (cargando un celular por USB).
@@ -436,7 +437,7 @@ export const INFLADOR = {
       // 150 PSI, ABS. TODO VERIFICAR — los 4000 mAh (salen de otra ficha del
       // ATJ-006, no de la nuestra) y el peso, con una unidad nuestra.
       q: '¿Qué características técnicas tiene?',
-      a: 'Motor de 80 W, hasta 150 PSI, batería recargable de 4000 mAh y carcasa de ABS. Mide unos 15 × 9 × 7 cm: entra en una mano y en la guantera. Muestra la presión en PSI, BAR o kg/cm².',
+      a: 'Motor de 80 W, hasta 150 PSI, batería recargable de 4000 mAh y carcasa de ABS. Mide unos 15 × 9 × 7 cm: entra en una mano y en la guantera.',
     },
     {
       // TODO VERIFICAR — puerto y tiempo de carga.
