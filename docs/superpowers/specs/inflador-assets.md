@@ -253,3 +253,18 @@ fotos reales. Se encontraron con la búsqueda por imagen de Alibaba usando
 
 Ojo con los derechos: el material de fábrica se puede pedir al proveedor
 para revender; lo de otras marcas (Powools, tiendas) no se usa tal cual.
+
+## 8. Video del hero y clips de "cómo funciona" (2026-11-26)
+
+Salen de los dos videos de fábrica del ATJ-006 (`CarMania/Inflador Pulse Pro/video1.mp4`
+y `video2.mp4`, 16:9 720p), recortados en cuadrado y unidos con fundidos de
+0,35 s, sin audio (H.264, CRF 30):
+
+- `hero/inflador-hero.mp4` (540², 13 s, ~540 KB): en la mano → botón → salida
+  de aire y luz → enroscando en la válvula → inflando la rueda → pantalla en la
+  rueda → pelota → bici. Poster = primer frame (`inflador-hero-poster.webp`).
+- `how-to-use/01-enrosca-la-manguera.mp4`, `02-elegi-el-modo.mp4`,
+  `03-se-corta-solo.mp4` (640², ~4 s, ~200 KB c/u), dos tomas cada uno.
+
+Las escenas animadas en SVG (`InflatorScene`) siguen en el código: en
+`steps` de `lib/landings/inflador.ts`, borrar `video` y descomentar `scene`.

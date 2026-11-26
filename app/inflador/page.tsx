@@ -75,8 +75,9 @@ const METADATA: Metadata = {
 export default async function InfladorPage() {
   if (!isPublished(INFLADOR_STORE)) notFound();
 
-  // La imagen del hero es el LCP de esta página.
-  ReactDOM.preload(INFLADOR.heroMedia.src, {
+  // El poster del video del hero es el LCP de esta página (como en
+  // /trabavolante). Apunta al mismo archivo que el `poster` del <video>.
+  ReactDOM.preload(INFLADOR.heroMedia.poster, {
     as: 'image',
     fetchPriority: 'high',
     type: 'image/webp',

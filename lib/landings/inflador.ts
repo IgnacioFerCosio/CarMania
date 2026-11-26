@@ -227,12 +227,15 @@ export const INFLADOR = {
       'Una rueda baja gasta más nafta, se gasta antes y frena peor. Con el Pulse PRO la controlás en tu casa, en dos minutos.',
   },
   heroMedia: {
-    // TODO FOTO — INF-01. Ideal: un video corto (como el del trabavolante)
-    // con el inflador en la mano y la pantalla subiendo hasta cortar.
-    kind: 'image',
-    src: '/inflador/hero/inflador-hero.webp',
-    width: 1080,
-    height: 1080,
+    // Collage de 8 tomas de los videos de fábrica del ATJ-006 (el modelo
+    // exacto): botón, salida de aire y luz, en la mano, enroscando en la
+    // válvula, inflando la rueda, pelota y bici. 540×540 H.264 sin audio,
+    // 13 s, ~540 KB, con fundidos. El poster es su primer frame (el LCP).
+    kind: 'video',
+    src: '/inflador/hero/inflador-hero.mp4',
+    poster: '/inflador/hero/inflador-hero-poster.webp',
+    width: 540,
+    height: 540,
     badgeLine1: '150 PSI',
     badgeLine2: 'SIN CABLES',
   },
@@ -267,19 +270,28 @@ export const INFLADOR = {
       n: 1,
       title: 'Enroscá la manguera',
       desc: 'La manguera sale de arriba del inflador y se enrosca en la válvula de la rueda. Para la bici, la pelota o un inflable, usás el pico que corresponda.',
-      scene: 'hose',
+      video: '/inflador/how-to-use/01-enrosca-la-manguera.mp4',
+      // Alternativa: la animación en SVG (InflatorScene). Para volver a ella,
+      // borrá `video` y descomentá esto.
+      // scene: 'hose',
     },
     {
       n: 2,
       title: 'Elegí el modo',
       desc: 'Con el botón pasás por los 4 modos: auto, moto, bici y pelota, cada uno con su presión. Si tu auto pide otra, la ajustás en la pantalla.',
-      scene: 'mode',
+      video: '/inflador/how-to-use/02-elegi-el-modo.mp4',
+      // Alternativa: la animación en SVG (InflatorScene). Para volver a ella,
+      // borrá `video` y descomentá esto.
+      // scene: 'mode',
     },
     {
       n: 3,
       title: 'Apretá y olvidate',
       desc: 'Infla solo y se corta cuando llega a la presión exacta. Sin pasarte, sin manómetro aparte y sin agacharte a medir.',
-      scene: 'auto',
+      video: '/inflador/how-to-use/03-se-corta-solo.mp4',
+      // Alternativa: la animación en SVG (InflatorScene). Para volver a ella,
+      // borrá `video` y descomentá esto.
+      // scene: 'auto',
     },
   ],
   benefits: [
