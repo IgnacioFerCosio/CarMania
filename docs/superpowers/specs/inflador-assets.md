@@ -256,6 +256,15 @@ para revender; lo de otras marcas (Powools, tiendas) no se usa tal cual.
 
 ## 8. Video del hero y clips de "cómo funciona" (2026-11-26)
 
+Cortes medidos con detección de escenas de ffmpeg, para que ninguna toma
+arrastre frames de otra (video1: 12,10 · 19,77 · 22,07 · 25,03 · 27,13 · 29,90
+· 32,37 · 35,97 · 37,80 · 39,83 · 41,87 · 43,70 · 46,80; video2: 0,76 · 1,72 ·
+2,64 · 7,92 · 8,76 · 10,56 · 11,64 · 15,68 …). El hero va con cortes secos; los
+clips de los pasos, con fundidos cortos. Paso 1 = todos los enroscados de los
+dos videos (9 tomas, 11,5 s); paso 3 = todo lo que infla el video 1 (pelota,
+inflable, moto, bici, auto; 9,5 s). El cuadro "CARGA EL CELULAR" es un frame
+del video1 a los 18,6 s.
+
 Salen de los dos videos de fábrica del ATJ-006 (`CarMania/Inflador Pulse Pro/video1.mp4`
 y `video2.mp4`, 16:9 720p), recortados en cuadrado y unidos con fundidos de
 0,35 s, sin audio (H.264, CRF 30):

@@ -259,7 +259,9 @@ export const INFLADOR = {
   /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). */
   useCases: [
     { label: 'SIN CABLES', image: '/inflador/use-cases/inalambrico.webp', alt: 'Inflando la rueda de un auto en la ruta, sin cable a la cigarrera' },
-    { label: 'PANTALLA DIGITAL', image: '/inflador/use-cases/pantalla.webp', alt: 'La pantalla del inflador marcando la presión' },
+    // Antes "PANTALLA DIGITAL" (ya se ve en el hero y en cómo funciona). La foto
+    // es un frame del video de fábrica (video1, 18,6 s).
+    { label: 'CARGA EL CELULAR', image: '/inflador/use-cases/carga-celular.webp', alt: 'El inflador cargando un celular por USB, como batería externa' },
     { label: 'CORTE AUTOMÁTICO', image: '/inflador/use-cases/corte.webp', alt: 'El inflador se apaga solo al llegar a la presión elegida' },
     { label: 'CUATRO MODOS', image: '/inflador/use-cases/modos.webp', alt: 'Los modos de auto, moto, bici y pelota' },
     { label: 'LUZ LED', image: '/inflador/use-cases/luz.webp', alt: 'Inflando una rueda de noche con la luz del inflador' },
@@ -325,6 +327,12 @@ export const INFLADOR = {
       icon: 'shield',
       title: 'Pantalla digital',
       desc: 'Medís la presión antes de inflar: también es tu manómetro.',
+      highlight: false,
+    },
+    {
+      icon: 'bolt',
+      title: 'Batería externa',
+      desc: 'Por el puerto USB carga el celular en una emergencia.',
       highlight: false,
     },
     {
@@ -417,6 +425,18 @@ export const INFLADOR = {
     {
       q: '¿Qué presión le pongo?',
       a: 'La que dice el fabricante de tu auto: está en una etiqueta en el marco de la puerta del conductor o en el manual. Se mide con la rueda fría.',
+    },
+    {
+      // Se ve en los dos videos de fábrica (cargando un celular por USB).
+      q: '¿Sirve para cargar el celular?',
+      a: 'Sí. Tiene un puerto USB, así que en una emergencia también funciona como batería externa: conectás el cable del celular y lo cargás.',
+    },
+    {
+      // Ficha del ATJ-006 en Alibaba (Yuyao Yiheng): 9 × 7,2 × 14,8 cm, 80 W,
+      // 150 PSI, ABS. TODO VERIFICAR — los 4000 mAh (salen de otra ficha del
+      // ATJ-006, no de la nuestra) y el peso, con una unidad nuestra.
+      q: '¿Qué características técnicas tiene?',
+      a: 'Motor de 80 W, hasta 150 PSI, batería recargable de 4000 mAh y carcasa de ABS. Mide unos 15 × 9 × 7 cm: entra en una mano y en la guantera. Muestra la presión en PSI, BAR o kg/cm².',
     },
     {
       // TODO VERIFICAR — puerto y tiempo de carga.
