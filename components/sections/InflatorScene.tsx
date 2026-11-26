@@ -390,7 +390,9 @@ export function InflatorScene({ name, label }: { name: string; label: string }) 
   if (!Scene) return null;
   return (
     <div ref={ref} data-run="0" className="inf-scene absolute inset-0" role="img" aria-label={label}>
-      <style>{KEYFRAMES}</style>
+      {/* Por innerHTML: como texto hijo, el server escapa las comillas del
+          selector (`&quot;`) y React marca un error de hidratación. */}
+      <style dangerouslySetInnerHTML={{ __html: KEYFRAMES }} />
       <svg viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet" className="h-full w-full">
         <Scene />
       </svg>
