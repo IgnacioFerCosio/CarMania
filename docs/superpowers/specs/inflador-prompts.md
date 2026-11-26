@@ -135,7 +135,7 @@ Para el x1: "ONE CARMANIA box … ONE inflator"; para el x3: "THREE … THREE".
 [BLOQUE] Create an amateur smartphone photo taken by a customer: a hand holding the inflator next to a worn soccer ball on the grass of a backyard, the hose going from the top of the inflator to the ball through a needle adapter, display showing "9 PSI" with the ball icon lit; the inflator is smaller than the ball. A child's bicycle blurred in the background. Natural daylight, landscape 4:3, photorealistic, no text other than the display.
 ```
 
-**INF-R5 · María Victoria** → `reviews/05-la-caja.webp` (adjuntar también `queIncluye.jpeg`)
+**INF-R5 · Martín (antes María Victoria)** → `reviews/05-la-caja.webp` (adjuntar también `queIncluye.jpeg`)
 ```
 [BLOQUE] The second attached image is the exact box (black CARMANIA box with its logo). Create an amateur smartphone photo taken by a customer right after unboxing: the open box on a wooden kitchen table, the hose, the USB cable and the nozzles laid out next to it, a woman's hand holding the inflator (it fits in her palm) with its display turned off, brand new. Warm indoor light, landscape 4:3, photorealistic, no text other than the logo.
 ```

@@ -182,7 +182,7 @@ Cargadas el 2026-11-25: 8 reseñas (6 de 5★ y 2 de 4★, promedio 4,75), con e
 mismo formato que las del trabavolante (apellido abreviado y fecha; las fechas,
 del 6 al 23 de noviembre de 2026, las puse yo). Los títulos que vinieron
 ("¡Una salvación!", etc.) no se usan: las cards de reseña no tienen título.
-La de María Victoria va también como opinión en "qué incluye".
+La de Martín C. (antes María Victoria: en la foto la mano es de hombre) va también como opinión en "qué incluye".
 
 **Fotos** (800×600, 4:3, en `public/inflador/reviews/`). Cargadas el 2026-11-25,
 generadas con IA (originales en `CarMania/Inflador Pulse Pro/Reviews`, r1…r8) y
@@ -196,7 +196,7 @@ JPEG antes del webp. Para rehacer una, mismo nombre y mismo tratamiento:
 | INF-R2 | `02-bici.webp` | Milagros F. | Inflando la bici. |
 | INF-R3 | `03-cuatro-ruedas.webp` | Gonzalo M. | Poniendo a punto las ruedas antes de viajar. |
 | INF-R4 | `04-pelota.webp` | Facundo S. | Inflando una pelota de fútbol con el pico de aguja. |
-| INF-R5 | `05-la-caja.webp` | María Victoria C. | La caja negra CARMANIA abierta con el kit. |
+| INF-R5 | `05-la-caja.webp` | Martín C. | El kit sobre la mesa, recién abierto (la reseña ya no habla de la caja). |
 | INF-R6 | `06-de-noche.webp` | Diego R. | Inflando de noche al costado de la ruta, con la luz. |
 | INF-R7 | `07-mochila.webp` | Sofía C. | El inflador en la mochila, con la bici de montaña. |
 | INF-R8 | `08-en-la-mano.webp` | Santiago B. | El inflador en la mano, pantalla en 32 PSI. |

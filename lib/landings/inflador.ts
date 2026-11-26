@@ -45,7 +45,7 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     name: 'Juan Ignacio P.',
     location: 'Córdoba',
     stars: 5,
-    text: 'Lo usé el finde en la ruta con una cubierta medio baja. Lo seteás en 32 libras, arranca y corta solo, una maravilla. Súper compacto: entra re bien en la guantera.',
+    text: 'Lo usé el finde en la ruta con una cubierta medio baja. Elegís la presión, arranca y corta solo cuando llega, una maravilla. Súper compacto: entra re bien en la guantera.',
     date: '23 Nov 2026',
     verified: true,
     image: '/inflador/reviews/01-en-la-ruta.webp',
@@ -78,10 +78,10 @@ const INFLADOR_REVIEWS: readonly Review[] = [
     image: '/inflador/reviews/04-pelota.webp',
   },
   {
-    name: 'María Victoria C.',
+    name: 'Martín C.',
     location: 'Tucumán',
     stars: 5,
-    text: 'La cajita negra de Carmania es un lujo y trae todo: el cable para cargarlo, el pico para las bicis y el de pelota. Lo probé apenas llegó y en un toque me niveló la rueda.',
+    text: 'Viene re completo: el cable para cargarlo, el pico para las bicis y el de pelota. Lo probé apenas llegó y en un toque me niveló la rueda del auto.',
     date: '14 Nov 2026',
     verified: true,
     image: '/inflador/reviews/05-la-caja.webp',
@@ -126,10 +126,10 @@ const corta = (name: string, text: string): Review => ({
 });
 
 const INFLADOR_HERO_REVIEWS: readonly Review[] = [
-  corta('Juan Ignacio P.', 'Lo seteás en 32 libras, arranca y corta solo, una maravilla. Súper compacto: entra re bien en la guantera.'),
+  corta('Juan Ignacio P.', 'Elegís la presión, arranca y corta solo cuando llega, una maravilla. Súper compacto: entra re bien en la guantera.'),
   corta('Milagros F.', 'Me sorprendió lo chiquito que es. Lo uso para la bici y el auto, y la pantalla se ve perfecta hasta de noche.'),
   corta('Facundo S.', 'Lo usamos para todo: la moto, las bicis de los chicos y las pelotas. Que sea inalámbrico te da una libertad tremenda.'),
-  corta('María Victoria C.', 'La cajita negra es un lujo y trae todo. Lo probé apenas llegó y en un toque me niveló la rueda.'),
+  corta('Martín C.', 'Viene re completo. Lo probé apenas llegó y en un toque me niveló la rueda del auto.'),
   corta('Diego R.', 'Lo comparé con mi manómetro y marca la presión exacta. Corta solo cuando llega a lo que le programás.'),
   corta('Santiago B.', 'Lo veía muy chico, pero tiene una fuerza bárbara. La pantalla es clarísima.'),
 ];
@@ -344,10 +344,10 @@ export const INFLADOR = {
       'Cable USB de carga',
       'Manual de uso',
     ],
-    // La de María Victoria (corta): habla de la caja y lo que trae, al lado de la lista.
+    // La de Martín (corta): habla de lo que trae, al lado de la lista.
     testimonial: corta(
-      'María Victoria C.',
-      'La cajita negra de Carmania es un lujo y trae todo: el cable, el pico para las bicis y el de pelota.',
+      'Martín C.',
+      'Viene re completo: el cable para cargarlo, el pico para las bicis y el de pelota.',
     ),
     gallery: [
       { src: '/inflador/whats-in-box/que-incluye.webp', alt: 'La caja, el Inflador Pulse PRO, la manguera, el cable USB y los picos' },
