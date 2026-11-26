@@ -103,6 +103,10 @@ los del trabavolante). La comparativa acepta un recorte sin fondo por columna
 
 ## 5. Prompts de imágenes (2026-11-25)
 
+> **Reemplazados por [inflador-prompts.md](inflador-prompts.md)** (v2: tamaño
+> real del producto y salida de aire + luz LED arriba). Los de abajo quedan
+> como historial.
+
 **Paso 0, la imagen maestra.** Se genera primero y todas las demás la usan de
 referencia, para que el producto sea siempre el mismo. Adjuntar
 `docs/superpowers/specs/inflador-referencia-proveedor.png` (la foto del
