@@ -221,3 +221,35 @@ con el celular, natural, sin pose de estudio.
 - **INF-R6** `06-de-noche`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo; the air outlet where the hose screws in is on the TOP end of the body, next to a small square LED light, never on the side or bottom), create an amateur smartphone photo taken by a customer at night: the inflator connected to the tire of a pickup truck on the shoulder of a Patagonian route, its LED light on, the display glowing "35 PSI" with the car mode icon lit, a phone flashlight adding light, dark empty steppe behind. Grainy night shot, landscape 4:3, photorealistic, no text other than the display.*
 - **INF-R7** `07-mochila`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo; the air outlet where the hose screws in is on the TOP end of the body, next to a small square LED light, never on the side or bottom), create an amateur smartphone photo taken by a customer: the inflator with its display turned off, peeking out of the side pocket of an open hiking backpack resting next to a mountain bike on a dirt trail in the hills of Salta. Bright daylight, landscape 4:3, photorealistic, no text other than the display.*
 - **INF-R8** `08-en-la-mano`: *Using the attached image as the exact product reference (same body, display and red-ring button, no logo; the air outlet where the hose screws in is on the TOP end of the body, next to a small square LED light, never on the side or bottom), create an amateur smartphone photo taken by a customer: a man's hand holding the inflator close to the camera, display showing "24 PSI" with the car mode icon lit (mid-inflation, the tire started at 15), the hose connected to the tire of a car in a residential street, blurred in the background. Natural daylight, landscape 4:3, photorealistic, no text other than the display.*
+
+## 7. Fuentes de fotos y videos reales (2026-11-26)
+
+El LT-26010 es el **ATJ-006** de fábrica. Estas publicaciones lo muestran (o
+casi igual: cuerpo negro brillante, botón con aro rojo) y suelen traer video y
+fotos reales. Se encontraron con la búsqueda por imagen de Alibaba usando
+`hero/inflador-oscuro.webp`, y en 1688 con "无线充气泵 ATJ-006".
+
+**Alibaba (fábrica Yuyao Yiheng, la del ATJ-006):**
+- https://www.alibaba.com/product-detail/80W-Automatic-Ball-Tyre-Pump-150psi_1601735570655.html — "ATJ-006 3-in-1"
+- https://www.alibaba.com/product-detail/Portable-Compact-Wireless-Electric-Tire-Inflator_1601618466457.html — manguera en arco (como el dibujo de la caja)
+- https://www.alibaba.com/product-detail/150psi-Digital-Portable-ABS-Tire-Pressure_1601498892843.html — 314 vendidos
+- https://www.alibaba.com/product-detail/DC7-4V-150-PSI-mini-Handheld_1601322359626.html (Shenzhen Acme)
+- https://www.alibaba.com/product-detail/Outdoor-portable-mini-air-compressor-Tire_1601271334201.html
+
+**Alibaba, muy parecidos (otras fábricas):**
+- https://www.alibaba.com/product-detail/BAIMEI-Portable-Tire-Inflator-Rechargeable-Electric_1601959073137.html (Hebei Baimei)
+- https://www.alibaba.com/product-detail/BAIMEI-Portable-Electric-Ball-Pump-Rechargeable_1601959019619.html (Hebei Baimei)
+- https://www.alibaba.com/product-detail/Multi-nozzle-Tire-Inflator-Portable-Air_1601853260570.html (Ningbo Hifly)
+- https://www.alibaba.com/product-detail/Factory-Price-150psi-Mini-Portable-Electric_1601638375405.html (Guangzhou Siguang)
+
+**1688:**
+- https://detail.1688.com/offer/935997545885.html — Yuyao Datang, publicado como "ATJ-006 便携式充气泵", ¥54
+- https://detail.1688.com/offer/843250009051.html — Ningbo Atang, 2×2000 mAh, manguera en arco, ¥55
+- https://detail.1688.com/offer/962111879346.html — Shaoxing Langhao, ¥33,5 (3.589 ventas/año)
+- https://detail.1688.com/offer/1089327780612.html — Shaoxing Langhao, manguera en arco, ¥40
+- https://detail.1688.com/offer/1016168443909.html — Yiwu Zhuoxiang, ¥49,9
+
+**Video del modelo exacto:** https://www.youtube.com/watch?v=FgcpW7QWJeg (Powools ATJ-006, guía de uso).
+
+Ojo con los derechos: el material de fábrica se puede pedir al proveedor
+para revender; lo de otras marcas (Powools, tiendas) no se usa tal cual.
