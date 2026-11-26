@@ -18,7 +18,7 @@
  *     queda deshabilitado ("Producto no disponible").
  *   - Imágenes: los pasos (INF-09…11) y los packs (INF-13…15) siguen siendo
  *     cajas "FOTO PENDIENTE" con su ID. Se reemplazan con el mismo nombre.
- *   - Reseñas: cargadas, con fotos placeholder (INF-R1…R8).
+ *   - Reseñas: cargadas, con sus fotos (INF-R1…R8).
  *
  * ⚠️ SOBRE LAS SPECS. Sólo uso lo que se ve en la foto del proveedor (la
  * caja muestra pantalla digital y 4 modos: auto, moto, bici y pelota; en la

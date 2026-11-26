@@ -184,8 +184,11 @@ del 6 al 23 de noviembre de 2026, las puse yo). Los títulos que vinieron
 ("¡Una salvación!", etc.) no se usan: las cards de reseña no tienen título.
 La de María Victoria va también como opinión en "qué incluye".
 
-**Fotos pendientes** (800×600, 4:3, en `public/inflador/reviews/`; hoy son
-placeholders "FOTO PENDIENTE"):
+**Fotos** (800×600, 4:3, en `public/inflador/reviews/`). Cargadas el 2026-11-25,
+generadas con IA (originales en `CarMania/Inflador Pulse Pro/Reviews`, r1…r8) y
+pasadas por un filtro "de celular": algo de desenfoque, menos saturación y
+contraste, negros levantados, viñeteo, grano (más en la de noche) y compresión
+JPEG antes del webp. Para rehacer una, mismo nombre y mismo tratamiento:
 
 | ID | Archivo | Reseña | Qué tendría que mostrar |
 |---|---|---|---|
