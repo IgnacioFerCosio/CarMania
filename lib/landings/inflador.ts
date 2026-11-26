@@ -214,10 +214,10 @@ export const INFLADOR = {
     currency: 'ARS',
   },
   headlines: {
-    heroLine1: 'Inflá la rueda',
-    heroLine2: 'sin buscar una gomería',
+    heroLine1: 'La presión justa',
+    heroLine2: 'sin moverte del auto',
     heroSub:
-      'Elegís la presión en la pantalla, apretás un botón y se corta solo cuando llega. Sin cables y tan chico que vive en la guantera.',
+      'Elegís la presión, apretás un botón y se corta solo cuando llega. Auto, moto, bici y pelota. Sin cables, entra en la guantera y hasta te carga el celular.',
     finalCta: 'Elegí la presión. Apretá. Listo.',
     howItWorksLabel: 'Listo en 3 pasos',
     howItWorksTitle: '¿Cómo funciona?',
@@ -496,10 +496,10 @@ export const INFLADOR = {
   metadata: {
     title: 'Inflador Pulse PRO™ — CARMANIA',
     description:
-      'Inflador inalámbrico con pantalla digital y corte automático: elegís la presión y se corta solo. Para auto, moto, bici y pelotas. Envío gratis y 30 días de devolución.',
+      'La presión justa sin moverte del auto: inflador inalámbrico con corte automático para auto, moto, bici y pelota, que además carga el celular. Envío gratis y 30 días de devolución.',
     ogTitle: 'Inflador Pulse PRO™ — CARMANIA',
     ogDescription:
-      'Elegí la presión, apretá y se corta solo. Sin cables, con luz LED y entra en la guantera. Envío gratis y devolución 30 días.',
+      'La presión justa sin moverte del auto. Elegís, apretás y se corta solo. Sin cables, entra en la guantera y carga el celular. Envío gratis y devolución 30 días.',
     canonical: '/inflador',
   },
 } satisfies LandingConfig;
