@@ -370,15 +370,18 @@ export const INFLADOR = {
   /**
    * Comparativa (después de los packs): contra lo que la gente usa hoy, el
    * compresor de 12 V con cable y el de la estación de servicio. Recortes
-   * con transparencia (generados con IA) en /inflador/comparativa/.
+   * con transparencia (generados con IA) en /inflador/comparativa/. Para que
+   * el Pulse PRO destaque, su recorte va justo (desde la mitad de la manguera,
+   * sin el cable USB) y los otros dos llevan margen transparente arriba: la
+   * tabla los escala al mismo alto y los apoya abajo, así quedan al ~70 %.
    */
   comparison: {
     title: 'No es un compresor más.',
     accent: 'más.',
     columns: [
-      { name: 'Pulse PRO™', image: '/inflador/comparativa/pulse-pro.webp', width: 201, height: 420 },
-      { name: 'Compresor 12 V', image: '/inflador/comparativa/compresor-12v.webp', width: 360, height: 378 },
-      { name: 'Estación de servicio', image: '/inflador/comparativa/estacion.webp', width: 126, height: 420 },
+      { name: 'Pulse PRO™', image: '/inflador/comparativa/pulse-pro.webp', width: 307, height: 420 },
+      { name: 'Compresor 12 V', image: '/inflador/comparativa/compresor-12v.webp', width: 360, height: 540 },
+      { name: 'Estación de servicio', image: '/inflador/comparativa/estacion.webp', width: 126, height: 583 },
     ],
     rows: [
       { label: 'Sin cables', values: [true, false, false] },
