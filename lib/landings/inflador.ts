@@ -36,8 +36,8 @@ import { SOPORTE } from './soporte';
  *
  * Mismo formato que las del soporte y el trabavolante: apellido abreviado y
  * fecha. Las fechas (noviembre de 2026) las puse yo, porque no vinieron con
- * las reseñas. Las fotos son placeholders "FOTO PENDIENTE" (INF-R1…R8) en
- * /public/inflador/reviews/, 4:3 a 800×600: se reemplazan con el mismo nombre.
+ * las reseñas. Las fotos (INF-R1…R8, IA con filtro "de celular") están en
+ * /public/inflador/reviews/, 4:3 a 800×600: ver inflador-assets.md §6.
  * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
  */
 const INFLADOR_REVIEWS: readonly Review[] = [
