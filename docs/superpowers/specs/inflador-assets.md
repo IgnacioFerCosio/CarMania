@@ -75,8 +75,10 @@ inalámbrico, entra en la guantera, sirve para auto/moto/bici/pelota.
 
 Cargadas el 2026-11-25 (generadas con IA a partir de la imagen maestra; los
 originales están en la carpeta `CarMania/Inflador Pulse Pro`): INF-01 a INF-08
-e INF-12. **Faltan** los pasos (INF-09 a 11) y los packs (INF-13 a 15): siguen
-siendo una caja oscura "FOTO PENDIENTE" con su ID, el brief y la medida. Para reemplazarlo, subí la foto con el **mismo nombre y tamaño** en
+e INF-12. Los pasos (INF-09 a 11) ya no llevan foto: son escenas animadas en
+SVG (`components/sections/InflatorScene.tsx`). **Faltan** los packs (INF-13 a
+15): siguen siendo una caja oscura "FOTO PENDIENTE" con su ID, el brief y la
+medida. Para reemplazarlo, subí la foto con el **mismo nombre y tamaño** en
 `public/inflador/`. Todo se exporta al tamaño en que se ve (en Cloudflare
 `/_next/image` devuelve el original).
 

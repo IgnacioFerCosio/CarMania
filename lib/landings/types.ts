@@ -100,6 +100,11 @@ export type Step = {
   video?: string;
   /** Foto del paso: se muestra sólo si no hay `video`. */
   image?: string;
+  /**
+   * Escena animada del paso (`InflatorScene`: 'hose' | 'mode' | 'auto', en
+   * /inflador). Si está, va en lugar del video y de la foto.
+   */
+  scene?: string;
 };
 
 /** Sección de videos verticales del producto en acción (`VideoShowcase`). */

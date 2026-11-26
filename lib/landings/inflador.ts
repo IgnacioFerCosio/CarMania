@@ -266,20 +266,20 @@ export const INFLADOR = {
     {
       n: 1,
       title: 'Enroscá la manguera',
-      desc: 'La manguera flexible se enrosca en la válvula de la rueda. Para la bici, la pelota o un inflable, usás el pico que corresponda.',
-      image: '/inflador/how-to-use/01-enrosca-la-manguera.webp',
+      desc: 'La manguera sale de arriba del inflador y se enrosca en la válvula de la rueda. Para la bici, la pelota o un inflable, usás el pico que corresponda.',
+      scene: 'hose',
     },
     {
       n: 2,
-      title: 'Elegí la presión',
-      desc: 'Prendelo, elegí el modo (auto, moto, bici o pelota) y ajustá la presión que dice tu auto. La pantalla te muestra la que tiene ahora.',
-      image: '/inflador/how-to-use/02-elegi-la-presion.webp',
+      title: 'Elegí el modo',
+      desc: 'Con el botón pasás por los 4 modos: auto, moto, bici y pelota, cada uno con su presión. Si tu auto pide otra, la ajustás en la pantalla.',
+      scene: 'mode',
     },
     {
       n: 3,
       title: 'Apretá y olvidate',
       desc: 'Infla solo y se corta cuando llega a la presión exacta. Sin pasarte, sin manómetro aparte y sin agacharte a medir.',
-      image: '/inflador/how-to-use/03-se-corta-solo.webp',
+      scene: 'auto',
     },
   ],
   benefits: [
