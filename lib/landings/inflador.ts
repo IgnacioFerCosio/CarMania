@@ -120,10 +120,13 @@ const INFLADOR_REVIEWS: readonly Review[] = [
  * la lista) y para la opinión de "qué incluye": hasta ~150 caracteres, para
  * que entren en tres líneas sin cortarlas con "…" (ver `pickHeroReviews`).
  */
-const corta = (name: string, text: string): Review => ({
-  ...INFLADOR_REVIEWS.find((r) => r.name === name)!,
-  text,
-});
+const corta = (name: string, text: string): Review => {
+  const r = INFLADOR_REVIEWS.find((x) => x.name === name)!;
+  // Estas van en un círculo de 40-48 px: miniatura de 128² en reviews/mini/.
+  // En Cloudflare `/_next/image` devuelve el original, así que sin esto el
+  // hero bajaba las 8 fotos de 800×600 (~60 KB cada una) para un avatar.
+  return { ...r, text, image: r.image?.replace('/reviews/', '/reviews/mini/') };
+};
 
 const INFLADOR_HERO_REVIEWS: readonly Review[] = [
   corta('Juan Ignacio P.', 'Elegís la presión, arranca y corta solo cuando llega, una maravilla. Súper compacto: entra re bien en la guantera.'),
