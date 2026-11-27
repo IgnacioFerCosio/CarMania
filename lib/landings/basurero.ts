@@ -21,10 +21,86 @@
  *   - Imágenes: TODAS son cajas "FOTO PENDIENTE" con su ID (BAS-01…15). Las
  *     fotos de CarMount NO se usan (tienen su logo y son suyas): sólo son la
  *     referencia para generar las nuestras.
- *   - Reseñas: ninguna. La sección no sale hasta cargar reales.
+ *   - Reseñas: 8, sin fotos, ciudad ni fecha (ver BASURERO_REVIEWS).
  */
-import type { Bundle, LandingConfig, UpsellTier } from './types';
+import type { Bundle, LandingConfig, Review, UpsellTier } from './types';
 import { SOPORTE } from './soporte';
+
+/**
+ * Reseñas del Elegance PRO (las pasó Ignacio el 2026-11-27 como reales, sin
+ * fotos, ciudad ni fecha). Mismo formato que las otras landings; el título que
+ * traían ("¡Buenísimo!", etc.) no entra en el formato y quedó afuera. Sin
+ * `image`, la tarjeta muestra la inicial con "Foto cliente": se completan con
+ * las fotos de los clientes, no con fotos generadas. `verified` va en false
+ * hasta confirmar que salen de compras; ciudad y fecha, vacías hasta tenerlas.
+ * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
+ */
+const BASURERO_REVIEWS: readonly Review[] = [
+  {
+    name: 'Laura M.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Me encantó. Es re lindo, no parece un tacho de basura y queda perfecto en el portavasos. Muy práctico.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Juan Ignacio P.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Se nota que es de metal y no de plástico barato. El tamaño es ideal para el auto y encima viene con las bolsitas.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Valentina G.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Por fin un tacho de basura que no queda feo en el auto. Es re discreto, elegante y la tapa funciona espectacular.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Carlos T.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Ideal para tirar los papelitos, tickets y cositas que siempre quedan dando vueltas. Entra de diez en la consola central.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Sofía B.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Espectacular. Es chiquito pero súper útil. Te viene con los rollos de bolsitas que son re fáciles de cambiar. Muy cómodo.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Diego F.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Basta de bolsitas de súper colgadas por todos lados. Este tachito queda impecable y no molesta para nada.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Martina R.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'La verdad que me sorprendió para bien. Es re fuerte, la tapa cierra perfecto y se limpia en un segundo. Un golazo.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+  {
+    name: 'Mariano L.',
+    location: '', // TODO — ciudad
+    stars: 5,
+    text: 'Cumple de diez. Calza justo en el portavasos de la puerta o del medio. Una de las mejores compras que hice para el auto.',
+    date: '', // TODO — fecha
+    verified: false, // TODO — true si sale de una compra verificada
+  },
+];
 
 const BASURERO_BUNDLES: readonly Bundle[] = [
   {
@@ -97,7 +173,7 @@ export const BASURERO = {
     socialProofCount: SOPORTE.brand.socialProofCount,
     socialProofLabel: SOPORTE.brand.socialProofLabel,
     averageRating: SOPORTE.brand.averageRating,
-    reviewsCount: 0,
+    reviewsCount: BASURERO_REVIEWS.length,
   },
   // Espejo del bundle x1.
   fallbackPricing: {
@@ -229,12 +305,12 @@ export const BASURERO = {
       { src: '/basurero/whats-in-box/que-incluye.webp', alt: 'La caja, el Basurero Elegance PRO y las bolsitas de repuesto' },
     ],
   },
-  reviews: [],
+  reviews: BASURERO_REVIEWS,
   ratingBreakdown: {
-    average: 0,
-    total: 0,
+    average: 5, // 40 / 8
+    total: BASURERO_REVIEWS.length,
     stars: [
-      { stars: 5, count: 0 },
+      { stars: 5, count: 8 },
       { stars: 4, count: 0 },
       { stars: 3, count: 0 },
       { stars: 2, count: 0 },
