@@ -4,6 +4,23 @@ Qué encontré del basurero de portavasos de metal con tapa a presión, fuera de
 CarMount (que está en `basurero-assets.md`). Es para elegir proveedor y para
 los creativos; nada de esto se publica tal cual.
 
+## 0. El de CarMount es un Baseus
+
+Google Lens con la foto de CarMount da que el modelo liso es el **Baseus
+Gentleman Style Vehicle-mounted Trash Can (CRLJT-01)**, con el logo de
+CarMount: 500 ml, aleación de aluminio, 30 bolsitas, gris oscuro. CarMount lo
+vende desde 2021. Baseus es una marca grande y lo vende en todo el mundo
+([ar.baseusonline.com](https://ar.baseusonline.com), Amazon, AliExpress, Harvey
+Norman) y **también aparece en Mercado Libre Argentina** ("Cesto De Basura
+Premium Tacho Auto Oficina Baseus Aluminio").
+
+Qué implica: el producto "liso de CarMount" existe con marca conocida en
+Argentina. Si lo vendemos, conviene que el nuestro no sea idéntico al Baseus
+(sin su logo, y mejor un genérico de fábrica que una reventa de Baseus), y que
+la landing compita por servicio y marca, no por precio. Buscar el CRLJT-01 en
+Alibaba/1688 por su forma para encontrar la fábrica que lo hace (o uno
+parecido) es el próximo paso con proveedores.
+
 ## 1. Proveedores (Alibaba, los que pasó Ignacio)
 
 | | [Shenzhen Weida](https://www.alibaba.com/product-detail/Press-and-Press-Type-Car-Mounted_1601261907032.html) | [Anhui Pingyao](https://www.alibaba.com/product-detail/Luxury-Metal-Press-Lid-Mini-Car_1601820236569.html) |
