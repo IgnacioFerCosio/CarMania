@@ -42,7 +42,7 @@ clientes: **no se usan**). Venden aparte un pack de 6 bolsitas de repuesto.
 
 | Qué | Dónde | Estado |
 |---|---|---|
-| Proveedor y ficha técnica | — | Pendiente. Con la ficha se cierran las specs de arriba. |
+| Proveedor y ficha técnica | — | Pendiente. Dos candidatos de Alibaba comparados en `basurero-referentes.md`, junto con lo que hay que preguntarles. Con la ficha se cierran las specs de arriba. |
 | Si la unidad o la caja traen marca | — | Para las fotos, caja lisa o con el logo CARMANIA. |
 | Precio de x1 / x2 / x3 | `BASURERO_BUNDLES`, `fallbackPricing`, `STORE_PRODUCTS` | Provisorio: $29.990 / $44.990 / $59.980 (tachados $54.990 / $109.980 / $164.970). Cumple "2ª al 50 %" y "3ª GRATIS". |
 | Crear los 3 productos en Shopify y publicarlos al canal "Carmania Headless" | `productId` / `fallbackVariantId` en `''` | Pendiente. Hasta entonces el botón dice "Producto no disponible". |
