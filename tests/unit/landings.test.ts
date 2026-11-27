@@ -16,6 +16,7 @@ import { BASURERO } from '@/lib/landings/basurero';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { buildTiers, nextTierOf } from '@/lib/tiers';
+import { USE_CASE_LINE, useCaseLines } from '@/lib/landings/useCaseLabel';
 import { STORE_PRODUCTS, STORE_PRICE_PERKS } from '@/lib/config';
 import type { LandingConfig } from '@/lib/landings/types';
 
@@ -58,6 +59,18 @@ describe.each(Object.entries(LANDINGS))('landing %s', (ruta, cfg) => {
       ['double', b],
       ['triple', c],
     ]);
+  });
+
+  // UseCases tiene un solo tamaño de letra para todas las landings: un rótulo
+  // más largo que 2 renglones (o con una palabra que no entra en uno) se
+  // corta o se encima en el celular.
+  it(`los rótulos de use cases entran en 2 renglones de ${USE_CASE_LINE} caracteres`, () => {
+    const prefix = cfg.sectionCopy.useCasesPrefix ? `${cfg.sectionCopy.useCasesPrefix} ` : '';
+    for (const { label } of cfg.useCases) {
+      const lines = useCaseLines(prefix + label);
+      expect(lines.length, `"${label}" ocupa ${lines.length} renglones: ${lines.join(' / ')}`).toBeLessThanOrEqual(2);
+      for (const l of lines) expect(l.length, `"${l}" no entra en un renglón`).toBeLessThanOrEqual(USE_CASE_LINE);
+    }
   });
 
   it('productId y fallbackVariantId van juntos: los dos vacíos o los dos GIDs', () => {

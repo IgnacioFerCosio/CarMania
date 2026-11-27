@@ -91,7 +91,7 @@ medida. Para reemplazarlo, subí la foto con el **mismo nombre y tamaño** en
 | INF-05 | `use-cases/corte.webp` | CORTE AUTOMÁTICO: la pantalla llegando a la presión elegida. | 400×600 |
 | INF-06 | `use-cases/modos.webp` | CUATRO MODOS: auto, moto, bici y pelota. | 400×600 |
 | INF-07 | `use-cases/luz.webp` | LUZ LED: inflando de noche con la luz prendida. | 400×600 |
-| INF-08 | `use-cases/guantera.webp` | ENTRA EN LA GUANTERA: el inflador en la guantera abierta. | 400×600 |
+| INF-08 | `use-cases/guantera.webp` | EN LA GUANTERA: el inflador en la guantera abierta. | 400×600 |
 | INF-09 | `how-to-use/01-enrosca-la-manguera.webp` | Paso 1: enroscar la manguera en la válvula. | 1200×1000 |
 | INF-10 | `how-to-use/02-elegi-la-presion.webp` | Paso 2: elegir modo y presión en la pantalla. | 1200×1000 |
 | INF-11 | `how-to-use/03-se-corta-solo.webp` | Paso 3: apretar y esperar a que corte. | 1200×1000 |
@@ -145,7 +145,7 @@ ni logos salvo la pantalla):
    > …the inflator standing in the center surrounded by a car wheel, a motorcycle wheel, a bicycle wheel and a soccer ball, arranged on a dark studio floor, top light with a red (#D70707) rim, vertical 2:3, photorealistic.
 5. INF-07 `luz` — LUZ LED:
    > …night scene on a dark road shoulder: the inflator's built-in LED light illuminating a car tire valve while it inflates, the only light source being the inflator and distant red tail lights, vertical 2:3, photorealistic, cinematic.
-6. INF-08 `guantera` — ENTRA EN LA GUANTERA:
+6. INF-08 `guantera` — EN LA GUANTERA:
    > …the inflator with its coiled hose resting inside an open car glovebox, dark modern dashboard, the glovebox light on, vertical 2:3, photorealistic.
 
 **Cómo funciona** (`how-to-use/*.webp`, 1200×1000; pueden pasar a video):

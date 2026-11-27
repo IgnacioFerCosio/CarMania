@@ -268,7 +268,7 @@ export const INFLADOR = {
     { label: 'CORTE AUTOMÁTICO', image: '/inflador/use-cases/corte.webp', alt: 'El inflador se apaga solo al llegar a la presión elegida' },
     { label: 'CUATRO MODOS', image: '/inflador/use-cases/modos.webp', alt: 'Los modos de auto, moto, bici y pelota' },
     { label: 'LUZ LED', image: '/inflador/use-cases/luz.webp', alt: 'Inflando una rueda de noche con la luz del inflador' },
-    { label: 'ENTRA EN LA GUANTERA', image: '/inflador/use-cases/guantera.webp', alt: 'El inflador guardado en la guantera del auto' },
+    { label: 'EN LA GUANTERA', image: '/inflador/use-cases/guantera.webp', alt: 'El inflador guardado en la guantera del auto' },
   ],
   steps: [
     {

@@ -67,12 +67,12 @@ reemplazar una foto, subila con el **mismo nombre y tamaño** en
 |---|---|---|---|
 | BAS-01 | `hero/basurero-hero.mp4` + `basurero-hero-poster.webp` | **Hecho, provisorio:** el video de producto de CarMount (10 s, 540², sin audio, ~410 KB), sin el tramo de la caja; el logo se ve en el producto. Decisión de Ignacio; reemplazar por uno propio cuando haya producto. | 540² |
 | BAS-02 | `hero/basurero-oscuro.webp` | Producto sobre fondo de estudio negro (card de `/tienda`). | 1200² |
-| BAS-03 | `use-cases/portavasos.webp` | ENTRA EN EL PORTAVASOS | 400×600 |
-| BAS-04 | `use-cases/tapa.webp` | SE ABRE CON UN TOQUE | 400×600 |
+| BAS-03 | `use-cases/portavasos.webp` | EN EL PORTAVASOS | 400×600 |
+| BAS-04 | `use-cases/tapa.webp` | ABRE AL TOQUE | 400×600 |
 | BAS-05 | `use-cases/metal.webp` | CUERPO DE METAL | 400×600 |
-| BAS-06 | `use-cases/bolsitas.webp` | BOLSITAS DE REPUESTO | 400×600 |
+| BAS-06 | `use-cases/bolsitas.webp` | BOLSITAS INCLUIDAS | 400×600 |
 | BAS-07 | `use-cases/vaciado.webp` | SE VACÍA EN SEGUNDOS | 400×600 |
-| BAS-08 | `use-cases/puerta.webp` | TAMBIÉN EN LA PUERTA | 400×600 |
+| BAS-08 | `use-cases/puerta.webp` | VA EN LA PUERTA | 400×600 |
 | BAS-09 | `how-to-use/01-ponelo-en-el-portavasos.webp` | Paso 1: ponerlo en el portavasos. | 1200×1000 |
 | BAS-10 | `how-to-use/02-apreta-y-tira.webp` | Paso 2: apretar la tapa y tirar. | 1200×1000 |
 | BAS-11 | `how-to-use/03-cambia-la-bolsita.webp` | Paso 3: cambiar la bolsita. | 1200×1000 |

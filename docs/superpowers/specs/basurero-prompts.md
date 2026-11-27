@@ -68,12 +68,12 @@ copiar el BMW de las fotos de referencia).
 
 ## Cuadros de beneficios (`use-cases/*.webp`, 400×600, vertical 2:3)
 
-**BAS-03 · ENTRA EN EL PORTAVASOS** → `use-cases/portavasos.webp`
+**BAS-03 · EN EL PORTAVASOS** → `use-cases/portavasos.webp`
 ```
 [BLOQUE] Create a photo of the closed trash can seated snugly in a car's center-console cup holder, right next to the gear selector, about 8–9 cm of it sticking out; dark modern interior, soft side light on the matte metal. Vertical 2:3, photorealistic, no logos, no text.
 ```
 
-**BAS-04 · SE ABRE CON UN TOQUE** → `use-cases/tapa.webp`
+**BAS-04 · ABRE AL TOQUE** → `use-cases/tapa.webp`
 ```
 [BLOQUE] Create a close-up of an adult index finger pressing the center of the lid of the trash can, which sits in a car cup holder; the lid is just starting to pop up on its hinge. Dark car interior, shallow depth of field, red (#D70707) rim light on the silver ring. Vertical 2:3, photorealistic, no logos, no text.
 ```
@@ -83,7 +83,7 @@ copiar el BMW de las fotos de referencia).
 [BLOQUE] Create a macro close-up of the trash can's matte black metal body and the polished silver ring of its lid, showing the fine satin texture of the metal, dramatic low light with a red (#D70707) rim on the edge, dark background. Vertical 2:3, photorealistic, no logos, no text.
 ```
 
-**BAS-06 · BOLSITAS DE REPUESTO** → `use-cases/bolsitas.webp`
+**BAS-06 · BOLSITAS INCLUIDAS** → `use-cases/bolsitas.webp`
 ```
 [BLOQUE] Create a photo from slightly above of the trash can with its lid open and a thin black liner bag fitted inside, the edge of the bag folded neatly over the inner rim; next to it on the console, a small roll of spare black liner bags. Dark car interior, soft light. Vertical 2:3, photorealistic, no logos, no text.
 ```
@@ -93,7 +93,7 @@ copiar el BMW de las fotos de referencia).
 [BLOQUE] Create a photo of adult hands lifting a full, tied black liner bag out of the open trash can (paper receipts and wrappers visible through the bag's opening), the empty can held in the other hand, next to an open car door. Daylight, shallow depth of field. Vertical 2:3, photorealistic, no logos, no text.
 ```
 
-**BAS-08 · TAMBIÉN EN LA PUERTA** → `use-cases/puerta.webp`
+**BAS-08 · VA EN LA PUERTA** → `use-cases/puerta.webp`
 ```
 [BLOQUE] Create a photo of the closed trash can lying in the storage pocket of a car's front door panel, the door open, dark leather and trim with a warm accent stitch, soft light from outside. The trash can fits the pocket with room to spare. Vertical 2:3, photorealistic, no logos, no text.
 ```

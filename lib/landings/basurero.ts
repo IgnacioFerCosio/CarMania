@@ -228,12 +228,12 @@ export const BASURERO = {
   carBrands: SOPORTE.carBrands,
   /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). */
   useCases: [
-    { label: 'ENTRA EN EL PORTAVASOS', image: '/basurero/use-cases/portavasos.webp', alt: 'El basurero puesto en el portavasos, al lado de la palanca de cambios' },
-    { label: 'SE ABRE CON UN TOQUE', image: '/basurero/use-cases/tapa.webp', alt: 'Un dedo apretando la tapa del basurero para abrirla' },
+    { label: 'EN EL PORTAVASOS', image: '/basurero/use-cases/portavasos.webp', alt: 'El basurero puesto en el portavasos, al lado de la palanca de cambios' },
+    { label: 'ABRE AL TOQUE', image: '/basurero/use-cases/tapa.webp', alt: 'Un dedo apretando la tapa del basurero para abrirla' },
     { label: 'CUERPO DE METAL', image: '/basurero/use-cases/metal.webp', alt: 'Primer plano del cuerpo de metal negro mate del basurero' },
-    { label: 'BOLSITAS DE REPUESTO', image: '/basurero/use-cases/bolsitas.webp', alt: 'El basurero con una bolsita de repuesto puesta adentro' },
-    { label: 'PARA AUTOS CON PERILLA', image: '/basurero/use-cases/perilla.webp', alt: 'El basurero en el portavasos de un SUV nuevo, al lado de la perilla de cambios' },
-    { label: 'TAMBIÉN EN LA PUERTA', image: '/basurero/use-cases/puerta.webp', alt: 'El basurero guardado en el bolsillo de la puerta del auto' },
+    { label: 'BOLSITAS INCLUIDAS', image: '/basurero/use-cases/bolsitas.webp', alt: 'El basurero con una bolsita de repuesto puesta adentro' },
+    { label: 'AUTOS CON PERILLA', image: '/basurero/use-cases/perilla.webp', alt: 'El basurero en el portavasos de un SUV nuevo, al lado de la perilla de cambios' },
+    { label: 'VA EN LA PUERTA', image: '/basurero/use-cases/puerta.webp', alt: 'El basurero guardado en el bolsillo de la puerta del auto' },
   ],
   steps: [
     {

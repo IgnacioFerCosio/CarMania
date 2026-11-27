@@ -9,10 +9,16 @@
  * El prefijo del label ("Para AUTO" en el soporte, sin prefijo en el parasol)
  * sale de `config.sectionCopy.useCasesPrefix`. Sin prefijo, el label se parte
  * como el título: primera palabra blanca, última en accent.
+ *
+ * TAMAÑO UNIVERSAL: el rótulo tiene el mismo tamaño en TODAS las landings
+ * (antes se achicaba hasta que entrara el más largo en un renglón, y en las
+ * de rótulos largos quedaba ilegible en el celular). Ocupa hasta 2 renglones
+ * de `USE_CASE_LINE` caracteres; el test de config hace cumplir ese largo.
  */
 import Image from 'next/image';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
+import { USE_CASE_LINE } from '@/lib/landings/useCaseLabel';
 
 /** Palabras en blanco + última palabra en accent (rojo). */
 function accentLastWord(text: string) {
@@ -43,9 +49,6 @@ export function UseCases({
   const { useCasesTitle, useCasesPrefix } = config.sectionCopy;
   // 'Para ' en el soporte, '' en el parasol — un solo text node, sin marcador.
   const labelPrefix = useCasesPrefix ? `${useCasesPrefix} ` : '';
-  // Largo del rótulo más largo (prefijo incluido), en caracteres: con él se
-  // calcula un solo tamaño de letra para toda la grilla (tarjetas parejas).
-  const nMax = Math.max(...useCases.map((c) => (labelPrefix + c.label).length));
 
   return (
     <section className="bg-[#24262A] py-14 sm:py-16 md:py-24">
@@ -69,17 +72,16 @@ export function UseCases({
               className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
             />
 
-            {/* Siempre en un renglón y del mismo tamaño en toda la grilla: el
-                tamaño de diseño (--fs) baja lo justo para que el rótulo más
-                largo (--n caracteres, prefijo incluido) entre en el ancho de la tarjeta (100cqw
-                menos los márgenes, --pad). 0,69 em = ancho medio de una
-                mayúscula de la display, medido en el navegador. */}
+            {/* Mismo tamaño en todas las landings: el de diseño (--fs), salvo
+                que un renglón de USE_CASE_LINE caracteres no entre en el ancho
+                de la tarjeta (100cqw menos los márgenes, --pad), en celulares
+                muy angostos. 0,69 em = ancho medio de una mayúscula de la
+                display, medido en el navegador. Hasta 2 renglones. */}
             <span
-              className="absolute bottom-2.5 left-2 whitespace-nowrap font-display font-black italic uppercase tracking-wider text-white [--fs:11px] [--pad:1rem] sm:bottom-3 sm:left-3 sm:[--fs:12px] sm:[--pad:1.5rem] md:[--fs:14px] lg:[--fs:16px]"
+              className="absolute inset-x-2 bottom-2.5 font-display font-black uppercase italic leading-[1.05] tracking-wide text-white [--fs:14px] [--pad:1rem] sm:inset-x-3 sm:bottom-3 sm:[--fs:15px] sm:[--pad:1.5rem] md:[--fs:16px] lg:[--fs:17px]"
               style={
                 {
-                  '--n': nMax,
-                  fontSize: 'min(var(--fs), calc((100cqw - var(--pad)) / (var(--n) * 0.69)))',
+                  fontSize: `min(var(--fs), calc((100cqw - var(--pad)) / ${USE_CASE_LINE * 0.69}))`,
                 } as React.CSSProperties
               }
             >
