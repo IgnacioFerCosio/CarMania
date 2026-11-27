@@ -56,8 +56,8 @@ export function HeroTestimonialCarousel({
                 &ldquo;{r.text}&rdquo;
               </p>
               <p className="mt-2 text-xs font-bold text-white">
-                {r.name}{' '}
-                <span className="font-normal text-ink-400">/ {r.location}</span>
+                {r.name}
+                {r.location && <span className="font-normal text-ink-400"> / {r.location}</span>}
               </p>
             </div>
           </div>

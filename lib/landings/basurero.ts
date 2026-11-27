@@ -194,8 +194,8 @@ export const BASURERO = {
       'Si no hay dónde tirar el ticket, termina en la puerta, en el piso o abajo del asiento. Con el Elegance PRO lo tirás en el momento y el auto nunca llega a ensuciarse.',
   },
   heroMedia: {
-    // 540×540 H.264 sin audio, CRF 30, ~540 KB (como el del trabavolante).
-    // ⚠️ Es el video de producto de CarMount (12 s) tal cual: se ve su logo en
+    // 540×540 H.264 sin audio, CRF 30, ~410 KB (como el del trabavolante).
+    // ⚠️ Es el video de producto de CarMount desde 1,8 s (sin el tramo de la caja, 10 s): se ve su logo en
     // la caja y en el producto. Decisión de Ignacio (2026-11-27), a sabiendas
     // de que es material de ellos. Reemplazarlo por uno propio cuando
     // tengamos producto. El poster es su primer frame (el LCP).
