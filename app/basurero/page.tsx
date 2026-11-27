@@ -6,8 +6,8 @@
  *   hero → beneficios en cuadros → qué incluye → cómo funciona → packs →
  *   comparativa → reseñas → garantía → FAQ → CTA final.
  *
- * Sin CarBrands ni TimeRace por ahora (TimeRace tiene las escenas del
- * trabavolante; CarBrands se suma si el producto resulta universal).
+ * Sin CarBrands. Debajo de la comparativa, en vez de TimeRace (que es del
+ * trabavolante), va FitCheck: "¿entra en tu portavasos?", animado.
  *
  * Las reseñas salen sólo cuando haya reales cargadas en la config.
  *
@@ -31,6 +31,7 @@ import { UseCases } from '@/components/sections/UseCases';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
+import { FitCheck } from '@/components/sections/FitCheck';
 import { Pricing } from '@/components/sections/Pricing';
 import { Reviews } from '@/components/sections/Reviews';
 import { ReviewsExpandable } from '@/components/sections/ReviewsExpandable';
@@ -136,8 +137,10 @@ export default async function BasureroPage() {
         {/* 5. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={BASURERO} />
 
-        {/* 6. Comparativa */}
-        <ComparisonTable comparison={BASURERO.comparison} bg="ink" />
+        {/* 6. Comparativa, con el gris de use cases */}
+        <ComparisonTable comparison={BASURERO.comparison} bg="gray" />
+        {/* Pegada a la tabla (mismo fondo): ¿entra en tu portavasos?, animado */}
+        <FitCheck data={BASURERO.fitCheck} />
 
         {/* 7. Reseñas: sólo con reseñas reales cargadas */}
         {BASURERO.reviews.length > 0 && (

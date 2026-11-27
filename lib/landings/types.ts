@@ -266,6 +266,8 @@ export type LandingConfig = {
   comparison?: AdvertorialData['comparison'];
   /** Animación de tiempos debajo de la comparativa (/trabavolante). */
   timeRace?: TimeRace;
+  /** Animación "¿entra en tu portavasos?" debajo de la comparativa (/basurero). */
+  fitCheck?: FitCheck;
   ratingBreakdown: {
     average: number;
     total: number;
@@ -369,6 +371,21 @@ export type TimeRace = SectionTitle & {
   other: { name: string; doneLabel: string; steps: readonly TimeRaceStep[] };
   /** Frase de cierre debajo de las columnas. */
   note: string;
+  cta: { label: string; href: string };
+};
+
+/**
+ * "¿Entra en tu portavasos?" (`FitCheck.tsx`): en loop, una lata entra en
+ * el portavasos y después entra el producto, con sus medidas. Debajo, tres
+ * datos para decidir sin dudar.
+ */
+export type FitCheck = SectionTitle & {
+  /** Lo que dice cada fase de la animación (lata, producto). */
+  steps: readonly [string, string];
+  /** Medidas que se dibujan sobre el producto. */
+  diameter: string;
+  height: string;
+  tips: readonly { icon: IconName; title: string; desc: string }[];
   cta: { label: string; href: string };
 };
 

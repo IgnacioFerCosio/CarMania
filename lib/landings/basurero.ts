@@ -36,7 +36,7 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     quantity: 1,
     unitsLabel: '1 unidad',
     badge: null,
-    bonus: '+ 30 bolsitas de repuesto', // TODO VERIFICAR (dato de CarMount)
+    bonus: '+ 30 bolsitas de regalo', // TODO VERIFICAR (dato de CarMount)
     freeShipping: true,
     recommended: false,
     fallbackPrice: 29990, // TODO PRECIO REAL
@@ -52,7 +52,7 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     quantity: 2,
     unitsLabel: '2 unidades · 2ª al 50%',
     badge: 'MÁS ELEGIDO',
-    bonus: 'Uno para cada auto de la casa',
+    bonus: '+ 60 bolsitas de regalo',
     freeShipping: true,
     recommended: true,
     fallbackPrice: 44990, // TODO PRECIO REAL — 1,5 × el x1 (redondeado)
@@ -68,7 +68,7 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     quantity: 3,
     unitsLabel: '3 unidades · 3ª GRATIS',
     badge: '3X2',
-    bonus: 'Para regalar (o para la camioneta)',
+    bonus: '+ 90 bolsitas de regalo',
     freeShipping: true,
     recommended: false,
     fallbackPrice: 59980, // TODO PRECIO REAL — 2 × el x1
@@ -156,7 +156,7 @@ export const BASURERO = {
     { label: 'SE ABRE CON UN TOQUE', image: '/basurero/use-cases/tapa.webp', alt: 'Un dedo apretando la tapa del basurero para abrirla' },
     { label: 'CUERPO DE METAL', image: '/basurero/use-cases/metal.webp', alt: 'Primer plano del cuerpo de metal negro mate del basurero' },
     { label: 'BOLSITAS DE REPUESTO', image: '/basurero/use-cases/bolsitas.webp', alt: 'El basurero con una bolsita de repuesto puesta adentro' },
-    { label: 'SE VACÍA EN SEGUNDOS', image: '/basurero/use-cases/vaciado.webp', alt: 'Sacando la bolsita llena del basurero' },
+    { label: 'PARA AUTOS CON PERILLA', image: '/basurero/use-cases/perilla.webp', alt: 'El basurero en el portavasos de un SUV nuevo, al lado de la perilla de cambios' },
     { label: 'TAMBIÉN EN LA PUERTA', image: '/basurero/use-cases/puerta.webp', alt: 'El basurero guardado en el bolsillo de la puerta del auto' },
   ],
   steps: [
@@ -243,16 +243,16 @@ export const BASURERO = {
   },
   /**
    * Comparativa (después de los packs): contra lo que la gente usa hoy, la
-   * bolsita colgada del asiento y el basurero de plástico. `image` vacía = la
-   * columna sale sin figura, hasta tener los recortes.
+   * bolsita colgada del asiento y el basurero de plástico. Las figuras son
+   * recortes sin fondo (webp con alfa) en `public/basurero/comparativa/`.
    */
   comparison: {
     title: 'No es un basurero más.',
     accent: 'más.',
     columns: [
-      { name: 'Elegance PRO™', image: '', width: 240, height: 420 },
-      { name: 'Bolsita colgada', image: '', width: 336, height: 378 },
-      { name: 'Basurero de plástico', image: '', width: 336, height: 378 },
+      { name: 'Elegance PRO™', image: '/basurero/comparativa/elegance-pro.webp', width: 235, height: 420 },
+      { name: 'Bolsita colgada', image: '/basurero/comparativa/bolsita-colgada.webp', width: 336, height: 378 },
+      { name: 'Basurero de plástico', image: '/basurero/comparativa/basurero-plastico.webp', width: 336, height: 378 },
     ],
     rows: [
       { label: 'Entra en el portavasos', values: [true, false, 'a veces'] },
@@ -260,14 +260,51 @@ export const BASURERO = {
       { label: 'Firme en las curvas', values: [true, false, false] },
       { label: 'De metal, no se rompe', values: [true, false, false] },
       { label: 'Bolsitas de repuesto incluidas', values: [true, false, false] },
-      { label: 'Queda bien en el auto', values: [true, false, false] },
+      { label: 'Estética premium', values: [true, false, false] },
+      { label: 'Ideal en autos nuevos con perilla', values: [true, false, false] },
     ],
+  },
+  /**
+   * Debajo de la comparativa: la prueba de la lata. Una lata común mide
+   * 6,6 cm de diámetro; el Elegance PRO, 6,5 (TODO VERIFICAR, dato de
+   * CarMount): si la medida real del proveedor es más ancha, esto deja de ser
+   * cierto y hay que cambiarlo.
+   */
+  fitCheck: {
+    eyebrow: 'Antes de comprar',
+    title: '¿Entra en tu portavasos?',
+    accent: 'portavasos?',
+    steps: ['¿Entra una lata de gaseosa?', 'Entonces entra el Elegance PRO.'],
+    diameter: '6,5 cm',
+    height: '14 cm',
+    tips: [
+      {
+        icon: 'check',
+        title: 'La prueba de la lata',
+        desc: 'Mide 6,5 cm de diámetro, lo mismo que una lata. Si la lata entra en tu portavasos, el Elegance PRO también.',
+      },
+      {
+        icon: 'rotate',
+        title: 'Al lado de la perilla',
+        desc: 'En los autos nuevos que cambian con perilla, la consola queda despejada y el basurero, a mano.',
+      },
+      {
+        icon: 'shield',
+        title: '¿Portavasos muy ancho?',
+        desc: 'También va en el bolsillo de la puerta, parado o acostado.',
+      },
+    ],
+    cta: { label: 'Quiero el mío', href: '#pricing' },
   },
   faq: [
     {
       q: '¿Entra en el portavasos de mi auto?',
       // TODO VERIFICAR (dato de CarMount) — medidas.
       a: 'Mide 6,5 cm de diámetro y 14 cm de alto, así que entra en la mayoría de los portavasos, de un auto chico a una camioneta. Si tu portavasos es más ancho o lo necesitás libre, también va en el bolsillo de la puerta.',
+    },
+    {
+      q: '¿Sirve en los autos nuevos que tienen perilla en vez de palanca?',
+      a: 'Sí, y ahí es donde mejor queda. En los autos que cambian con una perilla giratoria, la consola queda despejada y el portavasos a mano: el Elegance PRO va justo ahí, al lado de la perilla, y combina con ese interior.',
     },
     {
       q: '¿Cuánto le entra?',
