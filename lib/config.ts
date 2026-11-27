@@ -493,17 +493,18 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     comingSoon: true,
   },
   {
-    // ⚠️ ESQUELETO: el producto NO existe en Shopify y toda la landing es
-    // placeholder (copy, precios y fotos "FOTO PENDIENTE"; ver
+    // ⚠️ El producto NO existe en Shopify, las specs son las de CarMount sin
+    // verificar y las fotos son placeholders "FOTO PENDIENTE" (ver
     // docs/superpowers/specs/basurero-assets.md). Por eso `comingSoon`: 404
     // en producción, fuera de /tienda.
     handle: 'basurero-elegance-pro', // TODO SHOPIFY — espejo de BASURERO.brand.productHandle
     title: 'Basurero Elegance PRO™',
-    blurb: 'Basurero para el auto. Texto provisorio hasta tener el producto.', // TODO COPY
+    blurb:
+      'Basurero de metal que entra en el portavasos. Apretás la tapa, tirás y listo: el auto siempre limpio.',
     image: '/basurero/hero/basurero-oscuro.webp',
     href: '/basurero',
     fallbackPrice: 29990, // TODO PRECIO REAL — espejo de BASURERO.fallbackPricing.price
-    specTag: 'ELEGANCE PRO', // TODO COPY
+    specTag: 'ENTRA EN EL PORTAVASOS',
     badge: 'NUEVO',
     comingSoon: true,
   },

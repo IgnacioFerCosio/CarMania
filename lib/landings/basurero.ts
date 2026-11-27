@@ -1,23 +1,26 @@
 /**
  * LandingConfig del Basurero Elegance PRO™ (landing `/basurero`).
  *
- * ESQUELETO CON PLACEHOLDERS. La estructura es la de /inflador y
- * /trabavolante; el contenido real (producto, fotos, copy, precios) todavía
- * no está. Checklist en docs/superpowers/specs/basurero-assets.md.
+ * El producto: el basurero de portavasos que vende CarMount ("Car Trash Can",
+ * carmount.com/shop/car-trash-can). Un cilindro de metal negro mate que entra
+ * en el portavasos, con tapa que se abre apretándola y bolsitas de repuesto.
+ * Investigación y checklist en docs/superpowers/specs/basurero-assets.md;
+ * prompts de las imágenes en basurero-prompts.md.
  *
  * REGLA: este archivo NO importa del config raíz (ver types.ts). SÍ puede
  * importar de `./soporte`.
  *
- * ⚠️ TODO lo de abajo es provisorio:
- *   - Copy: genérico de basurero de auto, marcado `// TODO COPY`. A propósito
- *     NO promete specs (capacidad, material, medidas, si es impermeable, cómo
- *     se sujeta): eso sale del producto real.
+ * ⚠️ PENDIENTES antes de que /basurero reciba tráfico:
+ *   - Specs: son las que publica CarMount (6,5 × 14 cm, ~465 ml, metal, 30
+ *     bolsitas). Nuestra unidad puede ser distinta: todo lo que sale de ahí
+ *     está marcado `// TODO VERIFICAR (dato de CarMount)`.
  *   - Precios: provisorios, marcados `// TODO PRECIO REAL`. Cumplen las
  *     promesas del copy ("2ª al 50%", "3ª GRATIS"); lo vigila el test.
  *   - Shopify: los 3 productos no existen (`productId` en `''`): el botón
  *     queda deshabilitado ("Producto no disponible").
- *   - Imágenes: TODAS son cajas "FOTO PENDIENTE" con su ID (BAS-01…15).
- *     Se reemplazan subiendo el archivo con el mismo nombre y tamaño.
+ *   - Imágenes: TODAS son cajas "FOTO PENDIENTE" con su ID (BAS-01…15). Las
+ *     fotos de CarMount NO se usan (tienen su logo y son suyas): sólo son la
+ *     referencia para generar las nuestras.
  *   - Reseñas: ninguna. La sección no sale hasta cargar reales.
  */
 import type { Bundle, LandingConfig, UpsellTier } from './types';
@@ -29,11 +32,11 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     productId: '', // TODO SHOPIFY — el producto x1 no existe todavía
     fallbackVariantId: '',
     label: 'LLEVÁ 1',
-    subtitle: 'Tu auto ordenado.', // TODO COPY
+    subtitle: 'Chau basura en el piso.',
     quantity: 1,
     unitsLabel: '1 unidad',
     badge: null,
-    bonus: 'Bonus provisorio', // TODO COPY
+    bonus: '+ 30 bolsitas de repuesto', // TODO VERIFICAR (dato de CarMount)
     freeShipping: true,
     recommended: false,
     fallbackPrice: 29990, // TODO PRECIO REAL
@@ -49,7 +52,7 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     quantity: 2,
     unitsLabel: '2 unidades · 2ª al 50%',
     badge: 'MÁS ELEGIDO',
-    bonus: 'Uno para cada auto de la casa', // TODO COPY
+    bonus: 'Uno para cada auto de la casa',
     freeShipping: true,
     recommended: true,
     fallbackPrice: 44990, // TODO PRECIO REAL — 1,5 × el x1 (redondeado)
@@ -65,7 +68,7 @@ const BASURERO_BUNDLES: readonly Bundle[] = [
     quantity: 3,
     unitsLabel: '3 unidades · 3ª GRATIS',
     badge: '3X2',
-    bonus: 'Para regalar', // TODO COPY
+    bonus: 'Para regalar (o para la camioneta)',
     freeShipping: true,
     recommended: false,
     fallbackPrice: 59980, // TODO PRECIO REAL — 2 × el x1
@@ -102,101 +105,124 @@ export const BASURERO = {
     compareAtPrice: 54990, // TODO PRECIO REAL
     currency: 'ARS',
   },
-  // TODO COPY — todos los textos de la landing.
   headlines: {
-    heroLine1: 'Tu auto ordenado',
-    heroLine2: 'sin bolsitas colgando',
+    heroLine1: 'Chau basura',
+    heroLine2: 'en el piso del auto',
     heroSub:
-      'Un lugar fijo para la basura del auto: tickets, envoltorios, pañuelos y botellitas. Texto provisorio hasta tener el producto.',
-    finalCta: 'Tu auto, como el primer día.',
+      'Un basurero de metal que entra en el portavasos. Apretás la tapa, tirás el papel y la cerrás: el auto queda limpio y sin bolsitas colgando.',
+    finalCta: 'Tu auto limpio, sin pensarlo.',
     howItWorksLabel: 'Listo en 3 pasos',
     howItWorksTitle: '¿Cómo funciona?',
     benefitsEyebrow: 'Por qué el Elegance PRO',
-    benefitsTitle: 'Chau a la basura en el piso',
-    benefitsSub: 'Texto provisorio: el beneficio principal del basurero, en una o dos líneas.',
+    benefitsTitle: 'El lugar que le faltaba a tu auto',
+    benefitsSub:
+      'Si no hay dónde tirar el ticket, termina en la puerta, en el piso o abajo del asiento. Con el Elegance PRO lo tirás en el momento y el auto nunca llega a ensuciarse.',
   },
   heroMedia: {
-    // TODO FOTO — BAS-01. Puede pasar a video (como el del trabavolante).
+    // TODO FOTO — BAS-01. Ideal: un video corto de 540² (como el del
+    // trabavolante) con la mano apretando la tapa y tirando un papel.
     kind: 'image',
     src: '/basurero/hero/basurero-hero.webp',
     width: 1080,
     height: 1080,
-    badgeLine1: 'ELEGANCE', // TODO COPY
-    badgeLine2: 'PRO',
+    // Cortos: "PORTAVASOS" no entra en el ancho del badge.
+    badgeLine1: 'CUERPO',
+    badgeLine2: 'DE METAL',
   },
-  heroSubHighlights: ['basura del auto'], // TODO COPY
+  heroSubHighlights: ['entra en el portavasos', 'sin bolsitas colgando'],
   sectionCopy: {
     pricingTitle: 'Probá tu Elegance PRO',
     pricingTitleAccent: '30 días gratis',
     reviewsTitle: 'Opiniones de',
     reviewsTitleAccent: 'clientes',
-    reviewsFooter: 'de autos ordenados.',
+    reviewsFooter: 'de autos siempre limpios.',
     faqEyebrow: 'Dudas frecuentes',
     faqTitle: 'Respondemos lo que más nos preguntan',
     carBrandsTitle: 'Entra en',
     carBrandsTitleAccent: 'cualquier auto',
-    useCasesTitle: 'Ordenado. Limpio. Listo.', // TODO COPY
+    useCasesTitle: 'Apretá. Tirá. Listo.',
+    // Sin prefijo "Para": los labels ya son beneficios, como en el trabavolante.
     useCasesPrefix: '',
   },
   // No se muestra (la página no usa CarBrands). Va porque el tipo lo pide.
-  // Si el basurero resulta universal, se puede sumar la sección.
   carBrands: SOPORTE.carBrands,
-  /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). TODO COPY */
+  /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). */
   useCases: [
-    { label: 'BENEFICIO UNO', image: '/basurero/use-cases/beneficio-1.webp', alt: 'Basurero Elegance PRO — beneficio 1' },
-    { label: 'BENEFICIO DOS', image: '/basurero/use-cases/beneficio-2.webp', alt: 'Basurero Elegance PRO — beneficio 2' },
-    { label: 'BENEFICIO TRES', image: '/basurero/use-cases/beneficio-3.webp', alt: 'Basurero Elegance PRO — beneficio 3' },
-    { label: 'BENEFICIO CUATRO', image: '/basurero/use-cases/beneficio-4.webp', alt: 'Basurero Elegance PRO — beneficio 4' },
-    { label: 'BENEFICIO CINCO', image: '/basurero/use-cases/beneficio-5.webp', alt: 'Basurero Elegance PRO — beneficio 5' },
-    { label: 'BENEFICIO SEIS', image: '/basurero/use-cases/beneficio-6.webp', alt: 'Basurero Elegance PRO — beneficio 6' },
+    { label: 'ENTRA EN EL PORTAVASOS', image: '/basurero/use-cases/portavasos.webp', alt: 'El basurero puesto en el portavasos, al lado de la palanca de cambios' },
+    { label: 'SE ABRE CON UN TOQUE', image: '/basurero/use-cases/tapa.webp', alt: 'Un dedo apretando la tapa del basurero para abrirla' },
+    { label: 'CUERPO DE METAL', image: '/basurero/use-cases/metal.webp', alt: 'Primer plano del cuerpo de metal negro mate del basurero' },
+    { label: 'BOLSITAS DE REPUESTO', image: '/basurero/use-cases/bolsitas.webp', alt: 'El basurero con una bolsita de repuesto puesta adentro' },
+    { label: 'SE VACÍA EN SEGUNDOS', image: '/basurero/use-cases/vaciado.webp', alt: 'Sacando la bolsita llena del basurero' },
+    { label: 'TAMBIÉN EN LA PUERTA', image: '/basurero/use-cases/puerta.webp', alt: 'El basurero guardado en el bolsillo de la puerta del auto' },
   ],
-  // TODO COPY — los pasos dependen de cómo se instala el producto real.
   steps: [
     {
       n: 1,
-      title: 'Paso 1',
-      desc: 'Texto provisorio: cómo se coloca en el auto.',
-      image: '/basurero/how-to-use/01-paso-1.webp',
+      title: 'Ponelo en el portavasos',
+      // TODO VERIFICAR (dato de CarMount) — 6,5 cm de diámetro.
+      desc: 'Mide 6,5 cm de diámetro: entra en el portavasos de casi cualquier auto y queda firme. Si lo necesitás libre, va en el bolsillo de la puerta.',
+      image: '/basurero/how-to-use/01-ponelo-en-el-portavasos.webp',
     },
     {
       n: 2,
-      title: 'Paso 2',
-      desc: 'Texto provisorio: cómo se usa en el día a día.',
-      image: '/basurero/how-to-use/02-paso-2.webp',
+      title: 'Apretá y tirá',
+      desc: 'Apretás la tapa, tirás el ticket, el pañuelo o el envoltorio y la cerrás. Con una mano y sin sacar la vista de la calle.',
+      image: '/basurero/how-to-use/02-apreta-y-tira.webp',
     },
     {
       n: 3,
-      title: 'Paso 3',
-      desc: 'Texto provisorio: cómo se vacía y se limpia.',
-      image: '/basurero/how-to-use/03-paso-3.webp',
+      title: 'Cambiá la bolsita',
+      desc: 'Cuando se llena, sacás la bolsita, ponés una nueva y listo. Sin tachos sucios ni papeles sueltos.',
+      image: '/basurero/how-to-use/03-cambia-la-bolsita.webp',
     },
   ],
-  // TODO COPY — no se muestran en la página (no usa Benefits), pero el tipo
-  // los pide.
+  // No se muestran en la página (no usa Benefits), pero el tipo los pide.
   benefits: [
-    { icon: 'check', title: 'Beneficio 1', desc: 'Texto provisorio.', highlight: true },
-    { icon: 'shield', title: 'Beneficio 2', desc: 'Texto provisorio.', highlight: true },
-    { icon: 'sparkles', title: 'Beneficio 3', desc: 'Texto provisorio.', highlight: false },
-    { icon: 'leaf', title: 'Beneficio 4', desc: 'Texto provisorio.', highlight: false },
+    {
+      icon: 'check',
+      title: 'Entra en el portavasos',
+      // TODO VERIFICAR (dato de CarMount) — 6,5 × 14 cm.
+      desc: '6,5 cm de diámetro y 14 cm de alto.',
+      highlight: true,
+    },
+    {
+      icon: 'bolt',
+      title: 'Se abre con un toque',
+      desc: 'Apretás la tapa y tirás, con una mano.',
+      highlight: true,
+    },
+    {
+      icon: 'shield',
+      title: 'De metal',
+      desc: 'No se rompe ni se ve barato.',
+      highlight: false,
+    },
+    {
+      icon: 'sparkles',
+      title: 'Bolsitas de repuesto',
+      // TODO VERIFICAR (dato de CarMount) — 30 bolsitas.
+      desc: 'Se vacía en segundos, sin ensuciarse.',
+      highlight: false,
+    },
   ],
   pitchBlocks: [
     {
       eyebrow: 'El problema',
       headline: 'LA BASURA DEL AUTO SIEMPRE TERMINA EN EL PISO',
       accentWord: 'EN EL PISO',
-      body: 'Texto provisorio: el problema que resuelve el Elegance PRO.',
+      body: 'El ticket del estacionamiento, el pañuelo, el envoltorio del alfajor. Sin un lugar donde tirarlos, terminan en la puerta o abajo del asiento. El Elegance PRO está siempre a mano, en el portavasos.',
     },
   ],
   whatsInBox: {
     // La lista ya va bajo un "¿Qué incluye?" fijo del componente.
-    headline: 'Todo lo que viene en la caja', // TODO COPY
-    lead: 'Texto provisorio.',
-    body: ' Qué trae el Elegance PRO, cuando tengamos el producto.',
-    note: 'Nota provisoria.',
-    // TODO VERIFICAR — el contenido real de la caja.
-    items: ['1 Basurero Elegance PRO™'],
+    headline: 'Todo para un auto siempre limpio',
+    lead: 'Chau bolsita colgada del asiento.',
+    body: ' El Elegance PRO viene con las bolsitas de repuesto, así lo vaciás en segundos desde el primer día.',
+    note: 'También sirve en la camioneta del trabajo, en la lancha o en el escritorio.',
+    // TODO VERIFICAR (dato de CarMount) — qué trae nuestra caja y cuántas bolsitas.
+    items: ['1 Basurero Elegance PRO™', '30 bolsitas de repuesto'],
     gallery: [
-      { src: '/basurero/whats-in-box/que-incluye.webp', alt: 'La caja y el Basurero Elegance PRO' },
+      { src: '/basurero/whats-in-box/que-incluye.webp', alt: 'La caja, el Basurero Elegance PRO y las bolsitas de repuesto' },
     ],
   },
   reviews: [],
@@ -212,9 +238,9 @@ export const BASURERO = {
     ],
   },
   /**
-   * Comparativa (después de los packs). TODO COPY — contra qué se compara
-   * (bolsita colgada, basurero común…) y las filas. `image` vacía = la
-   * columna sale sin figura.
+   * Comparativa (después de los packs): contra lo que la gente usa hoy, la
+   * bolsita colgada del asiento y el basurero de plástico. `image` vacía = la
+   * columna sale sin figura, hasta tener los recortes.
    */
   comparison: {
     title: 'No es un basurero más.',
@@ -222,22 +248,49 @@ export const BASURERO = {
     columns: [
       { name: 'Elegance PRO™', image: '', width: 240, height: 420 },
       { name: 'Bolsita colgada', image: '', width: 336, height: 378 },
-      { name: 'Basurero común', image: '', width: 336, height: 378 },
+      { name: 'Basurero de plástico', image: '', width: 336, height: 378 },
     ],
     rows: [
-      { label: 'Ventaja 1', values: [true, false, false] },
-      { label: 'Ventaja 2', values: [true, false, true] },
-      { label: 'Ventaja 3', values: [true, true, false] },
+      { label: 'Entra en el portavasos', values: [true, false, 'a veces'] },
+      { label: 'Queda cerrado', values: [true, false, 'a veces'] },
+      { label: 'Firme en las curvas', values: [true, false, false] },
+      { label: 'De metal, no se rompe', values: [true, false, false] },
+      { label: 'Bolsitas de repuesto incluidas', values: [true, false, false] },
+      { label: 'Queda bien en el auto', values: [true, false, false] },
     ],
   },
   faq: [
     {
-      q: '¿Entra en mi auto?', // TODO COPY
-      a: 'Texto provisorio: compatibilidad y dónde se coloca.',
+      q: '¿Entra en el portavasos de mi auto?',
+      // TODO VERIFICAR (dato de CarMount) — medidas.
+      a: 'Mide 6,5 cm de diámetro y 14 cm de alto, así que entra en la mayoría de los portavasos, de un auto chico a una camioneta. Si tu portavasos es más ancho o lo necesitás libre, también va en el bolsillo de la puerta.',
     },
     {
-      q: '¿Cómo se limpia?', // TODO COPY
-      a: 'Texto provisorio.',
+      q: '¿Cuánto le entra?',
+      // TODO VERIFICAR (dato de CarMount) — ~465 ml.
+      a: 'Unos 465 ml: tickets, pañuelos, envoltorios, chicles y el papelito del estacionamiento. Es para la basura de todos los días, no para una botella entera.',
+    },
+    {
+      q: '¿Cómo se vacía?',
+      a: 'Sacás la bolsita, ponés una nueva y listo. Lleva unos segundos y no te ensuciás las manos.',
+    },
+    {
+      q: '¿Se mueve cuando manejo?',
+      a: 'En un portavasos de su medida queda firme, también en las curvas y los pozos.',
+    },
+    {
+      q: '¿De qué está hecho?',
+      // TODO VERIFICAR (dato de CarMount) — material exacto.
+      a: 'El cuerpo es de metal: aguanta el uso de todos los días y queda bien en cualquier interior, no parece un tacho de plástico.',
+    },
+    {
+      q: '¿Trae bolsitas?',
+      // TODO VERIFICAR (dato de CarMount) — 30 bolsitas.
+      a: 'Sí, viene con 30 bolsitas de repuesto.',
+    },
+    {
+      q: '¿Lo puedo usar fuera del auto?',
+      a: 'Sí. Sirve en la camioneta del trabajo, en la lancha, en el motorhome o arriba del escritorio.',
     },
     {
       q: '¿Cuánto tarda en llegar?',
@@ -280,12 +333,12 @@ export const BASURERO = {
   upsellChain: BASURERO_UPSELL_CHAIN,
   whatsappPrefilled: 'Hola CARMANIA! Quería consultar por el Basurero Elegance PRO...',
   metadata: {
-    // TODO COPY
     title: 'Basurero Elegance PRO™ — CARMANIA',
     description:
-      'Basurero para el auto: tu auto ordenado y sin basura en el piso. Envío gratis y 30 días de devolución.',
+      'Basurero de metal para el auto que entra en el portavasos: apretás la tapa, tirás y listo. Con bolsitas de repuesto. Envío gratis y 30 días de devolución.',
     ogTitle: 'Basurero Elegance PRO™ — CARMANIA',
-    ogDescription: 'Tu auto ordenado y sin basura en el piso. Envío gratis y devolución 30 días.',
+    ogDescription:
+      'Chau basura en el piso del auto. Entra en el portavasos, se abre con un toque y es de metal. Envío gratis y devolución 30 días.',
     canonical: '/basurero',
   },
 } satisfies LandingConfig;
