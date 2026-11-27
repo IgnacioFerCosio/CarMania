@@ -12,13 +12,26 @@
  *
  * TAMAÑO UNIVERSAL: el rótulo tiene el mismo tamaño en TODAS las landings
  * (antes se achicaba hasta que entrara el más largo en un renglón, y en las
- * de rótulos largos quedaba ilegible en el celular). Ocupa hasta 2 renglones
- * de `USE_CASE_LINE` caracteres; el test de config hace cumplir ese largo.
+ * de rótulos largos quedaba ilegible en el celular). Y siempre en DOS
+ * renglones, para que la grilla quede pareja: arriba lo blanco, abajo la
+ * palabra en accent (o el prefijo arriba y el rótulo abajo). Cada renglón,
+ * de hasta `USE_CASE_LINE` caracteres; el test de config lo hace cumplir.
  */
 import Image from 'next/image';
 import { SOPORTE } from '@/lib/landings/soporte';
 import type { LandingConfig } from '@/lib/landings/types';
 import { USE_CASE_LINE } from '@/lib/landings/useCaseLabel';
+
+/** Rótulo de tarjeta: lo blanco arriba y la última palabra (accent) abajo. */
+function labelLines(text: string) {
+  const w = text.split(' ');
+  return (
+    <>
+      <span className="block">{w.slice(0, -1).join(' ')}</span>
+      <span className="block text-accent">{w[w.length - 1]}</span>
+    </>
+  );
+}
 
 /** Palabras en blanco + última palabra en accent (rojo). */
 function accentLastWord(text: string) {
@@ -76,7 +89,7 @@ export function UseCases({
                 que un renglón de USE_CASE_LINE caracteres no entre en el ancho
                 de la tarjeta (100cqw menos los márgenes, --pad), en celulares
                 muy angostos. 0,69 em = ancho medio de una mayúscula de la
-                display, medido en el navegador. Hasta 2 renglones. */}
+                display, medido en el navegador. Siempre 2 renglones. */}
             <span
               className="absolute inset-x-2 bottom-2.5 font-display font-black uppercase italic leading-[1.05] tracking-wide text-white [--fs:14px] [--pad:1rem] sm:inset-x-3 sm:bottom-3 sm:[--fs:15px] sm:[--pad:1.5rem] md:[--fs:16px] lg:[--fs:17px]"
               style={
@@ -87,11 +100,11 @@ export function UseCases({
             >
               {labelPrefix ? (
                 <>
-                  {labelPrefix}
-                  <span className="text-accent">{c.label}</span>
+                  <span className="block">{labelPrefix.trim()}</span>
+                  <span className="block text-accent">{c.label}</span>
                 </>
               ) : (
-                accentLastWord(c.label)
+                labelLines(c.label)
               )}
             </span>
           </li>

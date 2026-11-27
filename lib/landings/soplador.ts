@@ -212,7 +212,7 @@ export const SOPLADOR = {
     { label: 'TAPIZADOS', image: '/soplador/use-cases/tapizados.webp', alt: 'Levantando migas y pelo de mascota de los pliegues del asiento' },
     { label: 'EL TABLERO', image: '/soplador/use-cases/tablero.webp', alt: 'Sacando polvo de las costuras y botones del tablero' },
     { label: 'EL TECLADO', image: '/soplador/use-cases/teclado.webp', alt: 'Limpiando entre las teclas de un teclado con el soplador' },
-    { label: 'LA NOTEBOOK', image: '/soplador/use-cases/notebook.webp', alt: 'Soplando la salida de aire de una notebook' },
+    { label: 'LA COMPU', image: '/soplador/use-cases/notebook.webp', alt: 'Soplando la salida de aire de una notebook' },
     { label: 'EL SECADO', image: '/soplador/use-cases/secado.webp', alt: 'Volando las gotas de agua de las molduras después de lavar el auto' },
   ],
   steps: [

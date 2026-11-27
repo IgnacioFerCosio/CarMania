@@ -61,15 +61,15 @@ describe.each(Object.entries(LANDINGS))('landing %s', (ruta, cfg) => {
     ]);
   });
 
-  // UseCases tiene un solo tamaño de letra para todas las landings: un rótulo
-  // más largo que 2 renglones (o con una palabra que no entra en uno) se
-  // corta o se encima en el celular.
-  it(`los rótulos de use cases entran en 2 renglones de ${USE_CASE_LINE} caracteres`, () => {
-    const prefix = cfg.sectionCopy.useCasesPrefix ? `${cfg.sectionCopy.useCasesPrefix} ` : '';
+  // UseCases: mismo tamaño de letra en todas las landings y siempre dos
+  // renglones (arriba lo blanco, abajo la palabra en accent), para que la
+  // grilla quede pareja. Cada renglón tiene que entrar en la tarjeta.
+  it(`los rótulos de use cases son 2 renglones de hasta ${USE_CASE_LINE} caracteres`, () => {
     for (const { label } of cfg.useCases) {
-      const lines = useCaseLines(prefix + label);
-      expect(lines.length, `"${label}" ocupa ${lines.length} renglones: ${lines.join(' / ')}`).toBeLessThanOrEqual(2);
-      for (const l of lines) expect(l.length, `"${l}" no entra en un renglón`).toBeLessThanOrEqual(USE_CASE_LINE);
+      const [top, bottom] = useCaseLines(label, cfg.sectionCopy.useCasesPrefix);
+      expect(top, `"${label}" necesita al menos dos palabras (o un prefijo)`).not.toBe('');
+      for (const l of [top, bottom])
+        expect(l.length, `"${l}" (de "${label}") no entra en un renglón`).toBeLessThanOrEqual(USE_CASE_LINE);
     }
   });
 
