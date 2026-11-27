@@ -6,7 +6,7 @@
  *   hero → beneficios en cuadros → qué incluye → cómo funciona → packs →
  *   comparativa → reseñas → garantía → FAQ → CTA final.
  *
- * Sin CarBrands. Debajo de la comparativa, en vez de TimeRace (que es del
+ * CarBrands ("Entra en cualquier auto") antes de qué incluye. Debajo de la comparativa, en vez de TimeRace (que es del
  * trabavolante), va FitCheck: "¿entra en tu portavasos?", animado.
  *
  * Las reseñas salen sólo cuando haya reales cargadas en la config.
@@ -28,6 +28,7 @@ import { CountdownBanner } from '@/components/layout/CountdownBanner';
 import { PromoBar } from '@/components/layout/PromoBar';
 import { Hero } from '@/components/sections/Hero';
 import { UseCases } from '@/components/sections/UseCases';
+import { CarBrands } from '@/components/sections/CarBrands';
 import { WhatsInBox } from '@/components/sections/WhatsInBox';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { ComparisonTable } from '@/components/advertorial/ComparisonTable';
@@ -128,8 +129,16 @@ export default async function BasureroPage() {
         {/* 2. Beneficios en 6 cuadros */}
         <UseCases config={BASURERO} />
 
+        {/* Compatibilidad — "Entra en cualquier auto" */}
+        <CarBrands config={BASURERO} />
+
         {/* 3. Qué incluye */}
-        <WhatsInBox data={BASURERO.whatsInBox} />
+        <WhatsInBox
+          data={{
+            ...BASURERO.whatsInBox,
+            testimonialPhoto: BASURERO.whatsInBox.testimonial?.image,
+          }}
+        />
 
         {/* 4. Cómo funciona (3 pasos) */}
         <HowItWorks config={BASURERO} />
@@ -137,8 +146,8 @@ export default async function BasureroPage() {
         {/* 5. Pricing */}
         <Pricing productId={productId} bundlesData={bundlesData} config={BASURERO} />
 
-        {/* 6. Comparativa, con el gris de use cases */}
-        <ComparisonTable comparison={BASURERO.comparison} bg="gray" />
+        {/* 6. Comparativa, con el gris de la garantía */}
+        <ComparisonTable comparison={BASURERO.comparison} bg="ink" />
         {/* Pegada a la tabla (mismo fondo): ¿entra en tu portavasos?, animado */}
         <FitCheck data={BASURERO.fitCheck} />
 

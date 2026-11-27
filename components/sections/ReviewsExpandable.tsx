@@ -33,8 +33,8 @@ export function ReviewsExpandable({
         id="reviews-grid"
         className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2 lg:grid-cols-4"
       >
-        {shown.map((r, i) => (
-          <ReviewCard key={r.name + r.date} review={r} index={i} />
+        {shown.map((r) => (
+          <ReviewCard key={r.name + r.date} review={r} />
         ))}
       </ul>
 

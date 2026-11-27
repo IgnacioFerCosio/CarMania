@@ -128,8 +128,10 @@ export function WhatsInBox({
                   &ldquo;{testimonial.text}&rdquo;
                 </p>
                 <p className="mt-1.5 text-xs font-bold text-white">
-                  {testimonial.name}{' '}
-                  <span className="font-normal text-ink-400">/ {testimonial.location}</span>
+                  {testimonial.name}
+                  {testimonial.location && (
+                    <span className="font-normal text-ink-400"> / {testimonial.location}</span>
+                  )}
                 </p>
               </div>
             </div>

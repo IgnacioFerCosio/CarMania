@@ -13,7 +13,8 @@
  * medidas a la vista). El dibujo respeta la proporción real: lata de 6,6 cm
  * y Elegance PRO de 6,5 × 14 cm, en un portavasos de ~7,5 cm.
  *
- * Va como sección propia con el fondo de la comparativa (gris de use cases)
+ * Va como sección propia con el fondo de la comparativa (`bg-ink-900`, el de
+ * la garantía)
  * y subida sobre su padding de abajo, como TimeRace en /trabavolante.
  */
 import { useEffect, useRef } from 'react';
@@ -52,7 +53,7 @@ export function FitCheck({ data }: { data: FitCheckData }) {
   return (
     <section
       ref={ref}
-      className="fc -mt-4 bg-[#24262A] px-4 pb-14 sm:-mt-6 sm:pb-20 md:-mt-10 md:px-6 md:pb-28"
+      className="fc -mt-4 bg-ink-900 px-4 pb-14 sm:-mt-6 sm:pb-20 md:-mt-10 md:px-6 md:pb-28"
     >
       <style>{KEYFRAMES}</style>
       <div className="mx-auto max-w-4xl">

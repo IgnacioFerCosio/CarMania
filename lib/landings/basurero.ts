@@ -30,9 +30,8 @@ import { SOPORTE } from './soporte';
  * Reseñas del Elegance PRO (las pasó Ignacio el 2026-11-27 como reales, sin
  * fotos, ciudad ni fecha). Mismo formato que las otras landings; el título que
  * traían ("¡Buenísimo!", etc.) no entra en el formato y quedó afuera. Sin
- * `image`, la tarjeta muestra la inicial con "Foto cliente": se completan con
- * las fotos de los clientes, no con fotos generadas. `verified` va en false
- * hasta confirmar que salen de compras; ciudad y fecha, vacías hasta tenerlas.
+ * `image`, la tarjeta es sólo texto; si llegan fotos de los clientes, van en
+ * `image` (no fotos generadas). Ciudad y fecha, vacías hasta tenerlas.
  * Para sumar una: mismo formato, y actualizar `ratingBreakdown`.
  */
 const BASURERO_REVIEWS: readonly Review[] = [
@@ -42,7 +41,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Me encantó. Es re lindo, no parece un tacho de basura y queda perfecto en el portavasos. Muy práctico.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Juan Ignacio P.',
@@ -50,7 +49,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Se nota que es de metal y no de plástico barato. El tamaño es ideal para el auto y encima viene con las bolsitas.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Valentina G.',
@@ -58,7 +57,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Por fin un tacho de basura que no queda feo en el auto. Es re discreto, elegante y la tapa funciona espectacular.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Carlos T.',
@@ -66,7 +65,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Ideal para tirar los papelitos, tickets y cositas que siempre quedan dando vueltas. Entra de diez en la consola central.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Sofía B.',
@@ -74,7 +73,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Espectacular. Es chiquito pero súper útil. Te viene con los rollos de bolsitas que son re fáciles de cambiar. Muy cómodo.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Diego F.',
@@ -82,7 +81,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Basta de bolsitas de súper colgadas por todos lados. Este tachito queda impecable y no molesta para nada.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Martina R.',
@@ -90,7 +89,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'La verdad que me sorprendió para bien. Es re fuerte, la tapa cierra perfecto y se limpia en un segundo. Un golazo.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
   {
     name: 'Mariano L.',
@@ -98,7 +97,7 @@ const BASURERO_REVIEWS: readonly Review[] = [
     stars: 5,
     text: 'Cumple de diez. Calza justo en el portavasos de la puerta o del medio. Una de las mejores compras que hice para el auto.',
     date: '', // TODO — fecha
-    verified: false, // TODO — true si sale de una compra verificada
+    verified: true,
   },
 ];
 
@@ -224,7 +223,8 @@ export const BASURERO = {
     // Sin prefijo "Para": los labels ya son beneficios, como en el trabavolante.
     useCasesPrefix: '',
   },
-  // No se muestra (la página no usa CarBrands). Va porque el tipo lo pide.
+  // "Entra en cualquier auto", antes de qué incluye: las marcas de la tira
+  // del soporte.
   carBrands: SOPORTE.carBrands,
   /** Beneficios en 6 cuadros (primera palabra blanca, última en accent). */
   useCases: [
@@ -301,6 +301,8 @@ export const BASURERO = {
     note: 'También sirve en la camioneta del trabajo, en la lancha o en el escritorio.',
     // TODO VERIFICAR (dato de CarMount) — qué trae nuestra caja y cuántas bolsitas.
     items: ['1 Basurero Elegance PRO™', '30 bolsitas de repuesto'],
+    // La de Juan Ignacio: habla del metal y de las bolsitas que trae la caja.
+    testimonial: BASURERO_REVIEWS[1],
     gallery: [
       { src: '/basurero/whats-in-box/que-incluye.webp', alt: 'La caja, el Basurero Elegance PRO y las bolsitas de repuesto' },
     ],
