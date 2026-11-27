@@ -50,11 +50,16 @@ clientes: **no se usan**). Venden aparte un pack de 6 bolsitas de repuesto.
 | Bolsitas de repuesto como producto aparte (como CarMount) | — | A decidir; serviría de upsell en el carrito. |
 | Plazos de envío | FAQ "¿Cuánto tarda en llegar?" | Igual que en las otras landings. |
 
-## 3. Imágenes — todas pendientes
+## 3. Imágenes
 
-Hoy cada archivo es una caja oscura "FOTO PENDIENTE" con su ID, el brief y la
-medida. Los prompts para generarlas están en **`basurero-prompts.md`**. Para
-reemplazarla, subí la foto con el **mismo nombre y tamaño** en
+BAS-02 a BAS-15 ya están generadas con Gemini (2026-11-27) a partir de una
+imagen maestra sin logo; los originales y la maestra están en
+`C:\Users\ignaf\Desktop\Ecommerce\CarMania\Basurero Elegance Pro\generadas\`.
+Muestran el modelo de CarMount sin logo: si la unidad del proveedor difiere
+(forma, tapa, caja), hay que rehacerlas. BAS-01 (el hero) pasa a ser un video.
+
+Los prompts están en **`basurero-prompts.md`**. Para
+reemplazar una foto, subila con el **mismo nombre y tamaño** en
 `public/basurero/`. Todo se exporta al tamaño en que se ve (en Cloudflare
 `/_next/image` devuelve el original).
 
