@@ -119,12 +119,16 @@ export const BASURERO = {
       'Si no hay dónde tirar el ticket, termina en la puerta, en el piso o abajo del asiento. Con el Elegance PRO lo tirás en el momento y el auto nunca llega a ensuciarse.',
   },
   heroMedia: {
-    // TODO FOTO — BAS-01. Ideal: un video corto de 540² (como el del
-    // trabavolante) con la mano apretando la tapa y tirando un papel.
-    kind: 'image',
-    src: '/basurero/hero/basurero-hero.webp',
-    width: 1080,
-    height: 1080,
+    // 540×540 H.264 sin audio, CRF 30, ~540 KB (como el del trabavolante).
+    // ⚠️ Es el video de producto de CarMount (12 s) tal cual: se ve su logo en
+    // la caja y en el producto. Decisión de Ignacio (2026-11-27), a sabiendas
+    // de que es material de ellos. Reemplazarlo por uno propio cuando
+    // tengamos producto. El poster es su primer frame (el LCP).
+    kind: 'video',
+    src: '/basurero/hero/basurero-hero.mp4',
+    poster: '/basurero/hero/basurero-hero-poster.webp',
+    width: 540,
+    height: 540,
     // Cortos: "PORTAVASOS" no entra en el ancho del badge.
     badgeLine1: 'CUERPO',
     badgeLine2: 'DE METAL',

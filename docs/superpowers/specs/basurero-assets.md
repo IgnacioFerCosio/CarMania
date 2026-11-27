@@ -60,7 +60,7 @@ reemplazarla, subí la foto con el **mismo nombre y tamaño** en
 
 | ID | Archivo | Qué va | Medida |
 |---|---|---|---|
-| BAS-01 | `hero/basurero-hero.webp` | En el portavasos, tapa abierta, una mano tirando un papel. Ideal: video de 540². | 1080² |
+| BAS-01 | `hero/basurero-hero.mp4` + `basurero-hero-poster.webp` | **Hecho, provisorio:** el video de producto de CarMount (12 s, 540², sin audio), con su logo a la vista. Decisión de Ignacio; reemplazar por uno propio cuando haya producto. | 540² |
 | BAS-02 | `hero/basurero-oscuro.webp` | Producto sobre fondo de estudio negro (card de `/tienda`). | 1200² |
 | BAS-03 | `use-cases/portavasos.webp` | ENTRA EN EL PORTAVASOS | 400×600 |
 | BAS-04 | `use-cases/tapa.webp` | SE ABRE CON UN TOQUE | 400×600 |
