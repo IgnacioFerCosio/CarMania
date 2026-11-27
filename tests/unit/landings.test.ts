@@ -11,6 +11,7 @@ import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
 import { TORNADO } from '@/lib/landings/tornado';
 import { TRABAVOLANTE } from '@/lib/landings/trabavolante';
+import { BASURERO } from '@/lib/landings/basurero';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { ALL_UPSELL_CHAINS } from '@/lib/landings';
 import { buildTiers, nextTierOf } from '@/lib/tiers';
@@ -23,6 +24,7 @@ const LANDINGS: Record<string, LandingConfig> = {
   '/soplador': SOPLADOR,
   '/soplador-tornado': TORNADO,
   '/trabavolante': TRABAVOLANTE,
+  '/basurero': BASURERO,
   '/llavero-rescate': ROMPEVIDRIOS,
 };
 

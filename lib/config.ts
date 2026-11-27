@@ -478,6 +478,21 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     comingSoon: true,
   },
   {
+    // ⚠️ ESQUELETO: el producto NO existe en Shopify y toda la landing es
+    // placeholder (copy, precios y fotos "FOTO PENDIENTE"; ver
+    // docs/superpowers/specs/basurero-assets.md). Por eso `comingSoon`: 404
+    // en producción, fuera de /tienda.
+    handle: 'basurero-elegance-pro', // TODO SHOPIFY — espejo de BASURERO.brand.productHandle
+    title: 'Basurero Elegance PRO™',
+    blurb: 'Basurero para el auto. Texto provisorio hasta tener el producto.', // TODO COPY
+    image: '/basurero/hero/basurero-oscuro.webp',
+    href: '/basurero',
+    fallbackPrice: 29990, // TODO PRECIO REAL — espejo de BASURERO.fallbackPricing.price
+    specTag: 'ELEGANCE PRO', // TODO COPY
+    badge: 'NUEVO',
+    comingSoon: true,
+  },
+  {
     // La foto es la del llavero solo (unidad), no el pack x2. En producción
     // sigue como "Próximamente" (2026-11-08): se abre sólo con la URL, con
     // noindex. Publicarlo es sacar `comingSoon`.
