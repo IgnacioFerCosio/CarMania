@@ -12,6 +12,7 @@ import { PARASOL } from './parasol';
 import { SOPLADOR } from './soplador';
 import { TORNADO } from './tornado';
 import { TRABAVOLANTE } from './trabavolante';
+import { INFLADOR } from './inflador';
 import { BASURERO } from './basurero';
 import { ROMPEVIDRIOS_UPSELL_CHAIN } from './rompevidrios.bundles';
 import type { CrossSell, UpsellTier } from './types';
@@ -22,6 +23,7 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
   ...SOPLADOR.upsellChain,
   ...TORNADO.upsellChain,
   ...TRABAVOLANTE.upsellChain,
+  ...INFLADOR.upsellChain,
   ...BASURERO.upsellChain,
   // Arranca en 2 unidades (no hay pack de 1). Va última: si quedara detrás
   // de una escalera que termina en 1 unidad, `nextTierOf` la ofrecería como
@@ -57,7 +59,7 @@ export const ALL_UPSELL_CHAINS: readonly UpsellTier[] = [
  * Si agregás un pack nuevo a una escalera, sumalo también a los dos
  * descuentos en Shopify (en "Comprá" de uno y en "Llevá" del otro).
  *
- * El soplador, el trabavolante y el basurero no entran: todavía no están incorporados
+ * El soplador, el trabavolante, el inflador y el basurero no entran: todavía no están incorporados
  * como productos.
  *
  * TODO rompevidrios ↔ soporte: el plan es ofrecer uno con el otro, pero la

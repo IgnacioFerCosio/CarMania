@@ -27,6 +27,7 @@ import { PARASOL } from '@/lib/landings/parasol';
 import { SOPLADOR } from '@/lib/landings/soplador';
 import { TORNADO } from '@/lib/landings/tornado';
 import { TRABAVOLANTE } from '@/lib/landings/trabavolante';
+import { INFLADOR } from '@/lib/landings/inflador';
 import { BASURERO } from '@/lib/landings/basurero';
 import { ROMPEVIDRIOS } from '@/lib/landings/rompevidrios';
 import { CROSS_SELLS, CROSS_SELL_DISCOUNT } from '@/lib/landings';
@@ -100,6 +101,7 @@ const LANDINGS: [string, LandingConfig][] = [
   ['/soplador', SOPLADOR],
   ['/soplador-tornado', TORNADO],
   ['/trabavolante', TRABAVOLANTE],
+  ['/inflador', INFLADOR],
   ['/basurero', BASURERO],
   ['/llavero-rescate', ROMPEVIDRIOS],
 ];

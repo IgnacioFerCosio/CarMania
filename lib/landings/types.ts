@@ -100,6 +100,11 @@ export type Step = {
   video?: string;
   /** Foto del paso: se muestra sólo si no hay `video`. */
   image?: string;
+  /**
+   * Escena animada del paso (`InflatorScene`: 'hose' | 'mode' | 'auto', en
+   * /inflador). Si está, va en lugar del video y de la foto.
+   */
+  scene?: string;
 };
 
 /** Sección de videos verticales del producto en acción (`VideoShowcase`). */
@@ -337,7 +342,18 @@ export type MediaSlot = {
  */
 export type SectionTitle = { eyebrow?: string; title: string; accent: string };
 
-export type ComparisonColumn = { name: string; image: string; width: number; height: number };
+export type ComparisonColumn = {
+  name: string;
+  image: string;
+  width: number;
+  height: number;
+  /**
+   * Cuánto más alta que la fila de figuras sale esta imagen (1,5 = 50 % más).
+   * Crece para arriba, por encima de la tabla, sin recortarse. Sin esto, la
+   * figura entra justa en la fila, como en /llavero-rescate y /trabavolante.
+   */
+  grow?: number;
+};
 
 /**
  * "Carrera" animada debajo de la comparativa (/trabavolante): el camino de

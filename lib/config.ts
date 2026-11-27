@@ -478,6 +478,21 @@ export const STORE_PRODUCTS: readonly StoreProduct[] = [
     comingSoon: true,
   },
   {
+    // ⚠️ El producto NO existe en Shopify y faltan imágenes de la landing
+    // (placeholders "FOTO PENDIENTE", ver docs/superpowers/specs/inflador-assets.md).
+    // Por eso `comingSoon`: 404 en producción, fuera de /tienda.
+    handle: 'inflador-pulse-pro',
+    title: 'Inflador Pulse PRO™',
+    blurb:
+      'Inflador inalámbrico con pantalla digital: elegís la presión, apretás y se corta solo. Para auto, moto, bici y pelotas.',
+    image: '/inflador/hero/inflador-oscuro.webp',
+    href: '/inflador',
+    fallbackPrice: 49990, // TODO PRECIO REAL — espejo de INFLADOR.fallbackPricing.price
+    specTag: '150 PSI · SIN CABLES',
+    badge: 'NUEVO',
+    comingSoon: true,
+  },
+  {
     // ⚠️ ESQUELETO: el producto NO existe en Shopify y toda la landing es
     // placeholder (copy, precios y fotos "FOTO PENDIENTE"; ver
     // docs/superpowers/specs/basurero-assets.md). Por eso `comingSoon`: 404
