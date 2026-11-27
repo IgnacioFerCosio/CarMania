@@ -66,6 +66,9 @@ export function ComparisonTable({
   // fila 1: figuras · fila 2: nombres · filas 3…: ítems
   const lastRow = rows.length + 2;
   const cardTop = `calc(var(--fig-h) - ${OVERLAP}px)`;
+  // Lo que una figura con `grow` sobresale por arriba: se deja ese lugar libre
+  // para que no pise el título.
+  const grow = Math.max(1, ...columns.map((c) => c.grow ?? 1));
 
   return (
     <section className={`${BG[bg]} ${SECTION_Y}`}>
@@ -87,6 +90,7 @@ export function ComparisonTable({
               style={{
                 gridTemplateColumns: `minmax(0,1.25fr) repeat(${columns.length}, minmax(0,1fr))`,
                 gridTemplateRows: `var(--fig-h) repeat(${lastRow - 1}, auto)`,
+                ...(grow > 1 && { marginTop: `calc(var(--fig-h) * ${grow - 1})` }),
               }}
             >
               {/* Tarjeta de la tabla: arranca debajo de las figuras */}
@@ -119,14 +123,21 @@ export function ComparisonTable({
                   style={{ gridColumn: i + 2, gridRow: 1 }}
                 >
                   {/* Sin imagen todavía, la columna sale sin figura. */}
+                  {/* Con `grow`, la figura es más alta que la fila y sobresale por
+                      arriba (la fila no recorta: crece desde abajo). */}
                   {c.image && (
                   <Image
                     src={c.image}
                     alt=""
                     width={c.width}
                     height={c.height}
-                    sizes="120px"
-                    className="max-h-full w-auto max-w-full object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)] sm:max-w-[138%]"
+                    sizes={c.grow ? '200px' : '120px'}
+                    className={
+                      c.grow
+                        ? 'w-auto max-w-[135%] object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)] sm:max-w-[160%]'
+                        : 'max-h-full w-auto max-w-full object-contain drop-shadow-[0_12px_10px_rgba(0,0,0,0.55)] sm:max-w-[138%]'
+                    }
+                    {...(c.grow && { style: { height: `calc(var(--fig-h) * ${c.grow})` } })}
                   />
                   )}
                 </div>
